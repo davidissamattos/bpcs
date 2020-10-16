@@ -44,8 +44,6 @@ bpc <- function(data,
 
   if((is.null(player0_score) | is.null(player1_score)) & is.null(result_column))
     stop('Error! It is required to have either scores for both player0 and player1 OR a column indicating who won (0 for player0 1 for player1')
-  if(solve_ties=='none' & model_type!='davidson')
-    stop('Error! If not handling the ties the Davidson model should be used')
   if(is.data.frame(data)==F & tibble::is_tibble(data)==F)
     stop('Error! Wrong data format')
 
@@ -64,11 +62,11 @@ bpc <- function(data,
                   warmup=warmup)
 
   d <- data
-  #Clean NA
-  dropna_cols<-c('player0','player1','player0_score','player1_score','winner_column')
-  d<-tidyr::drop_na(d,tidyselect::any_of(dropna_cols))
 
-  standata=list(N_total = nrow(data))
+  #Clean NA
+  dropna_cols<-c(player0,player1,player0_score,player1_score,result_column)
+  d<-tidyr::drop_na(d,tidyselect::any_of(dropna_cols))
+  standata=list()
 
   # If we provide only the scores we need to create a winner vector and process the ties
   if(!is.null(player0_score) & !is.null(player1_score))
@@ -83,15 +81,21 @@ bpc <- function(data,
   # If one of the score vectors is null we need to have the winner vector
   if(is.null(player0_score) | is.null(player1_score))
   {
-    standata<-c(standata,
-                y=list(d[,result_column]))
+    d$y<-d[,result_column]
+    standata<-c(standata, y=list(d$y))
   }
+
+  #Check if everything is in order with solve_ties and the choice of model
+  ties_present<- check_if_there_are_ties(d$y)
+  if(solve_ties=='none' & model_type!='davidson' & ties_present==T)
+    stop('Error! If not handling the ties the Davidson model should be used')
 
   #For our stan model we need the index for the players not the actual name
   d<-create_index(d,player0,player1)
   lookup_table <- create_index_lookuptable(d,player0,player1)
 
   standata<-c(standata,
+              N_total = nrow(d),
               N_players=list(nrow(lookup_table)),
               player0_indexes=list(as.vector(d$player0_index)),
               player1_indexes=list(as.vector(d$player1_index)),

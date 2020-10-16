@@ -1,3 +1,22 @@
+#' Create a lookup table of names and indexes
+#' Note that the indexes will be created in the order they appear. For string this doesnt make much difference but for numbers the index might be different than the actual number that appears in names
+#' @param data A data frame containing the observations. The other parameters specify the name of the columns
+#' @param player0 The name of the column of data data contains player0
+#' @param player1 The name of the column of data data contains player0
+#'
+#' @return A dataframe of a lookup table with columns Names and Index
+create_index_lookuptable <-function(data,player0,player1){
+  d<-as.data.frame(data)
+  p0_names <- unique(d[,player0])
+  p1_names <- unique(d[,player1])
+  player_names <- unique(c(p0_names,p1_names))
+  player_index <- seq(1:length(player_names)) #sequential indexing starting with 1
+
+  #Now we have a lookup table to convert the indexes
+  lookup_table <- data.frame(Names=player_names, Index=player_index)
+  return(as.data.frame(lookup_table))
+}
+
 #' Create two columns with the indexes for the names
 #'
 #' @param data A data frame containing the observations. The other parameters specify the name of the columns
@@ -18,27 +37,10 @@ create_index <- function(data, player0, player1){
   d$player0_index<-player0_index
   d$player1_index<-player1_index
   #We return a data frame with the indexes
-  return(d)
+  return(as.data.frame(d))
 }
 
-#' Create a lookup table of names and indexes
-#'
-#' @param data A data frame containing the observations. The other parameters specify the name of the columns
-#' @param player0 The name of the column of data data contains player0
-#' @param player1 The name of the column of data data contains player0
-#'
-#' @return A dataframe of a lookup table
-create_index_lookuptable <-function(data,player0,player1){
-  d<-as.data.frame(data)
-  p0_names <- unique(d[,player0])
-  p1_names <- unique(d[,player1])
-  player_names <- unique(c(p0_names,p1_names))
-  player_index <- seq(1:length(player_names)) #sequential indexing starting with 1
 
-  #Now we have a lookup table to convert the indexes
-  lookup_table <- data.frame(Names=player_names, Index=player_index)
-  return(lookup_table)
-}
 
 HPD_lower_from_column<-function(column, credMass=0.95){
   hdi_col<-HDInterval::hdi(column, credMass=credMass)
@@ -66,7 +68,7 @@ HPDI_from_stanfit<- function(stanfit)
   df_hpdi<-dplyr::mutate(df,Mean=mean_estimate)
   df_hpdi<-dplyr::rename(df_hpdi,HPD_lower=lower, HPD_higher=upper)
   df_hpdi<-dplyr::select(df_hpdi,Parameter, Mean, HPD_lower, HPD_higher)
-  return(df_hpdi)
+  return(as.data.frame(df_hpdi))
 }
 
 sample_stanfit<-function(stanfit,par,n=100){
@@ -74,10 +76,21 @@ sample_stanfit<-function(stanfit,par,n=100){
   posterior<- dplyr::as_tibble(posterior[[par]])
   #re sampling from the posterior
   s <- dplyr::sample_n(posterior, size = n, replace=T)
-  return(s)
+  return(as.data.frame(s))
 }
 
 
+#' Giving a player0 an player1 it adds a column to the data frame containing who won or if it was a tie
+#'
+#' @param data
+#' @param player0_score name of the column in data
+#' @param player1_score name of the column in data
+#' @param solve_ties Method to solve the ties, either randomly allocate, or do nothing, or remove the row from the datasetc('random', 'none', 'remove').
+#' @param win_score decides if who wins is the one that has the highest score or the lowest score
+#'
+#' @return a dataframe with column 'y' that contains the results of the comparison
+#'
+#' @examples
 compute_scores<-function(data,
                          player0_score,
                          player1_score,
@@ -98,7 +111,7 @@ compute_scores<-function(data,
   {
     player1win<-ifelse(d$diff_score <0, 1,0)
     tie<-ifelse(d$diff_score==0,-1,0)
-    d$y<- as.vector(ifelse(d$diff_score >0, 0, 1))
+    d$y<- as.vector(player1win+tie)
   }
 
   # How to handle ties in the scores
@@ -108,7 +121,7 @@ compute_scores<-function(data,
   }
   if(solve_ties=='random')
   {
-    for(i in nrow(d)){
+    for(i in 1:nrow(d)){
       if(d$y[i]==-1)
         d$y[i]= sample(c(0,1), replace=T, size=1)
     }
@@ -116,11 +129,53 @@ compute_scores<-function(data,
   if(solve_ties=='remove')
   {
     d$ties<-ifelse(d$diff_score!=0,0,NA)
+    print(d$ties)
     d<-tidyr::drop_na(d,tidyselect::any_of('ties'))
     d<-dplyr::select(d, -ties)
   }
 
   d<-dplyr::select(d, -diff_score)
-  return(d)
+  return(as.data.frame(d))
 }
 
+#' Check if a data frame column contains only the values 1 0 and -1
+#'
+#' @param d_column
+#'
+#' @return T (correct) or F (with problems)
+check_result_column<-function(d_column){
+  passed<- all(d_column %in% c(-1,0,1))
+  return(passed)
+}
+
+#' Check if a data frame column contains ties:-1
+#'
+#' @param d_column
+#'
+#' @return T (there are ties) or F (no ties)
+check_if_there_are_ties<-function(d_column){
+  ties<- any(d_column %in% c(-1))
+  return(ties)
+}
+
+
+#' Check for NA in the specfic columns and returns T or F is there is at least 1 NA in those columns
+#'
+#' @param d
+#' @param player0
+#' @param player1
+#' @param player0_score
+#' @param player1_score
+#' @param result_column
+#'
+#' @return T (there are NA) or F (no NA)
+check_if_there_are_na<-function(d, player0,player1,player0_score,player1_score,result_column)
+{
+  na_cols<-c(player0,player1,player0_score,player1_score,result_column)
+  for(col in na_cols){
+    check_na<-any(is.na(d[,col]))
+    if(check_na==T)
+      return(T)
+  }
+  return(F)
+}
