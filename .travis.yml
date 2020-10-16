@@ -1,6 +1,6 @@
 language: r
 sudo: false
-# r: devel
+r: devel
 cache: packages
 
 latex: true
@@ -46,6 +46,7 @@ after_script:
 
 after_success:
   - travis_wait 40 tar -C .. -xf $PKG_TARBALL
+  - Rscript -e 'covr::codecov()'
 
 after_failure:
 - cat bpc.Rcheck/00*

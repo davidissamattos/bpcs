@@ -43,5 +43,6 @@ SystemRequirements: GNU make
 Suggests: 
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    covr
 VignetteBuilder: knitr
