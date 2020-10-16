@@ -2,7 +2,6 @@ language: r
 sudo: false
 r:
   - devel
-  - oldrel
 cache: packages
 
 latex: true
