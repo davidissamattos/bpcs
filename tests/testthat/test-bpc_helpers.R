@@ -101,7 +101,8 @@ test_that('check_result_column works',{
   expect_true(check_result_column(v1$results))
   expect_false(check_result_column(v2$results))
   expect_false(check_result_column(v3$results))
-  expect_false(check_result_column(v4$results))
+  expect_false(check_result_column(v4
+                                   $results))
 })
 
 test_that('check_if_there_are_ties works',{
