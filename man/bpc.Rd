@@ -55,10 +55,6 @@ An object of the class TODO:finish
 Bayesian Paired comparison  regression models in Stan
 }
 \examples{
-A simple example to test comes from the citations_agresti data.
-A paired comparison model can be used to rank the journals based on citations. The same example is also discussed in the package BradleyTerry2.
-We can calculate the latent strength variables lambda with the paired_comp method using the Bradley-Terry model
-
  bpc(data=citations_agresti,
               player0 = 'journal1',
               player1 = 'journal2',
@@ -67,17 +63,4 @@ We can calculate the latent strength variables lambda with the paired_comp metho
               model_type='bradleyterry',
               solve_ties='random',
               win_score = 'higher')
-
-The results below show the estimate of the mean value of the parameters as well as the high posterior density intervals
-
-
-
-Estimated parameters:
-Parameter               Mean HPD_lower HPD_higher
-lambda_Biometrika  0.6082746 -2.157297   3.500569
-  lambda_CommStat -1.9528696 -4.998772   0.804907
-      lambda_JASA -0.6212713 -3.254756   2.329280
-     lambda_JRSSB  1.9889004 -1.057586   5.110548
-
-
 }

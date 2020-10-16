@@ -2,7 +2,9 @@
 % Please edit documentation in R/bpc_s3.R
 \name{predict.bpc}
 \alias{predict.bpc}
-\title{Title}
+\title{Predict results for new data
+This S3 function receives the bpc model and a data frame containing the same columns as the one used to fit the model.
+It returns another data frame with with the same columns of the new data and n additional columns representing a posterior preditive distribution.}
 \usage{
 \method{predict}{bpc}(object, newdata, n = 100)
 }
@@ -17,5 +19,7 @@
 
 }
 \description{
-Title
+Predict results for new data
+This S3 function receives the bpc model and a data frame containing the same columns as the one used to fit the model.
+It returns another data frame with with the same columns of the new data and n additional columns representing a posterior preditive distribution.
 }

@@ -2,7 +2,8 @@
 % Please edit documentation in R/bpc_helpers.R
 \name{create_index_lookuptable}
 \alias{create_index_lookuptable}
-\title{Create a lookup table of names and indexes}
+\title{Create a lookup table of names and indexes
+Note that the indexes will be created in the order they appear. For string this doesnt make much difference but for numbers the index might be different than the actual number that appears in names}
 \usage{
 create_index_lookuptable(data, player0, player1)
 }
@@ -14,8 +15,9 @@ create_index_lookuptable(data, player0, player1)
 \item{player1}{The name of the column of data data contains player0}
 }
 \value{
-A dataframe of a lookup table
+A dataframe of a lookup table with columns Names and Index
 }
 \description{
 Create a lookup table of names and indexes
+Note that the indexes will be created in the order they appear. For string this doesnt make much difference but for numbers the index might be different than the actual number that appears in names
 }
