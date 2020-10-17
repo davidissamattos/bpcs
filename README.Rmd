@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # bpc - A package for Bayesian Paired Comparison analysis
 
 <!-- badges: start -->
-https://travis-ci.com/davidissamattos/bpc.svg?branch=master
+
 <!-- badges: end -->
 
 
