@@ -179,3 +179,34 @@ check_if_there_are_na<-function(d, player0,player1,player0_score,player1_score,r
   }
   return(F)
 }
+
+
+get_model_parameters<-function(bpc_object){
+  if(class(bpc_object)!='bpc')
+    stop('Error! The object is not of bpc class')
+  stanfit<-get_stanfit(bpc_object)
+  pars_all<-stanfit@model_pars
+  pars<- subset(pars_all, !(pars_all %in% c('log_lik','lp__')))
+  return(pars)
+}
+
+#' Replace the name of the parameter from index to name using a lookup_table
+#' lambda[1] --> lambda_Biometrika
+#' @param data dataframe
+#' @param column name of the colum
+#' @param par  name of the parameter
+#' @param lookup_table a data frame
+#'
+#' @return
+#'
+#' @examples
+replace_parameter_index_with_names<-function(data,column,par,lookup_table){
+  for(i in 1:nrow(lookup_table)){
+    old_name<-paste(par,'[',i,']',sep="")
+    new_name<-paste(par,'_',lookup_table$Names[i],sep="")
+    for(j in 1:nrow(data)){
+      data[j,column]<-gsub(pattern=old_name,replacement=new_name,x=data[j,column],fixed = T)#string as is
+    }
+  }
+  return(data)
+}

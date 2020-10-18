@@ -9,7 +9,7 @@
 #' @examples
 print.bpc <- function(x){
   cat("Estimated parameters:\n")
-  print(x$hpdi)
+  print(get_hpdi_parameters(x))
 }
 
 #' Summary of the model bpc model
@@ -21,9 +21,9 @@ print.bpc <- function(x){
 #' @export
 #'
 #' @examples
-print.bpc <- function(x){
+summary.bpc <- function(x){
   cat("Estimated parameters:\n")
-  print(x$hpdi)
+  print(get_hpdi_parameters(x))
 
   cat('\n\n')
   cat("Probabilities:\n")

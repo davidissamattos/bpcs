@@ -35,6 +35,35 @@ sample_posterior<-function(bpc_object, par='lambda', n=1000){
   return(posterior)
 }
 
+#' Return a data frame with the mean and the HPDI for all parameters
+#'
+#' @param bpc_object
+#'
+#' @return a data frame containing a column with the parameters, a column with mean and two columns with higher and lower hpdi
+#' @export
+#'
+#' @examples
+#' TODO: finish
+get_hpdi_parameters<-function(bpc_object){
+  if(class(bpc_object)!='bpc')
+    stop('Error! The object is not of bpc class')
+  hpdi<-bpc_object$hpdi
+  #excluding some parameters that are not used
+  hpdi <- dplyr::filter(hpdi, !stringr::str_detect(Parameter, "log_lik"))
+  hpdi <- dplyr::filter(hpdi, !stringr::str_detect(Parameter, "lp__"))
+  pars<-get_model_parameters(bpc_object)
+  for(i in 1:length(pars)){
+    parameter <- pars[i]
+    if(parameter=='U'){
+      hpdi<-replace_parameter_index_with_names(hpdi,column = 'Parameter',par = parameter,bpc_object$cluster_lookup_table)
+    }
+    else{
+      hpdi<-replace_parameter_index_with_names(hpdi, column = 'Parameter',par=parameter,bpc_object$lookup_table)
+    }
+  }
+  return(hpdi)
+}
+
 
 
 #' Generate a ranking of the parameter strength only and based on sampling the posterior distribution

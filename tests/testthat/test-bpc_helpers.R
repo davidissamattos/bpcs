@@ -151,3 +151,12 @@ test_that('check_if_there_are_na works',{
                                     player1_score='score2',
                                     result_column=NULL))
 })
+
+
+test_that('replace_parameter_index_with_names works',{
+  data<-data.frame(v=  c('lambda[1]','lambda[2]','lambda[3]','lambda[4]'))
+  lookup_table<-create_index_lookuptable(citations_agresti,player0 = 'journal1','journal2')
+  new_data <- data.frame(v=c('lambda_Biometrika', 'lambda_CommStat', 'lambda_JASA', 'lambda_JRSSB'))
+
+  expect_equal(replace_parameter_index_with_names(data,'v','lambda',lookup_table),new_data)
+})
