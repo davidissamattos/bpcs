@@ -5,22 +5,15 @@
 \title{Print method for the bpc object}
 \usage{
 \method{print}{bpc}(x)
-
-\method{print}{bpc}(x)
 }
 \arguments{
-\item{x}{bpc object}
+\item{x}{a bpc object}
 
 \item{...}{}
 }
 \value{
 
-
-
 }
 \description{
 Print method for the bpc object
-
-Summary of the model bpc model
-Contains only the parameters estimates and the respective HPD interval
 }

@@ -5,6 +5,9 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -19,15 +22,77 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
+The `bpc` package performs Bayesian estimation of Paired Comparison models utilizing Stan. 
+
 
 ## Installation
 
+For the `bpc` package to work, we rely upon the Stan software and the `rstan` package. 
+
+* For general installation of Stan and RStan see: https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
+* For macOS: https://github.com/stan-dev/rstan/wiki/Installing-RStan-from-source-on-a-Mac
+* For Linux: https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux
+* For Windows: https://github.com/stan-dev/rstan/wiki/Installing-RStan-from-source-on-Windows 
+
+At the moment we are not available in CRAN. To install the bpc package install directly from our Github repository
+
+```{r eval=FALSE, echo=T}
+remotes::install_github('https://github.com/davidissamattos/bpc')
+```
+
+After install we load the package with:
+```{r}
+library(bpc)
+```
 
 
 ## Example
+
+The main function of the package is the `bpc` function. This function requires a specific type of data frame that contains:
+
+* Two columns containing the name of the contestants in the paired comparison
+* Two columns containing the score of each player OR 
+* one column containing the result of the match (0 if player0 won, 1 if player1 won, -1 if it was a tie)
+
+We will utilize a prepared version of the known dataset available in Agresti 2002. The same dataset can also be found in other packages such as the `BradleyTerry2`. The dataset can be seen below and is available as `data(citations_agresti)`:
+
+```{r}
+knitr::kable(citations_agresti)
+```
+
+Based on the scores of each contestant, the `bpc` function computes automatically who won the contest. Alternatively, you can provide a vector of who won if that is already available (for more information see `?bpc`.
+
+For the simple Bradley Terry Model we specify `bradleyterry` as the model_type. If there are ties in the data we can use a different model (see vignette: X), or we can solve it randomly with the `random` option. Since we provide the scores we need to say who won `higher` if higher score wins or `lower` if lower score wins. 
+
+```{r}
+  m1<-bpc(data=citations_agresti,
+                  player0 = 'journal1',
+                  player1 = 'journal2',
+                  player0_score = 'score1',
+                  player1_score = 'score2',
+                  model_type='bradleyterry',
+                  solve_ties='random',
+                  win_score = 'higher')
+```
+
+If rstan is available and correctly working this function should sample the posterior distribution and create a `bpc` object.
+
+To see a summary of the results we can run:
+
+```{r}
+summary(m1)
+```
 
 
 ## Documentation
 
 
 ## Vignettes
+
+This package provides a series of small and self contained vignettes that exemplify the use of each model. In the vignettes, we also provide examples of code for data transformation, tables and plots.
+
+Below we list all our vignettes:
+
+* Getting Started: 
+* Handling ties:
+* Bradley-Terry with random effects

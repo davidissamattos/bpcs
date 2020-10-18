@@ -2,6 +2,7 @@
 
 S3method(predict,bpc)
 S3method(print,bpc)
+S3method(summary,bpc)
 export("%>%")
 export(bpc)
 export(get_loo)
