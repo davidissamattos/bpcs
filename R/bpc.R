@@ -40,7 +40,8 @@ bpc <- function(data,
                 prior_lambda_std=2.0,
                 chains=4,
                 iter=2000,
-                warmup=1000){
+                warmup=1000,
+                show_chain_messages=T){
 
   if((is.null(player0_score) | is.null(player1_score)) & is.null(result_column))
     stop('Error! It is required to have either scores for both player0 and player1 OR a column indicating who won (0 for player0 1 for player1')
@@ -67,6 +68,17 @@ bpc <- function(data,
   dropna_cols<-c(player0,player1,player0_score,player1_score,result_column)
   d<-tidyr::drop_na(d,tidyselect::any_of(dropna_cols))
   standata=list()
+
+  #Show chain messages
+  if(show_chain_messages==F){
+    refresh<-0
+  }
+  else{
+    refresh<-1
+  }
+
+
+
 
   # If we provide only the scores we need to create a winner vector and process the ties
   if(!is.null(player0_score) & !is.null(player1_score))
@@ -106,7 +118,7 @@ bpc <- function(data,
 
   }
   if(model_type=='bradleyterry'){
-    stanfit <- rstan::sampling(stanmodels$bt, data = standata, chains=chains, iter=iter, warmup=warmup)
+    stanfit <- rstan::sampling(stanmodels$bt, data = standata, chains=chains, iter=iter, warmup=warmup, refresh=refresh)
 
   }
   else

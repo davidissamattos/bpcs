@@ -56,16 +56,18 @@ test_that("bpc returns a bpc object with datasets using the bradleyterry model",
                   player1_score = 'score2',
                   model_type='bradleyterry',
                   solve_ties='random',
-                  win_score = 'higher')
+                  win_score = 'higher',
+                  show_chain_messages=F)
 
   m1_tennis<-bpc(data=tennis_agresti,
-                               player0 = 'player1',
-                               player1 = 'player2',
-                               player0_score = 'wins_player1',
-                               player1_score = 'wins_player2',
-                               model_type='bradleyterry',
-                               solve_ties='random',
-                               win_score = 'higher')
+                 player0 = 'player1',
+                 player1 = 'player2',
+                 player0_score = 'wins_player1',
+                 player1_score = 'wins_player2',
+                 model_type='bradleyterry',
+                 solve_ties='random',
+                 win_score = 'higher',
+                 show_chain_messages=F)
 
   m2_tennis<-bpc(data=tennis_agresti,
                  player0 = 'player1',
@@ -74,7 +76,8 @@ test_that("bpc returns a bpc object with datasets using the bradleyterry model",
                  player1_score = 'wins_player2',
                  model_type='bradleyterry',
                  solve_ties='remove',
-                 win_score = 'higher')
+                 win_score = 'higher',
+                 show_chain_messages=F)
 
   expect_s3_class(m_citations,'bpc')
   expect_s3_class(m1_tennis,'bpc')

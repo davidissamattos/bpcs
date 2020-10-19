@@ -129,7 +129,6 @@ compute_scores<-function(data,
   if(solve_ties=='remove')
   {
     d$ties<-ifelse(d$diff_score!=0,0,NA)
-    print(d$ties)
     d<-tidyr::drop_na(d,tidyselect::any_of('ties'))
     d<-dplyr::select(d, -ties)
   }
