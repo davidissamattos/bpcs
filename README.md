@@ -5,6 +5,11 @@
 
 <!-- badges: start -->
 
+[![Project Status: WIP – Initial development is in progress, but there
+has not yet been a stable, usable release suitable for the
+public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)[![Last-changedate](https://img.shields.io/badge/last%20change-19%20October,%202020-yellowgreen.svg)](/commits/master)
+[![codecov](https://codecov.io/gh/davidissamattos/bpc/branch/master/graph/badge.svg?token=6RTC7768CL)](undefined)
+
 <!-- badges: end -->
 
 The `bpc` package performs Bayesian estimation of Paired Comparison
@@ -28,7 +33,7 @@ At the moment we are not available in CRAN. To install the bpc package
 install directly from our Github repository
 
 ``` r
-remotes::install_github('https://github.com/davidissamattos/bpc')
+remotes::install_github('davidissamattos/bpc')
 ```
 
 After install we load the package with:
@@ -288,8 +293,8 @@ score wins or `lower` if lower score wins.
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 2.2e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.
+#> Chain 1: Gradient evaluation took 5.5e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.55 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -306,15 +311,15 @@ score wins or `lower` if lower score wins.
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.022735 seconds (Warm-up)
-#> Chain 1:                0.026234 seconds (Sampling)
-#> Chain 1:                0.048969 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.019755 seconds (Warm-up)
+#> Chain 1:                0.018856 seconds (Sampling)
+#> Chain 1:                0.038611 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 9e-06 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
+#> Chain 2: Gradient evaluation took 6e-06 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -331,15 +336,15 @@ score wins or `lower` if lower score wins.
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.023715 seconds (Warm-up)
-#> Chain 2:                0.026985 seconds (Sampling)
-#> Chain 2:                0.0507 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.021114 seconds (Warm-up)
+#> Chain 2:                0.019429 seconds (Sampling)
+#> Chain 2:                0.040543 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 9e-06 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
+#> Chain 3: Gradient evaluation took 6e-06 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -356,9 +361,9 @@ score wins or `lower` if lower score wins.
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.025489 seconds (Warm-up)
-#> Chain 3:                0.025532 seconds (Sampling)
-#> Chain 3:                0.051021 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.019746 seconds (Warm-up)
+#> Chain 3:                0.016517 seconds (Sampling)
+#> Chain 3:                0.036263 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
@@ -381,9 +386,9 @@ score wins or `lower` if lower score wins.
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.025794 seconds (Warm-up)
-#> Chain 4:                0.021178 seconds (Sampling)
-#> Chain 4:                0.046972 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.021071 seconds (Warm-up)
+#> Chain 4:                0.019834 seconds (Sampling)
+#> Chain 4:                0.040905 seconds (Total)
 #> Chain 4:
 ```
 

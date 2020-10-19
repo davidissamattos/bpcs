@@ -8,6 +8,8 @@ output: github_document
 library(tidyverse)
 library(knitr)
 library(kableExtra)
+library(badgecreatr)
+library(badger)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -19,6 +21,10 @@ knitr::opts_chunk$set(
 # bpc - A package for Bayesian Paired Comparison analysis
 
 <!-- badges: start -->
+`r minimal_badges(status = "wip", license = "MIT",date = format(Sys.time(), '%d %B, %Y'))`
+`r badge_last_commit("davidissamattos/bpc")`
+`r badge_code_size("davidissamattos/bpc")`
+[![codecov](https://codecov.io/gh/davidissamattos/bpc/branch/master/graph/badge.svg?token=6RTC7768CL)](undefined)
 
 <!-- badges: end -->
 
@@ -37,7 +43,7 @@ For the `bpc` package to work, we rely upon the Stan software and the `rstan` pa
 At the moment we are not available in CRAN. To install the bpc package install directly from our Github repository
 
 ```{r eval=FALSE, echo=T}
-remotes::install_github('https://github.com/davidissamattos/bpc')
+remotes::install_github('davidissamattos/bpc')
 ```
 
 After install we load the package with:
@@ -62,7 +68,7 @@ knitr::kable(citations_agresti)
 
 Based on the scores of each contestant, the `bpc` function computes automatically who won the contest. Alternatively, you can provide a vector of who won if that is already available (for more information see `?bpc`.
 
-For the simple Bradley Terry Model we specify `bradleyterry` as the model_type. If there are ties in the data we can use a different model (see vignette: X), or we can solve it randomly with the `random` option. Since we provide the scores we need to say who won `higher` if higher score wins or `lower` if lower score wins. 
+For the simple Bradley Terry Model we specify the model type as `bradleyterry` . If there are ties in the data we can use a different model (see vignette: TODO), or we can solve it randomly with the `random` option. Since we provide the scores we need to say who won `higher` if higher score wins or `lower` if lower score wins. 
 
 ```{r}
   m1<-bpc(data=citations_agresti,
@@ -75,7 +81,7 @@ For the simple Bradley Terry Model we specify `bradleyterry` as the model_type. 
                   win_score = 'higher')
 ```
 
-If rstan is available and correctly working this function should sample the posterior distribution and create a `bpc` object.
+If `rstan` is available and correctly working this function should sample the posterior distribution and create a `bpc` object.
 
 To see a summary of the results we can run:
 
@@ -84,15 +90,12 @@ summary(m1)
 ```
 
 
-## Documentation
-
-
 ## Vignettes
 
 This package provides a series of small and self contained vignettes that exemplify the use of each model. In the vignettes, we also provide examples of code for data transformation, tables and plots.
 
 Below we list all our vignettes:
 
-* Getting Started: 
-* Handling ties:
-* Bradley-Terry with random effects
+* Getting Started: TODO
+* Handling ties: TODO
+* Bradley-Terry with random effects: TODO
