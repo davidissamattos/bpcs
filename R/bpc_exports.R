@@ -17,22 +17,25 @@ get_stanfit<-function(bpc_object){
 #' @param bpc_object a bpc object
 #' @param n how many times are we sampling. Default 1000
 #' @param par name of the parameters to predict
-#' @return Return the posterior samples for the lambda parameters
+#' @return Return a data frame with the posterior samples for the parameters. One column for each parameter one row for each sample
 #' @export
 #'
 #' @examples
+#TODO: verify the random effects condition
 sample_posterior<-function(bpc_object, par='lambda', n=1000){
   if(class(bpc_object)!='bpc')
     stop('Error! The object is not of bpc class')
   n<-floor(n)
-  lookup_table<-bpc_object$lookup_table
+  if(par=='U')
+    lookup_table <- bpc_object$cluster_lookup_table
+  else
+    lookup_table <- bpc_object$lookup_table
+
   stanfit<- get_stanfit(bpc_object)
-  posterior <- sample_stanfit(stanfit, par=par,n=n)
-  colnames(posterior) <- paste(
-    rep(paste(par,'_',sep = ""),
-        nrow(lookup_table)),
-    lookup_table$Names, sep = "")
-  return(posterior)
+  posterior <- as.data.frame(sample_stanfit(stanfit, par=par,n=n))
+  #Creating parameter name for the columns
+  colnames(posterior) <- create_array_of_par_names(par,lookup_table)
+  return(as.data.frame(posterior))
 }
 
 #' Return a data frame with the mean and the HPDI for all parameters
@@ -43,7 +46,7 @@ sample_posterior<-function(bpc_object, par='lambda', n=1000){
 #' @export
 #'
 #' @examples
-#' TODO: finish
+#' TODO: verify the random effects condition
 get_hpdi_parameters<-function(bpc_object){
   if(class(bpc_object)!='bpc')
     stop('Error! The object is not of bpc class')
@@ -170,7 +173,7 @@ get_probabilities<-function(bpc_object, n=1000){
 get_loo<-function(bpc_object){
   if(class(bpc_object)!='bpc')
     stop('Error! The object is not of bpc class')
-  l<-loo::loo(bpc_object$stanfit)
+  l<-loo::loo(get_stanfit(bpc_object), pars = "log_lik")
   return(l)
 }
 
@@ -185,7 +188,8 @@ get_loo<-function(bpc_object){
 get_waic <- function(bpc_object){
   if(class(bpc_object)!='bpc')
     stop('Error! The object is not of bpc class')
-  waic<-loo::waic(bpc_object$stanfit)
+  loglik<-loo::extract_log_lik(get_stanfit(bpc_object))
+  waic<-loo::waic(loglik)
   return(waic)
 }
 

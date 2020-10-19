@@ -25,3 +25,8 @@ inv_logit<-function(x){
   y <- exp(x)/(1+exp(x))
   return(y)
 }
+
+
+code_coverage_with_token<-function(){
+  covr::codecov(token = 'e56cbadd-aa85-499a-a6d8-124e4813c031')
+}

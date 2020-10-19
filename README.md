@@ -5,9 +5,11 @@
 
 <!-- badges: start -->
 
-[![Project Status: WIP – Initial development is in progress, but there
-has not yet been a stable, usable release suitable for the
-public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)[![Last-changedate](https://img.shields.io/badge/last%20change-19%20October,%202020-yellowgreen.svg)](/commits/master)
+[![License:
+MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://cran.r-project.org/web/licenses/MIT)
+[![](https://img.shields.io/github/last-commit/davidissamattos/bpc.svg)](https://github.com/davidissamattos/bpc/commits/master)
+[![](https://img.shields.io/badge/lifecycle-experimental-blue.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![](https://img.shields.io/github/languages/code-size/davidissamattos/bpc.svg)](https://github.com/davidissamattos/bpc)
 [![codecov](https://codecov.io/gh/davidissamattos/bpc/branch/master/graph/badge.svg?token=6RTC7768CL)](undefined)
 
 <!-- badges: end -->
@@ -275,11 +277,11 @@ automatically who won the contest. Alternatively, you can provide a
 vector of who won if that is already available (for more information see
 `?bpc`.
 
-For the simple Bradley Terry Model we specify `bradleyterry` as the
-model\_type. If there are ties in the data we can use a different model
-(see vignette: X), or we can solve it randomly with the `random` option.
-Since we provide the scores we need to say who won `higher` if higher
-score wins or `lower` if lower score wins.
+For the simple Bradley Terry Model we specify the model type as
+`bradleyterry` . If there are ties in the data we can use a different
+model (see vignette: TODO), or we can solve it randomly with the
+`random` option. Since we provide the scores we need to say who won
+`higher` if higher score wins or `lower` if lower score wins.
 
 ``` r
   m1<-bpc(data=citations_agresti,
@@ -293,8 +295,8 @@ score wins or `lower` if lower score wins.
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 5.5e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.55 seconds.
+#> Chain 1: Gradient evaluation took 2.1e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -311,15 +313,15 @@ score wins or `lower` if lower score wins.
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.019755 seconds (Warm-up)
-#> Chain 1:                0.018856 seconds (Sampling)
-#> Chain 1:                0.038611 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.021523 seconds (Warm-up)
+#> Chain 1:                0.022916 seconds (Sampling)
+#> Chain 1:                0.044439 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 6e-06 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
+#> Chain 2: Gradient evaluation took 9e-06 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -336,15 +338,15 @@ score wins or `lower` if lower score wins.
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.021114 seconds (Warm-up)
-#> Chain 2:                0.019429 seconds (Sampling)
-#> Chain 2:                0.040543 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.022578 seconds (Warm-up)
+#> Chain 2:                0.023767 seconds (Sampling)
+#> Chain 2:                0.046345 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 6e-06 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
+#> Chain 3: Gradient evaluation took 9e-06 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -361,9 +363,9 @@ score wins or `lower` if lower score wins.
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.019746 seconds (Warm-up)
-#> Chain 3:                0.016517 seconds (Sampling)
-#> Chain 3:                0.036263 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.022543 seconds (Warm-up)
+#> Chain 3:                0.0211 seconds (Sampling)
+#> Chain 3:                0.043643 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
@@ -386,14 +388,14 @@ score wins or `lower` if lower score wins.
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.021071 seconds (Warm-up)
-#> Chain 4:                0.019834 seconds (Sampling)
-#> Chain 4:                0.040905 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.02258 seconds (Warm-up)
+#> Chain 4:                0.022303 seconds (Sampling)
+#> Chain 4:                0.044883 seconds (Total)
 #> Chain 4:
 ```
 
-If rstan is available and correctly working this function should sample
-the posterior distribution and create a `bpc` object.
+If `rstan` is available and correctly working this function should
+sample the posterior distribution and create a `bpc` object.
 
 To see a summary of the results we can run:
 
@@ -409,8 +411,6 @@ summary(m1)
 #> call_arg     13     -none-     list
 ```
 
-## Documentation
-
 ## Vignettes
 
 This package provides a series of small and self contained vignettes
@@ -419,6 +419,6 @@ examples of code for data transformation, tables and plots.
 
 Below we list all our vignettes:
 
-  - Getting Started:
-  - Handling ties:
-  - Bradley-Terry with random effects
+  - Getting Started: TODO
+  - Handling ties: TODO
+  - Bradley-Terry with random effects: TODO

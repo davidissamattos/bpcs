@@ -17,7 +17,8 @@ bpc(
   prior_lambda_std = 2,
   chains = 4,
   iter = 2000,
-  warmup = 1000
+  warmup = 1000,
+  show_chain_messages = T
 )
 }
 \arguments{

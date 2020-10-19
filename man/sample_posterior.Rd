@@ -14,7 +14,7 @@ sample_posterior(bpc_object, par = "lambda", n = 1000)
 \item{n}{how many times are we sampling. Default 1000}
 }
 \value{
-Return the posterior samples for the lambda parameters
+Return a data frame with the posterior samples for the parameters. One column for each parameter one row for each sample
 }
 \description{
 Get the posterior samples for the  parameters

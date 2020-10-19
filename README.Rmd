@@ -8,7 +8,6 @@ output: github_document
 library(tidyverse)
 library(knitr)
 library(kableExtra)
-library(badgecreatr)
 library(badger)
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -21,8 +20,9 @@ knitr::opts_chunk$set(
 # bpc - A package for Bayesian Paired Comparison analysis
 
 <!-- badges: start -->
-`r minimal_badges(status = "wip", license = "MIT",date = format(Sys.time(), '%d %B, %Y'))`
+`r  badge_license('MIT', color='yellow')`
 `r badge_last_commit("davidissamattos/bpc")`
+`r badge_lifecycle("experimental", "blue")`
 `r badge_code_size("davidissamattos/bpc")`
 [![codecov](https://codecov.io/gh/davidissamattos/bpc/branch/master/graph/badge.svg?token=6RTC7768CL)](undefined)
 

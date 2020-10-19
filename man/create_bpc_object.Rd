@@ -4,7 +4,14 @@
 \alias{create_bpc_object}
 \title{Creates a bpc object based on a stanfit object and a lookup_table dataframe}
 \usage{
-create_bpc_object(stanfit, lookup_table, model_type, standata, call_arg)
+create_bpc_object(
+  stanfit,
+  lookup_table,
+  cluster_lookup_table = NULL,
+  model_type,
+  standata,
+  call_arg
+)
 }
 \arguments{
 \item{stanfit}{Stanfit object returned by rstan::sampling}

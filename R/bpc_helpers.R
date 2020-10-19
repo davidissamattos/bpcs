@@ -190,6 +190,7 @@ get_model_parameters<-function(bpc_object){
 }
 
 #' Replace the name of the parameter from index to name using a lookup_table
+#' Receives a data frame and returns a dataframe
 #' lambda[1] --> lambda_Biometrika
 #' @param data dataframe
 #' @param column name of the colum
@@ -208,4 +209,10 @@ replace_parameter_index_with_names<-function(data,column,par,lookup_table){
     }
   }
   return(data)
+}
+
+create_array_of_par_names <- function(par,lookup_table){
+  name<-rep(paste(par,'_',sep = ""), nrow(lookup_table))
+  name<-paste(name,lookup_table$Names,sep="")
+  return(name)
 }

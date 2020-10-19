@@ -160,3 +160,10 @@ test_that('replace_parameter_index_with_names works',{
 
   expect_equal(replace_parameter_index_with_names(data,'v','lambda',lookup_table),new_data)
 })
+
+test_that('create_array_of_par_names works',{
+  par <- 'lambda'
+  lookup_table<-create_index_lookuptable(citations_agresti,player0 = 'journal1','journal2')
+  result <- c('lambda_Biometrika', 'lambda_CommStat', 'lambda_JASA', 'lambda_JRSSB')
+  expect_equal(create_array_of_par_names(par,lookup_table),result)
+})
