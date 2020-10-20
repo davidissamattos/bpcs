@@ -17,10 +17,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-# bpc - A package for Bayesian Paired Comparison analysis
+# bpcs - A package for Bayesian Paired Comparison analysis with Stan
 
 <!-- badges: start -->
-`r  badge_license('MIT', color='yellow')`
+`r badge_license('MIT', color='yellow')`
 `r badge_last_commit("davidissamattos/bpc")`
 `r badge_lifecycle("experimental", "blue")`
 `r badge_code_size("davidissamattos/bpc")`
@@ -28,12 +28,12 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-The `bpc` package performs Bayesian estimation of Paired Comparison models utilizing Stan. 
+The `bpcs` package performs Bayesian estimation of Paired Comparison models utilizing Stan. 
 
 
 ## Installation
 
-For the `bpc` package to work, we rely upon the Stan software and the `rstan` package. 
+For the `bpcs` package to work, we rely upon the Stan software and the `rstan` package. 
 
 * For general installation of Stan and RStan see: https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
 * For macOS: https://github.com/stan-dev/rstan/wiki/Installing-RStan-from-source-on-a-Mac
@@ -48,7 +48,7 @@ remotes::install_github('davidissamattos/bpc')
 
 After install we load the package with:
 ```{r}
-library(bpc)
+library(bpcs)
 ```
 
 
@@ -68,7 +68,7 @@ knitr::kable(citations_agresti)
 
 Based on the scores of each contestant, the `bpc` function computes automatically who won the contest. Alternatively, you can provide a vector of who won if that is already available (for more information see `?bpc`.
 
-For the simple Bradley Terry Model we specify the model type as `bradleyterry` . If there are ties in the data we can use a different model (see vignette: TODO), or we can solve it randomly with the `random` option. Since we provide the scores we need to say who won `higher` if higher score wins or `lower` if lower score wins. 
+For the simple Bradley Terry Model we specify the model type as `'bradleyterry'` . If there are ties in the data we can use a different model (see vignette: TODO), or we can solve it randomly with the `'random'` option. Since we provide the scores we need to say who won `'higher'` if higher score wins or `'lower'` if lower score wins. 
 
 ```{r}
   m1<-bpc(data=citations_agresti,

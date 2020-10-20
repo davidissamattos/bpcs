@@ -1,5 +1,5 @@
 ---
-title: "Getting Started with the bpc package"
+title: "Getting Started with the bpcs package"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting Started with the bpc package}
@@ -24,7 +24,7 @@ library(kableExtra)
 
 ## Introduction
 
-The `bpc` package performs Bayesian estimation of Paired Comparison models utilizing Stan. 
+The `bpcs` package performs Bayesian estimation of Paired Comparison models utilizing Stan. 
 We provide a series of models and auxiliary functions to help in the analysis and evaluation of the models. However, this package have the philosophy of 'batteries not included' for plots, tables and data transformation. There are already many great packages capable of performing create high quality plots, tables and that provides tools for data transformation. Since each user can have their own preferences, customization needs and data cleaning and transformation workflows, we designed not to enforce any particular framework or package. Our functions were designed to return cleaned data frames that can be used almost directly, or with few transformations in those packages. 
 
 With that said, we provide in the vignettes the code we use to transform the data and generate the tables and plots. The user is free to use/copy/modify these codes for their own use. For those we rely on the collection of packages `tidyverse`, and the packages `knitr` and `kableExtra`.

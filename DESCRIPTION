@@ -1,5 +1,5 @@
-Package: bpc
-Title: What the Package Does (One Line, Title Case)
+Package: bpcs
+Title:  bpcs - A package for Bayesian Paired Comparison analysis with Stan
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "David",

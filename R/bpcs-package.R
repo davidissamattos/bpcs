@@ -1,11 +1,10 @@
-#' The 'bpc' package.
+#' bpcs - A package for Bayesian Paired Comparison analysis with Stan
 #'
-#' @description A DESCRIPTION OF THE PACKAGE
+#' @description  bpcs - A package for Bayesian Paired Comparison analysis with Stan
 #'
 #' @docType package
-#' @name bpc-package
-#' @aliases bpc
-#' @useDynLib bpc, .registration = TRUE
+#' @name bpcs-package
+#' @useDynLib bpcs, .registration = TRUE
 #' @import methods
 #' @import Rcpp
 #' @importFrom rstan sampling
@@ -14,4 +13,7 @@
 #' @references
 #' Stan Development Team (2020). RStan: the R interface to Stan. R package version 2.21.2. https://mc-stan.org
 #'
+#'
+#'
+
 NULL

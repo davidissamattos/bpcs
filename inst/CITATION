@@ -1,15 +1,16 @@
 citHeader("To cite bpc in publications use:")
 
 citEntry(
-  entry    = "Article",
-  title    = ,
-  author   = ,
-  journal  = ,
-  year     = ,
-  volume   = ,
-  number   = ,
-  pages    = ,
-  url      = ,
+  entry    = "Misc",
+  title    = "{bpc}: A package for Bayesian Paired Comparison analysis",
+  author   = c(person(given = "David", family = "Issa Mattos"),
+              person(given = "Erika", family = "Martins Silva Ramos")),
+  journal  = "",
+  year     = "2020",
+  volume   = "",
+  number   = "",
+  pages    = "",
+  url      = "",
   textVersion = paste(
 
   )
