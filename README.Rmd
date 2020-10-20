@@ -21,9 +21,9 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 `r badge_license('MIT', color='yellow')`
-`r badge_last_commit("davidissamattos/bpc")`
+`r badge_last_commit("davidissamattos/bpcs")`
 `r badge_lifecycle("experimental", "blue")`
-`r badge_code_size("davidissamattos/bpc")`
+`r badge_code_size("davidissamattos/bpcs")`
 [![codecov](https://codecov.io/gh/davidissamattos/bpc/branch/master/graph/badge.svg?token=6RTC7768CL)](undefined)
 
 <!-- badges: end -->
@@ -43,7 +43,7 @@ For the `bpcs` package to work, we rely upon the Stan software and the `rstan` p
 At the moment we are not available in CRAN. To install the bpc package install directly from our Github repository
 
 ```{r eval=FALSE, echo=T}
-remotes::install_github('davidissamattos/bpc')
+remotes::install_github('davidissamattos/bpcs')
 ```
 
 After install we load the package with:
@@ -71,7 +71,7 @@ Based on the scores of each contestant, the `bpc` function computes automaticall
 For the simple Bradley Terry Model we specify the model type as `'bradleyterry'` . If there are ties in the data we can use a different model (see vignette: TODO), or we can solve it randomly with the `'random'` option. Since we provide the scores we need to say who won `'higher'` if higher score wins or `'lower'` if lower score wins. 
 
 ```{r}
-  m1<-bpc(data=citations_agresti,
+m1<-bpc(data=citations_agresti,
                   player0 = 'journal1',
                   player1 = 'journal2',
                   player0_score = 'score1',

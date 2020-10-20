@@ -30,3 +30,7 @@ inv_logit<-function(x){
 code_coverage_with_token<-function(){
   covr::codecov(token = 'e56cbadd-aa85-499a-a6d8-124e4813c031')
 }
+
+deploy_pkgdown_site_to_github(){
+  pkgdown::build_site(document = T)
+}

@@ -16,5 +16,5 @@ a data frame containing a column with the parameters, a column with mean and two
 Return a data frame with the mean and the HPDI for all parameters
 }
 \examples{
-TODO: verify the random effects condition
+
 }

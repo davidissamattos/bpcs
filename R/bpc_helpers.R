@@ -56,7 +56,7 @@ HPD_higher_from_column<-function(column, credMass=0.95){
 
 #' Calculate HPDI from a stanfit model
 #'
-#' @param stanfit a stanfit object
+#' @param stanfit a stanfit object retrived from a bpc object
 #'
 #' @return a data frame with the HPDI calculated from coda
 HPDI_from_stanfit<- function(stanfit)
@@ -71,9 +71,17 @@ HPDI_from_stanfit<- function(stanfit)
   return(as.data.frame(df_hpdi))
 }
 
+#' Return a data frame by resampling the posterior from a stanfit
+#'
+#' @param stanfit stanfit object
+#' @param par parameter name
+#' @param n number of samples
+#'
+#' @return a dataframe containing the samples of the parameter. Each column is a parameter (in order of the index), each row is a sample
+
 sample_stanfit<-function(stanfit,par,n=100){
   posterior <- rstan::extract(stanfit)
-  posterior<- dplyr::as_tibble(posterior[[par]])
+  posterior<- as.data.frame(posterior[[par]])
   #re sampling from the posterior
   s <- dplyr::sample_n(posterior, size = n, replace=T)
   return(as.data.frame(s))
@@ -82,7 +90,7 @@ sample_stanfit<-function(stanfit,par,n=100){
 
 #' Giving a player0 an player1 it adds a column to the data frame containing who won or if it was a tie
 #'
-#' @param data
+#' @param data dataframe
 #' @param player0_score name of the column in data
 #' @param player1_score name of the column in data
 #' @param solve_ties Method to solve the ties, either randomly allocate, or do nothing, or remove the row from the datasetc('random', 'none', 'remove').

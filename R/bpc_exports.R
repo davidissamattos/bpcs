@@ -21,8 +21,9 @@ get_stanfit<-function(bpc_object){
 #' @export
 #'
 #' @examples
-#TODO: verify the random effects condition
+
 sample_posterior<-function(bpc_object, par='lambda', n=1000){
+  #TODO: verify the random effects condition
   if(class(bpc_object)!='bpc')
     stop('Error! The object is not of bpc class')
   n<-floor(n)
@@ -46,8 +47,9 @@ sample_posterior<-function(bpc_object, par='lambda', n=1000){
 #' @export
 #'
 #' @examples
-#' TODO: verify the random effects condition
+#'
 get_hpdi_parameters<-function(bpc_object){
+  #TODO: verify the random effects condition
   if(class(bpc_object)!='bpc')
     stop('Error! The object is not of bpc class')
   hpdi<-bpc_object$hpdi

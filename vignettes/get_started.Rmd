@@ -2,7 +2,7 @@
 title: "Getting Started with the bpcs package"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting Started with the bpc package}
+  %\VignetteIndexEntry{Getting Started with the bpcs package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
