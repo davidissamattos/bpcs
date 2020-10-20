@@ -295,8 +295,8 @@ m1<-bpc(data=citations_agresti,
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 3e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.3 seconds.
+#> Chain 1: Gradient evaluation took 1.9e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -2301,15 +2301,15 @@ m1<-bpc(data=citations_agresti,
 #> Chain 1: Iteration: 1999 / 2000 [ 99%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.037391 seconds (Warm-up)
-#> Chain 1:                0.068713 seconds (Sampling)
-#> Chain 1:                0.106104 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.046387 seconds (Warm-up)
+#> Chain 1:                0.141613 seconds (Sampling)
+#> Chain 1:                0.188 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 9e-06 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
+#> Chain 2: Gradient evaluation took 2.3e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.23 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -4314,15 +4314,15 @@ m1<-bpc(data=citations_agresti,
 #> Chain 2: Iteration: 1999 / 2000 [ 99%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.071215 seconds (Warm-up)
-#> Chain 2:                0.107903 seconds (Sampling)
-#> Chain 2:                0.179118 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.075448 seconds (Warm-up)
+#> Chain 2:                0.110372 seconds (Sampling)
+#> Chain 2:                0.18582 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 1e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
+#> Chain 3: Gradient evaluation took 1.1e-05 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -6327,15 +6327,15 @@ m1<-bpc(data=citations_agresti,
 #> Chain 3: Iteration: 1999 / 2000 [ 99%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.132438 seconds (Warm-up)
-#> Chain 3:                0.145173 seconds (Sampling)
-#> Chain 3:                0.277611 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.166828 seconds (Warm-up)
+#> Chain 3:                0.153158 seconds (Sampling)
+#> Chain 3:                0.319986 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 8e-06 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.08 seconds.
+#> Chain 4: Gradient evaluation took 1.3e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -8340,9 +8340,9 @@ m1<-bpc(data=citations_agresti,
 #> Chain 4: Iteration: 1999 / 2000 [ 99%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.169825 seconds (Warm-up)
-#> Chain 4:                0.14336 seconds (Sampling)
-#> Chain 4:                0.313185 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.194588 seconds (Warm-up)
+#> Chain 4:                0.208152 seconds (Sampling)
+#> Chain 4:                0.40274 seconds (Total)
 #> Chain 4:
 ```
 
@@ -8355,24 +8355,20 @@ To see a summary of the results we can run:
 summary(m1)
 #> Estimated parameters:
 #>           Parameter       Mean  HPD_lower HPD_higher
-#> 1 lambda_Biometrika  0.6406962 -2.0673266  3.4758285
-#> 2   lambda_CommStat -1.9561946 -5.0470743  0.8211697
-#> 3       lambda_JASA -0.5945189 -3.5328221  2.0363798
-#> 4      lambda_JRSSB  2.0306085 -0.6743542  5.1672757
+#> 1 lambda_Biometrika  0.6529630 -2.3441149  3.4324676
+#> 2   lambda_CommStat -1.9593761 -5.0396905  0.9082594
+#> 3       lambda_JASA -0.5801941 -3.3516817  2.3418493
+#> 4      lambda_JRSSB  1.9971706 -0.7685753  4.9412396
 #> 
 #> 
 #> Probabilities:
-#> Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.
-#> Using compatibility `.name_repair`.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_warnings()` to see where this warning was generated.
 #>            i        j       Mean    HPD_lower HPD_Higher
-#> 1 Biometrika CommStat 0.84948903 0.4563240689  0.9996136
-#> 2 Biometrika     JASA 0.68541936 0.1796696677  0.9986925
-#> 3 Biometrika    JRSSB 0.29109236 0.0002317233  0.8029733
-#> 4   CommStat     JASA 0.28254947 0.0006694743  0.7857001
-#> 5   CommStat    JRSSB 0.06007102 0.0000484711  0.2483970
-#> 6       JASA    JRSSB 0.15121623 0.0001527264  0.5383972
+#> 1 Biometrika CommStat 0.84669676 4.234903e-01  0.9998998
+#> 2 Biometrika     JASA 0.69203323 1.879526e-01  0.9989027
+#> 3 Biometrika    JRSSB 0.28306399 2.536355e-04  0.7390974
+#> 4   CommStat     JASA 0.29259511 9.404205e-04  0.8128460
+#> 5   CommStat    JRSSB 0.06341194 1.122454e-05  0.2879181
+#> 6       JASA    JRSSB 0.15091523 1.444419e-04  0.5475740
 ```
 
 ## Vignettes
