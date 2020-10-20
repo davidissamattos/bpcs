@@ -211,6 +211,15 @@ replace_parameter_index_with_names<-function(data,column,par,lookup_table){
   return(data)
 }
 
+#' Create an array with the name of the parameter and the corresponding index
+#' lambda[1] --> lambda_Biometrika
+#'
+#' @param par a name for the parameter
+#' @param lookup_table a lookuptable to convert the indexes to that
+#'
+#' @return a vector
+#'
+#' @examples
 create_array_of_par_names <- function(par,lookup_table){
   name<-rep(paste(par,'_',sep = ""), nrow(lookup_table))
   name<-paste(name,lookup_table$Names,sep="")
