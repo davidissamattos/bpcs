@@ -27,10 +27,15 @@ inv_logit<-function(x){
 }
 
 
+### Dev only
+
 code_coverage_with_token<-function(){
   covr::codecov(token = 'e56cbadd-aa85-499a-a6d8-124e4813c031')
 }
 
-deploy_pkgdown_site_to_github(){
-  pkgdown::build_site(document = T)
+deploy_pkgdown_site_to_github<-function(){
+  code_coverage_with_token()
+  rmarkdown::render('README.Rmd',  encoding = 'UTF-8', knit_root_dir = '.')
+  pkgdown::build_site(devel = F, preview = F)
+  pkgdown::deploy_to_branch()
 }
