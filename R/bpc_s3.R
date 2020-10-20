@@ -8,8 +8,8 @@
 #'
 #' @examples
 print.bpc <- function(x){
-  cat("Estimated parameters:\n")
-  print(get_hpdi_parameters(x))
+  cat("Estimated baseline parameters:\n")
+  print(kable(get_hpdi_parameters(x),format = 'simple'))
 }
 
 #' Summary of the model bpc model
@@ -22,12 +22,12 @@ print.bpc <- function(x){
 #'
 #' @examples
 summary.bpc <- function(x){
-  cat("Estimated parameters:\n")
-  print(get_hpdi_parameters(x))
+  cat("Estimated baseline parameters:\n")
+  print(kable(get_hpdi_parameters(x),format = 'simple'))
 
   cat('\n\n')
-  cat("Probabilities:\n")
-  print(get_probabilities(x))
+  cat("Probability  P[i beats j]:\n")
+  print(kable(get_probabilities(x),format = 'simple'))
 
 }
 
