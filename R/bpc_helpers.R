@@ -96,7 +96,7 @@ sample_stanfit<-function(stanfit,par,n=100){
 #' @param solve_ties Method to solve the ties, either randomly allocate, or do nothing, or remove the row from the datasetc('random', 'none', 'remove').
 #' @param win_score decides if who wins is the one that has the highest score or the lowest score
 #'
-#' @return a dataframe with column 'y' that contains the results of the comparison
+#' @return a dataframe with column 'y' that contains the results of the comparison and a ties column indicating if there was ties
 #'
 #' @examples
 compute_scores<-function(data,
@@ -106,33 +106,34 @@ compute_scores<-function(data,
                          win_score='higher'){
   d<-data
 
+
   d$diff_score<- as.vector(d[,player1_score]-d[,player0_score])
   # If higher score better than lower score for winning
   if(win_score=='higher')
   {
-    player1win<-ifelse(d$diff_score >0,1,0)
-    tie<-ifelse(d$diff_score==0,-1,0)
-
-    d$y<- as.vector(player1win+tie)
+    player1win<-ifelse(d$diff_score >0, 1,
+                       ifelse(d$diff_score <0, 0, 2))
+    d$y<- as.vector(player1win)
   }
   else #lower
   {
-    player1win<-ifelse(d$diff_score <0, 1,0)
-    tie<-ifelse(d$diff_score==0,-1,0)
-    d$y<- as.vector(player1win+tie)
+    player1win<-ifelse(d$diff_score <0, 1,
+                       ifelse(d$diff_score >0, 0, 2))
+    d$y<- as.vector(player1win)
   }
 
   # How to handle ties in the scores
   if(solve_ties=='none')
   {
-    #we dont need to do anything
+
   }
   if(solve_ties=='random')
   {
     for(i in 1:nrow(d)){
-      if(d$y[i]==-1)
+      if(d$y[i]==2)
         d$y[i]= sample(c(0,1), replace=T, size=1)
     }
+
   }
   if(solve_ties=='remove')
   {
@@ -140,28 +141,42 @@ compute_scores<-function(data,
     d<-tidyr::drop_na(d,tidyselect::any_of('ties'))
     d<-dplyr::select(d, -ties)
   }
-
+  d<-compute_ties(d,'y')
   d<-dplyr::select(d, -diff_score)
   return(as.data.frame(d))
 }
 
-#' Check if a data frame column contains only the values 1 0 and -1
+#' Giving a result column we create a new column with ties (0 and 1 if it has)
+#'
+#' @param data data frame
+#' @param result_column column where the result is
+#'
+#' @return dataframe with a column ties
+#'
+#' @examples
+compute_ties<-function(data, result_column){
+  d<-data
+  d$ties<-ifelse(d[,result_column] ==2, 1,0)
+  return(as.data.frame(d))
+}
+
+#' Check if a data frame column contains only the values 1 0 and 2
 #'
 #' @param d_column
 #'
 #' @return T (correct) or F (with problems)
 check_result_column<-function(d_column){
-  passed<- all(d_column %in% c(-1,0,1))
+  passed<- all(d_column %in% c(2,0,1))
   return(passed)
 }
 
-#' Check if a data frame column contains ties:-1
+#' Check if a data frame column contains ties:-2
 #'
 #' @param d_column
 #'
 #' @return T (there are ties) or F (no ties)
 check_if_there_are_ties<-function(d_column){
-  ties<- any(d_column %in% c(-1))
+  ties<- any(d_column %in% c(2))
   return(ties)
 }
 

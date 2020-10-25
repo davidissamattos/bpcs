@@ -7,12 +7,14 @@
 get_probabilities(bpc_object, n = 1000)
 }
 \arguments{
-\item{bpc_object}{a bpc object}
+\item{bpc_object}{a bpc object
+Here we sample the posterior n times and predict the results for every combination of players
+Based on these results we calculate the average times player i beats player j and the average probability of ties}
 
 \item{n}{number of samples to draw from the posterior}
 }
 \value{
-a data frame with the respective probabilities
+a list with data frame table with the respective probabilities and a matrix with the corresponding posterior
 }
 \description{
 Get the win/draw probabilities based on the strength parameters only

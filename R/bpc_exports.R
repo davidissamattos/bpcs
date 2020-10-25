@@ -24,6 +24,8 @@ get_stanfit<-function(bpc_object){
 
 sample_posterior<-function(bpc_object, par='lambda', n=1000){
   #TODO: verify the random effects condition
+  #TODO: verify the predictors condition
+  #TODO: verify the home advantage condition
   if(class(bpc_object)!='bpc')
     stop('Error! The object is not of bpc class')
   n<-floor(n)
@@ -50,6 +52,8 @@ sample_posterior<-function(bpc_object, par='lambda', n=1000){
 #'
 get_hpdi_parameters<-function(bpc_object){
   #TODO: verify the random effects condition
+  #TODO: verify the predictors condition
+  #TODO: verify the home advantage condition
   if(class(bpc_object)!='bpc')
     stop('Error! The object is not of bpc class')
   hpdi<-bpc_object$hpdi
@@ -94,7 +98,8 @@ rank_parameters<-function(bpc_object,n=1000){
     dplyr::group_by(Parameter) %>%
     dplyr::summarise(MedianRank = median(Rank),
                      MeanRank = mean(Rank),
-                     StdRank = sqrt(var(Rank))) %>%
+                     StdRank = sqrt(var(Rank)),
+                     PosteriorRank = list(rank=Rank)) %>%
     dplyr::arrange(MedianRank)
   return(rank_df)
 }
@@ -102,9 +107,10 @@ rank_parameters<-function(bpc_object,n=1000){
 #' Get the win/draw probabilities based on the strength parameters only
 #'
 #' @param bpc_object a bpc object
-#'
+#' Here we sample the posterior n times and predict the results for every combination of players
+#' Based on these results we calculate the average times player i beats player j and the average probability of ties
 #' @param n number of samples to draw from the posterior
-#' @return a data frame with the respective probabilities
+#' @return a list with data frame table with the respective probabilities and a matrix with the corresponding posterior
 #' @export
 #'
 #' @examples
@@ -116,49 +122,38 @@ get_probabilities<-function(bpc_object, n=1000){
   out <- NULL
   s<-sample_posterior(bpc_object,n=n)
   lookup<-bpc_object$lookup_table
+  # Here we will get a Bayesian estimated probability of winning/ties
+  #first we create a data frame of new data
+  comb <- gtools::combinations(n=bpc_object$Nplayers, r=2, v=lookup$Names, repeats.allowed = F)
+  newdata<- data.frame(comb)
+  colnames(newdata)<-c(bpc_object$call_arg$player0,bpc_object$call_arg$player1)
+  pred<-predict(bpc_object, newdata=newdata, n=n,return_matrix=T)
 
   if(model=='bradleyterry')
   {
-    comb <- gtools::combinations(n=bpc_object$Nplayers, r=2, v=seq(1:bpc_object$Nplayers), repeats.allowed = F)
-    prob_post <- matrix(ncol=nrow(comb), nrow=n)#preallocating the space
-    prob_post <- as.data.frame(prob_post)
-    column_names <- c()
-    player_i_name <-c()
-    player_j_name <-c()
-    for(j in 1:nrow(comb)){
-      comb_row <- comb[j,]
-      player_i <- comb_row[1]
-      player_j <- comb_row[2]
-      player_i_name <-c(player_i_name,lookup$Names[player_i])
-      player_j_name <-c(player_j_name,lookup$Names[player_j])
-      #not needed but helps debugging
-      column_names <- c(column_names,paste(lookup$Names[player_i],'_beats_',lookup$Names[player_j],sep=""))
-      prob_post[,j]<-inv_logit(s[,player_i]-s[,player_j])
-    }
-    colnames(prob_post)<-column_names
-    #now that we have a posterior distribution of the probabilities lets summarize it
-    prob_mean <- prob_post %>%
-      dplyr::summarise_all(mean) %>%
-      t() %>%
-      as.vector()
-    prob_hpd_lower <- prob_post %>%
-      dplyr::summarise_all(HPD_lower_from_column) %>%
-      t()%>%
-      as.vector()
-    prob_hpd_higher <- prob_post %>%
-      dplyr::summarise_all(HPD_higher_from_column) %>%
-      t()%>%
-      as.vector()
-    out<-data.frame(i=player_i_name,
-                    j=player_j_name,
-                    Mean=prob_mean,
-                    HPD_lower=prob_hpd_lower,
-                    HPD_Higher=prob_hpd_higher)
+    mean_pred <- apply(pred, 2, mean)
+    # prob_hpd_lower <-apply(ypred, 2, HPD_lower_from_column)
+    # prob_hpd_higher <- apply(ypred, 2, HPD_higher_from_column)
+    t<- data.frame(i= comb[,1],
+                   j=comb[,2],
+                   i_beats_j=mean_pred)  %>%
+      tibble::remove_rownames()
+    out<-list(Table=,
+              Posterior = t(pred))
   }
-  #TODO: davidsson and add draws
   if(model=='davidson')
   {
-
+    y_pred <- pred[, startsWith(colnames(pred),"y_pred")]
+    ties_pred <- pred[, startsWith(colnames(pred),"ties_pred")]
+    mean_y <- apply(y_pred, 2, mean)
+    mean_ties <- apply(ties_pred, 2, mean)
+    t <- data.frame(i= comb[,1],
+                    j=comb[,2],
+                    i_beats_j=mean_y,
+                    i_ties_j=mean_ties)  %>%
+      tibble::remove_rownames()
+    out<- list(table=t,
+               Posterior=t(pred))
   }
   return(out)
 }
@@ -207,4 +202,22 @@ launch_shinystan<-function(bpc_object){
   if(class(bpc_object)!='bpc')
     stop('Error! The object is not of bpc class')
   shinystan::launch_shinystan(get_stanfit(bpc_object))
+}
+
+
+#' Create an array with the name of the parameter and the corresponding index
+#' lambda[1] --> lambda_Biometrika
+#'
+#' @param bpc_object is a bpc object
+#' @param par a name for the parameter
+#'
+#' @return a vector
+#' @export
+#' @examples
+get_par_names <- function(bpc_object,par){
+  if(par=='U')
+    name <- create_array_of_par_names(par=par, lookup_table = bpc_object$cluster_lookup_table)
+  else
+    name <- create_array_of_par_names(par=par, lookup_table = bpc_object$lookup_table)
+  return(name)
 }

@@ -33,7 +33,7 @@ static int current_statement_begin__;
 stan::io::program_reader prog_reader__() {
     stan::io::program_reader reader;
     reader.add_event(0, 0, "start", "model_bt");
-    reader.add_event(45, 43, "end", "model_bt");
+    reader.add_event(46, 44, "end", "model_bt");
     return reader;
 }
 #include <stan_meta_header.hpp>
@@ -46,6 +46,7 @@ private:
         std::vector<int> player0_indexes;
         std::vector<int> player1_indexes;
         double prior_lambda_std;
+        double prior_lambda_mu;
 public:
     model_bt(stan::io::var_context& context__,
         std::ostream* pstream__ = 0)
@@ -93,6 +94,11 @@ public:
             for (size_t k_0__ = 0; k_0__ < y_k_0_max__; ++k_0__) {
                 y[k_0__] = vals_i__[pos__++];
             }
+            size_t y_i_0_max__ = N_total;
+            for (size_t i_0__ = 0; i_0__ < y_i_0_max__; ++i_0__) {
+                check_greater_or_equal(function__, "y[i_0__]", y[i_0__], 0);
+                check_less_or_equal(function__, "y[i_0__]", y[i_0__], 1);
+            }
             current_statement_begin__ = 10;
             context__.validate_dims("data initialization", "N_players", "int", context__.to_vec());
             N_players = int(0);
@@ -135,13 +141,20 @@ public:
             pos__ = 0;
             prior_lambda_std = vals_r__[pos__++];
             check_greater_or_equal(function__, "prior_lambda_std", prior_lambda_std, 0);
+            current_statement_begin__ = 14;
+            context__.validate_dims("data initialization", "prior_lambda_mu", "double", context__.to_vec());
+            prior_lambda_mu = double(0);
+            vals_r__ = context__.vals_r("prior_lambda_mu");
+            pos__ = 0;
+            prior_lambda_mu = vals_r__[pos__++];
+            check_greater_or_equal(function__, "prior_lambda_mu", prior_lambda_mu, 0);
             // initialize transformed data variables
             // execute transformed data statements
             // validate transformed data
             // validate, set parameter ranges
             num_params_r__ = 0U;
             param_ranges_i__.clear();
-            current_statement_begin__ = 17;
+            current_statement_begin__ = 18;
             validate_non_negative_index("lambda", "N_players", N_players);
             num_params_r__ += (1 * N_players);
         } catch (const std::exception& e) {
@@ -161,7 +174,7 @@ public:
         (void) pos__; // dummy call to supress warning
         std::vector<double> vals_r__;
         std::vector<int> vals_i__;
-        current_statement_begin__ = 17;
+        current_statement_begin__ = 18;
         if (!(context__.contains_r("lambda")))
             stan::lang::rethrow_located(std::runtime_error(std::string("Variable lambda missing")), current_statement_begin__, prog_reader__());
         vals_r__ = context__.vals_r("lambda");
@@ -176,7 +189,7 @@ public:
         size_t lambda_i_0_max__ = N_players;
         for (size_t i_0__ = 0; i_0__ < lambda_i_0_max__; ++i_0__) {
             try {
-                writer__.scalar_unconstrain(lambda[i_0__]);
+                writer__.scalar_lb_unconstrain(0, lambda[i_0__]);
             } catch (const std::exception& e) {
                 stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable lambda: ") + e.what()), current_statement_begin__, prog_reader__());
             }
@@ -206,34 +219,34 @@ public:
         try {
             stan::io::reader<local_scalar_t__> in__(params_r__, params_i__);
             // model parameters
-            current_statement_begin__ = 17;
+            current_statement_begin__ = 18;
             std::vector<local_scalar_t__> lambda;
             size_t lambda_d_0_max__ = N_players;
             lambda.reserve(lambda_d_0_max__);
             for (size_t d_0__ = 0; d_0__ < lambda_d_0_max__; ++d_0__) {
                 if (jacobian__)
-                    lambda.push_back(in__.scalar_constrain(lp__));
+                    lambda.push_back(in__.scalar_lb_constrain(0, lp__));
                 else
-                    lambda.push_back(in__.scalar_constrain());
+                    lambda.push_back(in__.scalar_lb_constrain(0));
             }
             // model body
             {
-            current_statement_begin__ = 21;
+            current_statement_begin__ = 22;
             validate_non_negative_index("p", "N_total", N_total);
             std::vector<local_scalar_t__  > p(N_total, local_scalar_t__(DUMMY_VAR__));
             stan::math::initialize(p, DUMMY_VAR__);
             stan::math::fill(p, DUMMY_VAR__);
-            current_statement_begin__ = 22;
-            lp_accum__.add(normal_log<propto__>(lambda, 0, prior_lambda_std));
-            current_statement_begin__ = 25;
+            current_statement_begin__ = 23;
+            lp_accum__.add(normal_log<propto__>(lambda, prior_lambda_mu, prior_lambda_std));
+            current_statement_begin__ = 26;
             for (int i = 1; i <= N_total; ++i) {
-                current_statement_begin__ = 27;
+                current_statement_begin__ = 28;
                 stan::model::assign(p, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1) - get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1)), 
                             "assigning variable p");
             }
-            current_statement_begin__ = 30;
+            current_statement_begin__ = 31;
             lp_accum__.add(bernoulli_logit_log<propto__>(y, p));
             }
         } catch (const std::exception& e) {
@@ -287,7 +300,7 @@ public:
         size_t lambda_d_0_max__ = N_players;
         lambda.reserve(lambda_d_0_max__);
         for (size_t d_0__ = 0; d_0__ < lambda_d_0_max__; ++d_0__) {
-            lambda.push_back(in__.scalar_constrain());
+            lambda.push_back(in__.scalar_lb_constrain(0));
         }
         size_t lambda_k_0_max__ = N_players;
         for (size_t k_0__ = 0; k_0__ < lambda_k_0_max__; ++k_0__) {
@@ -303,23 +316,23 @@ public:
             if (!include_gqs__ && !include_tparams__) return;
             if (!include_gqs__) return;
             // declare and define generated quantities
-            current_statement_begin__ = 36;
+            current_statement_begin__ = 37;
             validate_non_negative_index("log_lik", "N_total", N_total);
             Eigen::Matrix<double, Eigen::Dynamic, 1> log_lik(N_total);
             stan::math::initialize(log_lik, DUMMY_VAR__);
             stan::math::fill(log_lik, DUMMY_VAR__);
             // generated quantities statements
-            current_statement_begin__ = 37;
+            current_statement_begin__ = 38;
             for (int i = 1; i <= N_total; ++i) {
                 {
-                current_statement_begin__ = 38;
+                current_statement_begin__ = 39;
                 local_scalar_t__ p(DUMMY_VAR__);
                 (void) p;  // dummy to suppress unused var warning
                 stan::math::initialize(p, DUMMY_VAR__);
                 stan::math::fill(p, DUMMY_VAR__);
-                current_statement_begin__ = 39;
+                current_statement_begin__ = 40;
                 stan::math::assign(p, (get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1) - get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1)));
-                current_statement_begin__ = 41;
+                current_statement_begin__ = 42;
                 stan::model::assign(log_lik, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             bernoulli_logit_log(get_base1(y, i, "y", 1), p), 
@@ -327,7 +340,7 @@ public:
                 }
             }
             // validate, write generated quantities
-            current_statement_begin__ = 36;
+            current_statement_begin__ = 37;
             size_t log_lik_j_1_max__ = N_total;
             for (size_t j_1__ = 0; j_1__ < log_lik_j_1_max__; ++j_1__) {
                 vars__.push_back(log_lik(j_1__));

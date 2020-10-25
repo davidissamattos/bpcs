@@ -7,7 +7,7 @@
 HPDI_from_stanfit(stanfit)
 }
 \arguments{
-\item{stanfit}{a stanfit object}
+\item{stanfit}{a stanfit object retrived from a bpc object}
 }
 \value{
 a data frame with the HPDI calculated from coda

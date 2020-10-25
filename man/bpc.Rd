@@ -2,7 +2,8 @@
 % Please edit documentation in R/bpc.R
 \name{bpc}
 \alias{bpc}
-\title{Bayesian Paired comparison  regression models in Stan}
+\title{Bayesian Paired comparison  regression models in Stan
+This is the main function of the package and it samples the posterior distribution of different models using Stan depending on the parameters choice}
 \usage{
 bpc(
   data,
@@ -14,7 +15,7 @@ bpc(
   model_type = "bradleyterry",
   solve_ties = "random",
   win_score = "higher",
-  prior_lambda_std = 2,
+  priors = NULL,
   chains = 4,
   iter = 2000,
   warmup = 1000,
@@ -32,28 +33,31 @@ bpc(
 
 \item{player1_score}{A string with name of the column containing the scores of players 1}
 
-\item{result_column}{A string with name of the column containing the winners. 0 for player 0, 1 for player 1 and -1 for ties}
+\item{result_column}{A string with name of the column containing the winners. 0 for player 0, 1 for player 1 and 2 for ties}
 
 \item{model_type}{'bradleyterry' (default), 'davidson' for ties}
 
 \item{solve_ties}{A string for the method of handling ties. 'random' for converting ties randomly, 'remove' for removing the tie occurrencess
-'none' to ignore ties. The last requires a model to handle ties such as the davidson}
+'none' to ignore ties. The last requires a model to handle ties such as the davidson if there are ties}
 
 \item{win_score}{A string that indicates if a 'higher' score is winner or if a 'lower' score is winner}
 
-\item{prior_lambda_std}{Positive value for the standard deviation of the normal prior if not uniform. Default is 2}
+\item{priors}{A list with the parameters for the priors. Possible values ''}
 
 \item{chains}{Number of chains passed to Stan sampling. Positive integer, default=4. For more information consult Stan}
 
 \item{iter}{Number of iterations passed to Stan sampling. Positive integer, default =2000. For more information consult Stan}
 
 \item{warmup}{Number of iteration for the warmup passed to Stan sampling. Positive integer, default 1000.  For more information consult Stan}
+
+\item{show_chain_messages}{Hide chain messages from stan}
 }
 \value{
-An object of the class TODO:finish
+An object of the class bpc. This object should be used in conjunction with the several auxiliary functions from the package
 }
 \description{
 Bayesian Paired comparison  regression models in Stan
+This is the main function of the package and it samples the posterior distribution of different models using Stan depending on the parameters choice
 }
 \examples{
  bpc(data=citations_agresti,

@@ -13,6 +13,8 @@ compute_scores(
 )
 }
 \arguments{
+\item{data}{dataframe}
+
 \item{player0_score}{name of the column in data}
 
 \item{player1_score}{name of the column in data}
@@ -22,7 +24,7 @@ compute_scores(
 \item{win_score}{decides if who wins is the one that has the highest score or the lowest score}
 }
 \value{
-a dataframe with column 'y' that contains the results of the comparison
+a dataframe with column 'y' that contains the results of the comparison and a ties column indicating if there was ties
 }
 \description{
 Giving a player0 an player1 it adds a column to the data frame containing who won or if it was a tie
