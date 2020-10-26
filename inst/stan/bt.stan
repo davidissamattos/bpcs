@@ -6,20 +6,21 @@
 
 data {
  int <lower=1> N_total; // Sample size
- int y[N_total]; //variable that indicates which one wins player0 or player1
+ int <lower=0, upper=1> y[N_total]; //variable that indicates which one wins player0 or player1
  int <lower=1> N_players; // Number of players
  int <lower=1> player0_indexes[N_total];
  int <lower=1> player1_indexes[N_total];
  real<lower=0> prior_lambda_std;
+ real<lower=0> prior_lambda_mu;
 }
 
 parameters {
-  real lambda[N_players]; //Latent variable that represents the strength
+  real <lower=0> lambda[N_players]; //Latent variable that represents the strength
 }
 
 model {
   real p[N_total];
-  lambda ~ normal(0,prior_lambda_std);
+  lambda ~ normal(prior_lambda_mu,prior_lambda_std);
 
 
   for (i in 1:N_total)

@@ -1,5 +1,6 @@
 ---
 output: github_document
+bibliography: bibliography.bib
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -24,16 +25,18 @@ knitr::opts_chunk$set(
 `r badge_last_commit("davidissamattos/bpcs")`
 `r badge_lifecycle("experimental", "blue")`
 `r badge_code_size("davidissamattos/bpcs")`
-[![codecov](https://codecov.io/gh/davidissamattos/bpc/branch/master/graph/badge.svg?token=6RTC7768CL)](undefined)
 
+[![Codecov test coverage](https://codecov.io/gh/davidissamattos/bpcs/branch/master/graph/badge.svg)](https://codecov.io/gh/davidissamattos/bpcs?branch=master)
 <!-- badges: end -->
 
 The `bpcs` package performs Bayesian estimation of Paired Comparison models utilizing Stan. 
 
+Package documentation and vignette articles can be found at: https://davidissamattos.github.io/bpcs/
+
 
 ## Installation
 
-For the `bpcs` package to work, we rely upon the Stan software and the `rstan` package. 
+For the `bpcs` package to work, we rely upon the Stan software and the `rstan` package [@rstan]. 
 
 * For general installation of Stan and RStan see: https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
 * For macOS: https://github.com/stan-dev/rstan/wiki/Installing-RStan-from-source-on-a-Mac
@@ -52,7 +55,7 @@ library(bpcs)
 ```
 
 
-## Example
+## Minimal example
 
 The main function of the package is the `bpc` function. This function requires a specific type of data frame that contains:
 
@@ -60,7 +63,7 @@ The main function of the package is the `bpc` function. This function requires a
 * Two columns containing the score of each player OR 
 * one column containing the result of the match (0 if player0 won, 1 if player1 won, -1 if it was a tie)
 
-We will utilize a prepared version of the known dataset available in Agresti 2002. The same dataset can also be found in other packages such as the `BradleyTerry2`. The dataset can be seen below and is available as `data(citations_agresti)`:
+We will utilize a prepared version of the citations dataset available [@agresti2003categorical]. The same dataset can also be found in other packages that implement the Bradley-Terry model such as the `BradleyTerry2` [@turner2012bradley]. The dataset can be seen below and is available as `data(citations_agresti)`:
 
 ```{r}
 knitr::kable(citations_agresti)
@@ -68,7 +71,8 @@ knitr::kable(citations_agresti)
 
 Based on the scores of each contestant, the `bpc` function computes automatically who won the contest. Alternatively, you can provide a vector of who won if that is already available (for more information see `?bpc`.
 
-For the simple Bradley Terry Model we specify the model type as `'bradleyterry'` . If there are ties in the data we can use a different model (see vignette: TODO), or we can solve it randomly with the `'random'` option. Since we provide the scores we need to say who won `'higher'` if higher score wins or `'lower'` if lower score wins. 
+
+For the simple Bradley Terry Model we specify the model type as `'bradleyterry'`. Here we hide the MCMC sampler chain messages for simplicity. 
 
 ```{r}
 m1<-bpc(data=citations_agresti,
@@ -78,7 +82,8 @@ m1<-bpc(data=citations_agresti,
                   player1_score = 'score2',
                   model_type='bradleyterry',
                   solve_ties='random',
-                  win_score = 'higher')
+                  win_score = 'higher',
+        show_chain_messages = F)
 ```
 
 If `rstan` is available and correctly working this function should sample the posterior distribution and create a `bpc` object.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/bpc_helpers.R
 \name{check_if_there_are_ties}
 \alias{check_if_there_are_ties}
-\title{Check if a data frame column contains ties:-1}
+\title{Check if a data frame column contains ties:-2}
 \usage{
 check_if_there_are_ties(d_column)
 }
@@ -13,5 +13,5 @@ check_if_there_are_ties(d_column)
 T (there are ties) or F (no ties)
 }
 \description{
-Check if a data frame column contains ties:-1
+Check if a data frame column contains ties:-2
 }
