@@ -2,7 +2,7 @@
 % Please edit documentation in R/bpc_exports.R
 \name{sample_posterior}
 \alias{sample_posterior}
-\title{Get the posterior samples for the  parameters}
+\title{Get the posterior samples for a parameter of the model.}
 \usage{
 sample_posterior(bpc_object, par = "lambda", n = 1000)
 }
@@ -11,11 +11,16 @@ sample_posterior(bpc_object, par = "lambda", n = 1000)
 
 \item{par}{name of the parameters to predict}
 
-\item{n}{how many times are we sampling. Default 1000}
+\item{n}{how many times are we sampling? Default 1000}
 }
 \value{
 Return a data frame with the posterior samples for the parameters. One column for each parameter one row for each sample
 }
 \description{
-Get the posterior samples for the  parameters
+Get the posterior samples for a parameter of the model.
+}
+\examples{
+m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
+s <- sample_posterior(m_citations, par='lambda', n=100)
+print(head(s))
 }

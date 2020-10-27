@@ -4,10 +4,10 @@
 \alias{create_index}
 \title{Create two columns with the indexes for the names}
 \usage{
-create_index(data, player0, player1)
+create_index(d, player0, player1)
 }
 \arguments{
-\item{data}{A data frame containing the observations. The other parameters specify the name of the columns}
+\item{d}{A data frame containing the observations. The other parameters specify the name of the columns}
 
 \item{player0}{The name of the column of data data contains player0}
 

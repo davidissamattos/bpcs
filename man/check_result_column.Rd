@@ -2,7 +2,7 @@
 % Please edit documentation in R/bpc_helpers.R
 \name{check_result_column}
 \alias{check_result_column}
-\title{Check if a data frame column contains only the values 1 0 and 2}
+\title{Check if a data frame column contains only the values 1 0 and 2. Used to check the format of the results}
 \usage{
 check_result_column(d_column)
 }
@@ -10,8 +10,8 @@ check_result_column(d_column)
 \item{d_column}{}
 }
 \value{
-T (correct) or F (with problems)
+TRUE (correct) or FALSE (with problems)
 }
 \description{
-Check if a data frame column contains only the values 1 0 and 2
+Check if a data frame column contains only the values 1 0 and 2. Used to check the format of the results
 }

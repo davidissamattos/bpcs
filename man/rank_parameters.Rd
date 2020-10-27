@@ -2,7 +2,8 @@
 % Please edit documentation in R/bpc_exports.R
 \name{rank_parameters}
 \alias{rank_parameters}
-\title{Generate a ranking of the parameter strength only and based on sampling the posterior distribution}
+\title{Generate a ranking of the ability based on sampling the posterior distribution of the ranks
+To print this object you should remove the last column PosteriorRank since it contain the whole posterior distribution for each case}
 \usage{
 rank_parameters(bpc_object, n = 1000)
 }
@@ -12,8 +13,15 @@ rank_parameters(bpc_object, n = 1000)
 \item{n}{Number of times we will sample the posterior}
 }
 \value{
-a rank data frame
+a data frame. This data frame contains the median of the rank, the mean, the standard deviation and column with a list containing all the posterior values for the rank
 }
 \description{
-Generate a ranking of the parameter strength only and based on sampling the posterior distribution
+Generate a ranking of the ability based on sampling the posterior distribution of the ranks
+To print this object you should remove the last column PosteriorRank since it contain the whole posterior distribution for each case
+}
+\examples{
+m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
+rank_citations<-rank_parameters(m_citations,n=100)
+rank_table <- dplyr::select(-MeanRank, -StadRank,-PosteriorRank)
+print(rank_table)
 }

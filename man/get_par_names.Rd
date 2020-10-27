@@ -2,8 +2,8 @@
 % Please edit documentation in R/bpc_exports.R
 \name{get_par_names}
 \alias{get_par_names}
-\title{Create an array with the name of the parameter and the corresponding index
-lambda\link{1} --> lambda_Biometrika}
+\title{Create an array with the name of the parameter and the corresponding index created automatically from the lookup table
+E.g  for parameter lambda with 4 players we have (lambda\link{1}, lambda\link{2}, lambda\link{3}, lambda\link{4}). This function will return (lambda_Biometrika, lambda_CommStat, lambda_JASA, lambda_JRSSB)}
 \usage{
 get_par_names(bpc_object, par)
 }
@@ -13,9 +13,13 @@ get_par_names(bpc_object, par)
 \item{par}{a name for the parameter}
 }
 \value{
-a vector
+a vector containing the equivalent, respective to the indexes, vector with the names.
 }
 \description{
-Create an array with the name of the parameter and the corresponding index
-lambda\link{1} --> lambda_Biometrika
+Create an array with the name of the parameter and the corresponding index created automatically from the lookup table
+E.g  for parameter lambda with 4 players we have (lambda\link{1}, lambda\link{2}, lambda\link{3}, lambda\link{4}). This function will return (lambda_Biometrika, lambda_CommStat, lambda_JASA, lambda_JRSSB)
+}
+\examples{
+m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
+print(get_par_names(m_citations,par='lambda'))
 }

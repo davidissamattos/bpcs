@@ -4,7 +4,8 @@
 #'
 #' @name citations_agresti
 #' @docType data
-#' @references Agresti, Alan. Categorical data analysis. Vol. 482. John Wiley & Sons, 2003.
+#' @references
+#' Agresti, Alan. Categorical data analysis. Vol. 482. John Wiley & Sons, 2003.
 #' @keywords data
 NULL
 
@@ -14,7 +15,8 @@ NULL
 #' This is the aggregated form originally presented
 #' @name tennis_aggresti
 #' @docType data
-#' @references Agresti, Alan. Categorical data analysis. Vol. 482. John Wiley & Sons, 2003.
+#' @references
+#' Agresti, Alan. Categorical data analysis. Vol. 482. John Wiley & Sons, 2003.
 #' @keywords data
 NULL
 
@@ -24,7 +26,8 @@ NULL
 #'
 #' @name tennis_aggresti_2
 #' @docType data
-#' @references Agresti, Alan. Categorical data analysis. Vol. 482. John Wiley & Sons, 2003.
+#' @references
+#' Agresti, Alan. Categorical data analysis. Vol. 482. John Wiley & Sons, 2003.
 #' @keywords data
 NULL
 
@@ -46,7 +49,8 @@ NULL
 #' @keywords data
 NULL
 
-#' A short fake dataset to test models with ties
+#' A short fake dataset to test models with ties.
+#' This data set does not have any real application but to easy test the data
 #'
 #' @name test_ties
 #' @docType data

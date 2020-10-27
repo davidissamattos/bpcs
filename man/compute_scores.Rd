@@ -2,10 +2,14 @@
 % Please edit documentation in R/bpc_helpers.R
 \name{compute_scores}
 \alias{compute_scores}
-\title{Giving a player0 an player1 it adds a column to the data frame containing who won or if it was a tie}
+\title{Giving a player0 an player1 scores, this functions adds one column to the data frame containing who won (0= player0 1=player1 2=tie) and another if it was a tie.
+The ties column superseeds the y column.
+If it was tie the y column does not matter
+y column: (0= player0 1=player1 2=tie)
+ties column (0=not tie, 1=tie)}
 \usage{
 compute_scores(
-  data,
+  d,
   player0_score,
   player1_score,
   solve_ties = "random",
@@ -13,7 +17,7 @@ compute_scores(
 )
 }
 \arguments{
-\item{data}{dataframe}
+\item{d}{dataframe}
 
 \item{player0_score}{name of the column in data}
 
@@ -27,5 +31,9 @@ compute_scores(
 a dataframe with column 'y' that contains the results of the comparison and a ties column indicating if there was ties
 }
 \description{
-Giving a player0 an player1 it adds a column to the data frame containing who won or if it was a tie
+Giving a player0 an player1 scores, this functions adds one column to the data frame containing who won (0= player0 1=player1 2=tie) and another if it was a tie.
+The ties column superseeds the y column.
+If it was tie the y column does not matter
+y column: (0= player0 1=player1 2=tie)
+ties column (0=not tie, 1=tie)
 }

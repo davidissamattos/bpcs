@@ -2,7 +2,8 @@
 % Please edit documentation in R/bpc_helpers.R
 \name{HPDI_from_stanfit}
 \alias{HPDI_from_stanfit}
-\title{Calculate HPDI from a stanfit model}
+\title{Calculate HPDI for all parameters from a stanfit object
+Here we use the coda package}
 \usage{
 HPDI_from_stanfit(stanfit)
 }
@@ -10,8 +11,12 @@ HPDI_from_stanfit(stanfit)
 \item{stanfit}{a stanfit object retrived from a bpc object}
 }
 \value{
-a data frame with the HPDI calculated from coda
+a data frame with the HPDI calculated from the coda pacakge
 }
 \description{
-Calculate HPDI from a stanfit model
+Calculate HPDI for all parameters from a stanfit object
+Here we use the coda package
+}
+\references{
+Martyn Plummer, Nicky Best, Kate Cowles and Karen Vines (2006). CODA: Convergence Diagnosis and Output Analysis for MCMC, R News, vol 6, 7-11
 }

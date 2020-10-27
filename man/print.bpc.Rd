@@ -2,18 +2,20 @@
 % Please edit documentation in R/bpc_s3.R
 \name{print.bpc}
 \alias{print.bpc}
-\title{Print method for the bpc object}
+\title{Print method for the bpc object
+We only print the parameter values and the HDPI}
 \usage{
 \method{print}{bpc}(x)
 }
 \arguments{
 \item{x}{a bpc object}
 
-\item{...}{}
+\item{...}{additional parameters for the generic print function}
 }
 \value{
 
 }
 \description{
 Print method for the bpc object
+We only print the parameter values and the HDPI
 }

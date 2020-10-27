@@ -1,26 +1,21 @@
 #' Print method for the bpc object
-#'
+#' We only print the parameter values and the HDPI
 #' @param x a bpc object
-#' @param ...
-#'
+#' @param ...  additional parameters for the generic print function
 #' @return
 #' @export
-#'
-#' @examples
 print.bpc <- function(x){
   cat("Estimated baseline parameters with HPD intervals:\n")
   print(knitr::kable(get_hpdi_parameters(x),format = 'simple'))
 }
 
 #' Summary of the model bpc model
-#' Contains only the parameters estimates and the respective HPD interval
+#' Table 1: Contains the parameter estimates and respective HPD interval
+#' Table 2: Contains the empirical probability for the combination of all players
 #' @param x bpc object
-#' @param ...
-#'
+#' @param ... additional parameters for the generic summary function
 #' @return
 #' @export
-#'
-#' @examples
 summary.bpc <- function(x){
   cat("Estimated baseline parameters with HPD intervals:\n")
   print(knitr::kable(get_hpdi_parameters(x),format = 'simple'))
@@ -38,6 +33,7 @@ summary.bpc <- function(x){
 #' Predict results for new data
 #' This S3 function receives the bpc model and a data frame containing the same columns as the one used to fit the model.
 #' It returns another data frame with with the same columns of the new data and n additional columns representing a posterior preditive distribution.
+#' See the vignettes for a larger example with the usage of this function
 #' @param object a bpc object
 #' @param newdata a data frame that contains columns with the same names as used to fit the data in the model.
 #' @param n number of time we will iterate and get the posterior. default is 100 so we dont get too many
@@ -45,8 +41,6 @@ summary.bpc <- function(x){
 #' This parameter also ignores the n parameter above since it passes all the predictions from stan
 #' @return a dataframe or a matrix depending on the return_matrix parameter
 #' @export
-#'
-#' @examples
 predict.bpc <- function(object, newdata, n=100, return_matrix=F){
   model_type<-object$model_type
   stanfit<-object$stanfit

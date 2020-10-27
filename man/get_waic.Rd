@@ -2,16 +2,26 @@
 % Please edit documentation in R/bpc_exports.R
 \name{get_waic}
 \alias{get_waic}
-\title{iny wrapper for the WAIC method from the loo package}
+\title{Tiny wrapper for the WAIC method from the loo package
+This is used to evaluate the fit of the model using the Watanabe-Akaike Information criteria}
 \usage{
 get_waic(bpc_object)
 }
 \arguments{
-\item{bpc_object}{}
+\item{bpc_object}{a bpc object}
 }
 \value{
-
+a loo object
 }
 \description{
-iny wrapper for the WAIC method from the loo package
+Tiny wrapper for the WAIC method from the loo package
+This is used to evaluate the fit of the model using the Watanabe-Akaike Information criteria
+}
+\examples{
+m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
+waic<-get_waic(m_citations)
+print(waic)
+}
+\references{
+Gelman, Andrew, Jessica Hwang, and Aki Vehtari. "Understanding predictive information criteria for Bayesian models." Statistics and computing 24.6 (2014): 997-1016.
 }

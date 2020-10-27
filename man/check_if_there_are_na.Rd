@@ -14,10 +14,20 @@ check_if_there_are_na(
 )
 }
 \arguments{
-\item{result_column}{}
+\item{d}{a data frame}
+
+\item{player0}{the name of column for player0}
+
+\item{player1}{the name of column for player1}
+
+\item{player0_score}{the name of column for player0 scores}
+
+\item{player1_score}{the name of column for player1 scores}
+
+\item{result_column}{the name of column for results}
 }
 \value{
-T (there are NA) or F (no NA)
+TRUE (there are NA) or FALSE (no NA)
 }
 \description{
 Check for NA in the specfic columns and returns T or F is there is at least 1 NA in those columns

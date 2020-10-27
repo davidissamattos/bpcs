@@ -2,16 +2,26 @@
 % Please edit documentation in R/bpc_exports.R
 \name{get_loo}
 \alias{get_loo}
-\title{Tiny wrapper for the PSIS-LOO-CV method from the loo package}
+\title{Tiny wrapper for the PSIS-LOO-CV method from the loo package
+This is used to evaluate the fit of the model using entropy criteria}
 \usage{
 get_loo(bpc_object)
 }
 \arguments{
-\item{bpc_object}{}
+\item{bpc_object}{a bpc object}
 }
 \value{
-
+a loo object
 }
 \description{
 Tiny wrapper for the PSIS-LOO-CV method from the loo package
+This is used to evaluate the fit of the model using entropy criteria
+}
+\examples{
+m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
+l<-get_loo(m_citations)
+print(l)
+}
+\references{
+Vehtari A, Gelman A, Gabry J (2017). “Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC.” \emph{Statistics and Computing}, \emph{27}, 1413-1432. doi:10.1007/s11222-016-9696-4 (URL: https://doi.org/10.1007/s11222-016-9696-4).
 }

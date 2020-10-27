@@ -2,14 +2,14 @@
 % Please edit documentation in R/bpc_exports.R
 \name{get_probabilities}
 \alias{get_probabilities}
-\title{Get the win/draw probabilities based on the strength parameters only}
+\title{Get the empirical win/draw probabilities based on the ability/strength parameters.
+Instead of calculating from the probability formula given from the model we create a predictive posterior distribution for all pair combinations and calculate the empirical wins/loose/draw
+The function returns the mean value of win/loose/draw for the player i. To calculate for player j the probability is 1-p_i}
 \usage{
 get_probabilities(bpc_object, n = 1000)
 }
 \arguments{
-\item{bpc_object}{a bpc object
-Here we sample the posterior n times and predict the results for every combination of players
-Based on these results we calculate the average times player i beats player j and the average probability of ties}
+\item{bpc_object}{a bpc object}
 
 \item{n}{number of samples to draw from the posterior}
 }
@@ -17,5 +17,12 @@ Based on these results we calculate the average times player i beats player j an
 a list with data frame table with the respective probabilities and a matrix with the corresponding posterior
 }
 \description{
-Get the win/draw probabilities based on the strength parameters only
+Get the empirical win/draw probabilities based on the ability/strength parameters.
+Instead of calculating from the probability formula given from the model we create a predictive posterior distribution for all pair combinations and calculate the empirical wins/loose/draw
+The function returns the mean value of win/loose/draw for the player i. To calculate for player j the probability is 1-p_i
+}
+\examples{
+m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
+prob<-get_probabilities(m_citations,n=100)
+print(prob$Table)
 }

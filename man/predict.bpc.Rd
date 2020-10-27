@@ -4,7 +4,8 @@
 \alias{predict.bpc}
 \title{Predict results for new data
 This S3 function receives the bpc model and a data frame containing the same columns as the one used to fit the model.
-It returns another data frame with with the same columns of the new data and n additional columns representing a posterior preditive distribution.}
+It returns another data frame with with the same columns of the new data and n additional columns representing a posterior preditive distribution.
+See the vignettes for a larger example with the usage of this function}
 \usage{
 \method{predict}{bpc}(object, newdata, n = 100, return_matrix = F)
 }
@@ -15,7 +16,8 @@ It returns another data frame with with the same columns of the new data and n a
 
 \item{n}{number of time we will iterate and get the posterior. default is 100 so we dont get too many}
 
-\item{return_matrix}{should we return only a matrix with the predictive values. Default F. Use this to combine with predictive posterior plots in bayesplot}
+\item{return_matrix}{should we return only a matrix with the predictive values. Default F. Use this to combine with predictive posterior plots in bayesplot
+This parameter also ignores the n parameter above since it passes all the predictions from stan}
 }
 \value{
 a dataframe or a matrix depending on the return_matrix parameter
@@ -24,4 +26,5 @@ a dataframe or a matrix depending on the return_matrix parameter
 Predict results for new data
 This S3 function receives the bpc model and a data frame containing the same columns as the one used to fit the model.
 It returns another data frame with with the same columns of the new data and n additional columns representing a posterior preditive distribution.
+See the vignettes for a larger example with the usage of this function
 }

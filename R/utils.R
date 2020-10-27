@@ -1,11 +1,13 @@
 #' Logit function
-#' See https://en.wikipedia.org/wiki/Logit
+#' @references
+#' https://en.wikipedia.org/wiki/Logit
 #' @param x p is a probability 0 to 1
-#'
 #' @return a value between -inf and inf
 #' @export
 #'
 #' @examples
+#' logit(0.5)
+#' logit(0.2)
 logit<-function(x){
 if( any(x < 0 | x > 1) )
   stop('Error! x not between 0 and 1')
@@ -14,13 +16,16 @@ if( any(x < 0 | x > 1) )
 }
 
 #' Inverse logit function
-#' See https://en.wikipedia.org/wiki/Logit
+#' @references
+#' https://en.wikipedia.org/wiki/Logit
 #' @param x is a real -inf to inf
-#'
 #' @return a value between 0 and 1
 #' @export
 #'
 #' @examples
+#' logit(5)
+#' logit(-5)
+#' logit(0)
 inv_logit<-function(x){
   y <- exp(x)/(1+exp(x))
   return(y)
@@ -28,7 +33,6 @@ inv_logit<-function(x){
 
 
 ### Dev only
-
 code_coverage_with_token<-function(){
   covr::codecov(token = 'e56cbadd-aa85-499a-a6d8-124e4813c031')
 }

@@ -3,19 +3,21 @@
 \name{summary.bpc}
 \alias{summary.bpc}
 \title{Summary of the model bpc model
-Contains only the parameters estimates and the respective HPD interval}
+Table 1: Contains the parameter estimates and respective HPD interval
+Table 2: Contains the empirical probability for the combination of all players}
 \usage{
 \method{summary}{bpc}(x)
 }
 \arguments{
 \item{x}{bpc object}
 
-\item{...}{}
+\item{...}{additional parameters for the generic summary function}
 }
 \value{
 
 }
 \description{
 Summary of the model bpc model
-Contains only the parameters estimates and the respective HPD interval
+Table 1: Contains the parameter estimates and respective HPD interval
+Table 2: Contains the empirical probability for the combination of all players
 }

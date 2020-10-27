@@ -2,8 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{logit}
 \alias{logit}
-\title{Logit function
-See https://en.wikipedia.org/wiki/Logit}
+\title{Logit function}
 \usage{
 logit(x)
 }
@@ -15,5 +14,11 @@ a value between -inf and inf
 }
 \description{
 Logit function
-See https://en.wikipedia.org/wiki/Logit
+}
+\examples{
+logit(0.5)
+logit(0.2)
+}
+\references{
+https://en.wikipedia.org/wiki/Logit
 }

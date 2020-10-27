@@ -2,16 +2,18 @@
 % Please edit documentation in R/bpc_exports.R
 \name{launch_shinystan}
 \alias{launch_shinystan}
-\title{Tiny wrapper to launch a shinystan app to investigate the MCMC}
+\title{Tiny wrapper to launch a shinystan app to investigate the MCMC
+It launches a shinystan app automatically in the web browser}
 \usage{
 launch_shinystan(bpc_object)
 }
 \arguments{
-\item{bpc_object}{}
+\item{bpc_object}{a bpc object}
 }
 \value{
 
 }
 \description{
 Tiny wrapper to launch a shinystan app to investigate the MCMC
+It launches a shinystan app automatically in the web browser
 }

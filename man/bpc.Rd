@@ -3,7 +3,14 @@
 \name{bpc}
 \alias{bpc}
 \title{Bayesian Paired comparison  regression models in Stan
-This is the main function of the package and it samples the posterior distribution of different models using Stan depending on the parameters choice}
+This is the main function of the package.
+This function utilizes precompiled stan models to sample the posterior distribution of the specified model with the input data.
+Currently have implemented the following models in their Bayesian version:
+\itemize{
+\item Bradley-Terry: 'bradleyterry'. For this method ties should be handled, either by random solving or by removing them. Otherwise we get an error from Stan.
+\item Davidson model (for handling ties): 'davidson'
+For more information regarding the dataset format see the vignettes.
+}}
 \usage{
 bpc(
   data,
@@ -25,9 +32,9 @@ bpc(
 \arguments{
 \item{data}{A data frame containing the observations. The other parameters specify the name of the columns}
 
-\item{player0}{A string with name of the column containing the players 0}
+\item{player0}{A string with name of the column containing the players 0. This column should be of string/character type and not be of factor type.}
 
-\item{player1}{A string with name of the column containing the players 0}
+\item{player1}{A string with name of the column containing the players 0. This column should be of string/character type and not be of factor type.}
 
 \item{player0_score}{A string with name of the column containing the scores of players 0}
 
@@ -57,15 +64,22 @@ An object of the class bpc. This object should be used in conjunction with the s
 }
 \description{
 Bayesian Paired comparison  regression models in Stan
-This is the main function of the package and it samples the posterior distribution of different models using Stan depending on the parameters choice
+This is the main function of the package.
+This function utilizes precompiled stan models to sample the posterior distribution of the specified model with the input data.
+Currently have implemented the following models in their Bayesian version:
+\itemize{
+\item Bradley-Terry: 'bradleyterry'. For this method ties should be handled, either by random solving or by removing them. Otherwise we get an error from Stan.
+\item Davidson model (for handling ties): 'davidson'
+For more information regarding the dataset format see the vignettes.
+}
 }
 \examples{
- bpc(data=citations_agresti,
-              player0 = 'journal1',
-              player1 = 'journal2',
-              player0_score = 'score1',
-              player1_score = 'score2',
-              model_type='bradleyterry',
-              solve_ties='random',
-              win_score = 'higher')
+#For the simple Bradley-Terry model
+m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
+summary(m_citations)
+}
+\references{
+Bradley RA, Terry ME (1952). “Rank Analysis of Incomplete Block Designs I: The Method of Paired Comparisons.” Biometrika, 39, 324–45.
+Davidson RR (1970). “On Extending the Bradley-Terry Model to Accommodate Ties in Paired Comparison Experiments.” Journal of the American Statistical Association, 65, 317–328.
+Stan Development Team (2020). RStan: the R interface to Stan. R package version 2.21.2. http://mc-stan.org/.
 }

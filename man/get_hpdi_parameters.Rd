@@ -2,19 +2,21 @@
 % Please edit documentation in R/bpc_exports.R
 \name{get_hpdi_parameters}
 \alias{get_hpdi_parameters}
-\title{Return a data frame with the mean and the HPDI for all parameters}
+\title{Return a data frame with the mean and with high and low 95\% hpd interval for all parameters of the model}
 \usage{
 get_hpdi_parameters(bpc_object)
 }
 \arguments{
-\item{bpc_object}{}
+\item{bpc_object}{a bpc object}
 }
 \value{
 a data frame containing a column with the parameters, a column with mean and two columns with higher and lower hpdi
 }
 \description{
-Return a data frame with the mean and the HPDI for all parameters
+Return a data frame with the mean and with high and low 95\% hpd interval for all parameters of the model
 }
 \examples{
-
+m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
+hpdi<-get_hpdi_parameters(m_citations)
+print(hpdi)
 }

@@ -2,8 +2,7 @@
 % Please edit documentation in R/bpc_helpers.R
 \name{create_array_of_par_names}
 \alias{create_array_of_par_names}
-\title{Create an array with the name of the parameter and the corresponding index
-lambda\link{1} --> lambda_Biometrika}
+\title{Helper function for the get_par_names function in exports. This creates an array with the name of the parameter and the corresponding index}
 \usage{
 create_array_of_par_names(par, lookup_table)
 }
@@ -16,6 +15,5 @@ create_array_of_par_names(par, lookup_table)
 a vector
 }
 \description{
-Create an array with the name of the parameter and the corresponding index
-lambda\link{1} --> lambda_Biometrika
+Helper function for the get_par_names function in exports. This creates an array with the name of the parameter and the corresponding index
 }

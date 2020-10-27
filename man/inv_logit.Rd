@@ -2,8 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{inv_logit}
 \alias{inv_logit}
-\title{Inverse logit function
-See https://en.wikipedia.org/wiki/Logit}
+\title{Inverse logit function}
 \usage{
 inv_logit(x)
 }
@@ -15,5 +14,12 @@ a value between 0 and 1
 }
 \description{
 Inverse logit function
-See https://en.wikipedia.org/wiki/Logit
+}
+\examples{
+logit(5)
+logit(-5)
+logit(0)
+}
+\references{
+https://en.wikipedia.org/wiki/Logit
 }

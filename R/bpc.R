@@ -1,9 +1,18 @@
 #' Bayesian Paired comparison  regression models in Stan
-#' This is the main function of the package and it samples the posterior distribution of different models using Stan depending on the parameters choice
+#' This is the main function of the package.
+#' This function utilizes precompiled stan models to sample the posterior distribution of the specified model with the input data.
+#' Currently have implemented the following models in their Bayesian version:
+#' * Bradley-Terry: 'bradleyterry'. For this method ties should be handled, either by random solving or by removing them. Otherwise we get an error from Stan.
+#' * Davidson model (for handling ties): 'davidson'
+#' For more information regarding the dataset format see the vignettes.
+#' @references
+#' Bradley RA, Terry ME (1952). “Rank Analysis of Incomplete Block Designs I: The Method of Paired Comparisons.” Biometrika, 39, 324–45.
+#' Davidson RR (1970). “On Extending the Bradley-Terry Model to Accommodate Ties in Paired Comparison Experiments.” Journal of the American Statistical Association, 65, 317–328.
+#' Stan Development Team (2020). RStan: the R interface to Stan. R package version 2.21.2. http://mc-stan.org/.
 #' @param data A data frame containing the observations. The other parameters specify the name of the columns
 #' @param model_type 'bradleyterry' (default), 'davidson' for ties
-#' @param player0 A string with name of the column containing the players 0
-#' @param player1 A string with name of the column containing the players 0
+#' @param player0 A string with name of the column containing the players 0. This column should be of string/character type and not be of factor type.
+#' @param player1 A string with name of the column containing the players 0. This column should be of string/character type and not be of factor type.
 #' @param player0_score A string with name of the column containing the scores of players 0
 #' @param player1_score A string with name of the column containing the scores of players 1
 #' @param result_column A string with name of the column containing the winners. 0 for player 0, 1 for player 1 and 2 for ties
@@ -15,19 +24,12 @@
 #' @param iter Number of iterations passed to Stan sampling. Positive integer, default =2000. For more information consult Stan
 #' @param warmup Number of iteration for the warmup passed to Stan sampling. Positive integer, default 1000.  For more information consult Stan
 #' @param show_chain_messages Hide chain messages from stan
-#'
 #' @return An object of the class bpc. This object should be used in conjunction with the several auxiliary functions from the package
 #' @export
-#
 #' @examples
-#'  bpc(data=citations_agresti,
-#'               player0 = 'journal1',
-#'               player1 = 'journal2',
-#'               player0_score = 'score1',
-#'               player1_score = 'score2',
-#'               model_type='bradleyterry',
-#'               solve_ties='random',
-#'               win_score = 'higher')
+#' #For the simple Bradley-Terry model
+#' m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
+#' summary(m_citations)
 bpc <- function(data,
                 player0,
                 player1,

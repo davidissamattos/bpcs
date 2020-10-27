@@ -2,7 +2,8 @@
 % Please edit documentation in R/bpc_helpers.R
 \name{sample_stanfit}
 \alias{sample_stanfit}
-\title{Return a data frame by resampling the posterior from a stanfit}
+\title{Return a data frame by resampling the posterior from a stanfit
+Here we select a parameter, retrieve the all the posterior from the stanfit and then we resample this posterior n times}
 \usage{
 sample_stanfit(stanfit, par, n = 100)
 }
@@ -18,4 +19,8 @@ a dataframe containing the samples of the parameter. Each column is a parameter 
 }
 \description{
 Return a data frame by resampling the posterior from a stanfit
+Here we select a parameter, retrieve the all the posterior from the stanfit and then we resample this posterior n times
+}
+\references{
+Stan Development Team (2020). RStan: the R interface to Stan. R package version 2.21.2. http://mc-stan.org/.
 }

@@ -3,9 +3,11 @@
 \docType{data}
 \name{test_ties}
 \alias{test_ties}
-\title{A short fake dataset to test models with ties}
+\title{A short fake dataset to test models with ties.
+This data set does not have any real application but to easy test the data}
 \description{
-A short fake dataset to test models with ties
+A short fake dataset to test models with ties.
+This data set does not have any real application but to easy test the data
 }
 \references{
 None
