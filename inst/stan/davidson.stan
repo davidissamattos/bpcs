@@ -17,7 +17,7 @@ data {
 
 parameters {
   real <lower=0> lambda[N_players]; //Latent variable that represents the strength
-  real <lower=0> nu; // the tie parameter
+  real <lower=0> nu; // the tie parameter. Minimum is zero so the prior will be half-normal
 }
 
 model {
@@ -26,7 +26,7 @@ model {
   real nu_prod[N_total];
   real denom[N_total];
   lambda ~ normal(prior_lambda_std,prior_lambda_mu);
-  nu ~ exponential(prior_nu);
+  nu ~ normal(0,prior_nu);//half-normal prior
 
   for (i in 1:N_total)
   {
