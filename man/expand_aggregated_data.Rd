@@ -34,5 +34,5 @@ This function expands datasets that have aggregated data into this long format.
 \examples{
 #Creating a simple data frame with only one row to illustrate how the function works
 df1<- tibble::tribble(~player0, ~player1, ~wins0, ~wins1,~cluster, 'A','B',4, 3, 'c1')
-expand_aggregated_data(df1,'player0', 'player1', 'wins0', 'wins1', keep=c('cluster')
+expand_aggregated_data(df1,'player0', 'player1', 'wins0', 'wins1', keep=c('cluster'))
 }

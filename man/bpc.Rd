@@ -63,12 +63,25 @@ bpc(
 \item 'davidsonU': For Davidson model with random effects
 }}
 
-\item{solve_ties}{A string for the method of handling ties. 'random' for converting ties randomly, 'remove' for removing the tie occurrencess
-'none' to ignore ties. The last requires a model to handle ties such as the davidson if there are ties}
+\item{solve_ties}{A string for the method of handling ties.
+*'random' for converting ties randomly,
+*'remove' for removing the tie occurrencess
+\itemize{
+\item 'none' to ignore ties. This requires a model capable of handling  ties
+}}
 
 \item{win_score}{A string that indicates if a 'higher' score is winner or if a 'lower' score is winner}
 
-\item{priors}{A list with the parameters for the priors. TODO add possibities}
+\item{priors}{A list with the parameters for the priors.
+\itemize{
+\item prior_lambda_mu Mean value of the lambda parameter in the all models. For the generalized this is also the prior for the B the parameter for  lambda ~ normal(mu, std)
+\item prior_lambda_std Standard deviation of the lambda parameter in the all models. lambda ~ normal(mu, std)
+\item prior_nu_mu Mean value of the nu parameter in the Davidson  models. nu ~ normal(mu, std)
+\item prior_nu_std Standard deviation ofnu parameter in the Davidson  models. nu ~ normal(mu, std). Default = 0.3
+\item prior_gm_mu Mean value of the gm in the ordered effect model. gm ~ normal(mu, std). Default = 0
+\item prior_gm_std Standard deviation of the gm parameter in the ordered effect model. gm ~ normal(mu, std). Default =
+\item prior_U_std Standard deviation of the U parameter in the random effects model. U ~ normal(0, std). Default = 3.0
+}}
 
 \item{chains}{Number of chains passed to Stan sampling. Positive integer, default=4. For more information consult Stan}
 
@@ -78,8 +91,10 @@ bpc(
 
 \item{show_chain_messages}{Hide chain messages from stan}
 
-\item{seed}{a random seed for Stan
-@return An object of the class bpc. This object should be used in conjunction with the several auxiliary functions from the package}
+\item{seed}{a random seed for Stan}
+}
+\value{
+An object of the class bpc. This object should be used in conjunction with the several auxiliary functions from the package
 }
 \description{
 Bayesian Paired comparison  regression models in Stan
