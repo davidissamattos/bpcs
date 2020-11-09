@@ -1,0 +1,20 @@
+---
+title: "Home advantage in the Bradley-Terry and in the Davidson model"
+bibliography: bibliography.bib
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Home advantage in the Bradley-Terry and in the Davidson model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(bpcs)
+```
