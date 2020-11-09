@@ -5,8 +5,8 @@
 #' @export
 #'
 #' @examples
-#' m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
-#' stanfit<- get_stanfit(m_citations)
+#' m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
+#' stanfit<- get_stanfit(m)
 #' print(class(stanfit))
 get_stanfit<-function(bpc_object){
   if(class(bpc_object)!='bpc')
@@ -22,25 +22,25 @@ get_stanfit<-function(bpc_object){
 #' @export
 #'
 #' @examples
-#' m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
-#' s <- sample_posterior(m_citations, par='lambda', n=100)
+#' m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
+#' s <- sample_posterior(m, par='lambda', n=100)
 #' print(head(s))
 sample_posterior<-function(bpc_object, par='lambda', n=1000){
-  #TODO: verify the random effects condition
   #TODO: verify the predictors condition
-  #TODO: verify the home advantage condition
   if(class(bpc_object)!='bpc')
     stop('Error! The object is not of bpc class')
+
   n<-floor(n)
-  if(par=='U')
-    lookup_table <- bpc_object$cluster_lookup_table
-  else
-    lookup_table <- bpc_object$lookup_table
+  cluster_lookup_table <- bpc_object$cluster_lookup_table
+  lookup_table <- bpc_object$lookup_table
 
   stanfit<- get_stanfit(bpc_object)
   posterior <- as.data.frame(sample_stanfit(stanfit, par=par,n=n))
+
   #Creating parameter name for the columns
-  colnames(posterior) <- create_array_of_par_names(par,lookup_table)
+  # The challenge here is to present a data frame with the appropriate variable names in the order given by stan.
+  # We do this with the function below from helpers indexes
+  colnames(posterior) <- create_array_of_par_names(par,lookup_table=lookup_table, cluster_lookup_table = cluster_lookup_table)
   return(as.data.frame(posterior))
 }
 
@@ -50,13 +50,11 @@ sample_posterior<-function(bpc_object, par='lambda', n=1000){
 #' @export
 #'
 #' @examples
-#' m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
-#' hpdi<-get_hpdi_parameters(m_citations)
+#' m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
+#' hpdi<-get_hpdi_parameters(m)
 #' print(hpdi)
 get_hpdi_parameters<-function(bpc_object){
-  #TODO: verify the random effects condition
   #TODO: verify the predictors condition
-  #TODO: verify the home advantage condition
   if(class(bpc_object)!='bpc')
     stop('Error! The object is not of bpc class')
   hpdi<-bpc_object$hpdi
@@ -67,10 +65,13 @@ get_hpdi_parameters<-function(bpc_object){
   for(i in 1:length(pars)){
     parameter <- pars[i]
     if(parameter=='U'){
-      hpdi<-replace_parameter_index_with_names(hpdi,column = 'Parameter',par = parameter,bpc_object$cluster_lookup_table)
+      hpdi<-replace_parameter_index_with_names(hpdi,column = 'Parameter',par = parameter, lookup_table=bpc_object$lookup_table, cluster_lookup_table = bpc_object$cluster_lookup_table)
     }
-    else{
-      hpdi<-replace_parameter_index_with_names(hpdi, column = 'Parameter',par=parameter,bpc_object$lookup_table)
+    else if(parameter=='lambda'){
+      hpdi<-replace_parameter_index_with_names(hpdi, column = 'Parameter',par=parameter,lookup_table=bpc_object$lookup_table)
+    }
+    else if(parameter=='B'){
+      hpdi<-replace_parameter_index_with_names(hpdi, column = 'Parameter',par=parameter,lookup_table=bpc_object$lookup_table, predictors_lookup_table=bpc_object$predictors_lookup_table)
     }
   }
   return(hpdi)
@@ -86,11 +87,11 @@ get_hpdi_parameters<-function(bpc_object){
 #' @export
 #'
 #' @examples
-#' m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
-#' rank_citations<-rank_parameters(m_citations,n=100)
-#' rank_table <- dplyr::select(-MeanRank, -StadRank,-PosteriorRank)
+#' m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
+#' rank_m<-rank_parameters(m,n=100)
+#' rank_table <- dplyr::select(rank_m,-MeanRank, -StadRank,-PosteriorRank)
 #' print(rank_table)
-rank_parameters<-function(bpc_object,n=1000){
+rank_players<-function(bpc_object,n=1000){
   if(class(bpc_object)!='bpc')
     stop('Error! The object is not of bpc class')
   s<-sample_posterior(bpc_object,par='lambda',n=n)
@@ -110,62 +111,6 @@ rank_parameters<-function(bpc_object,n=1000){
   return(rank_df)
 }
 
-#' Get the empirical win/draw probabilities based on the ability/strength parameters.
-#' Instead of calculating from the probability formula given from the model we create a predictive posterior distribution for all pair combinations and calculate the empirical wins/loose/draw
-#' The function returns the mean value of win/loose/draw for the player i. To calculate for player j the probability is 1-p_i
-#' @param bpc_object a bpc object
-#' @param n number of samples to draw from the posterior
-#' @return a list with data frame table with the respective probabilities and a matrix with the corresponding posterior
-#' @export
-#'
-#' @examples
-#' m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
-#' prob<-get_probabilities(m_citations,n=100)
-#' print(prob$Table)
-get_probabilities<-function(bpc_object, n=1000){
-  if(class(bpc_object)!='bpc')
-    stop('Error! The object is not of bpc class')
-  model<-bpc_object$model_type
-  stanfit<-get_stanfit(bpc_object)
-  out <- NULL
-  s<-sample_posterior(bpc_object,n=n)
-  lookup<-bpc_object$lookup_table
-  # Here we will get a Bayesian estimated probability of winning/ties
-  #first we create a data frame of new data
-  comb <- gtools::combinations(n=bpc_object$Nplayers, r=2, v=lookup$Names, repeats.allowed = F)
-  newdata<- data.frame(comb)
-  colnames(newdata)<-c(bpc_object$call_arg$player0,bpc_object$call_arg$player1)
-  pred<-predict(bpc_object, newdata=newdata, n=n,return_matrix=T)
-
-  if(model=='bradleyterry')
-  {
-    mean_pred <- apply(pred, 2, mean)
-    # prob_hpd_lower <-apply(ypred, 2, HPD_lower_from_column)
-    # prob_hpd_higher <- apply(ypred, 2, HPD_higher_from_column)
-    t<- data.frame(i= comb[,1],
-                   j=comb[,2],
-                   i_beats_j=mean_pred)  %>%
-      tibble::remove_rownames()
-    out<-list(Table=t,
-              Posterior = t(pred))
-  }
-  if(model=='davidson')
-  {
-    y_pred <- pred[, startsWith(colnames(pred),"y_pred")]
-    ties_pred <- pred[, startsWith(colnames(pred),"ties_pred")]
-    mean_y <- apply(y_pred, 2, mean)
-    mean_ties <- apply(ties_pred, 2, mean)
-    t <- data.frame(i= comb[,1],
-                    j=comb[,2],
-                    i_beats_j=mean_y,
-                    i_ties_j=mean_ties)  %>%
-      tibble::remove_rownames()
-    out<- list(Table=t,
-               Posterior=t(pred))
-  }
-  return(out)
-}
-
 
 #' Tiny wrapper for the PSIS-LOO-CV method from the loo package
 #' This is used to evaluate the fit of the model using entropy criteria
@@ -176,8 +121,8 @@ get_probabilities<-function(bpc_object, n=1000){
 #' @export
 #'
 #' @examples
-#' m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
-#' l<-get_loo(m_citations)
+#'  m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
+#'  l<-get_loo(m)
 #' print(l)
 get_loo<-function(bpc_object){
   if(class(bpc_object)!='bpc')
@@ -195,8 +140,8 @@ get_loo<-function(bpc_object){
 #' @export
 #'
 #' @examples
-#' m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
-#' waic<-get_waic(m_citations)
+#' m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
+#' waic<-get_waic(m)
 #' print(waic)
 get_waic <- function(bpc_object){
   if(class(bpc_object)!='bpc')
@@ -215,22 +160,4 @@ launch_shinystan<-function(bpc_object){
   if(class(bpc_object)!='bpc')
     stop('Error! The object is not of bpc class')
   shinystan::launch_shinystan(get_stanfit(bpc_object))
-}
-
-
-#' Create an array with the name of the parameter and the corresponding index created automatically from the lookup table
-#' E.g  for parameter lambda with 4 players we have (lambda[1], lambda[2], lambda[3], lambda[4]). This function will return (lambda_Biometrika, lambda_CommStat, lambda_JASA, lambda_JRSSB)
-#' @param bpc_object is a bpc object
-#' @param par a name for the parameter
-#' @return a vector containing the equivalent, respective to the indexes, vector with the names.
-#' @export
-#' @examples
-#' m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
-#' print(get_par_names(m_citations,par='lambda'))
-get_par_names <- function(bpc_object,par){
-  if(par=='U')
-    name <- create_array_of_par_names(par=par, lookup_table = bpc_object$cluster_lookup_table)
-  else
-    name <- create_array_of_par_names(par=par, lookup_table = bpc_object$lookup_table)
-  return(name)
 }

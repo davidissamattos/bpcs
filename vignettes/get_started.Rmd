@@ -1,6 +1,6 @@
 ---
 title: "Getting Started with the bpcs package"
-bibliography: ./bibliography.bib
+bibliography: bibliography.bib
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting Started with the bpcs package}
@@ -43,6 +43,8 @@ library(bpcs)
 The `bpcs` package performs Bayesian estimation of Paired Comparison models utilizing Stan. 
 We provide a series of models and auxiliary functions to help in the analysis and evaluation of the models. However, this package have the philosophy of 'batteries not included' for plots, tables and data transformation. There are already many great packages capable of performing create high quality plots, tables and that provides tools for data transformation. Since each user can have their own preferences, customization needs and data cleaning and transformation workflows, we designed not to enforce any particular framework or package. Our functions were designed to return cleaned data frames that can be used almost directly, or with few transformations in those packages. 
 
+At the moment, the only exception to this is the `expand_aggregated_data` function that receives a data frame with the number of wins for player 1 and the numbers of wins for player 2 and expand this aggregated data into a single match per row (that is required for our models). We include this function because this type of transformation is common since packages such as `BradleyTerry2` [@turner2012bradley] receives this type of aggregated data and many available datasets are presented like that.
+
 With that said, we provide in the vignettes the code we use to transform the data and generate the tables and plots. The user is free to use/copy/modify these codes for their own use. For those we rely on the collection of packages `tidyverse` [@tidyverse2019], and the packages `knitr` [@knitr2014] and `kableExtra` [@kableExtra2020].
 
 
@@ -50,35 +52,27 @@ With that said, we provide in the vignettes the code we use to transform the dat
 
 # Tennis example
 
-In this example, we will use the example from tennis players from Agresti [@agresti2003categorical]. The data `tennis_agresti` contains the information regarding tennis matches between 5 players, and how many times they won against each other.
+In this example, we will use the example from tennis players from Agresti [@agresti2003categorical]. The data `tennis_agresti` contains the information regarding tennis matches between 5 players, and who won the match, 0 for player0 or 1 for player1.
 
 ```{r}
 knitr::kable(tennis_agresti) %>% 
   kableExtra::kable_styling()
 ```
 
-We can expand this data into a series of matches with results of who won and who lost. We can visualize it in the `tennis_agresti_2`.
-
-Although, functions can be created to expand `tennis_agresti` in `tennis_agresti_2` due to the size of this dataset we performed this manually.
-
-```{r}
-knitr::kable(tennis_agresti_2) %>% 
-  kableExtra::kable_styling()
-```
-
 We can fit a Bayesian Bradley-Terry model using the `bpc` function
 
 ```{r}
-m1 <- bpc(data = tennis_agresti_2,
+m1 <- bpc(data = tennis_agresti,
           player0 = 'player0',
           player1 = 'player1',
           result_column = 'y',
-          model_type = 'bradleyterry',
+          model_type = 'bt',
           solve_ties = 'none', #there are no ties
           show_chain_messages = T)
 ```
 
 ## Diagnostics
+
 After the chain converges to find the result we can investigate if everything went right. 
 For that we can use the excellent tool provided in the `shinystan` [@shinystan2018] package that helps to assess the convergence of the chains.
 
@@ -96,7 +90,12 @@ stanfit <- get_stanfit(m1)
 shinystan::launch_shinystan(stanfit)
 ```
 
-If you prefer to investigate without `shinystan` we can retrieve the stanfit object and investigate ourselves or with the help of the `bayesplot` package [@bayesplot2019]
+If you prefer to investigate without `shinystan` we can retrieve the stanfit object and investigate ourselves or with the help of the `bayesplot` package [@bayesplot2019]. Here we need the stanfit and the stan posterior matrix to proceed. The indexes in Stan refer to the names and indexes available at the lookup table
+
+```{r}
+kable(m1$lookup_table)
+```
+
 
 ```{r}
 stanfit <- get_stanfit(m1)
@@ -108,7 +107,7 @@ Getting the traceplots:
 ```{r}
 mcmc_trace(posterior,pars = c("lambda[1]","lambda[2]","lambda[3]","lambda[4]"), n_warmup=1000)
 ```
-From the graph above we see a good mix between the chains.
+From the graph above we see a good mix between the chains. Specially after warmup (grey area)
 
 We can also look at divergent iterations between two parameters
 ```{r}
@@ -119,7 +118,7 @@ mcmc_scatter(
   np_style = scatter_style_np(div_color = "green", div_alpha = 0.8)
 )
 ```
-In this graph we don't see any between lambda[1] and lambda[2]
+In this graph we don't see any divergent iterations between lambda[1] and lambda[2]
 
 Verifying the Rhat and neff using the functions from `rstan`
 ```{r}
@@ -132,14 +131,10 @@ rstan::summary(stanfit ,pars=c('lambda'))$summary
 We first get the observed values and then the predictive values of the original dataframe. We can get predictive values with the predictive function and passing a data frame with the values we want to predict (in this case the original one). Note that we need to have the same column names in this new data frame
 
 ```{r}
-y<-as.vector(tennis_agresti_2$y)
-yrep<-predict(m1,tennis_agresti_2,n=100,return_matrix = T)
+y<-as.vector(tennis_agresti$y)
+yrep<-predict(m1,tennis_agresti,n=100,return_matrix = T)
 ```
 
-Now we plot the predictive posteriors
-```{r}
-ppc_stat(y=y, yrep=yrep, stat="median")
-```
 
 ```{r}
 ppc_bars(y=y, yrep=yrep) +
@@ -150,9 +145,9 @@ The  plots indicate a good model as the predictive posterior and the observed va
 
 ## Parameter tables and plots
 
-Now that we are confident on our model we can create some tables to report our results. 
+Now that we are confident that our model is correct, we can create some tables to report our results.
 
-To see the results in the console the `summary` function provides a good overview of the model.
+To see the results in the console the `summary` function provides a good overview of the model. With parameters, probability of winning and a ranking.
 ```{r}
 summary(m1)
 ```
@@ -170,8 +165,8 @@ A posterior distribution figure. The initial code is to replace the lambda[1] to
 #changing the names of the parameters in the posterior 
 dimnames<-attr(posterior, 'dimnames')
 parameters<-dimnames$parameters #reading the parameters of the posterior
-names <- get_par_names(m1,par='lambda')#from bpcs
-indexes <- seq(1:length(names))
+names <- m1$lookup_table$Names
+indexes <-m1$lookup_table$Index
 new_pars <- replace(parameters,indexes,names)
 #changin the attributes
 dimnames$parameters<-new_pars
@@ -184,14 +179,14 @@ mcmc_areas(posterior,
 ```
 
 ```{r}
-kable(get_probabilities(m1), caption = 'Probabilities of one player beating the other', digits = 2) %>% 
-  kable_styling() %>% 
-  add_header_above(c("P[i beats j]"=2, "Estimates"=3))
+prob_table<-get_probabilities(m1)$Table
+kable(prob_table, caption = 'Probabilities of one player beating the other', digits = 2) %>% 
+  kable_styling()
 ```
 We might also be interested in ranking the players based on their ability $lambda$. In the Bayesian case, we sample the posterior distribution of $lambda$ and rank them so we have posterior distribution of the ranks. This can be achieve with the function `rank_parameters`.
 
 ```{r}
-ranking <- rank_parameters(m1)
+ranking <- rank_players(m1)
 ```
 
 We can produce a table with the values of this dataframe.
@@ -229,44 +224,3 @@ y_seles %>%
 If the average number of wins of player 1 is higher than 0.5 than player 1 wins more times than player 0.
 
 Note that this is consistent with the obtained ranking and the probabilities of beating.
-
-## Comparing with aggregated data
-
-We can compare this result with the aggregated data of wins, and consider the number of wins as a score.
-Since in the aggregated we are throwing out information on how many times one player beats the other we recommend using the expanded version
-
-```{r}
-m2 <- bpc(data = tennis_agresti,
-          player0 = 'player0',
-          player1 = 'player1',
-          player0_score = 'wins_player0', 
-          player1_score = 'wins_player1',
-          model_type = 'bradleyterry',
-          solve_ties = 'random', #now there is one tie and we need to handle it
-          show_chain_messages = F)
-```
-
-Now let's compare the summary tables of both
-
-Expanded:
-```{r}
-summary(m1)
-```
-
-Reduced:
-```{r}
-summary(m2)
-```
-
-We can see that we have very different probabilities of winning (comparing the strength parameter itself is not recommended)
-
-Comparing the produced ranks we see that we even have a difference in the location fo the ranks for Navratilova and Seles
-```{r}
-ranking2 <- rank_parameters(m2)
-t2 <- ranking2 %>% dplyr::select(Parameter, MedianRank, StdRank)
-kable(t, caption = 'Rank of the players Expanded Dataset') %>%
-  kable_styling()
-kable(t2, caption = 'Rank of the players Aggregated Dataset') %>%
-  kable_styling()
-```
-

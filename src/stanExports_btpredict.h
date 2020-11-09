@@ -33,7 +33,7 @@ static int current_statement_begin__;
 stan::io::program_reader prog_reader__() {
     stan::io::program_reader reader;
     reader.add_event(0, 0, "start", "model_btpredict");
-    reader.add_event(25, 23, "end", "model_btpredict");
+    reader.add_event(31, 29, "end", "model_btpredict");
     return reader;
 }
 #include <stan_meta_header.hpp>
@@ -273,11 +273,34 @@ public:
             // generated quantities statements
             current_statement_begin__ = 20;
             for (int i = 1; i <= N_newdata; ++i) {
+                {
                 current_statement_begin__ = 21;
+                local_scalar_t__ p1_win(DUMMY_VAR__);
+                (void) p1_win;  // dummy to suppress unused var warning
+                stan::math::initialize(p1_win, DUMMY_VAR__);
+                stan::math::fill(p1_win, DUMMY_VAR__);
+                current_statement_begin__ = 22;
+                local_scalar_t__ p1(DUMMY_VAR__);
+                (void) p1;  // dummy to suppress unused var warning
+                stan::math::initialize(p1, DUMMY_VAR__);
+                stan::math::fill(p1, DUMMY_VAR__);
+                current_statement_begin__ = 23;
+                local_scalar_t__ p0(DUMMY_VAR__);
+                (void) p0;  // dummy to suppress unused var warning
+                stan::math::initialize(p0, DUMMY_VAR__);
+                stan::math::fill(p0, DUMMY_VAR__);
+                current_statement_begin__ = 24;
+                stan::math::assign(p1, stan::math::exp(get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1)));
+                current_statement_begin__ = 25;
+                stan::math::assign(p0, stan::math::exp(get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1)));
+                current_statement_begin__ = 26;
+                stan::math::assign(p1_win, (p1 / (p0 + p1)));
+                current_statement_begin__ = 27;
                 stan::model::assign(y_pred, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
-                            bernoulli_logit_rng((get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1) - get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1)), base_rng__), 
+                            bernoulli_rng(p1_win, base_rng__), 
                             "assigning variable y_pred");
+                }
             }
             // validate, write generated quantities
             current_statement_begin__ = 19;

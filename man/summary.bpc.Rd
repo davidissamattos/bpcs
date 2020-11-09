@@ -21,3 +21,7 @@ Summary of the model bpc model
 Table 1: Contains the parameter estimates and respective HPD interval
 Table 2: Contains the empirical probability for the combination of all players
 }
+\examples{
+m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
+summary(m)
+}

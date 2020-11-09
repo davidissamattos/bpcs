@@ -7,3 +7,14 @@
 ^docs$
 ^pkgdown$
 ^\.github$
+^doc$
+^Meta$
+^data/test_bt\.rda$
+^data/test_btorder\.rda$
+^data/test_btscores\.rda$
+^data/test_btU\.rda$
+^data/test_davidson\.rda$
+^data/test_davidsonorder\.rda$
+^data/test_davidsonU\.rda$
+^data/test_predictors\.rda$
+^\.covignore$

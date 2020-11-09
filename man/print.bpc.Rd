@@ -19,3 +19,7 @@ We only print the parameter values and the HDPI}
 Print method for the bpc object
 We only print the parameter values and the HDPI
 }
+\examples{
+m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
+print(m)
+}

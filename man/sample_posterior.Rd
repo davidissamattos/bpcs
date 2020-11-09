@@ -20,7 +20,7 @@ Return a data frame with the posterior samples for the parameters. One column fo
 Get the posterior samples for a parameter of the model.
 }
 \examples{
-m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
-s <- sample_posterior(m_citations, par='lambda', n=100)
+m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
+s <- sample_posterior(m, par='lambda', n=100)
 print(head(s))
 }

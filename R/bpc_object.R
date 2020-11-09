@@ -10,7 +10,7 @@
 #' @param call_arg a list with the arguments called from the bpc function
 #' @return a bpc object
 #'
-create_bpc_object <- function(stanfit, lookup_table, cluster_lookup_table=NULL, model_type, standata, call_arg){
+create_bpc_object <- function(stanfit, lookup_table, model_type, standata, call_arg, cluster_lookup_table=NULL, predictors_df=NULL, predictors_lookup_table=NULL, predictors_matrix=NULL){
 
   hpdi <- HPDI_from_stanfit(stanfit)
 
@@ -21,6 +21,9 @@ create_bpc_object <- function(stanfit, lookup_table, cluster_lookup_table=NULL, 
               hpdi=hpdi,
               lookup_table=lookup_table,
               cluster_lookup_table = cluster_lookup_table,
+              predictors_df=predictors_df,
+              predictors_lookup_table = predictors_lookup_table,
+              predictors_matrix=predictors_matrix,
               model_type=model_type,
               standata=standata,
               call_arg=call_arg)

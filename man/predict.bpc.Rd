@@ -7,12 +7,14 @@ This S3 function receives the bpc model and a data frame containing the same col
 It returns another data frame with with the same columns of the new data and n additional columns representing a posterior preditive distribution.
 See the vignettes for a larger example with the usage of this function}
 \usage{
-\method{predict}{bpc}(object, newdata, n = 100, return_matrix = F)
+\method{predict}{bpc}(object, newdata, predictors = NULL, n = 100, return_matrix = F)
 }
 \arguments{
 \item{object}{a bpc object}
 
 \item{newdata}{a data frame that contains columns with the same names as used to fit the data in the model.}
+
+\item{predictors}{A data frame that contains the players predictors values when using a generalized model. Should be set only if using the generalized models. Only numeric values are accepted. Booleans are accepted but will be cast into integers. The first column should be for the player name, the others will be the predictors.  The column names will be used as name for the predictors}
 
 \item{n}{number of time we will iterate and get the posterior. default is 100 so we dont get too many}
 
@@ -27,4 +29,9 @@ Predict results for new data
 This S3 function receives the bpc model and a data frame containing the same columns as the one used to fit the model.
 It returns another data frame with with the same columns of the new data and n additional columns representing a posterior preditive distribution.
 See the vignettes for a larger example with the usage of this function
+}
+\examples{
+m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
+predict(m,newdata=tennis_agresti)
+
 }

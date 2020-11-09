@@ -1,13 +1,13 @@
 Package: bpcs
-Title:  bpcs - A package for Bayesian Paired Comparison analysis with Stan
+Title: bpcs - A package for Bayesian Paired Comparison analysis with Stan
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "David",
            family = "Issa Mattos",
            role = c("aut", "cre"),
            email = "issamattos.david@gmail.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: The bpcs package provides pre compiled Stan models for the analysis of paired comparison data. The models include Bayesian versions of the Bradley-Terry model, including random effects (1 level) and predictors and the Davidson (1970) model to handle ties. Additionally, we provide a number of functions to facilitate inference on these models. 
+           comment = c(ORCID = "0000-0002-2501-9926"))
+Description: The bpcs package provides pre compiled Stan models for the analysis of paired comparison data. The models include Bayesian versions of the Bradley-Terry model, including random effects (1 level), generalized model for predictors, order effect (home advantage) and the same variations for the Davidson (1970) model to handle ties. Additionally, we provide a number of functions to facilitate inference and obtaining results with these models. 
 URL: https://github.com/davidissamattos/bpcs, https://davidissamattos.github.io/bpcs/
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -33,7 +33,8 @@ Imports:
     shinystan,
     loo,
     magrittr,
-    badger
+    badger,
+    stats
 LinkingTo: 
     BH (>= 1.66.0),
     Rcpp (>= 0.12.0),
@@ -46,5 +47,6 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    covr
+    covr,
+    bayesplot
 VignetteBuilder: knitr

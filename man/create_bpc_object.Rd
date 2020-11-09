@@ -9,10 +9,13 @@ object generated from the rstan sampling procedure}
 create_bpc_object(
   stanfit,
   lookup_table,
-  cluster_lookup_table = NULL,
   model_type,
   standata,
-  call_arg
+  call_arg,
+  cluster_lookup_table = NULL,
+  predictors_df = NULL,
+  predictors_lookup_table = NULL,
+  predictors_matrix = NULL
 )
 }
 \arguments{
@@ -20,13 +23,13 @@ create_bpc_object(
 
 \item{lookup_table}{lookup_table dataframe. Two columns one Index the other Names where each each index will match a string in the names}
 
-\item{cluster_lookup_table}{a lookup table with we have random effects}
-
 \item{model_type}{the type of the model used to call stan (string)}
 
 \item{standata}{a list with the data used to call the rstan::sampling procedure}
 
 \item{call_arg}{a list with the arguments called from the bpc function}
+
+\item{cluster_lookup_table}{a lookup table with we have random effects}
 }
 \value{
 a bpc object

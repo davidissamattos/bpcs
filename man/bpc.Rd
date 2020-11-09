@@ -19,14 +19,18 @@ bpc(
   player0_score = NULL,
   player1_score = NULL,
   result_column = NULL,
-  model_type = "bradleyterry",
+  z_player1 = NULL,
+  cluster = NULL,
+  predictors = NULL,
+  model_type = "bt",
   solve_ties = "random",
   win_score = "higher",
   priors = NULL,
   chains = 4,
   iter = 2000,
   warmup = 1000,
-  show_chain_messages = T
+  show_chain_messages = TRUE,
+  seed = NA
 )
 }
 \arguments{
@@ -42,14 +46,29 @@ bpc(
 
 \item{result_column}{A string with name of the column containing the winners. 0 for player 0, 1 for player 1 and 2 for ties}
 
-\item{model_type}{'bradleyterry' (default), 'davidson' for ties}
+\item{z_player1}{A string with the name of the column containing the order effect for player 1. E.g. if player1 has the home advantage this column should have 1 otherwise it should have 0}
+
+\item{cluster}{A string with the name of the column containing the cluster for the observation. To be used with a random effects model. This column should contain strings}
+
+\item{predictors}{A data frame that contains the players predictors values when using a generalized model. Only numeric values are accepted. Booleans are accepted but will be cast into integers. The first column should be for the player name, the others will be the predictors.  The column names will be used as name for the predictors}
+
+\item{model_type}{\itemize{
+\item 'bt' (default) for the Bradley Terry model. Ref: Bradley-Terry 1952,
+\item 'davidson' the Davidson model to handle for ties. Ref: Davidson 1970
+\item 'btordereffect' for the Bradley-Terry with order effect (for home advantage). Ref: Davidson 1977
+\item 'davidsonordereffect' for the Davidson model with order effect (for home advantage) and ties. Ref: Davidson 1977
+\item 'btgeneralized': for the generalized Bradley Terry model for subject specific predictors
+\item 'davidsongeneralized' for the generalized Davidson model for subject specific predictors
+\item 'btU': for the Bradley-Terry with random effects
+\item 'davidsonU': For Davidson model with random effects
+}}
 
 \item{solve_ties}{A string for the method of handling ties. 'random' for converting ties randomly, 'remove' for removing the tie occurrencess
 'none' to ignore ties. The last requires a model to handle ties such as the davidson if there are ties}
 
 \item{win_score}{A string that indicates if a 'higher' score is winner or if a 'lower' score is winner}
 
-\item{priors}{A list with the parameters for the priors. Possible values ''}
+\item{priors}{A list with the parameters for the priors. TODO add possibities}
 
 \item{chains}{Number of chains passed to Stan sampling. Positive integer, default=4. For more information consult Stan}
 
@@ -58,9 +77,9 @@ bpc(
 \item{warmup}{Number of iteration for the warmup passed to Stan sampling. Positive integer, default 1000.  For more information consult Stan}
 
 \item{show_chain_messages}{Hide chain messages from stan}
-}
-\value{
-An object of the class bpc. This object should be used in conjunction with the several auxiliary functions from the package
+
+\item{seed}{a random seed for Stan
+@return An object of the class bpc. This object should be used in conjunction with the several auxiliary functions from the package}
 }
 \description{
 Bayesian Paired comparison  regression models in Stan
@@ -75,11 +94,11 @@ For more information regarding the dataset format see the vignettes.
 }
 \examples{
 #For the simple Bradley-Terry model
-m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
-summary(m_citations)
+bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
 }
 \references{
 Bradley RA, Terry ME (1952). “Rank Analysis of Incomplete Block Designs I: The Method of Paired Comparisons.” Biometrika, 39, 324–45.
 Davidson RR (1970). “On Extending the Bradley-Terry Model to Accommodate Ties in Paired Comparison Experiments.” Journal of the American Statistical Association, 65, 317–328.
+Davidson, Roger R., and Robert J. Beaver (1977). "On extending the Bradley-Terry model to incorporate within-pair order effects." Biometrics: 693-702.
 Stan Development Team (2020). RStan: the R interface to Stan. R package version 2.21.2. http://mc-stan.org/.
 }

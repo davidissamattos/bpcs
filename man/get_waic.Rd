@@ -18,8 +18,8 @@ Tiny wrapper for the WAIC method from the loo package
 This is used to evaluate the fit of the model using the Watanabe-Akaike Information criteria
 }
 \examples{
-m_citations<-bpc(data=citations_agresti,player0 = 'journal1',player1 = 'journal2',player0_score = 'score1',player1_score = 'score2',model_type='bradleyterry',solve_ties='random',win_score = 'higher',show_chain_messages=F)
-waic<-get_waic(m_citations)
+m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
+waic<-get_waic(m)
 print(waic)
 }
 \references{

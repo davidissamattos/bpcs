@@ -1,97 +1,79 @@
 test_that("Input errors are caught in bpc", {
   #missing either player scores and the result column
   #mising player0_score and result column
-  expect_error(bpc(data=citations_agresti,
-                   player0 = 'journal1',
-                   player1 = 'journal2',
-                   player1_score = 'score2',
-                   model_type='bradleyterry',
+  expect_error(bpc(data=test_btscores,
+                   player0 = 'player0',
+                   player1 = 'player1',
+                   player1_score = 'score1',
+                   model_type='bt',
                    solve_ties='random',
                    win_score = 'higher'))
   #mising player1_score and result column
-  expect_error(bpc(data=citations_agresti,
-                   player0 = 'journal1',
-                   player1 = 'journal2',
-                   player0_score = 'score1',
-                   model_type='bradleyterry',
-                   solve_ties='random',
-                   win_score = 'higher'))
+  expect_error(bpc(data=test_btscores,
+                    player0 = 'player0',
+                    player1 = 'player1',
+                    player1_score = 'score0',
+                    model_type='bt',
+                    solve_ties='random',
+                    win_score = 'higher'))
   #missing both scores and result column
-  expect_error(bpc(data=citations_agresti,
-                   player0 = 'journal1',
-                   player1 = 'journal2',
-                   model_type='bradleyterry',
-                   solve_ties='random',
-                   win_score = 'higher'))
+  expect_error(bpc(data=test_btscores,
+                    player0 = 'player0',
+                    player1 = 'player1',
+                    model_type='bt',
+                    solve_ties='random',
+                    win_score = 'higher'))
 
   # input is not data frame or tibble # weird input for example
   expect_error(bpc(data=c(1,1,2),
-                   player0 = 'journal1',
-                   player1 = 'journal2',
-                   model_type='bradleyterry',
+                   player0 = 'player0',
+                   player1 = 'player1',
+                   results_column='y',
+                   model_type='bt',
                    solve_ties='random',
                    win_score = 'higher'))
 
+
+
+})
+
+
+test_that("Input warnings are caught in bpc", {
+  expect_warning(bpc(data=test_davidson,
+                   player0 = 'player0',
+                   player1 = 'player1',
+                   result_column = 'y',
+                   model_type='davidson',
+                   solve_ties='random',
+                   win_score = 'higher',
+                   iter=1000,
+                   warmup=300,
+                   show_chain_messages=F))
 })
 
 test_that('if there are ties AND solte_ties is none AND model is not davidson gives error',{
-  expect_error(bpc(data=tennis_agresti,#there are ties here
+  expect_error(bpc(data=test_davidson,#there are ties here
                    player0 = 'player0',
                    player1 = 'player1',
-                   player0_score = 'wins_player0',
-                   player1_score = 'wins_player1',
-                   model_type='bradleyterry', #model is not davidson
+                   results_column = 'y',
+                   model_type='bt', #model is not davidson
                    solve_ties='none', #method is none
                    win_score = 'higher'))
 })
 
 
-
-
-test_that("bpc returns a bpc object with datasets using the bradleyterry model", {
-  m_citations<-bpc(data=citations_agresti,
-                   player0 = 'journal1',
-                   player1 = 'journal2',
-                   player0_score = 'score1',
-                   player1_score = 'score2',
-                   model_type='bradleyterry',
-                   solve_ties='random',
-                   win_score = 'higher',
-                   show_chain_messages=F)
-
-  m1_tennis<-bpc(data=tennis_agresti,
-                 player0 = 'player0',
-                 player1 = 'player1',
-                 player0_score = 'wins_player0',
-                 player1_score = 'wins_player1',
-                 model_type='bradleyterry',
-                 solve_ties='random',
-                 win_score = 'higher',
-                 show_chain_messages=F)
-
-  m2_tennis<-bpc(data=tennis_agresti,
-                 player0 = 'player0',
-                 player1 = 'player1',
-                 player0_score = 'wins_player0',
-                 player1_score = 'wins_player1',
-                 model_type='bradleyterry',
-                 solve_ties='remove',
-                 win_score = 'higher',
-                 show_chain_messages=F)
-
-  expect_s3_class(m_citations,'bpc')
-  expect_s3_class(m1_tennis,'bpc')
-  expect_s3_class(m2_tennis,'bpc')
+test_that('if has z_player1 column but not the correct model gives error',{
+  expect_error(bpc(data=test_homebt,#there are ties here
+                   player0 = 'player0',
+                   player1 = 'player1',
+                   result_column = 'y',
+                   z_player1 = 'y',
+                   model_type='bt', #model is not btordereffect
+                   solve_ties='none',
+                   win_score = 'higher'))
 })
 
 
-test_that("bpc returns a bpc object with datasets using the davidson model", {
-  m_ties<-bpc(data=test_ties,
-              player0 = 'player0',
-              player1 = 'player1',
-              result_column = 'y',
-              model_type='davidson',
-              show_chain_messages=F)
 
-  expect_s3_class(m_ties,'bpc')
-})
+
+

@@ -1,18 +1,5 @@
 ## code to prepare `tennis_agresti` dataset goes here
-tennis_agresti <- tibble::tribble(~player0, ~player1, ~wins_player0, ~wins_player1,
-                                     'Seles', 'Graf', 2, 3,
-                                     'Seles', 'Sabatini', 1, 0,
-                                     'Seles', 'Navratilova', 3, 3,
-                                     'Seles', 'Sanchez', 2, 0,
-                                     'Graf', 'Sabatini', 6, 3,
-                                     'Graf', 'Navratilova', 3, 0,
-                                     'Graf', 'Sanchez', 7, 1,
-                                     'Sabatini', 'Navratilova', 1, 2,
-                                     'Sabatini', 'Sanchez', 3, 2,
-                                     'Navratilova', 'Sanchez',3, 1
-)
-
-tennis_agresti_2 <- tibble::tribble(~player0, ~player1, ~y, ~id,
+tennis_agresti <- tibble::tribble(~player0, ~player1, ~y, ~id,
                                   'Seles', 'Graf', 0, 1,
                                   'Seles', 'Graf', 0, 2,
                                   'Seles', 'Graf', 1, 3,
@@ -62,4 +49,3 @@ tennis_agresti_2 <- tibble::tribble(~player0, ~player1, ~y, ~id,
 )
 
 usethis::use_data(tennis_agresti, overwrite = TRUE)
-usethis::use_data(tennis_agresti_2, overwrite = TRUE)

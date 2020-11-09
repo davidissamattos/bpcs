@@ -33,7 +33,7 @@ static int current_statement_begin__;
 stan::io::program_reader prog_reader__() {
     stan::io::program_reader reader;
     reader.add_event(0, 0, "start", "model_davidsonpredict");
-    reader.add_event(30, 28, "end", "model_davidsonpredict");
+    reader.add_event(42, 40, "end", "model_davidsonpredict");
     return reader;
 }
 #include <stan_meta_header.hpp>
@@ -173,7 +173,7 @@ public:
         double nu(0);
         nu = vals_r__[pos__++];
         try {
-            writer__.scalar_lb_unconstrain(0, nu);
+            writer__.scalar_unconstrain(nu);
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable nu: ") + e.what()), current_statement_begin__, prog_reader__());
         }
@@ -216,9 +216,9 @@ public:
             local_scalar_t__ nu;
             (void) nu;  // dummy to suppress unused var warning
             if (jacobian__)
-                nu = in__.scalar_lb_constrain(0, lp__);
+                nu = in__.scalar_constrain(lp__);
             else
-                nu = in__.scalar_lb_constrain(0);
+                nu = in__.scalar_constrain();
             // model body
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
@@ -284,7 +284,7 @@ public:
         for (size_t k_0__ = 0; k_0__ < lambda_k_0_max__; ++k_0__) {
             vars__.push_back(lambda[k_0__]);
         }
-        double nu = in__.scalar_lb_constrain(0);
+        double nu = in__.scalar_constrain();
         vars__.push_back(nu);
         double lp__ = 0.0;
         (void) lp__;  // dummy to suppress unused var warning
@@ -309,16 +309,53 @@ public:
             // generated quantities statements
             current_statement_begin__ = 22;
             for (int i = 1; i <= N_newdata; ++i) {
+                {
+                current_statement_begin__ = 23;
+                local_scalar_t__ p0(DUMMY_VAR__);
+                (void) p0;  // dummy to suppress unused var warning
+                stan::math::initialize(p0, DUMMY_VAR__);
+                stan::math::fill(p0, DUMMY_VAR__);
                 current_statement_begin__ = 24;
+                local_scalar_t__ p1(DUMMY_VAR__);
+                (void) p1;  // dummy to suppress unused var warning
+                stan::math::initialize(p1, DUMMY_VAR__);
+                stan::math::fill(p1, DUMMY_VAR__);
+                current_statement_begin__ = 25;
+                local_scalar_t__ geom_term(DUMMY_VAR__);
+                (void) geom_term;  // dummy to suppress unused var warning
+                stan::math::initialize(geom_term, DUMMY_VAR__);
+                stan::math::fill(geom_term, DUMMY_VAR__);
+                current_statement_begin__ = 26;
+                local_scalar_t__ p_draw(DUMMY_VAR__);
+                (void) p_draw;  // dummy to suppress unused var warning
+                stan::math::initialize(p_draw, DUMMY_VAR__);
+                stan::math::fill(p_draw, DUMMY_VAR__);
+                current_statement_begin__ = 27;
+                local_scalar_t__ p_1_win_not_draw(DUMMY_VAR__);
+                (void) p_1_win_not_draw;  // dummy to suppress unused var warning
+                stan::math::initialize(p_1_win_not_draw, DUMMY_VAR__);
+                stan::math::fill(p_1_win_not_draw, DUMMY_VAR__);
+                current_statement_begin__ = 29;
+                stan::math::assign(p0, stan::math::exp(get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1)));
+                current_statement_begin__ = 30;
+                stan::math::assign(p1, stan::math::exp(get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1)));
+                current_statement_begin__ = 31;
+                stan::math::assign(geom_term, stan::math::exp((nu + (0.5 * (get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1) + get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1))))));
+                current_statement_begin__ = 33;
+                stan::math::assign(p_draw, (geom_term / ((p0 + p1) + geom_term)));
+                current_statement_begin__ = 34;
+                stan::math::assign(p_1_win_not_draw, (p1 / ((p0 + p1) + geom_term)));
+                current_statement_begin__ = 36;
                 stan::model::assign(ties_pred, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
-                            bernoulli_rng(((nu * stan::math::sqrt((get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1) * get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1)))) / (((nu * stan::math::sqrt((get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1) * get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1)))) + get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1)) + get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1))), base_rng__), 
+                            bernoulli_rng(p_draw, base_rng__), 
                             "assigning variable ties_pred");
-                current_statement_begin__ = 26;
+                current_statement_begin__ = 38;
                 stan::model::assign(y_pred, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
-                            bernoulli_rng((get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1) / (((nu * stan::math::sqrt((get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1) * get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1)))) + get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1)) + get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1))), base_rng__), 
+                            bernoulli_rng(p_1_win_not_draw, base_rng__), 
                             "assigning variable y_pred");
+                }
             }
             // validate, write generated quantities
             current_statement_begin__ = 20;

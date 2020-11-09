@@ -33,7 +33,7 @@ static int current_statement_begin__;
 stan::io::program_reader prog_reader__() {
     stan::io::program_reader reader;
     reader.add_event(0, 0, "start", "model_davidson");
-    reader.add_event(46, 44, "end", "model_davidson");
+    reader.add_event(81, 79, "end", "model_davidson");
     return reader;
 }
 #include <stan_meta_header.hpp>
@@ -48,7 +48,8 @@ private:
         std::vector<int> ties;
         double prior_lambda_std;
         double prior_lambda_mu;
-        double prior_nu;
+        double prior_nu_mu;
+        double prior_nu_std;
 public:
     model_davidson(stan::io::var_context& context__,
         std::ostream* pstream__ = 0)
@@ -164,24 +165,29 @@ public:
             vals_r__ = context__.vals_r("prior_lambda_mu");
             pos__ = 0;
             prior_lambda_mu = vals_r__[pos__++];
-            check_greater_or_equal(function__, "prior_lambda_mu", prior_lambda_mu, 0);
             current_statement_begin__ = 15;
-            context__.validate_dims("data initialization", "prior_nu", "double", context__.to_vec());
-            prior_nu = double(0);
-            vals_r__ = context__.vals_r("prior_nu");
+            context__.validate_dims("data initialization", "prior_nu_mu", "double", context__.to_vec());
+            prior_nu_mu = double(0);
+            vals_r__ = context__.vals_r("prior_nu_mu");
             pos__ = 0;
-            prior_nu = vals_r__[pos__++];
-            check_greater_or_equal(function__, "prior_nu", prior_nu, 0);
+            prior_nu_mu = vals_r__[pos__++];
+            current_statement_begin__ = 16;
+            context__.validate_dims("data initialization", "prior_nu_std", "double", context__.to_vec());
+            prior_nu_std = double(0);
+            vals_r__ = context__.vals_r("prior_nu_std");
+            pos__ = 0;
+            prior_nu_std = vals_r__[pos__++];
+            check_greater_or_equal(function__, "prior_nu_std", prior_nu_std, 0);
             // initialize transformed data variables
             // execute transformed data statements
             // validate transformed data
             // validate, set parameter ranges
             num_params_r__ = 0U;
             param_ranges_i__.clear();
-            current_statement_begin__ = 19;
+            current_statement_begin__ = 20;
             validate_non_negative_index("lambda", "N_players", N_players);
             num_params_r__ += (1 * N_players);
-            current_statement_begin__ = 20;
+            current_statement_begin__ = 21;
             num_params_r__ += 1;
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
@@ -200,7 +206,7 @@ public:
         (void) pos__; // dummy call to supress warning
         std::vector<double> vals_r__;
         std::vector<int> vals_i__;
-        current_statement_begin__ = 19;
+        current_statement_begin__ = 20;
         if (!(context__.contains_r("lambda")))
             stan::lang::rethrow_located(std::runtime_error(std::string("Variable lambda missing")), current_statement_begin__, prog_reader__());
         vals_r__ = context__.vals_r("lambda");
@@ -215,12 +221,12 @@ public:
         size_t lambda_i_0_max__ = N_players;
         for (size_t i_0__ = 0; i_0__ < lambda_i_0_max__; ++i_0__) {
             try {
-                writer__.scalar_lb_unconstrain(0, lambda[i_0__]);
+                writer__.scalar_unconstrain(lambda[i_0__]);
             } catch (const std::exception& e) {
                 stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable lambda: ") + e.what()), current_statement_begin__, prog_reader__());
             }
         }
-        current_statement_begin__ = 20;
+        current_statement_begin__ = 21;
         if (!(context__.contains_r("nu")))
             stan::lang::rethrow_located(std::runtime_error(std::string("Variable nu missing")), current_statement_begin__, prog_reader__());
         vals_r__ = context__.vals_r("nu");
@@ -229,7 +235,7 @@ public:
         double nu(0);
         nu = vals_r__[pos__++];
         try {
-            writer__.scalar_lb_unconstrain(0, nu);
+            writer__.scalar_unconstrain(nu);
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable nu: ") + e.what()), current_statement_begin__, prog_reader__());
         }
@@ -258,82 +264,77 @@ public:
         try {
             stan::io::reader<local_scalar_t__> in__(params_r__, params_i__);
             // model parameters
-            current_statement_begin__ = 19;
+            current_statement_begin__ = 20;
             std::vector<local_scalar_t__> lambda;
             size_t lambda_d_0_max__ = N_players;
             lambda.reserve(lambda_d_0_max__);
             for (size_t d_0__ = 0; d_0__ < lambda_d_0_max__; ++d_0__) {
                 if (jacobian__)
-                    lambda.push_back(in__.scalar_lb_constrain(0, lp__));
+                    lambda.push_back(in__.scalar_constrain(lp__));
                 else
-                    lambda.push_back(in__.scalar_lb_constrain(0));
+                    lambda.push_back(in__.scalar_constrain());
             }
-            current_statement_begin__ = 20;
+            current_statement_begin__ = 21;
             local_scalar_t__ nu;
             (void) nu;  // dummy to suppress unused var warning
             if (jacobian__)
-                nu = in__.scalar_lb_constrain(0, lp__);
+                nu = in__.scalar_constrain(lp__);
             else
-                nu = in__.scalar_lb_constrain(0);
+                nu = in__.scalar_constrain();
             // model body
-            {
-            current_statement_begin__ = 24;
-            validate_non_negative_index("p_draw", "N_total", N_total);
-            std::vector<local_scalar_t__  > p_draw(N_total, local_scalar_t__(DUMMY_VAR__));
-            stan::math::initialize(p_draw, DUMMY_VAR__);
-            stan::math::fill(p_draw, DUMMY_VAR__);
-            current_statement_begin__ = 25;
-            validate_non_negative_index("p_not_draw", "N_total", N_total);
-            std::vector<local_scalar_t__  > p_not_draw(N_total, local_scalar_t__(DUMMY_VAR__));
-            stan::math::initialize(p_not_draw, DUMMY_VAR__);
-            stan::math::fill(p_not_draw, DUMMY_VAR__);
-            current_statement_begin__ = 26;
-            validate_non_negative_index("nu_prod", "N_total", N_total);
-            std::vector<local_scalar_t__  > nu_prod(N_total, local_scalar_t__(DUMMY_VAR__));
-            stan::math::initialize(nu_prod, DUMMY_VAR__);
-            stan::math::fill(nu_prod, DUMMY_VAR__);
-            current_statement_begin__ = 27;
-            validate_non_negative_index("denom", "N_total", N_total);
-            std::vector<local_scalar_t__  > denom(N_total, local_scalar_t__(DUMMY_VAR__));
-            stan::math::initialize(denom, DUMMY_VAR__);
-            stan::math::fill(denom, DUMMY_VAR__);
             current_statement_begin__ = 28;
-            lp_accum__.add(normal_log<propto__>(lambda, prior_lambda_std, prior_lambda_mu));
+            lp_accum__.add(normal_log<propto__>(lambda, prior_lambda_mu, prior_lambda_std));
             current_statement_begin__ = 29;
-            lp_accum__.add(exponential_log<propto__>(nu, prior_nu));
-            current_statement_begin__ = 31;
+            lp_accum__.add(normal_log<propto__>(nu, prior_nu_mu, prior_nu_std));
+            current_statement_begin__ = 32;
             for (int i = 1; i <= N_total; ++i) {
-                current_statement_begin__ = 34;
-                stan::model::assign(nu_prod, 
-                            stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
-                            (nu * stan::math::sqrt((get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1) * get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1)))), 
-                            "assigning variable nu_prod");
+                {
                 current_statement_begin__ = 35;
-                stan::model::assign(denom, 
-                            stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
-                            ((get_base1(nu_prod, i, "nu_prod", 1) + get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1)) + get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1)), 
-                            "assigning variable denom");
+                local_scalar_t__ p0(DUMMY_VAR__);
+                (void) p0;  // dummy to suppress unused var warning
+                stan::math::initialize(p0, DUMMY_VAR__);
+                stan::math::fill(p0, DUMMY_VAR__);
                 current_statement_begin__ = 36;
-                stan::model::assign(p_draw, 
-                            stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
-                            (get_base1(nu_prod, i, "nu_prod", 1) / get_base1(denom, i, "denom", 1)), 
-                            "assigning variable p_draw");
+                local_scalar_t__ p1(DUMMY_VAR__);
+                (void) p1;  // dummy to suppress unused var warning
+                stan::math::initialize(p1, DUMMY_VAR__);
+                stan::math::fill(p1, DUMMY_VAR__);
                 current_statement_begin__ = 37;
-                stan::model::assign(p_not_draw, 
-                            stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
-                            (get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1) / get_base1(denom, i, "denom", 1)), 
-                            "assigning variable p_not_draw");
-                current_statement_begin__ = 40;
-                if (as_bool(logical_eq(get_base1(ties, i, "ties", 1), 1))) {
-                    current_statement_begin__ = 40;
-                    lp_accum__.add(bernoulli_log(get_base1(ties, i, "ties", 1), get_base1(p_draw, i, "p_draw", 1)));
-                }
+                local_scalar_t__ geom_term(DUMMY_VAR__);
+                (void) geom_term;  // dummy to suppress unused var warning
+                stan::math::initialize(geom_term, DUMMY_VAR__);
+                stan::math::fill(geom_term, DUMMY_VAR__);
+                current_statement_begin__ = 38;
+                local_scalar_t__ p_draw(DUMMY_VAR__);
+                (void) p_draw;  // dummy to suppress unused var warning
+                stan::math::initialize(p_draw, DUMMY_VAR__);
+                stan::math::fill(p_draw, DUMMY_VAR__);
+                current_statement_begin__ = 39;
+                local_scalar_t__ p_1_win_not_draw(DUMMY_VAR__);
+                (void) p_1_win_not_draw;  // dummy to suppress unused var warning
+                stan::math::initialize(p_1_win_not_draw, DUMMY_VAR__);
+                stan::math::fill(p_1_win_not_draw, DUMMY_VAR__);
+                current_statement_begin__ = 41;
+                stan::math::assign(p0, stan::math::exp(get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1)));
                 current_statement_begin__ = 42;
-                if (as_bool(logical_eq(get_base1(ties, i, "ties", 1), 0))) {
-                    current_statement_begin__ = 42;
-                    lp_accum__.add(bernoulli_log(get_base1(y, i, "y", 1), get_base1(p_not_draw, i, "p_not_draw", 1)));
+                stan::math::assign(p1, stan::math::exp(get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1)));
+                current_statement_begin__ = 43;
+                stan::math::assign(geom_term, stan::math::exp((nu + (0.5 * (get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1) + get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1))))));
+                current_statement_begin__ = 45;
+                stan::math::assign(p_draw, (geom_term / ((p0 + p1) + geom_term)));
+                current_statement_begin__ = 46;
+                stan::math::assign(p_1_win_not_draw, (p1 / ((p0 + p1) + geom_term)));
+                current_statement_begin__ = 49;
+                if (as_bool(logical_eq(get_base1(ties, i, "ties", 1), 1))) {
+                    current_statement_begin__ = 49;
+                    lp_accum__.add(bernoulli_log(get_base1(ties, i, "ties", 1), p_draw));
                 }
-            }
+                current_statement_begin__ = 51;
+                if (as_bool(logical_eq(get_base1(ties, i, "ties", 1), 0))) {
+                    current_statement_begin__ = 51;
+                    lp_accum__.add(bernoulli_log(get_base1(y, i, "y", 1), p_1_win_not_draw));
+                }
+                }
             }
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
@@ -357,6 +358,7 @@ public:
         names__.resize(0);
         names__.push_back("lambda");
         names__.push_back("nu");
+        names__.push_back("log_lik");
     }
     void get_dims(std::vector<std::vector<size_t> >& dimss__) const {
         dimss__.resize(0);
@@ -365,6 +367,9 @@ public:
         dims__.push_back(N_players);
         dimss__.push_back(dims__);
         dims__.resize(0);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dims__.push_back(N_total);
         dimss__.push_back(dims__);
     }
     template <typename RNG>
@@ -385,13 +390,13 @@ public:
         size_t lambda_d_0_max__ = N_players;
         lambda.reserve(lambda_d_0_max__);
         for (size_t d_0__ = 0; d_0__ < lambda_d_0_max__; ++d_0__) {
-            lambda.push_back(in__.scalar_lb_constrain(0));
+            lambda.push_back(in__.scalar_constrain());
         }
         size_t lambda_k_0_max__ = N_players;
         for (size_t k_0__ = 0; k_0__ < lambda_k_0_max__; ++k_0__) {
             vars__.push_back(lambda[k_0__]);
         }
-        double nu = in__.scalar_lb_constrain(0);
+        double nu = in__.scalar_constrain();
         vars__.push_back(nu);
         double lp__ = 0.0;
         (void) lp__;  // dummy to suppress unused var warning
@@ -402,6 +407,75 @@ public:
         try {
             if (!include_gqs__ && !include_tparams__) return;
             if (!include_gqs__) return;
+            // declare and define generated quantities
+            current_statement_begin__ = 58;
+            validate_non_negative_index("log_lik", "N_total", N_total);
+            Eigen::Matrix<double, Eigen::Dynamic, 1> log_lik(N_total);
+            stan::math::initialize(log_lik, DUMMY_VAR__);
+            stan::math::fill(log_lik, DUMMY_VAR__);
+            // generated quantities statements
+            current_statement_begin__ = 59;
+            for (int i = 1; i <= N_total; ++i) {
+                {
+                current_statement_begin__ = 61;
+                local_scalar_t__ p0(DUMMY_VAR__);
+                (void) p0;  // dummy to suppress unused var warning
+                stan::math::initialize(p0, DUMMY_VAR__);
+                stan::math::fill(p0, DUMMY_VAR__);
+                current_statement_begin__ = 62;
+                local_scalar_t__ p1(DUMMY_VAR__);
+                (void) p1;  // dummy to suppress unused var warning
+                stan::math::initialize(p1, DUMMY_VAR__);
+                stan::math::fill(p1, DUMMY_VAR__);
+                current_statement_begin__ = 63;
+                local_scalar_t__ geom_term(DUMMY_VAR__);
+                (void) geom_term;  // dummy to suppress unused var warning
+                stan::math::initialize(geom_term, DUMMY_VAR__);
+                stan::math::fill(geom_term, DUMMY_VAR__);
+                current_statement_begin__ = 64;
+                local_scalar_t__ p_draw(DUMMY_VAR__);
+                (void) p_draw;  // dummy to suppress unused var warning
+                stan::math::initialize(p_draw, DUMMY_VAR__);
+                stan::math::fill(p_draw, DUMMY_VAR__);
+                current_statement_begin__ = 65;
+                local_scalar_t__ p_1_win_not_draw(DUMMY_VAR__);
+                (void) p_1_win_not_draw;  // dummy to suppress unused var warning
+                stan::math::initialize(p_1_win_not_draw, DUMMY_VAR__);
+                stan::math::fill(p_1_win_not_draw, DUMMY_VAR__);
+                current_statement_begin__ = 67;
+                stan::math::assign(p0, stan::math::exp(get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1)));
+                current_statement_begin__ = 68;
+                stan::math::assign(p1, stan::math::exp(get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1)));
+                current_statement_begin__ = 69;
+                stan::math::assign(geom_term, stan::math::exp((nu + (0.5 * (get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1) + get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1))))));
+                current_statement_begin__ = 71;
+                stan::math::assign(p_draw, (geom_term / ((p0 + p1) + geom_term)));
+                current_statement_begin__ = 72;
+                stan::math::assign(p_1_win_not_draw, (p1 / ((p0 + p1) + geom_term)));
+                current_statement_begin__ = 74;
+                if (as_bool(logical_eq(get_base1(ties, i, "ties", 1), 1))) {
+                    current_statement_begin__ = 74;
+                    stan::model::assign(log_lik, 
+                                stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
+                                bernoulli_log(get_base1(ties, i, "ties", 1), p_draw), 
+                                "assigning variable log_lik");
+                }
+                current_statement_begin__ = 76;
+                if (as_bool(logical_eq(get_base1(ties, i, "ties", 1), 0))) {
+                    current_statement_begin__ = 76;
+                    stan::model::assign(log_lik, 
+                                stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
+                                bernoulli_log(get_base1(y, i, "y", 1), p_1_win_not_draw), 
+                                "assigning variable log_lik");
+                }
+                }
+            }
+            // validate, write generated quantities
+            current_statement_begin__ = 58;
+            size_t log_lik_j_1_max__ = N_total;
+            for (size_t j_1__ = 0; j_1__ < log_lik_j_1_max__; ++j_1__) {
+                vars__.push_back(log_lik(j_1__));
+            }
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
             // Next line prevents compiler griping about no return
@@ -445,6 +519,12 @@ public:
         if (include_tparams__) {
         }
         if (!include_gqs__) return;
+        size_t log_lik_j_1_max__ = N_total;
+        for (size_t j_1__ = 0; j_1__ < log_lik_j_1_max__; ++j_1__) {
+            param_name_stream__.str(std::string());
+            param_name_stream__ << "log_lik" << '.' << j_1__ + 1;
+            param_names__.push_back(param_name_stream__.str());
+        }
     }
     void unconstrained_param_names(std::vector<std::string>& param_names__,
                                    bool include_tparams__ = true,
@@ -463,6 +543,12 @@ public:
         if (include_tparams__) {
         }
         if (!include_gqs__) return;
+        size_t log_lik_j_1_max__ = N_total;
+        for (size_t j_1__ = 0; j_1__ < log_lik_j_1_max__; ++j_1__) {
+            param_name_stream__.str(std::string());
+            param_name_stream__ << "log_lik" << '.' << j_1__ + 1;
+            param_names__.push_back(param_name_stream__.str());
+        }
     }
 }; // model
 }  // namespace

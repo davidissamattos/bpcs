@@ -1,4 +1,4 @@
 library(testthat)
-library(bpc)
+library(bpcs)
 
-test_check("bpc")
+test_check("bpcs")

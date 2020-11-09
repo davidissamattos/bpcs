@@ -3,3 +3,5 @@
 - Basic functionality
 - pkgdown site
 - starting testing
+- add a few stan models and starting documentation
+
