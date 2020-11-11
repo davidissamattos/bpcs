@@ -95,7 +95,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+    </li>
+    <li>
       <a href="../articles/get_started.html">Getting Started with the bpcs package</a>
+    </li>
+    <li>
+      <a href="../articles/handling_ties.html">Handling ties</a>
+    </li>
+    <li>
+      <a href="../articles/home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
     </li>
   </ul>
 </li>
@@ -124,7 +133,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Check for NA in the specfic columns and returns T or F is there is at least 1 NA in those columns</h1>
-    <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_helpers.R'><code>R/bpc_helpers.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_helpers_checks.R'><code>R/bpc_helpers_checks.R</code></a></small>
     <div class="hidden name"><code>check_if_there_are_na.Rd</code></div>
     </div>
 
@@ -136,23 +145,43 @@
   <span class='va'>d</span>,
   <span class='va'>player0</span>,
   <span class='va'>player1</span>,
-  <span class='va'>player0_score</span>,
-  <span class='va'>player1_score</span>,
-  <span class='va'>result_column</span>
+  player0_score <span class='op'>=</span> <span class='cn'>NULL</span>,
+  player1_score <span class='op'>=</span> <span class='cn'>NULL</span>,
+  result_column <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>d</th>
+      <td><p>a data frame</p></td>
+    </tr>
+    <tr>
+      <th>player0</th>
+      <td><p>the name of column for player0</p></td>
+    </tr>
+    <tr>
+      <th>player1</th>
+      <td><p>the name of column for player1</p></td>
+    </tr>
+    <tr>
+      <th>player0_score</th>
+      <td><p>the name of column for player0 scores</p></td>
+    </tr>
+    <tr>
+      <th>player1_score</th>
+      <td><p>the name of column for player1 scores</p></td>
+    </tr>
+    <tr>
       <th>result_column</th>
-      <td></td>
+      <td><p>the name of column for results</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>T (there are NA) or F (no NA)</p>
+    <p>TRUE (there are NA) or FALSE (no NA)</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

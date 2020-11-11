@@ -6,7 +6,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Creates a bpc object based on a stanfit object and a lookup_table dataframe — create_bpc_object • bpcs</title>
+<title>Defines the class bpc and creates the bpc object.
+To create we need to receive some defined parameters (the arguments from the bpc function), a lookup table and a the stanfit
+object generated from the rstan sampling procedure — create_bpc_object • bpcs</title>
 
 
 <!-- jquery -->
@@ -39,8 +41,12 @@
 
 
 
-<meta property="og:title" content="Creates a bpc object based on a stanfit object and a lookup_table dataframe — create_bpc_object" />
-<meta property="og:description" content="Creates a bpc object based on a stanfit object and a lookup_table dataframe" />
+<meta property="og:title" content="Defines the class bpc and creates the bpc object.
+To create we need to receive some defined parameters (the arguments from the bpc function), a lookup table and a the stanfit
+object generated from the rstan sampling procedure — create_bpc_object" />
+<meta property="og:description" content="Defines the class bpc and creates the bpc object.
+To create we need to receive some defined parameters (the arguments from the bpc function), a lookup table and a the stanfit
+object generated from the rstan sampling procedure" />
 
 
 
@@ -95,7 +101,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+    </li>
+    <li>
       <a href="../articles/get_started.html">Getting Started with the bpcs package</a>
+    </li>
+    <li>
+      <a href="../articles/handling_ties.html">Handling ties</a>
+    </li>
+    <li>
+      <a href="../articles/home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
     </li>
   </ul>
 </li>
@@ -123,22 +138,29 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Creates a bpc object based on a stanfit object and a lookup_table dataframe</h1>
+    <h1>Defines the class bpc and creates the bpc object.
+To create we need to receive some defined parameters (the arguments from the bpc function), a lookup table and a the stanfit
+object generated from the rstan sampling procedure</h1>
     <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_object.R'><code>R/bpc_object.R</code></a></small>
     <div class="hidden name"><code>create_bpc_object.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Creates a bpc object based on a stanfit object and a lookup_table dataframe</p>
+    <p>Defines the class bpc and creates the bpc object.
+To create we need to receive some defined parameters (the arguments from the bpc function), a lookup table and a the stanfit
+object generated from the rstan sampling procedure</p>
     </div>
 
     <pre class="usage"><span class='fu'>create_bpc_object</span><span class='op'>(</span>
   <span class='va'>stanfit</span>,
   <span class='va'>lookup_table</span>,
-  cluster_lookup_table <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>model_type</span>,
   <span class='va'>standata</span>,
-  <span class='va'>call_arg</span>
+  <span class='va'>call_arg</span>,
+  cluster_lookup_table <span class='op'>=</span> <span class='cn'>NULL</span>,
+  predictors_df <span class='op'>=</span> <span class='cn'>NULL</span>,
+  predictors_lookup_table <span class='op'>=</span> <span class='cn'>NULL</span>,
+  predictors_matrix <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -151,6 +173,22 @@
     <tr>
       <th>lookup_table</th>
       <td><p>lookup_table dataframe. Two columns one Index the other Names where each each index will match a string in the names</p></td>
+    </tr>
+    <tr>
+      <th>model_type</th>
+      <td><p>the type of the model used to call stan (string)</p></td>
+    </tr>
+    <tr>
+      <th>standata</th>
+      <td><p>a list with the data used to call the rstan::sampling procedure</p></td>
+    </tr>
+    <tr>
+      <th>call_arg</th>
+      <td><p>a list with the arguments called from the bpc function</p></td>
+    </tr>
+    <tr>
+      <th>cluster_lookup_table</th>
+      <td><p>a lookup table with we have random effects</p></td>
     </tr>
     </table>
 

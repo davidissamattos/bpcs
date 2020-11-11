@@ -6,8 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Logit function
-See https://en.wikipedia.org/wiki/Logit — logit • bpcs</title>
+<title>Logit function — logit • bpcs</title>
 
 
 <!-- jquery -->
@@ -40,10 +39,8 @@ See https://en.wikipedia.org/wiki/Logit — logit • bpcs</title>
 
 
 
-<meta property="og:title" content="Logit function
-See https://en.wikipedia.org/wiki/Logit — logit" />
-<meta property="og:description" content="Logit function
-See https://en.wikipedia.org/wiki/Logit" />
+<meta property="og:title" content="Logit function — logit" />
+<meta property="og:description" content="Logit function" />
 
 
 
@@ -98,7 +95,16 @@ See https://en.wikipedia.org/wiki/Logit" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+    </li>
+    <li>
       <a href="../articles/get_started.html">Getting Started with the bpcs package</a>
+    </li>
+    <li>
+      <a href="../articles/handling_ties.html">Handling ties</a>
+    </li>
+    <li>
+      <a href="../articles/home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
     </li>
   </ul>
 </li>
@@ -126,15 +132,13 @@ See https://en.wikipedia.org/wiki/Logit" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Logit function
-See https://en.wikipedia.org/wiki/Logit</h1>
-    <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <h1>Logit function</h1>
+    <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_helpers.R'><code>R/bpc_helpers.R</code></a></small>
     <div class="hidden name"><code>logit.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Logit function
-See https://en.wikipedia.org/wiki/Logit</p>
+    <p>Logit function</p>
     </div>
 
     <pre class="usage"><span class='fu'>logit</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
@@ -151,7 +155,14 @@ See https://en.wikipedia.org/wiki/Logit</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a value between -inf and inf</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
+    <p>https://en.wikipedia.org/wiki/Logit</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>logit</span><span class='op'>(</span><span class='fl'>0.5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='fu'>logit</span><span class='op'>(</span><span class='fl'>0.2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] -1.386294</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

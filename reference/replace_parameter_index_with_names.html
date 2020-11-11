@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Replace the name of the parameter from index to name using a lookup_table
-Receives a data frame and returns a dataframe
-lambda1 --&gt; lambda_Biometrika — replace_parameter_index_with_names • bpcs</title>
+Receives a data frame and returns a dataframe.
+E.g  for parameter lambda with 4 players we have (lambda1, lambda2, lambda3, lambda4). This function will return (lambdaBiometrika, lambdaCommStat, lambdaJASA, lambdaJRSSB) — replace_parameter_index_with_names • bpcs</title>
 
 
 <!-- jquery -->
@@ -42,11 +42,11 @@ lambda1 --&gt; lambda_Biometrika — replace_parameter_index_with_names • bpcs
 
 
 <meta property="og:title" content="Replace the name of the parameter from index to name using a lookup_table
-Receives a data frame and returns a dataframe
-lambda1 --&gt; lambda_Biometrika — replace_parameter_index_with_names" />
+Receives a data frame and returns a dataframe.
+E.g  for parameter lambda with 4 players we have (lambda1, lambda2, lambda3, lambda4). This function will return (lambdaBiometrika, lambdaCommStat, lambdaJASA, lambdaJRSSB) — replace_parameter_index_with_names" />
 <meta property="og:description" content="Replace the name of the parameter from index to name using a lookup_table
-Receives a data frame and returns a dataframe
-lambda1 --&amp;gt; lambda_Biometrika" />
+Receives a data frame and returns a dataframe.
+E.g  for parameter lambda with 4 players we have (lambda1, lambda2, lambda3, lambda4). This function will return (lambdaBiometrika, lambdaCommStat, lambdaJASA, lambdaJRSSB)" />
 
 
 
@@ -101,7 +101,16 @@ lambda1 --&amp;gt; lambda_Biometrika" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+    </li>
+    <li>
       <a href="../articles/get_started.html">Getting Started with the bpcs package</a>
+    </li>
+    <li>
+      <a href="../articles/handling_ties.html">Handling ties</a>
+    </li>
+    <li>
+      <a href="../articles/home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
     </li>
   </ul>
 </li>
@@ -130,25 +139,32 @@ lambda1 --&amp;gt; lambda_Biometrika" />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Replace the name of the parameter from index to name using a lookup_table
-Receives a data frame and returns a dataframe
-lambda1 --&gt; lambda_Biometrika</h1>
-    <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_helpers.R'><code>R/bpc_helpers.R</code></a></small>
+Receives a data frame and returns a dataframe.
+E.g  for parameter lambda with 4 players we have (lambda1, lambda2, lambda3, lambda4). This function will return (lambdaBiometrika, lambdaCommStat, lambdaJASA, lambdaJRSSB)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_helpers_indexes.R'><code>R/bpc_helpers_indexes.R</code></a></small>
     <div class="hidden name"><code>replace_parameter_index_with_names.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Replace the name of the parameter from index to name using a lookup_table
-Receives a data frame and returns a dataframe
-lambda1 --&gt; lambda_Biometrika</p>
+Receives a data frame and returns a dataframe.
+E.g  for parameter lambda with 4 players we have (lambda1, lambda2, lambda3, lambda4). This function will return (lambdaBiometrika, lambdaCommStat, lambdaJASA, lambdaJRSSB)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>replace_parameter_index_with_names</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>column</span>, <span class='va'>par</span>, <span class='va'>lookup_table</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>replace_parameter_index_with_names</span><span class='op'>(</span>
+  <span class='va'>d</span>,
+  <span class='va'>column</span>,
+  <span class='va'>par</span>,
+  <span class='va'>lookup_table</span>,
+  cluster_lookup_table <span class='op'>=</span> <span class='cn'>NULL</span>,
+  predictors_lookup_table <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
+      <th>d</th>
       <td><p>dataframe</p></td>
     </tr>
     <tr>
@@ -161,15 +177,17 @@ lambda1 --&gt; lambda_Biometrika</p>
     </tr>
     <tr>
       <th>lookup_table</th>
-      <td><p>a data frame</p></td>
+      <td><p>lookup table of the players</p></td>
+    </tr>
+    <tr>
+      <th>cluster_lookup_table</th>
+      <td><p>a lookup table of the predictors</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-
+    <p>a data. frame where we change the names in the variable colum to the corresponding parameter_name from the lookup table</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

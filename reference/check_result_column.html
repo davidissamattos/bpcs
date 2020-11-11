@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check if a data frame column contains only the values 1 0 and -1 — check_result_column • bpcs</title>
+<title>Check if a data frame column contains only the values 1 0 and 2. Used to check the format of the results — check_result_column • bpcs</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Check if a data frame column contains only the values 1 0 and -1 — check_result_column" />
-<meta property="og:description" content="Check if a data frame column contains only the values 1 0 and -1" />
+<meta property="og:title" content="Check if a data frame column contains only the values 1 0 and 2. Used to check the format of the results — check_result_column" />
+<meta property="og:description" content="Check if a data frame column contains only the values 1 0 and 2. Used to check the format of the results" />
 
 
 
@@ -95,7 +95,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+    </li>
+    <li>
       <a href="../articles/get_started.html">Getting Started with the bpcs package</a>
+    </li>
+    <li>
+      <a href="../articles/handling_ties.html">Handling ties</a>
+    </li>
+    <li>
+      <a href="../articles/home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
     </li>
   </ul>
 </li>
@@ -123,13 +132,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check if a data frame column contains only the values 1 0 and -1</h1>
-    <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_helpers.R'><code>R/bpc_helpers.R</code></a></small>
+    <h1>Check if a data frame column contains only the values 1 0 and 2. Used to check the format of the results</h1>
+    <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_helpers_checks.R'><code>R/bpc_helpers_checks.R</code></a></small>
     <div class="hidden name"><code>check_result_column.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Check if a data frame column contains only the values 1 0 and -1</p>
+    <p>Check if a data frame column contains only the values 1 0 and 2. Used to check the format of the results</p>
     </div>
 
     <pre class="usage"><span class='fu'>check_result_column</span><span class='op'>(</span><span class='va'>d_column</span><span class='op'>)</span></pre>
@@ -145,7 +154,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>T (correct) or F (with problems)</p>
+    <p>TRUE (correct) or FALSE (with problems)</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create an array with the name of the parameter and the corresponding index
-lambda1 --&gt; lambda_Biometrika — create_array_of_par_names • bpcs</title>
+<title>Create an array with the parameter name and to what player/cluster it refers to in the order stan presents
+E.g  for parameter lambda with 4 players: c(lambdaBiometrika, lambdaCommStat, lambdaJASA, lambdaJRSSB) — create_array_of_par_names • bpcs</title>
 
 
 <!-- jquery -->
@@ -40,10 +40,10 @@ lambda1 --&gt; lambda_Biometrika — create_array_of_par_names • bpcs</title>
 
 
 
-<meta property="og:title" content="Create an array with the name of the parameter and the corresponding index
-lambda1 --&gt; lambda_Biometrika — create_array_of_par_names" />
-<meta property="og:description" content="Create an array with the name of the parameter and the corresponding index
-lambda1 --&amp;gt; lambda_Biometrika" />
+<meta property="og:title" content="Create an array with the parameter name and to what player/cluster it refers to in the order stan presents
+E.g  for parameter lambda with 4 players: c(lambdaBiometrika, lambdaCommStat, lambdaJASA, lambdaJRSSB) — create_array_of_par_names" />
+<meta property="og:description" content="Create an array with the parameter name and to what player/cluster it refers to in the order stan presents
+E.g  for parameter lambda with 4 players: c(lambdaBiometrika, lambdaCommStat, lambdaJASA, lambdaJRSSB)" />
 
 
 
@@ -98,7 +98,16 @@ lambda1 --&amp;gt; lambda_Biometrika" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+    </li>
+    <li>
       <a href="../articles/get_started.html">Getting Started with the bpcs package</a>
+    </li>
+    <li>
+      <a href="../articles/handling_ties.html">Handling ties</a>
+    </li>
+    <li>
+      <a href="../articles/home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
     </li>
   </ul>
 </li>
@@ -126,35 +135,39 @@ lambda1 --&amp;gt; lambda_Biometrika" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create an array with the name of the parameter and the corresponding index
-lambda1 --&gt; lambda_Biometrika</h1>
-    <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_helpers.R'><code>R/bpc_helpers.R</code></a></small>
+    <h1>Create an array with the parameter name and to what player/cluster it refers to in the order stan presents
+E.g  for parameter lambda with 4 players: c(lambdaBiometrika, lambdaCommStat, lambdaJASA, lambdaJRSSB)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_helpers_indexes.R'><code>R/bpc_helpers_indexes.R</code></a></small>
     <div class="hidden name"><code>create_array_of_par_names.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create an array with the name of the parameter and the corresponding index
-lambda1 --&gt; lambda_Biometrika</p>
+    <p>Create an array with the parameter name and to what player/cluster it refers to in the order stan presents
+E.g  for parameter lambda with 4 players: c(lambdaBiometrika, lambdaCommStat, lambdaJASA, lambdaJRSSB)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_array_of_par_names</span><span class='op'>(</span><span class='va'>par</span>, <span class='va'>lookup_table</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>create_array_of_par_names</span><span class='op'>(</span><span class='va'>par</span>, <span class='va'>lookup_table</span>, cluster_lookup_table <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>par</th>
-      <td><p>a name for the parameter</p></td>
+      <td><p>name of the parameter</p></td>
     </tr>
     <tr>
       <th>lookup_table</th>
-      <td><p>a lookuptable to convert the indexes to that</p></td>
+      <td><p>lookup table of the players</p></td>
+    </tr>
+    <tr>
+      <th>cluster_lookup_table</th>
+      <td><p>a lookup table of the clusters</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a vector</p>
+    <p>a data. frame where we change the names in the variable colum to the corresponding parameter_name from the lookup table</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

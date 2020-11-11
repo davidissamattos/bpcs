@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create two columns with the indexes for the names — create_index • bpcs</title>
+<title>Create two columns with the indexes for the names of the players
+Here we create a new lookup table. Should be used when sampling the parameters — create_index • bpcs</title>
 
 
 <!-- jquery -->
@@ -39,8 +40,10 @@
 
 
 
-<meta property="og:title" content="Create two columns with the indexes for the names — create_index" />
-<meta property="og:description" content="Create two columns with the indexes for the names" />
+<meta property="og:title" content="Create two columns with the indexes for the names of the players
+Here we create a new lookup table. Should be used when sampling the parameters — create_index" />
+<meta property="og:description" content="Create two columns with the indexes for the names of the players
+Here we create a new lookup table. Should be used when sampling the parameters" />
 
 
 
@@ -95,7 +98,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+    </li>
+    <li>
       <a href="../articles/get_started.html">Getting Started with the bpcs package</a>
+    </li>
+    <li>
+      <a href="../articles/handling_ties.html">Handling ties</a>
+    </li>
+    <li>
+      <a href="../articles/home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
     </li>
   </ul>
 </li>
@@ -123,22 +135,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create two columns with the indexes for the names</h1>
-    <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_helpers.R'><code>R/bpc_helpers.R</code></a></small>
+    <h1>Create two columns with the indexes for the names of the players
+Here we create a new lookup table. Should be used when sampling the parameters</h1>
+    <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_helpers_indexes.R'><code>R/bpc_helpers_indexes.R</code></a></small>
     <div class="hidden name"><code>create_index.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create two columns with the indexes for the names</p>
+    <p>Create two columns with the indexes for the names of the players
+Here we create a new lookup table. Should be used when sampling the parameters</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_index</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>player0</span>, <span class='va'>player1</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>create_index</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>player0</span>, <span class='va'>player1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
+      <th>d</th>
       <td><p>A data frame containing the observations. The other parameters specify the name of the columns</p></td>
     </tr>
     <tr>

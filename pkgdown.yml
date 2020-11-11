@@ -2,6 +2,9 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
+  bt_random_effects: bt_random_effects.html
   get_started: get_started.html
-last_built: 2020-10-20T11:14Z
+  handling_ties: handling_ties.html
+  home_advantage: home_advantage.html
+last_built: 2020-11-11T09:08Z
 
