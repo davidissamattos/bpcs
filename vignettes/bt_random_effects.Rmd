@@ -28,8 +28,16 @@ In the comparison part, researchers usually select a small number of benchmark p
 
 Almost always, this comparison is done with non-parametric tests statistics and often fail to compute the intra-class correlation of the repeated-measures, or average the repeated measures (throwing out the uncertainty of the results) before running the tests.
 
+## Why use ranks and not the output directly?
+
+Each benchmark function has a different search space and the algorithms converge quite differently from one function to the other. While the difference between the minimum and the algorithm output is limited to zero (when they solve the problem), the difference can range from 0.1 to 100 depending on the benchmark problem. To use this value would require either transformations such as normalizing for each benchmark. However, if we want only to rank the algorithms and provide a classification between them, the Bradley-Terry model is ideal. The differences in range of each benchmark function is already taken care of when computing who wins and who looses.
+
 In this example, we will show how to use the Bradley-Terry model to compensate the dependent data of the repeated measures and rank the algorithms. Our Bradley-Terry ranking of the abilities also shows the uncertainty of the ranks and the probabilities of one algorithm beating the other in any of the benchmarks.
 
+
+## The data
+
+First let's load some packages
 ```{r setup, warning=F, message=F}
 library(bpcs)
 library(tidyverse)
@@ -45,8 +53,7 @@ rstan::rstan_options(auto_write = TRUE)
 The collected data is available as:
 ```{r}
 data("optimization_algorithms")
-
-kable(sample_n(optimization_algorithms, size=20),
+kable(dplyr::sample_n(optimization_algorithms, size=20),
       caption= "Sample of the data set")
 ```
 
