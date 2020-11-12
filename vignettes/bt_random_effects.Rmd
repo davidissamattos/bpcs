@@ -63,7 +63,7 @@ Here we have the following benchmark functions:
 ```{r}
 bm<-unique(optimization_algorithms$Benchmark)
 nbm<-length(bm)
-kable(bm)
+kable(matrix(bm,ncol = 4))
 ```
 To reduce a bit the model sampling time here lets reduce the number of benchmark functions and only use 10 of them.
 
@@ -72,7 +72,7 @@ set.seed(1)
 bm_reduced <- sample(size=10, x=bm,replace = F)
 optimization_algorithms <- optimization_algorithms %>% 
   dplyr::filter(Benchmark %in% bm_reduced)
-kable(bm_reduced)
+kable(matrix(bm_reduced,ncol = 2))
 ```
 
 
@@ -177,9 +177,11 @@ t <- t[1:7,c(1, 9, 10)] # getting only the first seven parameters the mean Rhat 
 kable(t)
 ```
 
+
 All seems ok! Let's look now at the traceplots
 
 Traceplots of the chains with the bayesplot library
+
 ```{r}
 library(bayesplot)
 posterior<-rstan::extract(stanfit,inc_warmup=T,permuted=F)
@@ -192,10 +194,12 @@ Everything seems in order for us to look at the predictive posterior bar plot.
 yrep<-predict(m,df_3,n=100,return_matrix = T)
 ```
 
+
 ```{r}
 ppc_bars(y=df_3$y, yrep=yrep) +
   labs(title = 'Bar plot with medians and uncertainty\n intervals superimposed')
 ```
+
 This sounds ok. So let's investigate the actual parameters and the probabilities of the models
 
 ## Summary parameters
@@ -220,7 +224,7 @@ kable(get_probabilities(m)$Table,
 ```
 
 ```{r}
-kable(rank_players(m),
+kable(dplyr::select(rank_players(m),-Posterior),
       caption = "Ranking the algorithms",
       digits = 2)
 ```
