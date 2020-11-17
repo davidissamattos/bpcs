@@ -2,26 +2,30 @@
 % Please edit documentation in R/bpc_s3.R
 \name{summary.bpc}
 \alias{summary.bpc}
-\title{Summary of the model bpc model
-Table 1: Contains the parameter estimates and respective HPD interval
-Table 2: Contains the empirical probability for the combination of all players}
+\title{Summary of the model bpc model.}
 \usage{
-\method{summary}{bpc}(x)
+\method{summary}{bpc}(object, digits = 2, ...)
 }
 \arguments{
-\item{x}{bpc object}
+\item{object}{bpc object}
 
-\item{...}{additional parameters for the generic summary function}
-}
-\value{
+\item{digits}{number of decimal digits in the table}
 
+\item{\dots}{additional parameters for the generic summary function}
 }
 \description{
-Summary of the model bpc model
-Table 1: Contains the parameter estimates and respective HPD interval
-Table 2: Contains the empirical probability for the combination of all players
+\itemize{
+\item Table 1: Contains the parameter estimates and respective HPD interval
+\item Table 2: Contains the posterior probability for the combination of all players
+\item Table 3: Contains the ranking of the players' abilities based on the posterior distribution of the ranks
+}
 }
 \examples{
-m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
-summary(m)
+m<-bpc(data = tennis_agresti,
+player0 = 'player0',
+player1 = 'player1',
+result_column = 'y',
+model_type = 'bt',
+solve_ties = 'none')
+#' summary(m)
 }

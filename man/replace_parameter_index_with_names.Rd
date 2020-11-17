@@ -3,8 +3,7 @@
 \name{replace_parameter_index_with_names}
 \alias{replace_parameter_index_with_names}
 \title{Replace the name of the parameter from index to name using a lookup_table
-Receives a data frame and returns a dataframe.
-E.g  for parameter lambda with 4 players we have (lambda\link{1}, lambda\link{2}, lambda\link{3}, lambda\link{4}). This function will return (lambda\link{Biometrika}, lambda\link{CommStat}, lambda\link{JASA}, lambda\link{JRSSB})}
+Receives a data frame and returns a dataframe.}
 \usage{
 replace_parameter_index_with_names(
   d,
@@ -25,6 +24,8 @@ replace_parameter_index_with_names(
 \item{lookup_table}{lookup table of the players}
 
 \item{cluster_lookup_table}{a lookup table of the predictors}
+
+\item{predictors_lookup_table}{a lookup table for the predictors}
 }
 \value{
 a data. frame where we change the names in the variable colum to the corresponding parameter_name from the lookup table
@@ -32,5 +33,4 @@ a data. frame where we change the names in the variable colum to the correspondi
 \description{
 Replace the name of the parameter from index to name using a lookup_table
 Receives a data frame and returns a dataframe.
-E.g  for parameter lambda with 4 players we have (lambda\link{1}, lambda\link{2}, lambda\link{3}, lambda\link{4}). This function will return (lambda\link{Biometrika}, lambda\link{CommStat}, lambda\link{JASA}, lambda\link{JRSSB})
 }

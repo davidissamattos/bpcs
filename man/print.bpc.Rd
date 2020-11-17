@@ -2,24 +2,26 @@
 % Please edit documentation in R/bpc_s3.R
 \name{print.bpc}
 \alias{print.bpc}
-\title{Print method for the bpc object
-We only print the parameter values and the HDPI}
+\title{Print method for the bpc object.}
 \usage{
-\method{print}{bpc}(x)
+\method{print}{bpc}(x, digits = 3, ...)
 }
 \arguments{
 \item{x}{a bpc object}
 
-\item{...}{additional parameters for the generic print function}
-}
-\value{
+\item{digits}{number of decimal digits in the table}
 
+\item{\dots}{additional parameters for the generic print function}
 }
 \description{
-Print method for the bpc object
-We only print the parameter values and the HDPI
+This S3 functions only prints the mean and the HDPI values of all the parameters in the model
 }
 \examples{
-m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
-print(m)
+m<-bpc(data = tennis_agresti,
+player0 = 'player0',
+player1 = 'player1',
+result_column = 'y',
+model_type = 'bt',
+solve_ties = 'none')
+#' print(m)
 }

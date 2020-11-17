@@ -1,4 +1,5 @@
 test_that("bpc returns a bpc object the btordereffect model", {
+  test_btorder<-load_testdata('test_btorder')
   m1<-bpc(data=test_btorder,
           player0 = 'player0',
           player1 = 'player1',

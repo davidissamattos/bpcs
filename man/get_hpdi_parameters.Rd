@@ -2,7 +2,7 @@
 % Please edit documentation in R/bpc_exports.R
 \name{get_hpdi_parameters}
 \alias{get_hpdi_parameters}
-\title{Return a data frame with the mean and with high and low 95\% hpd interval for all parameters of the model}
+\title{Return the mean and the HPDI of the parameters of the model}
 \usage{
 get_hpdi_parameters(bpc_object)
 }
@@ -16,7 +16,12 @@ a data frame containing a column with the parameters, a column with mean and two
 Return a data frame with the mean and with high and low 95\% hpd interval for all parameters of the model
 }
 \examples{
-m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
+m<-bpc(data = tennis_agresti,
+player0 = 'player0',
+player1 = 'player1',
+result_column = 'y',
+model_type = 'bt',
+solve_ties = 'none')
 hpdi<-get_hpdi_parameters(m)
 print(hpdi)
 }

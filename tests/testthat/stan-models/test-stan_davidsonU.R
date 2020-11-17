@@ -1,4 +1,5 @@
 test_that("bpc returns a bpc object the davidsonU model", {
+  test_davidsonU<-load_testdata('test_davidsonU')
   m1<-bpc(data=test_davidsonU,
           player0 = 'player0',
           player1 = 'player1',

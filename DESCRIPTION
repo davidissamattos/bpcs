@@ -20,6 +20,8 @@ Depends:
 Imports:
     coda,
     dplyr,
+    tidyr,
+    stringr,
     ggplot2,
     gtools,
     methods,
@@ -34,7 +36,8 @@ Imports:
     loo,
     magrittr,
     badger,
-    stats
+    stats,
+    rlang
 LinkingTo: 
     BH (>= 1.66.0),
     Rcpp (>= 0.12.0),
@@ -48,5 +51,7 @@ Suggests:
     rmarkdown,
     testthat,
     covr,
-    bayesplot
+    bayesplot,
+    kableExtra,
+    tidyverse,
 VignetteBuilder: knitr

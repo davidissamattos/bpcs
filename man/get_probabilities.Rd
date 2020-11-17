@@ -22,7 +22,12 @@ Instead of calculating from the probability formula given from the model we crea
 The function returns the mean value of win/loose/draw for the player i. To calculate for player j the probability is 1-p_i
 }
 \examples{
-m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
+m<-bpc(data = tennis_agresti,
+player0 = 'player0',
+player1 = 'player1',
+result_column = 'y',
+model_type = 'bt',
+solve_ties = 'none')
 prob<-get_probabilities(m)
 print(prob$Table)
 }

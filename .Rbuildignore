@@ -1,4 +1,4 @@
-^bpc\.Rproj$
+^bpcs\.Rproj$
 ^\.Rproj\.user$
 ^data-raw$
 ^README\.Rmd$
@@ -9,12 +9,5 @@
 ^\.github$
 ^doc$
 ^Meta$
-^data/test_bt\.rda$
-^data/test_btorder\.rda$
-^data/test_btscores\.rda$
-^data/test_btU\.rda$
-^data/test_davidson\.rda$
-^data/test_davidsonorder\.rda$
-^data/test_davidsonU\.rda$
-^data/test_predictors\.rda$
+^figure$
 ^\.covignore$

@@ -1,17 +1,13 @@
 test_that("create_index_lookuptable works with datasets", {
+  test_bt<-load_testdata('test_bt')
+
   t_test_bt<- as.data.frame(tibble::tribble(~Names, ~Index,
                                             'A', 1,
                                             'B', 2,
                                             'C', 3,))
 
-  t_tennis_agresti<- as.data.frame(tibble::tribble(~Names, ~Index,
-                                                   'Seles', 1,
-                                                   'Graf', 2,
-                                                   'Sabatini', 3,
-                                                   'Navratilova', 4,
-                                                   'Sanchez', 5))
   expect_equal(create_index_lookuptable(test_bt, player0='player0', player1='player1'), t_test_bt)
-  expect_equal(create_index_lookuptable(tennis_agresti, player0='player0', player1='player1'), t_tennis_agresti)
+
 })
 
 test_that("create_index_lookuptable works with numbers", {
@@ -43,6 +39,7 @@ test_that("create_index_lookuptable works with numbers", {
 })
 
 test_that("create_index works", {
+  test_bt<-load_testdata('test_bt')
   t_test_bt<- as.data.frame(tibble::tribble(~player0, ~player1, ~y, ~player0_index, ~player1_index,
                                             'A', 'B', 0, 1, 2,
                                             'A', 'B', 0, 1, 2,
@@ -59,6 +56,7 @@ test_that("create_index works", {
 
 
 test_that('replace_parameter_index_with_names works',{
+  test_bt<-load_testdata('test_bt')
   data<-data.frame(v=  c('lambda[1]','lambda[2]','lambda[3]'))
   lookup_table<-create_index_lookuptable(test_bt,player0 = 'player0',player1 = 'player1')
   new_data <- data.frame(v=c('lambda[A]', 'lambda[B]', 'lambda[C]'))
@@ -67,6 +65,8 @@ test_that('replace_parameter_index_with_names works',{
 })
 
 test_that('create_array_of_par_names works',{
+  test_bt<-load_testdata('test_bt')
+  test_btU<-load_testdata('test_btU')
   lookup_table<-create_index_lookuptable(test_bt, player0 = 'player0',player1 = 'player1')
   result <- c('lambda[A]', 'lambda[B]', 'lambda[C]')
   expect_equal(create_array_of_par_names(par='lambda',lookup_table),result)
@@ -80,6 +80,7 @@ test_that('create_array_of_par_names works',{
 
 
 test_that('create_predictor_matrix_with_player_lookup_table works',{
+  test_predictors<-load_testdata('test_predictors')
   result<-as.matrix(data.frame(Pred1=c(2.3,1.4,4.2),
                      Pred2=c(-3.2,0.5,-2.1),
                      Pred3=c(0.01,0.04,0.02),
@@ -97,6 +98,7 @@ test_that('create_predictor_matrix_with_player_lookup_table works',{
 })
 
 test_that('create_predictors_lookup_table works',{
+  test_predictors<-load_testdata('test_predictors')
   result<-data.frame(Names=c('Pred1','Pred2','Pred3','Pred4'),
                      Index=c(1,2,3,4))
   predictor_all_columns<-colnames(test_predictors)
@@ -107,6 +109,7 @@ test_that('create_predictors_lookup_table works',{
 })
 
 test_that('create_index_predictors_with_lookup_table works',{
+  test_predictors<-load_testdata('test_predictors')
   result<-cbind(test_predictors,player_index=c(1,3,2))
 
   predictor_all_columns<-colnames(test_predictors)

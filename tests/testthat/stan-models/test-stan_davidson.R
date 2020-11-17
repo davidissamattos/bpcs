@@ -1,4 +1,5 @@
 test_that("bpc returns a bpc object with datasets using the davidson model", {
+  test_davidson<-load_testdata('test_davidson')
   m_ties<-bpc(data=test_davidson,
               player0 = 'player0',
               player1 = 'player1',

@@ -2,8 +2,7 @@
 % Please edit documentation in R/bpc_exports.R
 \name{get_loo}
 \alias{get_loo}
-\title{Tiny wrapper for the PSIS-LOO-CV method from the loo package
-This is used to evaluate the fit of the model using entropy criteria}
+\title{Tiny wrapper for the PSIS-LOO-CV method from the loo package.}
 \usage{
 get_loo(bpc_object)
 }
@@ -14,11 +13,15 @@ get_loo(bpc_object)
 a loo object
 }
 \description{
-Tiny wrapper for the PSIS-LOO-CV method from the loo package
 This is used to evaluate the fit of the model using entropy criteria
 }
 \examples{
- m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
+m<-bpc(data = tennis_agresti,
+player0 = 'player0',
+player1 = 'player1',
+result_column = 'y',
+model_type = 'bt',
+solve_ties = 'none')
  l<-get_loo(m)
 print(l)
 }

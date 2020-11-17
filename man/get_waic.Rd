@@ -2,8 +2,7 @@
 % Please edit documentation in R/bpc_exports.R
 \name{get_waic}
 \alias{get_waic}
-\title{Tiny wrapper for the WAIC method from the loo package
-This is used to evaluate the fit of the model using the Watanabe-Akaike Information criteria}
+\title{Tiny wrapper for the WAIC method from the loo package.}
 \usage{
 get_waic(bpc_object)
 }
@@ -14,11 +13,15 @@ get_waic(bpc_object)
 a loo object
 }
 \description{
-Tiny wrapper for the WAIC method from the loo package
 This is used to evaluate the fit of the model using the Watanabe-Akaike Information criteria
 }
 \examples{
-m<-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
+m<-bpc(data = tennis_agresti,
+player0 = 'player0',
+player1 = 'player1',
+result_column = 'y',
+model_type = 'bt',
+solve_ties = 'none')
 waic<-get_waic(m)
 print(waic)
 }

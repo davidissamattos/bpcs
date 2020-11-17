@@ -1,3 +1,37 @@
+home:
+  title: bpcs - A package for Bayesian Paired Comparison analysis with Stan
+  description:  The bpcs package provides pre compiled Stan models for the analysis of paired comparison data. The models include Bayesian versions of the Bradley-Terry model, including random effects (1 level), generalized model for predictors, order effect (home advantage) and the same variations for the Davidson (1970) model to handle ties. Additionally, we provide a number of functions to facilitate inference and obtaining results with these models.
+
 template:
   params:
     bootswatch: flatly
+
+reference:
+- title: "Basic usage functions"
+  desc: "Basic functions that are used in the R console for model fitting and simple investigatiosn"
+- contents:
+  - bpc
+  - summary.bpc
+  - print.bpc
+  - predict.bpc
+- title: "Model checking functions"
+  desc: "These are a thin wrapper over other packages functions to investigate the convergence of the MCMC."
+  - contents:
+  - launch_shinystan
+  - get_waic
+  - get_loo
+  - get_stanfit
+  - get_stanfit_summary
+- title: "Posterior distribution functions"
+  desc: "Functions used to investigate the posterior distribution of the parameters of the model"
+- contents:
+  - get_rank_of_players
+  - get_hpdi_parameters
+  - get_sample_posterior
+  - get_probabilities
+- title: "Data"
+  desc: "FDescription of the built-in datasets"
+- contents:
+  - tennis_agresti
+  - brasil_soccer_league
+  - optimization_algorithms

@@ -1,6 +1,9 @@
 test_that("Input errors are caught in bpc", {
   #missing either player scores and the result column
   #mising player0_score and result column
+  test_btscores<-load_testdata("test_btscores")
+
+
   expect_error(bpc(data=test_btscores,
                    player0 = 'player0',
                    player1 = 'player1',
@@ -39,6 +42,7 @@ test_that("Input errors are caught in bpc", {
 
 
 test_that("Input warnings are caught in bpc", {
+  test_davidson<-load_testdata("test_davidson")
   expect_warning(bpc(data=test_davidson,
                    player0 = 'player0',
                    player1 = 'player1',
@@ -52,6 +56,7 @@ test_that("Input warnings are caught in bpc", {
 })
 
 test_that('if there are ties AND solte_ties is none AND model is not davidson gives error',{
+  test_davidson<-load_testdata("test_davidson")
   expect_error(bpc(data=test_davidson,#there are ties here
                    player0 = 'player0',
                    player1 = 'player1',
@@ -63,7 +68,8 @@ test_that('if there are ties AND solte_ties is none AND model is not davidson gi
 
 
 test_that('if has z_player1 column but not the correct model gives error',{
-  expect_error(bpc(data=test_homebt,#there are ties here
+  test_btorder<-load_testdata("test_btorder")
+  expect_error(bpc(data=test_btorder,#there are ties here
                    player0 = 'player0',
                    player1 = 'player1',
                    result_column = 'y',

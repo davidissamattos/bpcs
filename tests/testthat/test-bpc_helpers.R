@@ -1,4 +1,5 @@
 test_that("compute_score works with btscores dataset", {
+  test_btscores<-load_testdata('test_btscores')
   test_btscores_higher <- as.data.frame(tibble::tribble(~y,0,0,1,0,0,0,0,0,1))
   test_btscores_lower <- as.data.frame(tibble::tribble(~y,1,1,0,1,1,1,1,1,0))
 
@@ -9,6 +10,7 @@ test_that("compute_score works with btscores dataset", {
 })
 
 test_that("compute_score works with davidsonscores dataset", {
+  test_davidsonscores<-load_testdata('test_davidsonscores')
   test_davidsonscores_1 <- as.data.frame(tibble::tribble(~y,0,0,0,0,0,0,0,0,0))#0 win both ties
   test_davidsonscores_2 <- as.data.frame(tibble::tribble(~y,0,0,0,0,0,0,0,0,1))#0 wins first and 1 wins last
   test_davidsonscores_3 <- as.data.frame(tibble::tribble(~y,0,0,1,0,0,0,0,0,0))#1 wins first and 0 last
@@ -48,21 +50,3 @@ test_that('compute_ties works',{
   expect_equal(compute_ties(v3,'results')$ties, rv3$ties)
 })
 
-
-test_that("Logit test if x is in bounds", {
-  expect_error(logit(-1),'Error!')
-  expect_error(logit(10),'Error!')
-})
-
-test_that('Known logit values', {
-  expect_equal(logit(0.5),0)
-  expect_equal(logit(1),Inf)
-  expect_equal(logit(0),-Inf)
-})
-
-
-test_that('Known inv logit values', {
-  expect_lt(inv_logit(5)-0.9933071, 0.001)
-  expect_lt(inv_logit(-5)-0.006692851,  0.001)
-  expect_lt(inv_logit(0)-0.5, 0.001)
-})

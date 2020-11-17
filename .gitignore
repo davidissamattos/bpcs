@@ -6,3 +6,10 @@ inst/doc
 docs
 doc
 Meta
+/src/*.cc
+/src/*.o
+/src/*.so
+/src/*.hpp
+/src/*.gcda
+/src/*.gcno
+/src/*.temp

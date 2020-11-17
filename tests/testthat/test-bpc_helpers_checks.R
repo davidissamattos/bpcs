@@ -31,9 +31,11 @@ test_that('check_if_there_are_ties works',{
 
 test_that('check_if_there_are_na works',{
   #dataset with Na
+  test_bt <- load_testdata('test_bt')
   test_bt_na1 <- test_bt
   test_bt_na1$y[4]<-NA
 
+  test_btscores <- load_testdata('test_btscores')
   test_btscores_na1 <- test_btscores
   test_btscores_na1$score0[4]<-NA
   test_btscores_na1$score1[6]<-NA
@@ -58,17 +60,17 @@ test_that('check_if_there_are_na works',{
                                      result_column=NULL))
 
   expect_false(check_if_there_are_na(d=test_bt,
-                                    player0='player0',
-                                    player1='player1',
-                                    result_column='y'))
+                                     player0='player0',
+                                     player1='player1',
+                                     result_column='y'))
 })
 
 
 test_that('check_numeric_predictor_matrix works',{
   m1<-as.matrix(data.frame(Pred1=c(2.3,1.4,4.2),
-                               Pred2=c(-3.2,0.5,-2.1),
-                               Pred3=c(0.01,0.04,0.02),
-                               Pred4=c(-0.5,-0.2,-0.3)))
+                           Pred2=c(-3.2,0.5,-2.1),
+                           Pred3=c(0.01,0.04,0.02),
+                           Pred4=c(-0.5,-0.2,-0.3)))
 
   m2<-as.matrix(data.frame(Pred1=c(2.3,1.4,4.2),
                            Pred2=c(-3.2,0.5,-2.1),
@@ -102,9 +104,9 @@ test_that('check_numeric_predictor_matrix works',{
 
 test_that('check_predictors_df_contains_all_players works',{
   test_predictors1<-tibble::tribble(~Player, ~Pred1, ~Pred2, ~Pred3, ~Pred4,
-                                   'A', 2.3, -3.2, 0.01, -1/2,
-                                   'C', 4.2, -2.1, 0.02, -0.3,
-                                   'B', 1.4, 0.5, 0.04, -0.2)
+                                    'A', 2.3, -3.2, 0.01, -1/2,
+                                    'C', 4.2, -2.1, 0.02, -0.3,
+                                    'B', 1.4, 0.5, 0.04, -0.2)
 
   test_predictors2<-tibble::tribble(~Player, ~Pred1, ~Pred2, ~Pred3, ~Pred4,
                                     'A', 2.3, -3.2, 0.01, -1/2,

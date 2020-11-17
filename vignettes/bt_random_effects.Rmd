@@ -41,11 +41,13 @@ First let's load some packages
 ```{r setup, warning=F, message=F}
 library(bpcs)
 library(tidyverse)
+library(kableExtra)
 library(knitr)
 library(gtools)
 library(rstan)
 #Stan should use parallel cores
-options(mc.cores = parallel::detectCores()) #use multiple cores
+# options(mc.cores = parallel::detectCores()) #use multiple cores
+options(mc.cores = 2) #CRAN works only with max 2 cores
 rstan::rstan_options(auto_write = TRUE)
 ```
 
@@ -224,13 +226,13 @@ kable(get_probabilities(m)$Table,
 ```
 
 ```{r}
-kable(dplyr::select(rank_players(m),-Posterior),
+kable(dplyr::select(get_rank_of_players(m),-PosteriorRank),
       caption = "Ranking the algorithms",
       digits = 2)
 ```
 
 
-We can also have nice plots of the parameters with bayesplot
+We can also have nice plots of the parameters with `bayesplot` package.
 
 ```{r}
 #changing the names of the parameters in the posterior 

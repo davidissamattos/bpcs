@@ -15,6 +15,242 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, warning=F, message=F}
 library(bpcs)
+library(knitr)
+library(tidyverse)
+library(kableExtra)
+library(rstan)
+#Stan should use parallel cores
+# options(mc.cores = parallel::detectCores()) #use multiple cores
+options(mc.cores = 2) #CRAN works only with max 2 cores
+rstan::rstan_options(auto_write = TRUE)
 ```
+
+# Introduction
+
+In this vignette, we will go over a sport dataset that consists of the games from the main Brazilian football league from 2017-2019. In this example, we will create a ranking system for the teams based on the Bradley-Terry model. Then we will expand this to include ties, home-advantage effects and ties with home-advantage. Note that in this example we give equal weights to a game regardless of the date, i.e. more recent games have the same impact as older games.
+
+The data can be accessed by:
+
+```{r}
+data("brasil_soccer_league")
+kable(head(brasil_soccer_league))
+```
+
+Let's analyze only the data from 2019 and remove a few columns that are not relevant for this example:
+```{r}
+d <- brasil_soccer_league %>%
+  dplyr::filter(Date >= as.Date("2019-01-01") &
+                  Date <= as.Date("2019-12-31")) %>%
+  select(HomeTeam, VisitorTeam, ScoreHomeTeam, ScoreVisitorTeam, Round) 
+```
+
+Now we have a smaller dataset (380 rows with 5 variables)
+
+```{r}
+kable(head(d))
+```
+
+# Fitting a Bradley-Terry model
+
+Let's start fitting a simple Bradley-Terry model and handle ties randomly
+
+```{r}
+m1 <- bpc(
+  d,
+  player0 = 'VisitorTeam',
+  player1 =  'HomeTeam',
+  player0_score = 'ScoreVisitorTeam',
+  player1_score = 'ScoreHomeTeam',
+  model_type = 'bt',
+  solve_ties = 'random',
+  priors = list(prior_lambda_std = 2.0),
+  # making a more informative prior to improve convergence
+  iter = 3000
+) #stan indicates a low bulk ESS so we are increasing the number of iterations
+```
+
+## Simple diagnostics
+
+Looking at the Rhat and the n_eff:
+```{r}
+print(m1)
+```
+
+Both look fine for all teams.
+
+Looking at the traceplots for the first 4 teams only (we can look at the others or launch the shinystan app)
+
+```{r}
+stafit<-get_stanfit(m1)
+posterior<-rstan::extract(stanfit,inc_warmup=T,permuted=F)
+bayesplot::mcmc_trace(posterior,pars = c("lambda[1]","lambda[2]","lambda[3]","lambda[4]"), n_warmup=1000)
+```
+
+They sound ok so there is no reason why we should not trust our data
+
+## Ranking with the bt model
+
+Let's get the rank with the simple `bt` model
+
+```{r}
+get_rank_of_players(m1) %>% 
+  select(Parameter, MedianRank) %>% 
+  kable()
+```
+
+# Fitting the Davidson model
+
+Now lets investigate how ties impact our model
+
+```{r}
+m2 <- bpc(d, 
+          player0 = 'VisitorTeam', 
+          player1 =  'HomeTeam', 
+          player0_score = 'ScoreVisitorTeam',
+          player1_score = 'ScoreHomeTeam',
+          model_type = 'davidson',
+          solve_ties = 'none',
+          priors = list(prior_lambda_std=2.0), # making a more informative prior to improve convergence
+          iter = 3000) #stan indicates a low bulk ESS so we are increasing the number of iterations
+```
+
+For sake of space and repetition we will not present the diagnostics which can be observed at:
+```{r eval=F}
+launch_shinystan(m2)
+```
+
+
+Let's look at the parameters
+```{r}
+print(m2)
+```
+
+## Ranking
+
+Let's look at the ranking with ties:
+
+```{r}
+get_rank_of_players(m2) %>% 
+  select(Parameter, MedianRank) %>% 
+  kable()
+```
+
+We can see that when we consider ties the rank has changed a bit and the difference between the teams reduce (we can see from both the parameter table as well as many equal median ranks between the teams).
+
+# Bradley-Terry with order effect (home advantage)
+
+
+```{r}
+d_home <- d %>% 
+  mutate(home_player1 = 1)
+
+m3 <- bpc(d_home, 
+          player0 = 'VisitorTeam', 
+          player1 =  'HomeTeam', 
+          player0_score = 'ScoreVisitorTeam',
+          player1_score = 'ScoreHomeTeam',
+          z_player1 = 'home_player1',
+          model_type = 'btordereffect',
+          solve_ties = 'random',
+          priors = list(prior_lambda_std=2.0), # making a more informative prior to improve convergence
+          iter = 3000) #stan indicates a low bulk ESS so we are increasing the number of iterations
+```
+
+For sake of space and repetition we will not present the diagnostics which can be observed at:
+```{r eval=F}
+launch_shinystan(m3)
+```
+
+Let's look at the parameters
+```{r}
+print(m3)
+```
+
+We can see that the gm parameter is negative indicating that playing home indeed provide an advantage to the matches.
+
+## Ranking
+
+Let's look at the ranking with home advantage:
+
+```{r}
+get_rank_of_players(m3) %>% 
+  select(Parameter, MedianRank) %>% 
+  kable()
+```
+
+We can see that the players ranking has changed a bit from the  BT and the Davidson model when we compensate for the home advantage 
+
+# Davidson with order effect (home advantage)
+
+Now let's fit our last model. The Davidson model with order effect. Here we take into account the ties and the home advantage effect
+
+```{r}
+m4 <- bpc(d_home, 
+          player0 = 'VisitorTeam', 
+          player1 =  'HomeTeam', 
+          player0_score = 'ScoreVisitorTeam',
+          player1_score = 'ScoreHomeTeam',
+          z_player1 = 'home_player1',
+          model_type = 'davidsonordereffect',
+          solve_ties = 'none',
+          priors = list(prior_lambda_std=2.0), # making a more informative prior to improve convergence
+          iter = 3000) #stan indicates a low bulk ESS so we are increasing the number of iterations
+```
+
+For sake of space and repetition we will not present the diagnostics which can be observed at:
+```{r eval=F}
+launch_shinystan(m4)
+```
+
+Let's look at the parameters
+```{r}
+print(m4)
+```
+
+We can see again that the home advantage gm parameter was negative, indicating that there is a home advantage effect.
+
+## Ranking
+
+Let's look at the ranking with home advantage and ties:
+
+```{r}
+get_rank_of_players(m4) %>% 
+  select(Parameter, MedianRank) %>% 
+  kable()
+```
+
+# Comparing the models with WAIC
+
+Let's see now using an information criteria (the WAIC) which model fits the data better.
+
+```{r}
+m1_waic <-get_waic(m1)
+m2_waic <-get_waic(m2)
+m3_waic <-get_waic(m3)
+m4_waic <-get_waic(m4)
+```
+
+
+We can look at each waic:
+```{r}
+m1_waic
+m2_waic
+m3_waic
+m4_waic
+```
+
+
+Or can also use the loo::compare function to see which performs better.
+```{r}
+loo::loo_compare(m1_waic,m2_waic, m3_waic, m4_waic)
+```
+
+We can see here that the best performing model was the Davidson model (lowest WAIC)
+
+
+# Final remarks
+
+In this vignette, we looked at 4 different models. However, we have not explored the impact of different priors in the model performance. For example, we might have improved the home advantage models by setting more informative priors to restrict the parameter estimate (which in model 4 was quite large).
+

@@ -2,15 +2,7 @@
 % Please edit documentation in R/bpc.R
 \name{bpc}
 \alias{bpc}
-\title{Bayesian Paired comparison  regression models in Stan
-This is the main function of the package.
-This function utilizes precompiled stan models to sample the posterior distribution of the specified model with the input data.
-Currently have implemented the following models in their Bayesian version:
-\itemize{
-\item Bradley-Terry: 'bradleyterry'. For this method ties should be handled, either by random solving or by removing them. Otherwise we get an error from Stan.
-\item Davidson model (for handling ties): 'davidson'
-For more information regarding the dataset format see the vignettes.
-}}
+\title{Bayesian Paired comparison  regression models in Stan}
 \usage{
 bpc(
   data,
@@ -22,7 +14,7 @@ bpc(
   z_player1 = NULL,
   cluster = NULL,
   predictors = NULL,
-  model_type = "bt",
+  model_type,
   solve_ties = "random",
   win_score = "higher",
   priors = NULL,
@@ -53,7 +45,7 @@ bpc(
 \item{predictors}{A data frame that contains the players predictors values when using a generalized model. Only numeric values are accepted. Booleans are accepted but will be cast into integers. The first column should be for the player name, the others will be the predictors.  The column names will be used as name for the predictors}
 
 \item{model_type}{\itemize{
-\item 'bt' (default) for the Bradley Terry model. Ref: Bradley-Terry 1952,
+\item 'bt' for the Bradley Terry model. Ref: Bradley-Terry 1952,
 \item 'davidson' the Davidson model to handle for ties. Ref: Davidson 1970
 \item 'btordereffect' for the Bradley-Terry with order effect (for home advantage). Ref: Davidson 1977
 \item 'davidsonordereffect' for the Davidson model with order effect (for home advantage) and ties. Ref: Davidson 1977
@@ -64,32 +56,36 @@ bpc(
 }}
 
 \item{solve_ties}{A string for the method of handling ties.
-*'random' for converting ties randomly,
-*'remove' for removing the tie occurrencess
 \itemize{
+\item 'random' for converting ties randomly,
+\item 'remove' for removing the tie occurrencess
 \item 'none' to ignore ties. This requires a model capable of handling  ties
 }}
 
-\item{win_score}{A string that indicates if a 'higher' score is winner or if a 'lower' score is winner}
+\item{win_score}{A string that indicates if which score should win
+\itemize{
+\item 'higher' score is winner
+\item 'lower' score is winner
+}}
 
 \item{priors}{A list with the parameters for the priors.
 \itemize{
-\item prior_lambda_mu Mean value of the lambda parameter in the all models. For the generalized this is also the prior for the B the parameter for  lambda ~ normal(mu, std)
-\item prior_lambda_std Standard deviation of the lambda parameter in the all models. lambda ~ normal(mu, std)
-\item prior_nu_mu Mean value of the nu parameter in the Davidson  models. nu ~ normal(mu, std)
-\item prior_nu_std Standard deviation ofnu parameter in the Davidson  models. nu ~ normal(mu, std). Default = 0.3
-\item prior_gm_mu Mean value of the gm in the ordered effect model. gm ~ normal(mu, std). Default = 0
-\item prior_gm_std Standard deviation of the gm parameter in the ordered effect model. gm ~ normal(mu, std). Default =
-\item prior_U_std Standard deviation of the U parameter in the random effects model. U ~ normal(0, std). Default = 3.0
+\item 'prior_lambda_mu' Mean value of the lambda parameter in the all models. For the generalized this is also the prior for the B the parameter for  lambda ~ normal(mu, std)
+\item 'prior_lambda_std' Standard deviation of the lambda parameter in the all models. lambda ~ normal(mu, std)
+\item 'prior_nu_mu' Mean value of the nu parameter in the Davidson  models. nu ~ normal(mu, std)
+\item 'prior_nu_std' Standard deviation ofnu parameter in the Davidson  models. nu ~ normal(mu, std). Default = 0.3
+\item 'prior_gm_mu' Mean value of the gm in the ordered effect model. gm ~ normal(mu, std). Default = 0
+\item 'prior_gm_std' Standard deviation of the gm parameter in the ordered effect model. gm ~ normal(mu, std). Default =
+\item 'prior_U_std' Standard deviation of the U parameter in the random effects model. U ~ normal(0, std). Default = 3.0
 }}
 
-\item{chains}{Number of chains passed to Stan sampling. Positive integer, default=4. For more information consult Stan}
+\item{chains}{Number of chains passed to Stan sampling. Positive integer, default=4. For more information consult Stan documentation}
 
-\item{iter}{Number of iterations passed to Stan sampling. Positive integer, default =2000. For more information consult Stan}
+\item{iter}{Number of iterations passed to Stan sampling. Positive integer, default =2000. For more information consult Stan documentation}
 
-\item{warmup}{Number of iteration for the warmup passed to Stan sampling. Positive integer, default 1000.  For more information consult Stan}
+\item{warmup}{Number of iteration for the warmup passed to Stan sampling. Positive integer, default 1000.  For more information consult Stan documentation}
 
-\item{show_chain_messages}{Hide chain messages from stan}
+\item{show_chain_messages}{Hide chain messages from Stan}
 
 \item{seed}{a random seed for Stan}
 }
@@ -97,19 +93,18 @@ bpc(
 An object of the class bpc. This object should be used in conjunction with the several auxiliary functions from the package
 }
 \description{
-Bayesian Paired comparison  regression models in Stan
 This is the main function of the package.
 This function utilizes precompiled stan models to sample the posterior distribution of the specified model with the input data.
-Currently have implemented the following models in their Bayesian version:
-\itemize{
-\item Bradley-Terry: 'bradleyterry'. For this method ties should be handled, either by random solving or by removing them. Otherwise we get an error from Stan.
-\item Davidson model (for handling ties): 'davidson'
-For more information regarding the dataset format see the vignettes.
-}
+For more information and larger examples of usage see the vignettes.
 }
 \examples{
 #For the simple Bradley-Terry model
-bpc(data = tennis_agresti, player0 = 'player0',player1 = 'player1',result_column = 'y',model_type = 'bt', solve_ties = 'none')
+bpc(data = tennis_agresti,
+player0 = 'player0',
+player1 = 'player1',
+result_column = 'y',
+model_type = 'bt',
+solve_ties = 'none')
 }
 \references{
 Bradley RA, Terry ME (1952). “Rank Analysis of Incomplete Block Designs I: The Method of Paired Comparisons.” Biometrika, 39, 324–45.

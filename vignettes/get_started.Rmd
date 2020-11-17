@@ -20,6 +20,7 @@ library(bpcs)
 library(tidyverse)
 library(kableExtra)
 library(bayesplot)
+library(knitr)
 ```
 
 # Getting started
@@ -93,7 +94,7 @@ shinystan::launch_shinystan(stanfit)
 If you prefer to investigate without `shinystan` we can retrieve the stanfit object and investigate ourselves or with the help of the `bayesplot` package [@bayesplot2019]. Here we need the stanfit and the stan posterior matrix to proceed. The indexes in Stan refer to the names and indexes available at the lookup table
 
 ```{r}
-kable(m1$lookup_table)
+knitr::kable(m1$lookup_table)
 ```
 
 
@@ -180,13 +181,13 @@ mcmc_areas(posterior,
 
 ```{r}
 prob_table<-get_probabilities(m1)$Table
-kable(prob_table, caption = 'Probabilities of one player beating the other', digits = 2) %>% 
-  kable_styling()
+knitr::kable(prob_table, caption = 'Probabilities of one player beating the other', digits = 2) %>% 
+  kableExtra::kable_styling()
 ```
-We might also be interested in ranking the players based on their ability $lambda$. In the Bayesian case, we sample the posterior distribution of $lambda$ and rank them so we have posterior distribution of the ranks. This can be achieve with the function `rank_parameters`.
+We might also be interested in ranking the players based on their ability $lambda$. In the Bayesian case, we sample the posterior distribution of $lambda$ and rank them so we have posterior distribution of the ranks. This can be achieve with the function `get_rank_of_players`.
 
 ```{r}
-ranking <- rank_players(m1)
+ranking <- get_rank_of_players(m1)
 ```
 
 We can produce a table with the values of this dataframe.
@@ -219,7 +220,7 @@ y_seles<-predict(m1,tennis_new_games,n=100)
 y_seles <- dplyr::mutate(y_seles, avg_win_player1 = rowMeans(select(y_seles, starts_with('y_pred')))) 
 y_seles %>% 
   dplyr::select(player0, player1,avg_win_player1) %>%
-  kable()
+  knitr::kable()
 ```
 If the average number of wins of player 1 is higher than 0.5 than player 1 wins more times than player 0.
 

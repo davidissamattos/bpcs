@@ -2,8 +2,7 @@
 % Please edit documentation in R/bpc_helpers_indexes.R
 \name{create_array_of_par_names}
 \alias{create_array_of_par_names}
-\title{Create an array with the parameter name and to what player/cluster it refers to in the order stan presents
-E.g  for parameter lambda with 4 players: c(lambda\link{Biometrika}, lambda\link{CommStat}, lambda\link{JASA}, lambda\link{JRSSB})}
+\title{Create an array with the parameter name and to what player/cluster it refers to in the order stan presents}
 \usage{
 create_array_of_par_names(par, lookup_table, cluster_lookup_table = NULL)
 }
@@ -19,5 +18,4 @@ a data. frame where we change the names in the variable colum to the correspondi
 }
 \description{
 Create an array with the parameter name and to what player/cluster it refers to in the order stan presents
-E.g  for parameter lambda with 4 players: c(lambda\link{Biometrika}, lambda\link{CommStat}, lambda\link{JASA}, lambda\link{JRSSB})
 }

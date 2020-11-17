@@ -7,7 +7,7 @@
 check_result_column(d_column)
 }
 \arguments{
-\item{d_column}{}
+\item{d_column}{a column from a data frame}
 }
 \value{
 TRUE (correct) or FALSE (with problems)

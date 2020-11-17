@@ -47,5 +47,6 @@ tennis_agresti <- tibble::tribble(~player0, ~player1, ~y, ~id,
                                   'Navratilova', 'Sanchez',0, 45,
                                   'Navratilova', 'Sanchez',1, 46
 )
+tennis_agresti <- as.data.frame(tennis_agresti)
 
 usethis::use_data(tennis_agresti, overwrite = TRUE)

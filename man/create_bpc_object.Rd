@@ -30,6 +30,12 @@ create_bpc_object(
 \item{call_arg}{a list with the arguments called from the bpc function}
 
 \item{cluster_lookup_table}{a lookup table with we have random effects}
+
+\item{predictors_df}{the data frame of the predictors for a generalized model}
+
+\item{predictors_lookup_table}{a lookup table for generalized models}
+
+\item{predictors_matrix}{a matrix of predictors for generalized models}
 }
 \value{
 a bpc object

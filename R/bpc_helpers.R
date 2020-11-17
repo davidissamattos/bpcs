@@ -9,51 +9,53 @@
 #' @param solve_ties Method to solve the ties, either randomly allocate, or do nothing, or remove the row from the datasetc('random', 'none', 'remove').
 #' @param win_score decides if who wins is the one that has the highest score or the lowest score
 #' @return a dataframe with column 'y' that contains the results of the comparison and a ties column indicating if there was ties
-compute_scores<-function(d,
-                         player0_score,
-                         player1_score,
-                         solve_ties='random',
-                         win_score='higher'){
-  d<-as.data.frame(d)
+#'  @importFrom rlang .data
+compute_scores <- function(d,
+                           player0_score,
+                           player1_score,
+                           solve_ties = 'random',
+                           win_score = 'higher') {
+  d <- as.data.frame(d)
 
 
-  d$diff_score<- as.vector(d[,player1_score]-d[,player0_score])
+  d$diff_score <- as.vector(d[, player1_score] - d[, player0_score])
   # If higher score better than lower score for winning
-  if(win_score=='higher')
+  if (win_score == 'higher')
   {
-    player1win<-ifelse(d$diff_score >0, 1,
-                       ifelse(d$diff_score <0, 0, 2))
-    d$y<- as.vector(player1win)
+    player1win <- ifelse(d$diff_score > 0, 1,
+                         ifelse(d$diff_score < 0, 0, 2))
+    d$y <- as.vector(player1win)
   }
-  else #lower
+  else
+    #lower
   {
-    player1win<-ifelse(d$diff_score <0, 1,
-                       ifelse(d$diff_score >0, 0, 2))
-    d$y<- as.vector(player1win)
+    player1win <- ifelse(d$diff_score < 0, 1,
+                         ifelse(d$diff_score > 0, 0, 2))
+    d$y <- as.vector(player1win)
   }
 
   # How to handle ties in the scores
-  if(solve_ties=='none')
+  if (solve_ties == 'none')
   {
 
   }
-  if(solve_ties=='random')
+  if (solve_ties == 'random')
   {
-    for(i in 1:nrow(d)){
-      if(d$y[i]==2)
-        d$y[i]= sample(c(0,1), replace=T, size=1)
+    for (i in 1:nrow(d)) {
+      if (d$y[i] == 2)
+        d$y[i] = sample(c(0, 1), replace = T, size = 1)
     }
 
   }
-  if(solve_ties=='remove')
+  if (solve_ties == 'remove')
   {
-    d$ties<-ifelse(d$diff_score!=0,0,NA)
-    d<-tidyr::drop_na(d,tidyselect::any_of('ties'))
-    d<-dplyr::select(d, -ties)
+    d$ties <- ifelse(d$diff_score != 0, 0, NA)
+    d <- tidyr::drop_na(d, tidyselect::any_of('ties'))
+    d <- dplyr::select(d,-.data$ties)
   }
 
-  d<-compute_ties(d,'y')
-  d<-dplyr::select(d, -diff_score)
+  d <- compute_ties(d, 'y')
+  d <- dplyr::select(d,-.data$diff_score)
   return(as.data.frame(d))
 }
 
@@ -61,10 +63,10 @@ compute_scores<-function(d,
 #' @param d data frame
 #' @param result_column column where the result is
 #' @return dataframe with a column called ties
-compute_ties<-function(d, result_column){
-  d<-as.data.frame(d)
-  if(check_result_column(d[,result_column])){
-    d$ties<-ifelse(d[,result_column] ==2, 1,0)
+compute_ties <- function(d, result_column) {
+  d <- as.data.frame(d)
+  if (check_result_column(d[, result_column])) {
+    d$ties <- ifelse(d[, result_column] == 2, 1, 0)
     return(as.data.frame(d))
   }
   else
@@ -79,12 +81,12 @@ compute_ties<-function(d, result_column){
 #' Here we exclude the log_lik and the lp__ since they are not parameters of the model
 #' @param bpc_object a bpc object
 #' @return a vector with the name of the parameters
-get_model_parameters<-function(bpc_object){
-  if(class(bpc_object)!='bpc')
+get_model_parameters <- function(bpc_object) {
+  if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
-  stanfit<-get_stanfit(bpc_object)
-  pars_all<-stanfit@model_pars
-  pars<- subset(pars_all, !(pars_all %in% c('log_lik','lp__')))
+  stanfit <- get_stanfit(bpc_object)
+  pars_all <- stanfit@model_pars
+  pars <- subset(pars_all,!(pars_all %in% c('log_lik', 'lp__')))
   return(pars)
 }
 
@@ -96,46 +98,10 @@ get_model_parameters<-function(bpc_object){
 #' @param par parameter name
 #' @param n number of samples
 #' @return a dataframe containing the samples of the parameter. Each column is a parameter (in order of the index), each row is a sample
-sample_stanfit<-function(stanfit,par,n=100){
+sample_stanfit <- function(stanfit, par, n = 100) {
   posterior <- rstan::extract(stanfit)
-  posterior<- as.data.frame(posterior[[par]])
+  posterior <- as.data.frame(posterior[[par]])
   #re sampling from the posterior
-  s <- dplyr::sample_n(posterior, size = n, replace=T)
+  s <- dplyr::sample_n(posterior, size = n, replace = T)
   return(as.data.frame(s))
 }
-
-
-#' Logit function
-#' @references
-#' https://en.wikipedia.org/wiki/Logit
-#' @param x p is a probability 0 to 1
-#' @return a value between -inf and inf
-#' @export
-#'
-#' @examples
-#' logit(0.5)
-#' logit(0.2)
-logit<-function(x){
-  if( any(x < 0 | x > 1) )
-    stop('Error! x not between 0 and 1')
-  y <- log(x/(1-x))
-  return(y)
-}
-
-#' Inverse logit function
-#' @references
-#' https://en.wikipedia.org/wiki/Logit
-#' @param x is a real -inf to inf
-#' @return a value between 0 and 1
-#' @export
-#'
-#' @examples
-#' logit(5)
-#' logit(-5)
-#' logit(0)
-inv_logit<-function(x){
-  y <- exp(x)/(1+exp(x))
-  return(y)
-}
-
-

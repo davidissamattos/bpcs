@@ -11,7 +11,7 @@ HPDI_from_stanfit(stanfit)
 \item{stanfit}{a stanfit object retrived from a bpc object}
 }
 \value{
-a data frame with the HPDI calculated from the coda pacakge
+a data frame with the HPDI calculated from the coda package
 }
 \description{
 Calculate HPDI for all parameters from a stanfit object
