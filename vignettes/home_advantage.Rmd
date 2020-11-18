@@ -83,7 +83,7 @@ Both look fine for all teams.
 Looking at the traceplots for the first 4 teams only (we can look at the others or launch the shinystan app)
 
 ```{r}
-stafit<-get_stanfit(m1)
+stanfit<-get_stanfit(m1)
 posterior<-rstan::extract(stanfit,inc_warmup=T,permuted=F)
 bayesplot::mcmc_trace(posterior,pars = c("lambda[1]","lambda[2]","lambda[3]","lambda[4]"), n_warmup=1000)
 ```
