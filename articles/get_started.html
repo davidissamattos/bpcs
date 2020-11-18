@@ -60,9 +60,6 @@
       <a href="../articles/get_started.html">Getting Started with the bpcs package</a>
     </li>
     <li>
-      <a href="../articles/handling_ties.html">Handling ties</a>
-    </li>
-    <li>
       <a href="../articles/home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
     </li>
   </ul>
@@ -106,7 +103,8 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/davidissamattos/bpcs">bpcs</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/bayesplot">bayesplot</a></span><span class="op">)</span></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/bayesplot">bayesplot</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span></pre></div>
 <div id="getting-started" class="section level1">
 <h1 class="hasAnchor">
 <a href="#getting-started" class="anchor"></a>Getting started</h1>
@@ -815,8 +813,8 @@ Sanchez
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).</span>
 <span class="co">#&gt; Chain 1: </span>
-<span class="co">#&gt; Chain 1: Gradient evaluation took 4e-05 seconds</span>
-<span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.4 seconds.</span>
+<span class="co">#&gt; Chain 1: Gradient evaluation took 3.9e-05 seconds</span>
+<span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.39 seconds.</span>
 <span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 1: </span>
 <span class="co">#&gt; Chain 1: </span>
@@ -833,15 +831,15 @@ Sanchez
 <span class="co">#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 1: </span>
-<span class="co">#&gt; Chain 1:  Elapsed Time: 0.106293 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 1:                0.124346 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 1:                0.230639 seconds (Total)</span>
+<span class="co">#&gt; Chain 1:  Elapsed Time: 0.095724 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 1:                0.099971 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 1:                0.195695 seconds (Total)</span>
 <span class="co">#&gt; Chain 1: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).</span>
 <span class="co">#&gt; Chain 2: </span>
-<span class="co">#&gt; Chain 2: Gradient evaluation took 1.9e-05 seconds</span>
-<span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.</span>
+<span class="co">#&gt; Chain 2: Gradient evaluation took 1.5e-05 seconds</span>
+<span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.</span>
 <span class="co">#&gt; Chain 2: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 2: </span>
 <span class="co">#&gt; Chain 2: </span>
@@ -858,15 +856,15 @@ Sanchez
 <span class="co">#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 2: </span>
-<span class="co">#&gt; Chain 2:  Elapsed Time: 0.109372 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 2:                0.112056 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 2:                0.221428 seconds (Total)</span>
+<span class="co">#&gt; Chain 2:  Elapsed Time: 0.093499 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 2:                0.092718 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 2:                0.186217 seconds (Total)</span>
 <span class="co">#&gt; Chain 2: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).</span>
 <span class="co">#&gt; Chain 3: </span>
-<span class="co">#&gt; Chain 3: Gradient evaluation took 1.6e-05 seconds</span>
-<span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.</span>
+<span class="co">#&gt; Chain 3: Gradient evaluation took 1.5e-05 seconds</span>
+<span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.</span>
 <span class="co">#&gt; Chain 3: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 3: </span>
 <span class="co">#&gt; Chain 3: </span>
@@ -883,15 +881,15 @@ Sanchez
 <span class="co">#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 3: </span>
-<span class="co">#&gt; Chain 3:  Elapsed Time: 0.106517 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 3:                0.108772 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 3:                0.215289 seconds (Total)</span>
+<span class="co">#&gt; Chain 3:  Elapsed Time: 0.094371 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 3:                0.102222 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 3:                0.196593 seconds (Total)</span>
 <span class="co">#&gt; Chain 3: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).</span>
 <span class="co">#&gt; Chain 4: </span>
-<span class="co">#&gt; Chain 4: Gradient evaluation took 1.6e-05 seconds</span>
-<span class="co">#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.</span>
+<span class="co">#&gt; Chain 4: Gradient evaluation took 1.3e-05 seconds</span>
+<span class="co">#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.</span>
 <span class="co">#&gt; Chain 4: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 4: </span>
 <span class="co">#&gt; Chain 4: </span>
@@ -908,9 +906,9 @@ Sanchez
 <span class="co">#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 4: </span>
-<span class="co">#&gt; Chain 4:  Elapsed Time: 0.109843 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 4:                0.117014 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 4:                0.226857 seconds (Total)</span>
+<span class="co">#&gt; Chain 4:  Elapsed Time: 0.09809 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 4:                0.096229 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 4:                0.194319 seconds (Total)</span>
 <span class="co">#&gt; Chain 4:</span></pre></div>
 <div id="diagnostics" class="section level2">
 <h2 class="hasAnchor">
@@ -925,7 +923,7 @@ Sanchez
 <span class="fu">shinystan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/shinystan/man/launch_shinystan.html">launch_shinystan</a></span><span class="op">(</span><span class="va">stanfit</span><span class="op">)</span></pre></div>
 <p>If you prefer to investigate without <code>shinystan</code> we can retrieve the stanfit object and investigate ourselves or with the help of the <code>bayesplot</code> package <span class="citation">(Gabry et al. 2019)</span>. Here we need the stanfit and the stan posterior matrix to proceed. The indexes in Stan refer to the names and indexes available at the lookup table</p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">m1</span><span class="op">$</span><span class="va">lookup_table</span><span class="op">)</span></pre></div>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">m1</span><span class="op">$</span><span class="va">lookup_table</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
@@ -997,18 +995,18 @@ Sanchez
 <p>Verifying the Rhat and neff using the functions from <code>rstan</code></p>
 <div class="sourceCode" id="cb12"><pre class="downlit">
 <span class="fu">rstan</span><span class="fu">::</span><span class="fu">summary</span><span class="op">(</span><span class="va">stanfit</span> ,pars<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'lambda'</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">summary</span>
-<span class="co">#&gt;                   mean    se_mean       sd      2.5%         25%        50%</span>
-<span class="co">#&gt; lambda[1]  0.486675381 0.04833589 1.403456 -2.239888 -0.51159182  0.5209566</span>
-<span class="co">#&gt; lambda[2]  0.907802498 0.04876807 1.382775 -1.762232 -0.05478881  0.9096297</span>
-<span class="co">#&gt; lambda[3] -0.364266790 0.04853609 1.405543 -3.027307 -1.38500295 -0.3548845</span>
-<span class="co">#&gt; lambda[4]  0.003058673 0.04843657 1.402948 -2.666660 -0.96833900  0.0112665</span>
-<span class="co">#&gt; lambda[5] -1.155524925 0.04886007 1.411014 -3.804889 -2.16084761 -1.1556328</span>
-<span class="co">#&gt;                  75%    97.5%    n_eff     Rhat</span>
-<span class="co">#&gt; lambda[1]  1.4400775 3.242829 843.0596 1.003983</span>
-<span class="co">#&gt; lambda[2]  1.8854082 3.594844 803.9558 1.004024</span>
-<span class="co">#&gt; lambda[3]  0.5806289 2.417240 838.6079 1.004699</span>
-<span class="co">#&gt; lambda[4]  0.9615463 2.761230 838.9513 1.004626</span>
-<span class="co">#&gt; lambda[5] -0.1848989 1.538424 833.9780 1.003542</span></pre></div>
+<span class="co">#&gt;                 mean    se_mean       sd      2.5%         25%        50%</span>
+<span class="co">#&gt; lambda[1]  0.5981244 0.05608858 1.421010 -2.268262 -0.34490743  0.5963528</span>
+<span class="co">#&gt; lambda[2]  1.0237451 0.05598825 1.408048 -1.736637  0.08037381  1.0219145</span>
+<span class="co">#&gt; lambda[3] -0.2469453 0.05544152 1.410106 -2.984862 -1.21614231 -0.2666707</span>
+<span class="co">#&gt; lambda[4]  0.1351097 0.05545279 1.407057 -2.680975 -0.79326104  0.1337490</span>
+<span class="co">#&gt; lambda[5] -1.0540686 0.05619409 1.417080 -3.837101 -1.98865845 -1.0633450</span>
+<span class="co">#&gt;                   75%    97.5%    n_eff     Rhat</span>
+<span class="co">#&gt; lambda[1]  1.57694028 3.338534 641.8672 1.004029</span>
+<span class="co">#&gt; lambda[2]  1.96993768 3.804726 632.4714 1.004260</span>
+<span class="co">#&gt; lambda[3]  0.70997791 2.490035 646.8944 1.004297</span>
+<span class="co">#&gt; lambda[4]  1.06817054 2.897269 643.8377 1.005484</span>
+<span class="co">#&gt; lambda[5] -0.07726685 1.739443 635.9276 1.003950</span></pre></div>
 </div>
 <div id="predictive-posterior" class="section level2">
 <h2 class="hasAnchor">
@@ -1033,13 +1031,13 @@ Sanchez
 <span class="co">#&gt; Estimated baseline parameters with HPD intervals:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter                    Mean   HPD_lower   HPD_higher</span>
-<span class="co">#&gt; --------------------  -----------  ----------  -----------</span>
-<span class="co">#&gt; lambda[Seles]           0.4866754   -2.393949     3.060478</span>
-<span class="co">#&gt; lambda[Graf]            0.9078025   -1.883444     3.433116</span>
-<span class="co">#&gt; lambda[Sabatini]       -0.3642668   -3.118918     2.268514</span>
-<span class="co">#&gt; lambda[Navratilova]     0.0030587   -2.661533     2.766857</span>
-<span class="co">#&gt; lambda[Sanchez]        -1.1555249   -3.835102     1.481281</span>
+<span class="co">#&gt; Parameter               Mean   HPD_lower   HPD_higher    n_eff   Rhat</span>
+<span class="co">#&gt; --------------------  ------  ----------  -----------  -------  -----</span>
+<span class="co">#&gt; lambda[Seles]           0.60       -2.03         3.54   641.87   1.00</span>
+<span class="co">#&gt; lambda[Graf]            1.02       -1.70         3.83   632.47   1.00</span>
+<span class="co">#&gt; lambda[Sabatini]       -0.25       -2.95         2.50   646.89   1.00</span>
+<span class="co">#&gt; lambda[Navratilova]     0.14       -2.70         2.89   643.84   1.01</span>
+<span class="co">#&gt; lambda[Sanchez]        -1.05       -3.72         1.84   635.93   1.00</span>
 <span class="co">#&gt; NOTES:</span>
 <span class="co">#&gt; * A higher lambda indicates a higher team ability</span>
 <span class="co">#&gt; </span>
@@ -1051,15 +1049,15 @@ Sanchez
 <span class="co">#&gt; </span>
 <span class="co">#&gt; i             j              i_beats_j</span>
 <span class="co">#&gt; ------------  ------------  ----------</span>
-<span class="co">#&gt; Graf          Navratilova         0.68</span>
+<span class="co">#&gt; Graf          Navratilova         0.69</span>
 <span class="co">#&gt; Graf          Sabatini            0.77</span>
 <span class="co">#&gt; Graf          Sanchez             0.87</span>
-<span class="co">#&gt; Graf          Seles               0.60</span>
-<span class="co">#&gt; Navratilova   Sabatini            0.59</span>
-<span class="co">#&gt; Navratilova   Sanchez             0.74</span>
-<span class="co">#&gt; Navratilova   Seles               0.40</span>
+<span class="co">#&gt; Graf          Seles               0.61</span>
+<span class="co">#&gt; Navratilova   Sabatini            0.58</span>
+<span class="co">#&gt; Navratilova   Sanchez             0.75</span>
+<span class="co">#&gt; Navratilova   Seles               0.39</span>
 <span class="co">#&gt; Sabatini      Sanchez             0.68</span>
-<span class="co">#&gt; Sabatini      Seles               0.31</span>
+<span class="co">#&gt; Sabatini      Seles               0.33</span>
 <span class="co">#&gt; Sanchez       Seles               0.19</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
@@ -1069,11 +1067,11 @@ Sanchez
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter              MedianRank   MeanRank   StdRank</span>
 <span class="co">#&gt; --------------------  -----------  ---------  --------</span>
-<span class="co">#&gt; lambda[Graf]                    1       1.39      0.61</span>
-<span class="co">#&gt; lambda[Seles]                   2       2.13      0.93</span>
-<span class="co">#&gt; lambda[Navratilova]             3       3.03      0.91</span>
-<span class="co">#&gt; lambda[Sabatini]                4       3.66      0.83</span>
-<span class="co">#&gt; lambda[Sanchez]                 5       4.79      0.50</span></pre></div>
+<span class="co">#&gt; lambda[Graf]                    1       1.35      0.60</span>
+<span class="co">#&gt; lambda[Seles]                   2       2.15      0.91</span>
+<span class="co">#&gt; lambda[Navratilova]             3       3.02      0.88</span>
+<span class="co">#&gt; lambda[Sabatini]                4       3.67      0.83</span>
+<span class="co">#&gt; lambda[Sanchez]                 5       4.80      0.47</span></pre></div>
 <p>If we want to create nicer tables and export them to latex/html we can leverage this with the <code>kable</code> function and the <code>kableExtra</code> package. Note that for extensive customization (and examples) we refer to the packages documentation.</p>
 <p>Parameter table with HPD intervals</p>
 <div class="sourceCode" id="cb16"><pre class="downlit">
@@ -1096,6 +1094,12 @@ HPD_lower
 <th style="text-align:right;">
 HPD_higher
 </th>
+<th style="text-align:right;">
+n_eff
+</th>
+<th style="text-align:right;">
+Rhat
+</th>
 </tr></thead>
 <tbody>
 <tr>
@@ -1103,13 +1107,19 @@ HPD_higher
 lambda[Seles]
 </td>
 <td style="text-align:right;">
-0.49
+0.60
 </td>
 <td style="text-align:right;">
--2.39
+-2.03
 </td>
 <td style="text-align:right;">
-3.06
+3.54
+</td>
+<td style="text-align:right;">
+641.87
+</td>
+<td style="text-align:right;">
+1.00
 </td>
 </tr>
 <tr>
@@ -1117,13 +1127,19 @@ lambda[Seles]
 lambda[Graf]
 </td>
 <td style="text-align:right;">
-0.91
+1.02
 </td>
 <td style="text-align:right;">
--1.88
+-1.70
 </td>
 <td style="text-align:right;">
-3.43
+3.83
+</td>
+<td style="text-align:right;">
+632.47
+</td>
+<td style="text-align:right;">
+1.00
 </td>
 </tr>
 <tr>
@@ -1131,13 +1147,19 @@ lambda[Graf]
 lambda[Sabatini]
 </td>
 <td style="text-align:right;">
--0.36
+-0.25
 </td>
 <td style="text-align:right;">
--3.12
+-2.95
 </td>
 <td style="text-align:right;">
-2.27
+2.50
+</td>
+<td style="text-align:right;">
+646.89
+</td>
+<td style="text-align:right;">
+1.00
 </td>
 </tr>
 <tr>
@@ -1145,13 +1167,19 @@ lambda[Sabatini]
 lambda[Navratilova]
 </td>
 <td style="text-align:right;">
-0.00
+0.14
 </td>
 <td style="text-align:right;">
--2.66
+-2.70
 </td>
 <td style="text-align:right;">
-2.77
+2.89
+</td>
+<td style="text-align:right;">
+643.84
+</td>
+<td style="text-align:right;">
+1.01
 </td>
 </tr>
 <tr>
@@ -1159,13 +1187,19 @@ lambda[Navratilova]
 lambda[Sanchez]
 </td>
 <td style="text-align:right;">
--1.16
+-1.05
 </td>
 <td style="text-align:right;">
--3.84
+-3.72
 </td>
 <td style="text-align:right;">
-1.48
+1.84
+</td>
+<td style="text-align:right;">
+635.93
+</td>
+<td style="text-align:right;">
+1.00
 </td>
 </tr>
 </tbody>
@@ -1189,8 +1223,8 @@ lambda[Sanchez]
 <p><img src="get_started_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
 <div class="sourceCode" id="cb18"><pre class="downlit">
 <span class="va">prob_table</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/get_probabilities.html">get_probabilities</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span><span class="op">$</span><span class="va">Table</span>
-<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">prob_table</span>, caption <span class="op">=</span> <span class="st">'Probabilities of one player beating the other'</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">prob_table</span>, caption <span class="op">=</span> <span class="st">'Probabilities of one player beating the other'</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <table class="table table">
 <caption>
 Probabilities of one player beating the other
@@ -1226,7 +1260,7 @@ Graf
 Sabatini
 </td>
 <td style="text-align:right;">
-0.76
+0.77
 </td>
 </tr>
 <tr>
@@ -1248,7 +1282,7 @@ Graf
 Seles
 </td>
 <td style="text-align:right;">
-0.60
+0.59
 </td>
 </tr>
 <tr>
@@ -1259,7 +1293,7 @@ Navratilova
 Sabatini
 </td>
 <td style="text-align:right;">
-0.59
+0.58
 </td>
 </tr>
 <tr>
@@ -1270,7 +1304,7 @@ Navratilova
 Sanchez
 </td>
 <td style="text-align:right;">
-0.74
+0.75
 </td>
 </tr>
 <tr>
@@ -1292,7 +1326,7 @@ Sabatini
 Sanchez
 </td>
 <td style="text-align:right;">
-0.67
+0.68
 </td>
 </tr>
 <tr>
@@ -1319,9 +1353,9 @@ Seles
 </tr>
 </tbody>
 </table>
-<p>We might also be interested in ranking the players based on their ability <span class="math inline">\(lambda\)</span>. In the Bayesian case, we sample the posterior distribution of <span class="math inline">\(lambda\)</span> and rank them so we have posterior distribution of the ranks. This can be achieve with the function <code>rank_parameters</code>.</p>
+<p>We might also be interested in ranking the players based on their ability <span class="math inline">\(lambda\)</span>. In the Bayesian case, we sample the posterior distribution of <span class="math inline">\(lambda\)</span> and rank them so we have posterior distribution of the ranks. This can be achieve with the function <code>get_rank_of_players</code>.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit">
-<span class="va">ranking</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rank_players.html">rank_players</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></pre></div>
+<span class="va">ranking</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_rank_of_players.html">get_rank_of_players</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></pre></div>
 <p>We can produce a table with the values of this dataframe.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit">
 <span class="va">t</span> <span class="op">&lt;-</span> <span class="va">ranking</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Parameter</span>, <span class="va">MedianRank</span>, <span class="va">StdRank</span><span class="op">)</span>
@@ -1351,7 +1385,7 @@ lambda[Graf]
 1
 </td>
 <td style="text-align:right;">
-0.6213413
+0.6798980
 </td>
 </tr>
 <tr>
@@ -1362,7 +1396,7 @@ lambda[Seles]
 2
 </td>
 <td style="text-align:right;">
-0.9150855
+0.8844961
 </td>
 </tr>
 <tr>
@@ -1373,7 +1407,7 @@ lambda[Navratilova]
 3
 </td>
 <td style="text-align:right;">
-0.8841792
+0.8949105
 </td>
 </tr>
 <tr>
@@ -1384,7 +1418,7 @@ lambda[Sabatini]
 4
 </td>
 <td style="text-align:right;">
-0.8294166
+0.8468371
 </td>
 </tr>
 <tr>
@@ -1395,7 +1429,7 @@ lambda[Sanchez]
 5
 </td>
 <td style="text-align:right;">
-0.5315887
+0.5147630
 </td>
 </tr>
 </tbody>
@@ -1422,7 +1456,7 @@ lambda[Sanchez]
 <span class="va">y_seles</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">y_seles</span>, avg_win_player1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowMeans</a></span><span class="op">(</span><span class="fu">select</span><span class="op">(</span><span class="va">y_seles</span>, <span class="fu">starts_with</span><span class="op">(</span><span class="st">'y_pred'</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> 
 <span class="va">y_seles</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">player0</span>, <span class="va">player1</span>,<span class="va">avg_win_player1</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
@@ -1444,7 +1478,7 @@ Seles
 Graf
 </td>
 <td style="text-align:right;">
-0.62
+0.58
 </td>
 </tr>
 <tr>
@@ -1455,7 +1489,7 @@ Seles
 Sabatini
 </td>
 <td style="text-align:right;">
-0.32
+0.34
 </td>
 </tr>
 <tr>
@@ -1466,7 +1500,7 @@ Seles
 Navratilova
 </td>
 <td style="text-align:right;">
-0.38
+0.46
 </td>
 </tr>
 <tr>

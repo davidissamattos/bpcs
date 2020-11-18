@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Return the mean and the HPDI of the parameters of the model — get_hpdi_parameters • bpcs</title>
+<title>Generate a ranking of the ability based on sampling the posterior distribution of the ranks. — get_rank_of_players • bpcs</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Return the mean and the HPDI of the parameters of the model — get_hpdi_parameters" />
-<meta property="og:description" content="Return a data frame with the mean and with high and low 95% hpd interval for all parameters of the model" />
+<meta property="og:title" content="Generate a ranking of the ability based on sampling the posterior distribution of the ranks. — get_rank_of_players" />
+<meta property="og:description" content="To print this object you should remove the last column PosteriorRank since it contain the whole posterior distribution for each case" />
 
 
 
@@ -129,16 +129,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Return the mean and the HPDI of the parameters of the model</h1>
+    <h1>Generate a ranking of the ability based on sampling the posterior distribution of the ranks.</h1>
     <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_exports.R'><code>R/bpc_exports.R</code></a></small>
-    <div class="hidden name"><code>get_hpdi_parameters.Rd</code></div>
+    <div class="hidden name"><code>get_rank_of_players.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Return a data frame with the mean and with high and low 95% hpd interval for all parameters of the model</p>
+    <p>To print this object you should remove the last column PosteriorRank since it contain the whole posterior distribution for each case</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_hpdi_parameters</span><span class='op'>(</span><span class='va'>bpc_object</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_rank_of_players</span><span class='op'>(</span><span class='va'>bpc_object</span>, n <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,11 +147,15 @@
       <th>bpc_object</th>
       <td><p>a bpc object</p></td>
     </tr>
+    <tr>
+      <th>n</th>
+      <td><p>Number of times we will sample the posterior</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a data frame containing a column with the parameters, a column with mean and two columns with higher and lower hpdi</p>
+    <p>a data frame. This data frame contains the median of the rank, the mean, the standard deviation and column with a list containing all the posterior values for the rank</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>m</span><span class='op'>&lt;-</span><span class='fu'><a href='bpc.html'>bpc</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,
@@ -163,8 +167,8 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 </div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 1.7e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
+#&gt; Chain 1: Gradient evaluation took 1.6e-05 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -181,15 +185,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.101967 seconds (Warm-up)
-#&gt; Chain 1:                0.102455 seconds (Sampling)
-#&gt; Chain 1:                0.204422 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.093874 seconds (Warm-up)
+#&gt; Chain 1:                0.112118 seconds (Sampling)
+#&gt; Chain 1:                0.205992 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 1.5e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
+#&gt; Chain 2: Gradient evaluation took 1.4e-05 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -206,9 +210,9 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.097213 seconds (Warm-up)
-#&gt; Chain 2:                0.100949 seconds (Sampling)
-#&gt; Chain 2:                0.198162 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.097025 seconds (Warm-up)
+#&gt; Chain 2:                0.101627 seconds (Sampling)
+#&gt; Chain 2:                0.198652 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
@@ -231,15 +235,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.097246 seconds (Warm-up)
-#&gt; Chain 3:                0.092935 seconds (Sampling)
-#&gt; Chain 3:                0.190181 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.096222 seconds (Warm-up)
+#&gt; Chain 3:                0.102156 seconds (Sampling)
+#&gt; Chain 3:                0.198378 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 1.7e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
+#&gt; Chain 4: Gradient evaluation took 2e-05 seconds
+#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.
 #&gt; Chain 4: Adjust your expectations accordingly!
 #&gt; Chain 4: 
 #&gt; Chain 4: 
@@ -256,17 +260,20 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.094181 seconds (Warm-up)
-#&gt; Chain 4:                0.101962 seconds (Sampling)
-#&gt; Chain 4:                0.196143 seconds (Total)
-#&gt; Chain 4: </div><div class='input'><span class='va'>hpdi</span><span class='op'>&lt;-</span><span class='fu'>get_hpdi_parameters</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>hpdi</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;             Parameter         Mean HPD_lower HPD_higher    n_eff     Rhat
-#&gt; 1       lambda[Seles]  0.461436150 -2.415531   3.274095 674.7449 1.003633
-#&gt; 2        lambda[Graf]  0.892263856 -2.009177   3.569018 684.3096 1.002754
-#&gt; 3    lambda[Sabatini] -0.383845950 -3.439297   2.229303 714.6578 1.003031
-#&gt; 4 lambda[Navratilova] -0.007741888 -2.949994   2.653058 695.4233 1.002428
-#&gt; 5     lambda[Sanchez] -1.179382266 -4.193579   1.491367 718.4426 1.002037</div></pre>
+#&gt; Chain 4:  Elapsed Time: 0.106726 seconds (Warm-up)
+#&gt; Chain 4:                0.104218 seconds (Sampling)
+#&gt; Chain 4:                0.210944 seconds (Total)
+#&gt; Chain 4: </div><div class='input'><span class='va'>rank_m</span><span class='op'>&lt;-</span><span class='fu'>get_rank_of_players</span><span class='op'>(</span><span class='va'>m</span>,n<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>rank_table</span> <span class='op'>&lt;-</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>rank_m</span>,<span class='op'>-</span><span class='va'>MeanRank</span>, <span class='op'>-</span><span class='va'>StdRank</span>,<span class='op'>-</span><span class='va'>PosteriorRank</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>rank_table</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 2</span><span>
+#&gt;   Parameter           MedianRank
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> lambda[Graf]                 1
+#&gt; </span><span style='color: #555555;'>2</span><span> lambda[Seles]                2
+#&gt; </span><span style='color: #555555;'>3</span><span> lambda[Navratilova]          3
+#&gt; </span><span style='color: #555555;'>4</span><span> lambda[Sabatini]             4
+#&gt; </span><span style='color: #555555;'>5</span><span> lambda[Sanchez]              5</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

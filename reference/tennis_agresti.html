@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>This is a dataset  with the results matches fromo  the first league of the Brazilian soccer championship from 2017-2019.
-It was reduced and translatedfrom the adaduque/Brasileirao_Dataset repository — brasil_soccer_league • bpcs</title>
+<title>This is the expansion of the tennis data from  Agresti (2003) p.449
+This data refers to matches for several women tennis players during 1989 and 1990 — tennis_agresti • bpcs</title>
 
 
 <!-- jquery -->
@@ -40,10 +40,10 @@ It was reduced and translatedfrom the adaduque/Brasileirao_Dataset repository �
 
 
 
-<meta property="og:title" content="This is a dataset  with the results matches fromo  the first league of the Brazilian soccer championship from 2017-2019.
-It was reduced and translatedfrom the adaduque/Brasileirao_Dataset repository — brasil_soccer_league" />
-<meta property="og:description" content="This is a dataset  with the results matches fromo  the first league of the Brazilian soccer championship from 2017-2019.
-It was reduced and translatedfrom the adaduque/Brasileirao_Dataset repository" />
+<meta property="og:title" content="This is the expansion of the tennis data from  Agresti (2003) p.449
+This data refers to matches for several women tennis players during 1989 and 1990 — tennis_agresti" />
+<meta property="og:description" content="This is the expansion of the tennis data from  Agresti (2003) p.449
+This data refers to matches for several women tennis players during 1989 and 1990" />
 
 
 
@@ -132,37 +132,32 @@ It was reduced and translatedfrom the adaduque/Brasileirao_Dataset repository" /
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>This is a dataset  with the results matches fromo  the first league of the Brazilian soccer championship from 2017-2019.
-It was reduced and translatedfrom the adaduque/Brasileirao_Dataset repository</h1>
+    <h1>This is the expansion of the tennis data from  Agresti (2003) p.449
+This data refers to matches for several women tennis players during 1989 and 1990</h1>
     <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>brasil_soccer_league.Rd</code></div>
+    <div class="hidden name"><code>tennis_agresti.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This is a dataset  with the results matches fromo  the first league of the Brazilian soccer championship from 2017-2019.
-It was reduced and translatedfrom the adaduque/Brasileirao_Dataset repository</p>
+    <p>This is the expansion of the tennis data from  Agresti (2003) p.449
+This data refers to matches for several women tennis players during 1989 and 1990</p>
     </div>
 
-    <pre class="usage"><span class='va'>brasil_soccer_league</span></pre>
+    <pre class="usage"><span class='va'>tennis_agresti</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>Data frame that contains 1140 matches and 9 Columns from the Brazilian soccer championship</p><ul>
-<li><p>Time: time of the day in 24h format</p></li>
-<li><p>DayWeek: day of the week</p></li>
-<li><p>Date: date YY-MM-DD</p></li>
-<li><p>HomeTeam: name of the team playing home</p></li>
-<li><p>VisitorTeam: name of the team playing visitor</p></li>
-<li><p>Round: Round number of the championship</p></li>
-<li><p>Stadium: Name of the stadium where the game was played</p></li>
-<li><p>ScoreHomeTeam: number of goals for the home team</p></li>
-<li><p>ScoreVisitorTeam: number of goals for the visitor</p></li>
+    <p>This is the expansion of the data where each row contains 1 match only</p><ul>
+<li><p>player0: name of player0</p></li>
+<li><p>player1: name of player1</p></li>
+<li><p>y: corresponds to the result of the match: 0 if player0 won, 1 if player1 won.</p></li>
+<li><p>id: is a column to make each row unique in the data. It does not have any particular interpretation</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p><a href='https://github.com/adaoduque/Brasileirao_Dataset'>https://github.com/adaoduque/Brasileirao_Dataset</a></p>
+    <p>Agresti, Alan. Categorical data analysis. Vol. 482. John Wiley &amp; Sons, 2003.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Return the mean and the HPDI of the parameters of the model — get_hpdi_parameters • bpcs</title>
+<title>Get stanfit summary table of all parameters excluding log_lik. — get_stanfit_summary • bpcs</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Return the mean and the HPDI of the parameters of the model — get_hpdi_parameters" />
-<meta property="og:description" content="Return a data frame with the mean and with high and low 95% hpd interval for all parameters of the model" />
+<meta property="og:title" content="Get stanfit summary table of all parameters excluding log_lik. — get_stanfit_summary" />
+<meta property="og:description" content="Important to investigate the neff and the Rhat from the MCMC
+This excludes the log_lik paramter" />
 
 
 
@@ -129,16 +130,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Return the mean and the HPDI of the parameters of the model</h1>
+    <h1>Get stanfit summary table of all parameters excluding log_lik.</h1>
     <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_exports.R'><code>R/bpc_exports.R</code></a></small>
-    <div class="hidden name"><code>get_hpdi_parameters.Rd</code></div>
+    <div class="hidden name"><code>get_stanfit_summary.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Return a data frame with the mean and with high and low 95% hpd interval for all parameters of the model</p>
+    <p>Important to investigate the neff and the Rhat from the MCMC
+This excludes the log_lik paramter</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_hpdi_parameters</span><span class='op'>(</span><span class='va'>bpc_object</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_stanfit_summary</span><span class='op'>(</span><span class='va'>bpc_object</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,7 +153,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a data frame containing a column with the parameters, a column with mean and two columns with higher and lower hpdi</p>
+    <p>a data frame with the summary including quantiles, Rhat and neff</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>m</span><span class='op'>&lt;-</span><span class='fu'><a href='bpc.html'>bpc</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,
@@ -163,8 +165,8 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 </div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 1.7e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
+#&gt; Chain 1: Gradient evaluation took 1.6e-05 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -181,15 +183,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.101967 seconds (Warm-up)
-#&gt; Chain 1:                0.102455 seconds (Sampling)
-#&gt; Chain 1:                0.204422 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.097601 seconds (Warm-up)
+#&gt; Chain 1:                0.106691 seconds (Sampling)
+#&gt; Chain 1:                0.204292 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 1.5e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
+#&gt; Chain 2: Gradient evaluation took 4.1e-05 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.41 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -206,15 +208,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.097213 seconds (Warm-up)
-#&gt; Chain 2:                0.100949 seconds (Sampling)
-#&gt; Chain 2:                0.198162 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.103687 seconds (Warm-up)
+#&gt; Chain 2:                0.098111 seconds (Sampling)
+#&gt; Chain 2:                0.201798 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 1.6e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
+#&gt; Chain 3: Gradient evaluation took 1.4e-05 seconds
+#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
 #&gt; Chain 3: Adjust your expectations accordingly!
 #&gt; Chain 3: 
 #&gt; Chain 3: 
@@ -231,15 +233,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.097246 seconds (Warm-up)
-#&gt; Chain 3:                0.092935 seconds (Sampling)
-#&gt; Chain 3:                0.190181 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.098286 seconds (Warm-up)
+#&gt; Chain 3:                0.102016 seconds (Sampling)
+#&gt; Chain 3:                0.200302 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 1.7e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
+#&gt; Chain 4: Gradient evaluation took 1.5e-05 seconds
+#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
 #&gt; Chain 4: Adjust your expectations accordingly!
 #&gt; Chain 4: 
 #&gt; Chain 4: 
@@ -256,17 +258,23 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.094181 seconds (Warm-up)
-#&gt; Chain 4:                0.101962 seconds (Sampling)
-#&gt; Chain 4:                0.196143 seconds (Total)
-#&gt; Chain 4: </div><div class='input'><span class='va'>hpdi</span><span class='op'>&lt;-</span><span class='fu'>get_hpdi_parameters</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>hpdi</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;             Parameter         Mean HPD_lower HPD_higher    n_eff     Rhat
-#&gt; 1       lambda[Seles]  0.461436150 -2.415531   3.274095 674.7449 1.003633
-#&gt; 2        lambda[Graf]  0.892263856 -2.009177   3.569018 684.3096 1.002754
-#&gt; 3    lambda[Sabatini] -0.383845950 -3.439297   2.229303 714.6578 1.003031
-#&gt; 4 lambda[Navratilova] -0.007741888 -2.949994   2.653058 695.4233 1.002428
-#&gt; 5     lambda[Sanchez] -1.179382266 -4.193579   1.491367 718.4426 1.002037</div></pre>
+#&gt; Chain 4:  Elapsed Time: 0.095363 seconds (Warm-up)
+#&gt; Chain 4:                0.107451 seconds (Sampling)
+#&gt; Chain 4:                0.202814 seconds (Total)
+#&gt; Chain 4: </div><div class='input'><span class='va'>s</span> <span class='op'>&lt;-</span> <span class='fu'>get_stanfit_summary</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>s</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   Parameter        mean    se_mean       sd      2.5%        25%         50%
+#&gt; 1 lambda[1]  0.37503498 0.04994473 1.443815 -2.519806 -0.5569123  0.35451135
+#&gt; 2 lambda[2]  0.81384425 0.04943617 1.408438 -1.996519 -0.1296731  0.83885451
+#&gt; 3 lambda[3] -0.44879102 0.04933840 1.425510 -3.289312 -1.3968647 -0.42663172
+#&gt; 4 lambda[4] -0.09057688 0.04948434 1.432678 -2.907504 -1.0482400 -0.07570459
+#&gt; 5 lambda[5] -1.24674340 0.04888153 1.435291 -4.104594 -2.1991616 -1.26898729
+#&gt;          75%    97.5%    n_eff     Rhat
+#&gt; 1  1.3711406 3.119285 835.6870 1.000954
+#&gt; 2  1.7525616 3.522901 811.6824 1.001225
+#&gt; 3  0.5171208 2.334939 834.7764 1.001651
+#&gt; 4  0.9078997 2.630866 838.2274 1.000698
+#&gt; 5 -0.2649000 1.550212 862.1653 1.001502</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

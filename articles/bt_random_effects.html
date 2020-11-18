@@ -60,9 +60,6 @@
       <a href="../articles/get_started.html">Getting Started with the bpcs package</a>
     </li>
     <li>
-      <a href="../articles/handling_ties.html">Handling ties</a>
-    </li>
-    <li>
       <a href="../articles/home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
     </li>
   </ul>
@@ -112,15 +109,26 @@
 </ul>
 <p>In the comparison part, researchers usually select a small number of benchmark problems (something like 20-30) and run their algorithms and the algorithms they are comparing several times for the same benchmark (something like 10 times each algorithm in each benchmark). At the end, they compare how close the algorithms approached the solution and rank them.</p>
 <p>Almost always, this comparison is done with non-parametric tests statistics and often fail to compute the intra-class correlation of the repeated-measures, or average the repeated measures (throwing out the uncertainty of the results) before running the tests.</p>
+<div id="why-use-ranks-and-not-the-output-directly" class="section level2">
+<h2 class="hasAnchor">
+<a href="#why-use-ranks-and-not-the-output-directly" class="anchor"></a>Why use ranks and not the output directly?</h2>
+<p>Each benchmark function has a different search space and the algorithms converge quite differently from one function to the other. While the difference between the minimum and the algorithm output is limited to zero (when they solve the problem), the difference can range from 0.1 to 100 depending on the benchmark problem. To use this value would require either transformations such as normalizing for each benchmark. However, if we want only to rank the algorithms and provide a classification between them, the Bradley-Terry model is ideal. The differences in range of each benchmark function is already taken care of when computing who wins and who looses.</p>
 <p>In this example, we will show how to use the Bradley-Terry model to compensate the dependent data of the repeated measures and rank the algorithms. Our Bradley-Terry ranking of the abilities also shows the uncertainty of the ranks and the probabilities of one algorithm beating the other in any of the benchmarks.</p>
+</div>
+<div id="the-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#the-data" class="anchor"></a>The data</h2>
+<p>First let’s load some packages</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/davidissamattos/bpcs">bpcs</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-gregmisc/gtools">gtools</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstan">rstan</a></span><span class="op">)</span>
 <span class="co">#Stan should use parallel cores</span>
-<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>mc.cores <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html">detectCores</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co">#use multiple cores</span>
+<span class="co"># options(mc.cores = parallel::detectCores()) #use multiple cores</span>
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>mc.cores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="co">#CRAN works only with max 2 cores</span>
 <span class="fu">rstan</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/rstan/reference/rstan_options.html">rstan_options</a></span><span class="op">(</span>auto_write <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <p>The collected data is available as:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
@@ -128,183 +136,429 @@
 <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op">(</span><span class="va">optimization_algorithms</span>, size<span class="op">=</span><span class="fl">20</span><span class="op">)</span>,
       caption<span class="op">=</span> <span class="st">"Sample of the data set"</span><span class="op">)</span></pre></div>
 <table class="table">
-<caption>Sample of the data set</caption>
-<colgroup>
-<col width="20%">
-<col width="18%">
-<col width="19%">
-<col width="11%">
-<col width="20%">
-<col width="9%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">Algorithm</th>
-<th align="left">Benchmark</th>
-<th align="right">TrueRewardDifference</th>
-<th align="right">Ndimensions</th>
-<th align="right">MaxFevalPerDimensions</th>
-<th align="right">simNumber</th>
+<caption>
+Sample of the data set
+</caption>
+<thead><tr>
+<th style="text-align:left;">
+Algorithm
+</th>
+<th style="text-align:left;">
+Benchmark
+</th>
+<th style="text-align:right;">
+TrueRewardDifference
+</th>
+<th style="text-align:right;">
+Ndimensions
+</th>
+<th style="text-align:right;">
+MaxFevalPerDimensions
+</th>
+<th style="text-align:right;">
+simNumber
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left">SimulatedAnnealing</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">2.120356e+06</td>
-<td align="right">2</td>
-<td align="right">1e+05</td>
-<td align="right">7</td>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+5.209200e-03
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+7
+</td>
 </tr>
-<tr class="even">
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Trigonometric1N6</td>
-<td align="right">0.000000e+00</td>
-<td align="right">6</td>
-<td align="right">1e+05</td>
-<td align="right">7</td>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+Schwefel2d21N6
+</td>
+<td style="text-align:right;">
+0.000000e+00
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+9
+</td>
 </tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">Schwefel2d23N6</td>
-<td align="right">0.000000e+00</td>
-<td align="right">6</td>
-<td align="right">1e+05</td>
-<td align="right">3</td>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:right;">
+0.000000e+00
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+8
+</td>
 </tr>
-<tr class="even">
-<td align="left">RandomSearch1</td>
-<td align="left">Price1</td>
-<td align="right">2.090000e-05</td>
-<td align="right">2</td>
-<td align="right">1e+05</td>
-<td align="right">8</td>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+0.000000e+00
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+2
+</td>
 </tr>
-<tr class="odd">
-<td align="left">RandomSearch1</td>
-<td align="left">SphereN6</td>
-<td align="right">6.521350e-01</td>
-<td align="right">6</td>
-<td align="right">1e+05</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+Trigonometric1N6
+</td>
+<td style="text-align:right;">
+0.000000e+00
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+9
+</td>
 </tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">Trigonometric1N6</td>
-<td align="right">0.000000e+00</td>
-<td align="right">6</td>
-<td align="right">1e+05</td>
-<td align="right">7</td>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:right;">
+0.000000e+00
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+6
+</td>
 </tr>
-<tr class="odd">
-<td align="left">PSO</td>
-<td align="left">SphereN6</td>
-<td align="right">0.000000e+00</td>
-<td align="right">6</td>
-<td align="right">1e+05</td>
-<td align="right">5</td>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+0.000000e+00
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+8
+</td>
 </tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">0.000000e+00</td>
-<td align="right">2</td>
-<td align="right">1e+05</td>
-<td align="right">2</td>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+LunacekBiRastriginN6
+</td>
+<td style="text-align:right;">
+1.683449e+01
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+6
+</td>
 </tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">ExponentialN2</td>
-<td align="right">0.000000e+00</td>
-<td align="right">2</td>
-<td align="right">1e+05</td>
-<td align="right">5</td>
+<tr>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+2.182702e+06
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+8
+</td>
 </tr>
-<tr class="even">
-<td align="left">PSO</td>
-<td align="left">Price1</td>
-<td align="right">1.000000e-07</td>
-<td align="right">2</td>
-<td align="right">1e+05</td>
-<td align="right">3</td>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+9.853440e-02
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+8
+</td>
 </tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">WhitleyN6</td>
-<td align="right">1.501749e+04</td>
-<td align="right">6</td>
-<td align="right">1e+05</td>
-<td align="right">7</td>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+WhitleyN6
+</td>
+<td style="text-align:right;">
+7.613292e+00
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+3
+</td>
 </tr>
-<tr class="even">
-<td align="left">PSO</td>
-<td align="left">WhitleyN6</td>
-<td align="right">1.609848e+01</td>
-<td align="right">6</td>
-<td align="right">1e+05</td>
-<td align="right">7</td>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+Shubert
+</td>
+<td style="text-align:right;">
+8.800000e-06
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+7
+</td>
 </tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">Giunta</td>
-<td align="right">0.000000e+00</td>
-<td align="right">2</td>
-<td align="right">1e+05</td>
-<td align="right">0</td>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:right;">
+2.000004e+03
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="even">
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Damavandi</td>
-<td align="right">7.787635e-01</td>
-<td align="right">2</td>
-<td align="right">1e+05</td>
-<td align="right">0</td>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+Schwefel2d20N2
+</td>
+<td style="text-align:right;">
+2.907718e+01
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+3
+</td>
 </tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">BentCigarN6</td>
-<td align="right">3.816770e+01</td>
-<td align="right">6</td>
-<td align="right">1e+05</td>
-<td align="right">7</td>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+Damavandi
+</td>
+<td style="text-align:right;">
+6.965498e-01
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+1
+</td>
 </tr>
-<tr class="even">
-<td align="left">SimulatedAnnealing</td>
-<td align="left">RosenbrockRotatedN6</td>
-<td align="right">3.946943e+05</td>
-<td align="right">6</td>
-<td align="right">1e+05</td>
-<td align="right">8</td>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+4.945661e+05
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+7
+</td>
 </tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">SphereN6</td>
-<td align="right">7.549354e+01</td>
-<td align="right">6</td>
-<td align="right">1e+05</td>
-<td align="right">7</td>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+Shubert
+</td>
+<td style="text-align:right;">
+1.490748e+02
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+8
+</td>
 </tr>
-<tr class="even">
-<td align="left">RandomSearch1</td>
-<td align="left">BentCigarN6</td>
-<td align="right">5.864294e+05</td>
-<td align="right">6</td>
-<td align="right">1e+05</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Damavandi
+</td>
+<td style="text-align:right;">
+5.108896e-01
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+2
+</td>
 </tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">DiscusN2</td>
-<td align="right">0.000000e+00</td>
-<td align="right">2</td>
-<td align="right">1e+05</td>
-<td align="right">0</td>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+1.489200e-03
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+1
+</td>
 </tr>
-<tr class="even">
-<td align="left">PSO</td>
-<td align="left">PinterN6</td>
-<td align="right">2.160256e-01</td>
-<td align="right">6</td>
-<td align="right">1e+05</td>
-<td align="right">3</td>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+9.292530e-02
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+2
+</td>
 </tr>
 </tbody>
 </table>
@@ -313,178 +567,217 @@
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="va">bm</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">optimization_algorithms</span><span class="op">$</span><span class="va">Benchmark</span><span class="op">)</span>
 <span class="va">nbm</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">bm</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">bm</span><span class="op">)</span></pre></div>
-<table class="table">
-<thead><tr class="header">
-<th align="left">x</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">BentCigarN6</td>
+<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">bm</span>,ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Warning in matrix(bm, ncol = 4): data length [30] is not a sub-multiple or</span>
+<span class="co">#&gt; multiple of the number of rows [8]</span></pre></div>
+<table class="table"><tbody>
+<tr>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:left;">
+LunacekBiRastriginN6
+</td>
+<td style="text-align:left;">
+Schwefel2d21N6
+</td>
+<td style="text-align:left;">
+Trefethen
+</td>
 </tr>
-<tr class="even">
-<td align="left">ChenBird</td>
+<tr>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:left;">
+Mishra7N6
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:left;">
+Trigonometric1N6
+</td>
 </tr>
-<tr class="odd">
-<td align="left">ChenV</td>
+<tr>
+<td style="text-align:left;">
+ChenV
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:left;">
+Tripod
+</td>
 </tr>
-<tr class="even">
-<td align="left">ChungReynoldsN2</td>
+<tr>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:left;">
+Price1
+</td>
+<td style="text-align:left;">
+Schwefel2d4N6
+</td>
+<td style="text-align:left;">
+WhitleyN6
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Damavandi</td>
+<tr>
+<td style="text-align:left;">
+Damavandi
+</td>
+<td style="text-align:left;">
+QingN2
+</td>
+<td style="text-align:left;">
+Shubert
+</td>
+<td style="text-align:left;">
+XinSheYang2N2
+</td>
 </tr>
-<tr class="even">
-<td align="left">DiscusN2</td>
+<tr>
+<td style="text-align:left;">
+DiscusN2
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:left;">
+SphereN6
+</td>
+<td style="text-align:left;">
+ZakharovN2
+</td>
 </tr>
-<tr class="odd">
-<td align="left">ExponentialN2</td>
+<tr>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:left;">
+SalomonN2
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
 </tr>
-<tr class="even">
-<td align="left">Giunta</td>
+<tr>
+<td style="text-align:left;">
+Giunta
+</td>
+<td style="text-align:left;">
+Schwefel2d20N2
+</td>
+<td style="text-align:left;">
+ThreeHumpCamelBack
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
 </tr>
-<tr class="odd">
-<td align="left">LunacekBiRastriginN6</td>
-</tr>
-<tr class="even">
-<td align="left">Mishra7N6</td>
-</tr>
-<tr class="odd">
-<td align="left">PinterN6</td>
-</tr>
-<tr class="even">
-<td align="left">Price1</td>
-</tr>
-<tr class="odd">
-<td align="left">QingN2</td>
-</tr>
-<tr class="even">
-<td align="left">RosenbrockRotatedN6</td>
-</tr>
-<tr class="odd">
-<td align="left">SalomonN2</td>
-</tr>
-<tr class="even">
-<td align="left">Schwefel2d20N2</td>
-</tr>
-<tr class="odd">
-<td align="left">Schwefel2d21N6</td>
-</tr>
-<tr class="even">
-<td align="left">Schwefel2d23N6</td>
-</tr>
-<tr class="odd">
-<td align="left">Schwefel2d26N6</td>
-</tr>
-<tr class="even">
-<td align="left">Schwefel2d4N6</td>
-</tr>
-<tr class="odd">
-<td align="left">Shubert</td>
-</tr>
-<tr class="even">
-<td align="left">SphereN6</td>
-</tr>
-<tr class="odd">
-<td align="left">StrechedVSineWave2N</td>
-</tr>
-<tr class="even">
-<td align="left">ThreeHumpCamelBack</td>
-</tr>
-<tr class="odd">
-<td align="left">Trefethen</td>
-</tr>
-<tr class="even">
-<td align="left">Trigonometric1N6</td>
-</tr>
-<tr class="odd">
-<td align="left">Tripod</td>
-</tr>
-<tr class="even">
-<td align="left">WhitleyN6</td>
-</tr>
-<tr class="odd">
-<td align="left">XinSheYang2N2</td>
-</tr>
-<tr class="even">
-<td align="left">ZakharovN2</td>
-</tr>
-</tbody>
-</table>
+</tbody></table>
 <p>To reduce a bit the model sampling time here lets reduce the number of benchmark functions and only use 10 of them.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
 <span class="va">bm_reduced</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">10</span>, x<span class="op">=</span><span class="va">bm</span>,replace <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
 <span class="va">optimization_algorithms</span> <span class="op">&lt;-</span> <span class="va">optimization_algorithms</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Benchmark</span> <span class="op">%in%</span> <span class="va">bm_reduced</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">bm_reduced</span><span class="op">)</span></pre></div>
-<table class="table">
-<thead><tr class="header">
-<th align="left">x</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">Trefethen</td>
+<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">bm_reduced</span>,ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></pre></div>
+<table class="table"><tbody>
+<tr>
+<td style="text-align:left;">
+Trefethen
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
 </tr>
-<tr class="even">
-<td align="left">ChungReynoldsN2</td>
+<tr>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
 </tr>
-<tr class="odd">
-<td align="left">ExponentialN2</td>
+<tr>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
 </tr>
-<tr class="even">
-<td align="left">BentCigarN6</td>
+<tr>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
 </tr>
-<tr class="odd">
-<td align="left">ChenBird</td>
+<tr>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
 </tr>
-<tr class="even">
-<td align="left">StrechedVSineWave2N</td>
-</tr>
-<tr class="odd">
-<td align="left">PinterN6</td>
-</tr>
-<tr class="even">
-<td align="left">RosenbrockRotatedN6</td>
-</tr>
-<tr class="odd">
-<td align="left">Schwefel2d23N6</td>
-</tr>
-<tr class="even">
-<td align="left">Schwefel2d26N6</td>
-</tr>
-</tbody>
-</table>
+</tbody></table>
 <p>Here we have the optimization algorithms:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="va">alg</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">optimization_algorithms</span><span class="op">$</span><span class="va">Algorithm</span><span class="op">)</span>
 <span class="va">nalg</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">alg</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">alg</span><span class="op">)</span></pre></div>
 <table class="table">
-<thead><tr class="header">
-<th align="left">x</th>
+<thead><tr>
+<th style="text-align:left;">
+x
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left">NelderMead</td>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
 </tr>
-<tr class="even">
-<td align="left">PSO</td>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
 </tr>
-<tr class="odd">
-<td align="left">SimulatedAnnealing</td>
+<tr>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
 </tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
 </tr>
-<tr class="odd">
-<td align="left">RandomSearch1</td>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
 </tr>
-<tr class="even">
-<td align="left">CMAES</td>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 <div id="preparing-the-data" class="section level1">
 <h1 class="hasAnchor">
@@ -578,7 +871,7 @@
 <p>Lets also specify a wide prior for the standard deviation of the random effects. This will help the convergence</p>
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bpc.html">bpc</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">df_3</span>, player0 <span class="op">=</span> <span class="st">'algo0_name'</span>, player1 <span class="op">=</span> <span class="st">'algo1_name'</span>, result_column <span class="op">=</span> <span class="st">'y'</span>, cluster <span class="op">=</span> <span class="st">'Benchmark'</span>, model_type <span class="op">=</span> <span class="st">'btU'</span>, priors<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>prior_U_std<span class="op">=</span><span class="fl">10.0</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Warning: The largest R-hat is 1.74, indicating chains have not mixed.</span>
+<span class="co">#&gt; Warning: The largest R-hat is 1.73, indicating chains have not mixed.</span>
 <span class="co">#&gt; Running the chains for more iterations may help. See</span>
 <span class="co">#&gt; http://mc-stan.org/misc/warnings.html#r-hat</span>
 <span class="co">#&gt; Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
@@ -598,54 +891,117 @@
 
 <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span></pre></div>
 <table class="table">
-<thead><tr class="header">
-<th align="left"></th>
-<th align="right">mean</th>
-<th align="right">n_eff</th>
-<th align="right">Rhat</th>
+<thead><tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+n_eff
+</th>
+<th style="text-align:right;">
+Rhat
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left">lambda[1]</td>
-<td align="right">-6.0813355</td>
-<td align="right">3121.427475</td>
-<td align="right">0.9994522</td>
+<tr>
+<td style="text-align:left;">
+lambda[1]
+</td>
+<td style="text-align:right;">
+-6.1586725
+</td>
+<td style="text-align:right;">
+3497.917293
+</td>
+<td style="text-align:right;">
+0.9999664
+</td>
 </tr>
-<tr class="even">
-<td align="left">lambda[2]</td>
-<td align="right">1.9197202</td>
-<td align="right">2797.486492</td>
-<td align="right">1.0007721</td>
+<tr>
+<td style="text-align:left;">
+lambda[2]
+</td>
+<td style="text-align:right;">
+1.8865093
+</td>
+<td style="text-align:right;">
+3488.425082
+</td>
+<td style="text-align:right;">
+0.9998077
+</td>
 </tr>
-<tr class="odd">
-<td align="left">lambda[3]</td>
-<td align="right">-3.5415072</td>
-<td align="right">2897.003614</td>
-<td align="right">1.0005890</td>
+<tr>
+<td style="text-align:left;">
+lambda[3]
+</td>
+<td style="text-align:right;">
+-3.5897167
+</td>
+<td style="text-align:right;">
+3188.296836
+</td>
+<td style="text-align:right;">
+1.0004454
+</td>
 </tr>
-<tr class="even">
-<td align="left">lambda[4]</td>
-<td align="right">6.2760126</td>
-<td align="right">2971.612944</td>
-<td align="right">1.0004848</td>
+<tr>
+<td style="text-align:left;">
+lambda[4]
+</td>
+<td style="text-align:right;">
+6.2940424
+</td>
+<td style="text-align:right;">
+3436.330560
+</td>
+<td style="text-align:right;">
+0.9999535
+</td>
 </tr>
-<tr class="odd">
-<td align="left">lambda[5]</td>
-<td align="right">-1.0446852</td>
-<td align="right">2340.781832</td>
-<td align="right">1.0013905</td>
+<tr>
+<td style="text-align:left;">
+lambda[5]
+</td>
+<td style="text-align:right;">
+-1.0891945
+</td>
+<td style="text-align:right;">
+3580.847828
+</td>
+<td style="text-align:right;">
+0.9994137
+</td>
 </tr>
-<tr class="even">
-<td align="left">lambda[6]</td>
-<td align="right">2.5693422</td>
-<td align="right">3090.311684</td>
-<td align="right">0.9996495</td>
+<tr>
+<td style="text-align:left;">
+lambda[6]
+</td>
+<td style="text-align:right;">
+2.5358600
+</td>
+<td style="text-align:right;">
+3462.330638
+</td>
+<td style="text-align:right;">
+0.9999700
+</td>
 </tr>
-<tr class="odd">
-<td align="left">U_std</td>
-<td align="right">0.0064804</td>
-<td align="right">2.048201</td>
-<td align="right">6.2874854</td>
+<tr>
+<td style="text-align:left;">
+U_std
+</td>
+<td style="text-align:right;">
+-0.0000516
+</td>
+<td style="text-align:right;">
+2.047331
+</td>
+<td style="text-align:right;">
+6.3554223
+</td>
 </tr>
 </tbody>
 </table>
@@ -667,7 +1023,8 @@
 <div class="sourceCode" id="cb13"><pre class="downlit">
 <span class="fu"><a href="https://mc-stan.org/bayesplot/reference/PPC-discrete.html">ppc_bars</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">df_3</span><span class="op">$</span><span class="va">y</span>, yrep<span class="op">=</span><span class="va">yrep</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">'Bar plot with medians and uncertainty\n intervals superimposed'</span><span class="op">)</span></pre></div>
-<p><img src="bt_random_effects_files/figure-html/unnamed-chunk-13-1.png" width="700"> This sounds ok. So let’s investigate the actual parameters and the probabilities of the models</p>
+<p><img src="bt_random_effects_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+<p>This sounds ok. So let’s investigate the actual parameters and the probabilities of the models</p>
 </div>
 <div id="summary-parameters" class="section level2">
 <h2 class="hasAnchor">
@@ -678,75 +1035,75 @@
 <span class="co">#&gt; Estimated baseline parameters with HPD intervals:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter                                             Mean    HPD_lower   HPD_higher</span>
-<span class="co">#&gt; ---------------------------------------------  -----------  -----------  -----------</span>
-<span class="co">#&gt; lambda[NelderMead]                              -6.0813355   -9.2284508   -2.8731942</span>
-<span class="co">#&gt; lambda[PSO]                                      1.9197202   -1.3504332    4.8375979</span>
-<span class="co">#&gt; lambda[SimulatedAnnealing]                      -3.5415072   -6.5492857   -0.3737584</span>
-<span class="co">#&gt; lambda[DifferentialEvolution]                    6.2760126    3.2742798    9.6098719</span>
-<span class="co">#&gt; lambda[RandomSearch1]                           -1.0446852   -4.0605047    1.9394860</span>
-<span class="co">#&gt; lambda[CMAES]                                    2.5693422   -0.5503290    5.6227403</span>
-<span class="co">#&gt; U_std                                            0.0064804   -4.3139508    4.3399226</span>
-<span class="co">#&gt; U[NelderMead,BentCigarN6]                        0.0093388   -2.2340144    2.2933604</span>
-<span class="co">#&gt; U[PSO,BentCigarN6]                              -0.0037507   -1.1169033    1.1307934</span>
-<span class="co">#&gt; U[SimulatedAnnealing,BentCigarN6]               -0.0092325   -1.2200893    1.3010612</span>
-<span class="co">#&gt; U[DifferentialEvolution,BentCigarN6]             0.0091011   -1.2993633    1.3448386</span>
-<span class="co">#&gt; U[RandomSearch1,BentCigarN6]                    -0.0013837   -1.3350151    1.3678829</span>
-<span class="co">#&gt; U[CMAES,BentCigarN6]                            -0.0026391   -3.1385352    3.1252336</span>
-<span class="co">#&gt; U[NelderMead,ChenBird]                          -0.0054263   -1.1199474    1.2276273</span>
-<span class="co">#&gt; U[PSO,ChenBird]                                 -0.0033324   -1.2179163    1.1999098</span>
-<span class="co">#&gt; U[SimulatedAnnealing,ChenBird]                  -0.0032369   -1.9667738    1.8815107</span>
-<span class="co">#&gt; U[DifferentialEvolution,ChenBird]               -0.0144573   -1.4131717    1.3869779</span>
-<span class="co">#&gt; U[RandomSearch1,ChenBird]                        0.0114638   -1.4930954    1.5231034</span>
-<span class="co">#&gt; U[CMAES,ChenBird]                                0.0077505   -3.1551930    3.0144809</span>
-<span class="co">#&gt; U[NelderMead,ChungReynoldsN2]                    0.0077808   -1.4594213    1.3705709</span>
-<span class="co">#&gt; U[PSO,ChungReynoldsN2]                           0.0249372   -1.1310871    1.1581838</span>
-<span class="co">#&gt; U[SimulatedAnnealing,ChungReynoldsN2]           -0.0026453   -1.9414731    2.0173936</span>
-<span class="co">#&gt; U[DifferentialEvolution,ChungReynoldsN2]         0.0215935   -2.2061187    2.1701971</span>
-<span class="co">#&gt; U[RandomSearch1,ChungReynoldsN2]                 0.0091406   -1.2152929    1.3179275</span>
-<span class="co">#&gt; U[CMAES,ChungReynoldsN2]                         0.0087841   -1.4881103    1.4644181</span>
-<span class="co">#&gt; U[NelderMead,ExponentialN2]                     -0.0022721   -1.8481916    2.0835197</span>
-<span class="co">#&gt; U[PSO,ExponentialN2]                             0.0008495   -1.0662792    1.0510459</span>
-<span class="co">#&gt; U[SimulatedAnnealing,ExponentialN2]              0.0101672   -1.2349015    1.2777247</span>
-<span class="co">#&gt; U[DifferentialEvolution,ExponentialN2]           0.0097153   -1.3131029    1.3592657</span>
-<span class="co">#&gt; U[RandomSearch1,ExponentialN2]                   0.0020057   -0.9682625    1.1449430</span>
-<span class="co">#&gt; U[CMAES,ExponentialN2]                           0.0115458   -1.7200189    1.7585731</span>
-<span class="co">#&gt; U[NelderMead,PinterN6]                          -0.0032972   -1.2770215    1.1372308</span>
-<span class="co">#&gt; U[PSO,PinterN6]                                  0.0050831   -0.9850174    1.1298418</span>
-<span class="co">#&gt; U[SimulatedAnnealing,PinterN6]                   0.0056528   -1.4515332    1.3424841</span>
-<span class="co">#&gt; U[DifferentialEvolution,PinterN6]                0.0047087   -1.9173664    1.9234772</span>
-<span class="co">#&gt; U[RandomSearch1,PinterN6]                       -0.0040798   -0.9998630    1.1104535</span>
-<span class="co">#&gt; U[CMAES,PinterN6]                                0.0078566   -2.2801951    2.2743285</span>
-<span class="co">#&gt; U[NelderMead,RosenbrockRotatedN6]               -0.0119566   -1.3572653    1.4959157</span>
-<span class="co">#&gt; U[PSO,RosenbrockRotatedN6]                      -0.0052985   -1.2926166    1.1333297</span>
-<span class="co">#&gt; U[SimulatedAnnealing,RosenbrockRotatedN6]        0.0053481   -1.3295858    1.2884489</span>
-<span class="co">#&gt; U[DifferentialEvolution,RosenbrockRotatedN6]    -0.0028180   -1.1636151    1.2997225</span>
-<span class="co">#&gt; U[RandomSearch1,RosenbrockRotatedN6]            -0.0118922   -1.2373475    1.3744853</span>
-<span class="co">#&gt; U[CMAES,RosenbrockRotatedN6]                     0.0008580   -1.8098404    1.7101715</span>
-<span class="co">#&gt; U[NelderMead,Schwefel2d23N6]                    -0.0093607   -1.1786796    1.3235602</span>
-<span class="co">#&gt; U[PSO,Schwefel2d23N6]                           -0.0110130   -1.1429641    1.1863242</span>
-<span class="co">#&gt; U[SimulatedAnnealing,Schwefel2d23N6]             0.0023133   -2.3879989    2.3452798</span>
-<span class="co">#&gt; U[DifferentialEvolution,Schwefel2d23N6]         -0.0113789   -2.3989582    2.2923228</span>
-<span class="co">#&gt; U[RandomSearch1,Schwefel2d23N6]                  0.0151689   -1.4366945    1.2324902</span>
-<span class="co">#&gt; U[CMAES,Schwefel2d23N6]                          0.0073984   -1.8835331    1.8093275</span>
-<span class="co">#&gt; U[NelderMead,Schwefel2d26N6]                     0.0019390   -1.7051961    1.6770167</span>
-<span class="co">#&gt; U[PSO,Schwefel2d26N6]                            0.0188018   -1.7834221    1.8847657</span>
-<span class="co">#&gt; U[SimulatedAnnealing,Schwefel2d26N6]             0.0012122   -0.9957577    1.0840952</span>
-<span class="co">#&gt; U[DifferentialEvolution,Schwefel2d26N6]          0.0071975   -1.2694775    1.2408055</span>
-<span class="co">#&gt; U[RandomSearch1,Schwefel2d26N6]                  0.0062456   -2.0047173    1.8782157</span>
-<span class="co">#&gt; U[CMAES,Schwefel2d26N6]                          0.0020167   -1.4841621    1.5752592</span>
-<span class="co">#&gt; U[NelderMead,StrechedVSineWave2N]                0.0024716   -1.1823129    1.2299560</span>
-<span class="co">#&gt; U[PSO,StrechedVSineWave2N]                       0.0134180   -1.6436805    1.7368158</span>
-<span class="co">#&gt; U[SimulatedAnnealing,StrechedVSineWave2N]       -0.0095089   -1.6197590    1.6997969</span>
-<span class="co">#&gt; U[DifferentialEvolution,StrechedVSineWave2N]    -0.0159673   -2.1335011    2.1671048</span>
-<span class="co">#&gt; U[RandomSearch1,StrechedVSineWave2N]            -0.0053599   -1.1692185    1.1505588</span>
-<span class="co">#&gt; U[CMAES,StrechedVSineWave2N]                     0.0009537   -3.3221185    3.3348614</span>
-<span class="co">#&gt; U[NelderMead,Trefethen]                         -0.0013900   -2.0153828    1.8869264</span>
-<span class="co">#&gt; U[PSO,Trefethen]                                 0.0039368   -2.0813849    2.1206923</span>
-<span class="co">#&gt; U[SimulatedAnnealing,Trefethen]                 -0.0056988   -1.7567292    1.7694184</span>
-<span class="co">#&gt; U[DifferentialEvolution,Trefethen]              -0.0044688   -1.1775903    1.2276741</span>
-<span class="co">#&gt; U[RandomSearch1,Trefethen]                      -0.0089027   -1.0990621    1.1905696</span>
-<span class="co">#&gt; U[CMAES,Trefethen]                               0.0043533   -2.4311092    2.4797655</span>
+<span class="co">#&gt; Parameter                                        Mean   HPD_lower   HPD_higher     n_eff   Rhat</span>
+<span class="co">#&gt; ---------------------------------------------  ------  ----------  -----------  --------  -----</span>
+<span class="co">#&gt; lambda[NelderMead]                              -6.16       -9.03        -2.82   3497.92   1.00</span>
+<span class="co">#&gt; lambda[PSO]                                      1.89       -1.12         4.97   3488.43   1.00</span>
+<span class="co">#&gt; lambda[SimulatedAnnealing]                      -3.59       -6.83        -0.66   3188.30   1.00</span>
+<span class="co">#&gt; lambda[DifferentialEvolution]                    6.29        3.21         9.37   3436.33   1.00</span>
+<span class="co">#&gt; lambda[RandomSearch1]                           -1.09       -4.07         2.09   3580.85   1.00</span>
+<span class="co">#&gt; lambda[CMAES]                                    2.54       -0.57         5.40   3462.33   1.00</span>
+<span class="co">#&gt; U_std                                            0.00       -4.24         4.31      2.05   6.36</span>
+<span class="co">#&gt; U[NelderMead,BentCigarN6]                        0.02       -2.18         2.30      2.83   1.79</span>
+<span class="co">#&gt; U[PSO,BentCigarN6]                               0.01       -1.10         1.21     62.33   1.03</span>
+<span class="co">#&gt; U[SimulatedAnnealing,BentCigarN6]                0.01       -1.29         1.26      8.37   1.15</span>
+<span class="co">#&gt; U[DifferentialEvolution,BentCigarN6]             0.00       -1.29         1.33      4.10   1.37</span>
+<span class="co">#&gt; U[RandomSearch1,BentCigarN6]                    -0.01       -1.32         1.42     95.72   1.03</span>
+<span class="co">#&gt; U[CMAES,BentCigarN6]                             0.00       -3.11         3.13      6.31   1.20</span>
+<span class="co">#&gt; U[NelderMead,ChenBird]                           0.01       -1.13         1.24    248.29   1.02</span>
+<span class="co">#&gt; U[PSO,ChenBird]                                  0.00       -1.16         1.33      2.80   1.81</span>
+<span class="co">#&gt; U[SimulatedAnnealing,ChenBird]                   0.01       -1.91         1.97     45.55   1.04</span>
+<span class="co">#&gt; U[DifferentialEvolution,ChenBird]                0.02       -1.55         1.24      4.14   1.37</span>
+<span class="co">#&gt; U[RandomSearch1,ChenBird]                        0.01       -1.52         1.56   3104.33   1.01</span>
+<span class="co">#&gt; U[CMAES,ChenBird]                               -0.01       -3.04         3.08     23.53   1.06</span>
+<span class="co">#&gt; U[NelderMead,ChungReynoldsN2]                   -0.02       -1.33         1.42   3333.60   1.01</span>
+<span class="co">#&gt; U[PSO,ChungReynoldsN2]                           0.01       -1.25         1.09   3445.48   1.01</span>
+<span class="co">#&gt; U[SimulatedAnnealing,ChungReynoldsN2]            0.00       -2.00         1.98   1233.13   1.01</span>
+<span class="co">#&gt; U[DifferentialEvolution,ChungReynoldsN2]         0.00       -2.13         2.18     25.51   1.05</span>
+<span class="co">#&gt; U[RandomSearch1,ChungReynoldsN2]                -0.01       -1.32         1.26    108.59   1.02</span>
+<span class="co">#&gt; U[CMAES,ChungReynoldsN2]                        -0.01       -1.54         1.48      2.50   2.16</span>
+<span class="co">#&gt; U[NelderMead,ExponentialN2]                      0.02       -1.99         1.97      3.51   1.48</span>
+<span class="co">#&gt; U[PSO,ExponentialN2]                             0.00       -1.11         1.07      2.51   2.12</span>
+<span class="co">#&gt; U[SimulatedAnnealing,ExponentialN2]              0.00       -1.23         1.35     10.50   1.12</span>
+<span class="co">#&gt; U[DifferentialEvolution,ExponentialN2]          -0.01       -1.38         1.35      2.60   2.00</span>
+<span class="co">#&gt; U[RandomSearch1,ExponentialN2]                   0.01       -1.12         1.07      2.62   1.98</span>
+<span class="co">#&gt; U[CMAES,ExponentialN2]                           0.00       -1.79         1.74      5.68   1.24</span>
+<span class="co">#&gt; U[NelderMead,PinterN6]                          -0.01       -1.18         1.26      3.65   1.46</span>
+<span class="co">#&gt; U[PSO,PinterN6]                                 -0.01       -1.12         1.10      6.44   1.20</span>
+<span class="co">#&gt; U[SimulatedAnnealing,PinterN6]                   0.00       -1.40         1.40      2.35   2.47</span>
+<span class="co">#&gt; U[DifferentialEvolution,PinterN6]               -0.01       -1.97         2.00   3042.04   1.00</span>
+<span class="co">#&gt; U[RandomSearch1,PinterN6]                        0.01       -1.02         1.05      2.92   1.73</span>
+<span class="co">#&gt; U[CMAES,PinterN6]                               -0.01       -2.33         2.25      2.68   1.92</span>
+<span class="co">#&gt; U[NelderMead,RosenbrockRotatedN6]               -0.01       -1.36         1.44     13.13   1.09</span>
+<span class="co">#&gt; U[PSO,RosenbrockRotatedN6]                      -0.02       -1.17         1.16      8.32   1.14</span>
+<span class="co">#&gt; U[SimulatedAnnealing,RosenbrockRotatedN6]       -0.03       -1.29         1.38      2.99   1.68</span>
+<span class="co">#&gt; U[DifferentialEvolution,RosenbrockRotatedN6]     0.00       -1.24         1.17      5.63   1.24</span>
+<span class="co">#&gt; U[RandomSearch1,RosenbrockRotatedN6]             0.00       -1.36         1.29      4.91   1.28</span>
+<span class="co">#&gt; U[CMAES,RosenbrockRotatedN6]                     0.00       -1.73         1.70     52.22   1.03</span>
+<span class="co">#&gt; U[NelderMead,Schwefel2d23N6]                    -0.01       -1.16         1.29      2.74   1.86</span>
+<span class="co">#&gt; U[PSO,Schwefel2d23N6]                           -0.01       -1.16         1.15     10.35   1.12</span>
+<span class="co">#&gt; U[SimulatedAnnealing,Schwefel2d23N6]            -0.02       -2.30         2.41      3.21   1.58</span>
+<span class="co">#&gt; U[DifferentialEvolution,Schwefel2d23N6]         -0.01       -2.30         2.29    723.52   1.01</span>
+<span class="co">#&gt; U[RandomSearch1,Schwefel2d23N6]                  0.01       -1.31         1.28      6.56   1.20</span>
+<span class="co">#&gt; U[CMAES,Schwefel2d23N6]                          0.00       -1.76         1.90      3.62   1.46</span>
+<span class="co">#&gt; U[NelderMead,Schwefel2d26N6]                     0.00       -1.72         1.66     11.47   1.11</span>
+<span class="co">#&gt; U[PSO,Schwefel2d26N6]                            0.01       -1.77         1.88   1992.34   1.01</span>
+<span class="co">#&gt; U[SimulatedAnnealing,Schwefel2d26N6]            -0.01       -1.05         1.02   2452.96   1.01</span>
+<span class="co">#&gt; U[DifferentialEvolution,Schwefel2d26N6]          0.00       -1.28         1.33      6.80   1.19</span>
+<span class="co">#&gt; U[RandomSearch1,Schwefel2d26N6]                 -0.01       -1.96         1.97      7.34   1.17</span>
+<span class="co">#&gt; U[CMAES,Schwefel2d26N6]                          0.00       -1.55         1.50      2.43   2.29</span>
+<span class="co">#&gt; U[NelderMead,StrechedVSineWave2N]                0.02       -1.21         1.20     13.38   1.09</span>
+<span class="co">#&gt; U[PSO,StrechedVSineWave2N]                       0.00       -1.72         1.66     10.73   1.11</span>
+<span class="co">#&gt; U[SimulatedAnnealing,StrechedVSineWave2N]        0.00       -1.66         1.69      2.18   3.30</span>
+<span class="co">#&gt; U[DifferentialEvolution,StrechedVSineWave2N]    -0.01       -2.12         2.14      2.20   3.19</span>
+<span class="co">#&gt; U[RandomSearch1,StrechedVSineWave2N]            -0.02       -1.18         1.15      3.97   1.40</span>
+<span class="co">#&gt; U[CMAES,StrechedVSineWave2N]                     0.01       -3.34         3.33      2.79   1.81</span>
+<span class="co">#&gt; U[NelderMead,Trefethen]                         -0.01       -1.90         1.93      2.25   2.88</span>
+<span class="co">#&gt; U[PSO,Trefethen]                                 0.01       -2.15         2.21      2.87   1.76</span>
+<span class="co">#&gt; U[SimulatedAnnealing,Trefethen]                  0.00       -1.79         1.82      2.92   1.73</span>
+<span class="co">#&gt; U[DifferentialEvolution,Trefethen]              -0.01       -1.20         1.27      2.97   1.70</span>
+<span class="co">#&gt; U[RandomSearch1,Trefethen]                       0.01       -1.16         1.19      2.11   4.24</span>
+<span class="co">#&gt; U[CMAES,Trefethen]                               0.00       -2.37         2.54      2.24   2.90</span>
 <span class="co">#&gt; NOTES:</span>
 <span class="co">#&gt; * A higher lambda indicates a higher team ability</span>
 <span class="co">#&gt; * The U_std indicates the standard deviation of the normal distribution where the parameters U[player, cluster] are drawn from. Higher values of U_std indicates a higher effect of the cluster in the team abitilies.</span>
@@ -770,12 +1127,12 @@
 <span class="co">#&gt; DifferentialEvolution   RandomSearch1           BentCigarN6                 1.00</span>
 <span class="co">#&gt; DifferentialEvolution   SimulatedAnnealing      BentCigarN6                 1.00</span>
 <span class="co">#&gt; NelderMead              PSO                     BentCigarN6                 0.00</span>
-<span class="co">#&gt; NelderMead              RandomSearch1           BentCigarN6                 0.01</span>
-<span class="co">#&gt; NelderMead              SimulatedAnnealing      BentCigarN6                 0.02</span>
+<span class="co">#&gt; NelderMead              RandomSearch1           BentCigarN6                 0.00</span>
+<span class="co">#&gt; NelderMead              SimulatedAnnealing      BentCigarN6                 0.03</span>
 <span class="co">#&gt; PSO                     RandomSearch1           BentCigarN6                 0.96</span>
 <span class="co">#&gt; PSO                     SimulatedAnnealing      BentCigarN6                 0.99</span>
 <span class="co">#&gt; RandomSearch1           SimulatedAnnealing      BentCigarN6                 0.86</span>
-<span class="co">#&gt; CMAES                   DifferentialEvolution   ChenBird                    0.95</span>
+<span class="co">#&gt; CMAES                   DifferentialEvolution   ChenBird                    0.94</span>
 <span class="co">#&gt; CMAES                   NelderMead              ChenBird                    1.00</span>
 <span class="co">#&gt; CMAES                   PSO                     ChenBird                    1.00</span>
 <span class="co">#&gt; CMAES                   RandomSearch1           ChenBird                    1.00</span>
@@ -786,10 +1143,10 @@
 <span class="co">#&gt; DifferentialEvolution   SimulatedAnnealing      ChenBird                    1.00</span>
 <span class="co">#&gt; NelderMead              PSO                     ChenBird                    0.00</span>
 <span class="co">#&gt; NelderMead              RandomSearch1           ChenBird                    0.08</span>
-<span class="co">#&gt; NelderMead              SimulatedAnnealing      ChenBird                    0.70</span>
-<span class="co">#&gt; PSO                     RandomSearch1           ChenBird                    0.96</span>
+<span class="co">#&gt; NelderMead              SimulatedAnnealing      ChenBird                    0.69</span>
+<span class="co">#&gt; PSO                     RandomSearch1           ChenBird                    0.97</span>
 <span class="co">#&gt; PSO                     SimulatedAnnealing      ChenBird                    1.00</span>
-<span class="co">#&gt; RandomSearch1           SimulatedAnnealing      ChenBird                    0.97</span>
+<span class="co">#&gt; RandomSearch1           SimulatedAnnealing      ChenBird                    0.96</span>
 <span class="co">#&gt; CMAES                   DifferentialEvolution   ChungReynoldsN2             0.03</span>
 <span class="co">#&gt; CMAES                   NelderMead              ChungReynoldsN2             1.00</span>
 <span class="co">#&gt; CMAES                   PSO                     ChungReynoldsN2             0.87</span>
@@ -801,17 +1158,17 @@
 <span class="co">#&gt; DifferentialEvolution   SimulatedAnnealing      ChungReynoldsN2             1.00</span>
 <span class="co">#&gt; NelderMead              PSO                     ChungReynoldsN2             0.00</span>
 <span class="co">#&gt; NelderMead              RandomSearch1           ChungReynoldsN2             0.02</span>
-<span class="co">#&gt; NelderMead              SimulatedAnnealing      ChungReynoldsN2             0.40</span>
-<span class="co">#&gt; PSO                     RandomSearch1           ChungReynoldsN2             0.96</span>
+<span class="co">#&gt; NelderMead              SimulatedAnnealing      ChungReynoldsN2             0.39</span>
+<span class="co">#&gt; PSO                     RandomSearch1           ChungReynoldsN2             0.95</span>
 <span class="co">#&gt; PSO                     SimulatedAnnealing      ChungReynoldsN2             1.00</span>
 <span class="co">#&gt; RandomSearch1           SimulatedAnnealing      ChungReynoldsN2             0.98</span>
-<span class="co">#&gt; CMAES                   DifferentialEvolution   ExponentialN2               0.53</span>
+<span class="co">#&gt; CMAES                   DifferentialEvolution   ExponentialN2               0.54</span>
 <span class="co">#&gt; CMAES                   NelderMead              ExponentialN2               1.00</span>
-<span class="co">#&gt; CMAES                   PSO                     ExponentialN2               0.95</span>
+<span class="co">#&gt; CMAES                   PSO                     ExponentialN2               0.96</span>
 <span class="co">#&gt; CMAES                   RandomSearch1           ExponentialN2               1.00</span>
 <span class="co">#&gt; CMAES                   SimulatedAnnealing      ExponentialN2               1.00</span>
 <span class="co">#&gt; DifferentialEvolution   NelderMead              ExponentialN2               1.00</span>
-<span class="co">#&gt; DifferentialEvolution   PSO                     ExponentialN2               0.94</span>
+<span class="co">#&gt; DifferentialEvolution   PSO                     ExponentialN2               0.95</span>
 <span class="co">#&gt; DifferentialEvolution   RandomSearch1           ExponentialN2               1.00</span>
 <span class="co">#&gt; DifferentialEvolution   SimulatedAnnealing      ExponentialN2               1.00</span>
 <span class="co">#&gt; NelderMead              PSO                     ExponentialN2               0.00</span>
@@ -824,20 +1181,20 @@
 <span class="co">#&gt; CMAES                   NelderMead              PinterN6                    0.96</span>
 <span class="co">#&gt; CMAES                   PSO                     PinterN6                    0.03</span>
 <span class="co">#&gt; CMAES                   RandomSearch1           PinterN6                    0.28</span>
-<span class="co">#&gt; CMAES                   SimulatedAnnealing      PinterN6                    0.48</span>
+<span class="co">#&gt; CMAES                   SimulatedAnnealing      PinterN6                    0.49</span>
 <span class="co">#&gt; DifferentialEvolution   NelderMead              PinterN6                    1.00</span>
 <span class="co">#&gt; DifferentialEvolution   PSO                     PinterN6                    0.98</span>
 <span class="co">#&gt; DifferentialEvolution   RandomSearch1           PinterN6                    1.00</span>
 <span class="co">#&gt; DifferentialEvolution   SimulatedAnnealing      PinterN6                    1.00</span>
 <span class="co">#&gt; NelderMead              PSO                     PinterN6                    0.00</span>
-<span class="co">#&gt; NelderMead              RandomSearch1           PinterN6                    0.01</span>
+<span class="co">#&gt; NelderMead              RandomSearch1           PinterN6                    0.02</span>
 <span class="co">#&gt; NelderMead              SimulatedAnnealing      PinterN6                    0.04</span>
 <span class="co">#&gt; PSO                     RandomSearch1           PinterN6                    0.93</span>
 <span class="co">#&gt; PSO                     SimulatedAnnealing      PinterN6                    0.98</span>
-<span class="co">#&gt; RandomSearch1           SimulatedAnnealing      PinterN6                    0.71</span>
-<span class="co">#&gt; CMAES                   DifferentialEvolution   RosenbrockRotatedN6         0.18</span>
+<span class="co">#&gt; RandomSearch1           SimulatedAnnealing      PinterN6                    0.72</span>
+<span class="co">#&gt; CMAES                   DifferentialEvolution   RosenbrockRotatedN6         0.17</span>
 <span class="co">#&gt; CMAES                   NelderMead              RosenbrockRotatedN6         1.00</span>
-<span class="co">#&gt; CMAES                   PSO                     RosenbrockRotatedN6         0.89</span>
+<span class="co">#&gt; CMAES                   PSO                     RosenbrockRotatedN6         0.90</span>
 <span class="co">#&gt; CMAES                   RandomSearch1           RosenbrockRotatedN6         1.00</span>
 <span class="co">#&gt; CMAES                   SimulatedAnnealing      RosenbrockRotatedN6         1.00</span>
 <span class="co">#&gt; DifferentialEvolution   NelderMead              RosenbrockRotatedN6         1.00</span>
@@ -845,12 +1202,12 @@
 <span class="co">#&gt; DifferentialEvolution   RandomSearch1           RosenbrockRotatedN6         1.00</span>
 <span class="co">#&gt; DifferentialEvolution   SimulatedAnnealing      RosenbrockRotatedN6         1.00</span>
 <span class="co">#&gt; NelderMead              PSO                     RosenbrockRotatedN6         0.00</span>
-<span class="co">#&gt; NelderMead              RandomSearch1           RosenbrockRotatedN6         0.02</span>
+<span class="co">#&gt; NelderMead              RandomSearch1           RosenbrockRotatedN6         0.01</span>
 <span class="co">#&gt; NelderMead              SimulatedAnnealing      RosenbrockRotatedN6         0.10</span>
-<span class="co">#&gt; PSO                     RandomSearch1           RosenbrockRotatedN6         0.98</span>
-<span class="co">#&gt; PSO                     SimulatedAnnealing      RosenbrockRotatedN6         0.99</span>
-<span class="co">#&gt; RandomSearch1           SimulatedAnnealing      RosenbrockRotatedN6         0.89</span>
-<span class="co">#&gt; CMAES                   DifferentialEvolution   Schwefel2d23N6              0.03</span>
+<span class="co">#&gt; PSO                     RandomSearch1           RosenbrockRotatedN6         0.97</span>
+<span class="co">#&gt; PSO                     SimulatedAnnealing      RosenbrockRotatedN6         1.00</span>
+<span class="co">#&gt; RandomSearch1           SimulatedAnnealing      RosenbrockRotatedN6         0.90</span>
+<span class="co">#&gt; CMAES                   DifferentialEvolution   Schwefel2d23N6              0.04</span>
 <span class="co">#&gt; CMAES                   NelderMead              Schwefel2d23N6              1.00</span>
 <span class="co">#&gt; CMAES                   PSO                     Schwefel2d23N6              0.95</span>
 <span class="co">#&gt; CMAES                   RandomSearch1           Schwefel2d23N6              1.00</span>
@@ -865,20 +1222,20 @@
 <span class="co">#&gt; PSO                     RandomSearch1           Schwefel2d23N6              0.95</span>
 <span class="co">#&gt; PSO                     SimulatedAnnealing      Schwefel2d23N6              1.00</span>
 <span class="co">#&gt; RandomSearch1           SimulatedAnnealing      Schwefel2d23N6              0.99</span>
-<span class="co">#&gt; CMAES                   DifferentialEvolution   Schwefel2d26N6              0.02</span>
+<span class="co">#&gt; CMAES                   DifferentialEvolution   Schwefel2d26N6              0.01</span>
 <span class="co">#&gt; CMAES                   NelderMead              Schwefel2d26N6              0.98</span>
 <span class="co">#&gt; CMAES                   PSO                     Schwefel2d26N6              0.81</span>
 <span class="co">#&gt; CMAES                   RandomSearch1           Schwefel2d26N6              0.15</span>
-<span class="co">#&gt; CMAES                   SimulatedAnnealing      Schwefel2d26N6              0.96</span>
+<span class="co">#&gt; CMAES                   SimulatedAnnealing      Schwefel2d26N6              0.97</span>
 <span class="co">#&gt; DifferentialEvolution   NelderMead              Schwefel2d26N6              1.00</span>
 <span class="co">#&gt; DifferentialEvolution   PSO                     Schwefel2d26N6              1.00</span>
 <span class="co">#&gt; DifferentialEvolution   RandomSearch1           Schwefel2d26N6              0.93</span>
 <span class="co">#&gt; DifferentialEvolution   SimulatedAnnealing      Schwefel2d26N6              1.00</span>
 <span class="co">#&gt; NelderMead              PSO                     Schwefel2d26N6              0.09</span>
-<span class="co">#&gt; NelderMead              RandomSearch1           Schwefel2d26N6              0.01</span>
-<span class="co">#&gt; NelderMead              SimulatedAnnealing      Schwefel2d26N6              0.45</span>
+<span class="co">#&gt; NelderMead              RandomSearch1           Schwefel2d26N6              0.00</span>
+<span class="co">#&gt; NelderMead              SimulatedAnnealing      Schwefel2d26N6              0.44</span>
 <span class="co">#&gt; PSO                     RandomSearch1           Schwefel2d26N6              0.04</span>
-<span class="co">#&gt; PSO                     SimulatedAnnealing      Schwefel2d26N6              0.89</span>
+<span class="co">#&gt; PSO                     SimulatedAnnealing      Schwefel2d26N6              0.88</span>
 <span class="co">#&gt; RandomSearch1           SimulatedAnnealing      Schwefel2d26N6              0.99</span>
 <span class="co">#&gt; CMAES                   DifferentialEvolution   StrechedVSineWave2N         0.00</span>
 <span class="co">#&gt; CMAES                   NelderMead              StrechedVSineWave2N         0.81</span>
@@ -890,10 +1247,10 @@
 <span class="co">#&gt; DifferentialEvolution   RandomSearch1           StrechedVSineWave2N         1.00</span>
 <span class="co">#&gt; DifferentialEvolution   SimulatedAnnealing      StrechedVSineWave2N         1.00</span>
 <span class="co">#&gt; NelderMead              PSO                     StrechedVSineWave2N         0.00</span>
-<span class="co">#&gt; NelderMead              RandomSearch1           StrechedVSineWave2N         0.01</span>
+<span class="co">#&gt; NelderMead              RandomSearch1           StrechedVSineWave2N         0.00</span>
 <span class="co">#&gt; NelderMead              SimulatedAnnealing      StrechedVSineWave2N         0.01</span>
-<span class="co">#&gt; PSO                     RandomSearch1           StrechedVSineWave2N         0.97</span>
-<span class="co">#&gt; PSO                     SimulatedAnnealing      StrechedVSineWave2N         0.98</span>
+<span class="co">#&gt; PSO                     RandomSearch1           StrechedVSineWave2N         0.96</span>
+<span class="co">#&gt; PSO                     SimulatedAnnealing      StrechedVSineWave2N         0.99</span>
 <span class="co">#&gt; RandomSearch1           SimulatedAnnealing      StrechedVSineWave2N         0.68</span>
 <span class="co">#&gt; CMAES                   DifferentialEvolution   Trefethen                   0.00</span>
 <span class="co">#&gt; CMAES                   NelderMead              Trefethen                   0.99</span>
@@ -906,10 +1263,10 @@
 <span class="co">#&gt; DifferentialEvolution   SimulatedAnnealing      Trefethen                   1.00</span>
 <span class="co">#&gt; NelderMead              PSO                     Trefethen                   0.00</span>
 <span class="co">#&gt; NelderMead              RandomSearch1           Trefethen                   0.00</span>
-<span class="co">#&gt; NelderMead              SimulatedAnnealing      Trefethen                   0.00</span>
+<span class="co">#&gt; NelderMead              SimulatedAnnealing      Trefethen                   0.01</span>
 <span class="co">#&gt; PSO                     RandomSearch1           Trefethen                   0.99</span>
 <span class="co">#&gt; PSO                     SimulatedAnnealing      Trefethen                   0.99</span>
-<span class="co">#&gt; RandomSearch1           SimulatedAnnealing      Trefethen                   0.62</span>
+<span class="co">#&gt; RandomSearch1           SimulatedAnnealing      Trefethen                   0.61</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Rank of the players' abilities:</span>
@@ -918,427 +1275,1381 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter                        MedianRank   MeanRank   StdRank</span>
 <span class="co">#&gt; ------------------------------  -----------  ---------  --------</span>
-<span class="co">#&gt; lambda[DifferentialEvolution]             1       1.01      0.09</span>
-<span class="co">#&gt; lambda[CMAES]                             2       2.32      0.49</span>
-<span class="co">#&gt; lambda[PSO]                               3       2.70      0.51</span>
-<span class="co">#&gt; lambda[RandomSearch1]                     4       4.03      0.29</span>
-<span class="co">#&gt; lambda[SimulatedAnnealing]                5       4.99      0.31</span>
-<span class="co">#&gt; lambda[NelderMead]                        6       5.96      0.22</span></pre></div>
+<span class="co">#&gt; lambda[DifferentialEvolution]             1       1.01      0.08</span>
+<span class="co">#&gt; lambda[CMAES]                             2       2.32      0.50</span>
+<span class="co">#&gt; lambda[PSO]                               3       2.71      0.50</span>
+<span class="co">#&gt; lambda[RandomSearch1]                     4       4.02      0.30</span>
+<span class="co">#&gt; lambda[SimulatedAnnealing]                5       4.99      0.29</span>
+<span class="co">#&gt; lambda[NelderMead]                        6       5.96      0.20</span></pre></div>
 <p>Of course we can get these estimates in nicer tables with kable that allows a greater deal of customization</p>
 <div class="sourceCode" id="cb15"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_hpdi_parameters.html">get_hpdi_parameters</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>,
       caption <span class="op">=</span> <span class="st">"Parameter distribution with the HPD intervals"</span>,
       digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></pre></div>
 <table class="table">
-<caption>Parameter distribution with the HPD intervals</caption>
-<thead><tr class="header">
-<th align="left">Parameter</th>
-<th align="right">Mean</th>
-<th align="right">HPD_lower</th>
-<th align="right">HPD_higher</th>
+<caption>
+Parameter distribution with the HPD intervals
+</caption>
+<thead><tr>
+<th style="text-align:left;">
+Parameter
+</th>
+<th style="text-align:right;">
+Mean
+</th>
+<th style="text-align:right;">
+HPD_lower
+</th>
+<th style="text-align:right;">
+HPD_higher
+</th>
+<th style="text-align:right;">
+n_eff
+</th>
+<th style="text-align:right;">
+Rhat
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left">lambda[NelderMead]</td>
-<td align="right">-6.081</td>
-<td align="right">-9.228</td>
-<td align="right">-2.873</td>
-</tr>
-<tr class="even">
-<td align="left">lambda[PSO]</td>
-<td align="right">1.920</td>
-<td align="right">-1.350</td>
-<td align="right">4.838</td>
-</tr>
-<tr class="odd">
-<td align="left">lambda[SimulatedAnnealing]</td>
-<td align="right">-3.542</td>
-<td align="right">-6.549</td>
-<td align="right">-0.374</td>
-</tr>
-<tr class="even">
-<td align="left">lambda[DifferentialEvolution]</td>
-<td align="right">6.276</td>
-<td align="right">3.274</td>
-<td align="right">9.610</td>
-</tr>
-<tr class="odd">
-<td align="left">lambda[RandomSearch1]</td>
-<td align="right">-1.045</td>
-<td align="right">-4.061</td>
-<td align="right">1.939</td>
-</tr>
-<tr class="even">
-<td align="left">lambda[CMAES]</td>
-<td align="right">2.569</td>
-<td align="right">-0.550</td>
-<td align="right">5.623</td>
-</tr>
-<tr class="odd">
-<td align="left">U_std</td>
-<td align="right">0.006</td>
-<td align="right">-4.314</td>
-<td align="right">4.340</td>
-</tr>
-<tr class="even">
-<td align="left">U[NelderMead,BentCigarN6]</td>
-<td align="right">0.009</td>
-<td align="right">-2.234</td>
-<td align="right">2.293</td>
-</tr>
-<tr class="odd">
-<td align="left">U[PSO,BentCigarN6]</td>
-<td align="right">-0.004</td>
-<td align="right">-1.117</td>
-<td align="right">1.131</td>
-</tr>
-<tr class="even">
-<td align="left">U[SimulatedAnnealing,BentCigarN6]</td>
-<td align="right">-0.009</td>
-<td align="right">-1.220</td>
-<td align="right">1.301</td>
-</tr>
-<tr class="odd">
-<td align="left">U[DifferentialEvolution,BentCigarN6]</td>
-<td align="right">0.009</td>
-<td align="right">-1.299</td>
-<td align="right">1.345</td>
-</tr>
-<tr class="even">
-<td align="left">U[RandomSearch1,BentCigarN6]</td>
-<td align="right">-0.001</td>
-<td align="right">-1.335</td>
-<td align="right">1.368</td>
-</tr>
-<tr class="odd">
-<td align="left">U[CMAES,BentCigarN6]</td>
-<td align="right">-0.003</td>
-<td align="right">-3.139</td>
-<td align="right">3.125</td>
-</tr>
-<tr class="even">
-<td align="left">U[NelderMead,ChenBird]</td>
-<td align="right">-0.005</td>
-<td align="right">-1.120</td>
-<td align="right">1.228</td>
-</tr>
-<tr class="odd">
-<td align="left">U[PSO,ChenBird]</td>
-<td align="right">-0.003</td>
-<td align="right">-1.218</td>
-<td align="right">1.200</td>
-</tr>
-<tr class="even">
-<td align="left">U[SimulatedAnnealing,ChenBird]</td>
-<td align="right">-0.003</td>
-<td align="right">-1.967</td>
-<td align="right">1.882</td>
-</tr>
-<tr class="odd">
-<td align="left">U[DifferentialEvolution,ChenBird]</td>
-<td align="right">-0.014</td>
-<td align="right">-1.413</td>
-<td align="right">1.387</td>
-</tr>
-<tr class="even">
-<td align="left">U[RandomSearch1,ChenBird]</td>
-<td align="right">0.011</td>
-<td align="right">-1.493</td>
-<td align="right">1.523</td>
-</tr>
-<tr class="odd">
-<td align="left">U[CMAES,ChenBird]</td>
-<td align="right">0.008</td>
-<td align="right">-3.155</td>
-<td align="right">3.014</td>
-</tr>
-<tr class="even">
-<td align="left">U[NelderMead,ChungReynoldsN2]</td>
-<td align="right">0.008</td>
-<td align="right">-1.459</td>
-<td align="right">1.371</td>
-</tr>
-<tr class="odd">
-<td align="left">U[PSO,ChungReynoldsN2]</td>
-<td align="right">0.025</td>
-<td align="right">-1.131</td>
-<td align="right">1.158</td>
-</tr>
-<tr class="even">
-<td align="left">U[SimulatedAnnealing,ChungReynoldsN2]</td>
-<td align="right">-0.003</td>
-<td align="right">-1.941</td>
-<td align="right">2.017</td>
-</tr>
-<tr class="odd">
-<td align="left">U[DifferentialEvolution,ChungReynoldsN2]</td>
-<td align="right">0.022</td>
-<td align="right">-2.206</td>
-<td align="right">2.170</td>
-</tr>
-<tr class="even">
-<td align="left">U[RandomSearch1,ChungReynoldsN2]</td>
-<td align="right">0.009</td>
-<td align="right">-1.215</td>
-<td align="right">1.318</td>
-</tr>
-<tr class="odd">
-<td align="left">U[CMAES,ChungReynoldsN2]</td>
-<td align="right">0.009</td>
-<td align="right">-1.488</td>
-<td align="right">1.464</td>
-</tr>
-<tr class="even">
-<td align="left">U[NelderMead,ExponentialN2]</td>
-<td align="right">-0.002</td>
-<td align="right">-1.848</td>
-<td align="right">2.084</td>
-</tr>
-<tr class="odd">
-<td align="left">U[PSO,ExponentialN2]</td>
-<td align="right">0.001</td>
-<td align="right">-1.066</td>
-<td align="right">1.051</td>
-</tr>
-<tr class="even">
-<td align="left">U[SimulatedAnnealing,ExponentialN2]</td>
-<td align="right">0.010</td>
-<td align="right">-1.235</td>
-<td align="right">1.278</td>
-</tr>
-<tr class="odd">
-<td align="left">U[DifferentialEvolution,ExponentialN2]</td>
-<td align="right">0.010</td>
-<td align="right">-1.313</td>
-<td align="right">1.359</td>
-</tr>
-<tr class="even">
-<td align="left">U[RandomSearch1,ExponentialN2]</td>
-<td align="right">0.002</td>
-<td align="right">-0.968</td>
-<td align="right">1.145</td>
-</tr>
-<tr class="odd">
-<td align="left">U[CMAES,ExponentialN2]</td>
-<td align="right">0.012</td>
-<td align="right">-1.720</td>
-<td align="right">1.759</td>
-</tr>
-<tr class="even">
-<td align="left">U[NelderMead,PinterN6]</td>
-<td align="right">-0.003</td>
-<td align="right">-1.277</td>
-<td align="right">1.137</td>
-</tr>
-<tr class="odd">
-<td align="left">U[PSO,PinterN6]</td>
-<td align="right">0.005</td>
-<td align="right">-0.985</td>
-<td align="right">1.130</td>
-</tr>
-<tr class="even">
-<td align="left">U[SimulatedAnnealing,PinterN6]</td>
-<td align="right">0.006</td>
-<td align="right">-1.452</td>
-<td align="right">1.342</td>
-</tr>
-<tr class="odd">
-<td align="left">U[DifferentialEvolution,PinterN6]</td>
-<td align="right">0.005</td>
-<td align="right">-1.917</td>
-<td align="right">1.923</td>
-</tr>
-<tr class="even">
-<td align="left">U[RandomSearch1,PinterN6]</td>
-<td align="right">-0.004</td>
-<td align="right">-1.000</td>
-<td align="right">1.110</td>
-</tr>
-<tr class="odd">
-<td align="left">U[CMAES,PinterN6]</td>
-<td align="right">0.008</td>
-<td align="right">-2.280</td>
-<td align="right">2.274</td>
-</tr>
-<tr class="even">
-<td align="left">U[NelderMead,RosenbrockRotatedN6]</td>
-<td align="right">-0.012</td>
-<td align="right">-1.357</td>
-<td align="right">1.496</td>
-</tr>
-<tr class="odd">
-<td align="left">U[PSO,RosenbrockRotatedN6]</td>
-<td align="right">-0.005</td>
-<td align="right">-1.293</td>
-<td align="right">1.133</td>
-</tr>
-<tr class="even">
-<td align="left">U[SimulatedAnnealing,RosenbrockRotatedN6]</td>
-<td align="right">0.005</td>
-<td align="right">-1.330</td>
-<td align="right">1.288</td>
-</tr>
-<tr class="odd">
-<td align="left">U[DifferentialEvolution,RosenbrockRotatedN6]</td>
-<td align="right">-0.003</td>
-<td align="right">-1.164</td>
-<td align="right">1.300</td>
-</tr>
-<tr class="even">
-<td align="left">U[RandomSearch1,RosenbrockRotatedN6]</td>
-<td align="right">-0.012</td>
-<td align="right">-1.237</td>
-<td align="right">1.374</td>
-</tr>
-<tr class="odd">
-<td align="left">U[CMAES,RosenbrockRotatedN6]</td>
-<td align="right">0.001</td>
-<td align="right">-1.810</td>
-<td align="right">1.710</td>
-</tr>
-<tr class="even">
-<td align="left">U[NelderMead,Schwefel2d23N6]</td>
-<td align="right">-0.009</td>
-<td align="right">-1.179</td>
-<td align="right">1.324</td>
-</tr>
-<tr class="odd">
-<td align="left">U[PSO,Schwefel2d23N6]</td>
-<td align="right">-0.011</td>
-<td align="right">-1.143</td>
-<td align="right">1.186</td>
-</tr>
-<tr class="even">
-<td align="left">U[SimulatedAnnealing,Schwefel2d23N6]</td>
-<td align="right">0.002</td>
-<td align="right">-2.388</td>
-<td align="right">2.345</td>
-</tr>
-<tr class="odd">
-<td align="left">U[DifferentialEvolution,Schwefel2d23N6]</td>
-<td align="right">-0.011</td>
-<td align="right">-2.399</td>
-<td align="right">2.292</td>
-</tr>
-<tr class="even">
-<td align="left">U[RandomSearch1,Schwefel2d23N6]</td>
-<td align="right">0.015</td>
-<td align="right">-1.437</td>
-<td align="right">1.232</td>
-</tr>
-<tr class="odd">
-<td align="left">U[CMAES,Schwefel2d23N6]</td>
-<td align="right">0.007</td>
-<td align="right">-1.884</td>
-<td align="right">1.809</td>
-</tr>
-<tr class="even">
-<td align="left">U[NelderMead,Schwefel2d26N6]</td>
-<td align="right">0.002</td>
-<td align="right">-1.705</td>
-<td align="right">1.677</td>
-</tr>
-<tr class="odd">
-<td align="left">U[PSO,Schwefel2d26N6]</td>
-<td align="right">0.019</td>
-<td align="right">-1.783</td>
-<td align="right">1.885</td>
-</tr>
-<tr class="even">
-<td align="left">U[SimulatedAnnealing,Schwefel2d26N6]</td>
-<td align="right">0.001</td>
-<td align="right">-0.996</td>
-<td align="right">1.084</td>
-</tr>
-<tr class="odd">
-<td align="left">U[DifferentialEvolution,Schwefel2d26N6]</td>
-<td align="right">0.007</td>
-<td align="right">-1.269</td>
-<td align="right">1.241</td>
-</tr>
-<tr class="even">
-<td align="left">U[RandomSearch1,Schwefel2d26N6]</td>
-<td align="right">0.006</td>
-<td align="right">-2.005</td>
-<td align="right">1.878</td>
-</tr>
-<tr class="odd">
-<td align="left">U[CMAES,Schwefel2d26N6]</td>
-<td align="right">0.002</td>
-<td align="right">-1.484</td>
-<td align="right">1.575</td>
-</tr>
-<tr class="even">
-<td align="left">U[NelderMead,StrechedVSineWave2N]</td>
-<td align="right">0.002</td>
-<td align="right">-1.182</td>
-<td align="right">1.230</td>
-</tr>
-<tr class="odd">
-<td align="left">U[PSO,StrechedVSineWave2N]</td>
-<td align="right">0.013</td>
-<td align="right">-1.644</td>
-<td align="right">1.737</td>
-</tr>
-<tr class="even">
-<td align="left">U[SimulatedAnnealing,StrechedVSineWave2N]</td>
-<td align="right">-0.010</td>
-<td align="right">-1.620</td>
-<td align="right">1.700</td>
-</tr>
-<tr class="odd">
-<td align="left">U[DifferentialEvolution,StrechedVSineWave2N]</td>
-<td align="right">-0.016</td>
-<td align="right">-2.134</td>
-<td align="right">2.167</td>
-</tr>
-<tr class="even">
-<td align="left">U[RandomSearch1,StrechedVSineWave2N]</td>
-<td align="right">-0.005</td>
-<td align="right">-1.169</td>
-<td align="right">1.151</td>
-</tr>
-<tr class="odd">
-<td align="left">U[CMAES,StrechedVSineWave2N]</td>
-<td align="right">0.001</td>
-<td align="right">-3.322</td>
-<td align="right">3.335</td>
-</tr>
-<tr class="even">
-<td align="left">U[NelderMead,Trefethen]</td>
-<td align="right">-0.001</td>
-<td align="right">-2.015</td>
-<td align="right">1.887</td>
-</tr>
-<tr class="odd">
-<td align="left">U[PSO,Trefethen]</td>
-<td align="right">0.004</td>
-<td align="right">-2.081</td>
-<td align="right">2.121</td>
-</tr>
-<tr class="even">
-<td align="left">U[SimulatedAnnealing,Trefethen]</td>
-<td align="right">-0.006</td>
-<td align="right">-1.757</td>
-<td align="right">1.769</td>
-</tr>
-<tr class="odd">
-<td align="left">U[DifferentialEvolution,Trefethen]</td>
-<td align="right">-0.004</td>
-<td align="right">-1.178</td>
-<td align="right">1.228</td>
-</tr>
-<tr class="even">
-<td align="left">U[RandomSearch1,Trefethen]</td>
-<td align="right">-0.009</td>
-<td align="right">-1.099</td>
-<td align="right">1.191</td>
-</tr>
-<tr class="odd">
-<td align="left">U[CMAES,Trefethen]</td>
-<td align="right">0.004</td>
-<td align="right">-2.431</td>
-<td align="right">2.480</td>
+<tr>
+<td style="text-align:left;">
+lambda[NelderMead]
+</td>
+<td style="text-align:right;">
+-6.159
+</td>
+<td style="text-align:right;">
+-9.028
+</td>
+<td style="text-align:right;">
+-2.816
+</td>
+<td style="text-align:right;">
+3497.917
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lambda[PSO]
+</td>
+<td style="text-align:right;">
+1.887
+</td>
+<td style="text-align:right;">
+-1.120
+</td>
+<td style="text-align:right;">
+4.973
+</td>
+<td style="text-align:right;">
+3488.425
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lambda[SimulatedAnnealing]
+</td>
+<td style="text-align:right;">
+-3.590
+</td>
+<td style="text-align:right;">
+-6.826
+</td>
+<td style="text-align:right;">
+-0.657
+</td>
+<td style="text-align:right;">
+3188.297
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lambda[DifferentialEvolution]
+</td>
+<td style="text-align:right;">
+6.294
+</td>
+<td style="text-align:right;">
+3.206
+</td>
+<td style="text-align:right;">
+9.372
+</td>
+<td style="text-align:right;">
+3436.331
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lambda[RandomSearch1]
+</td>
+<td style="text-align:right;">
+-1.089
+</td>
+<td style="text-align:right;">
+-4.070
+</td>
+<td style="text-align:right;">
+2.095
+</td>
+<td style="text-align:right;">
+3580.848
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lambda[CMAES]
+</td>
+<td style="text-align:right;">
+2.536
+</td>
+<td style="text-align:right;">
+-0.572
+</td>
+<td style="text-align:right;">
+5.403
+</td>
+<td style="text-align:right;">
+3462.331
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U_std
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+-4.235
+</td>
+<td style="text-align:right;">
+4.307
+</td>
+<td style="text-align:right;">
+2.047
+</td>
+<td style="text-align:right;">
+6.355
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[NelderMead,BentCigarN6]
+</td>
+<td style="text-align:right;">
+0.016
+</td>
+<td style="text-align:right;">
+-2.182
+</td>
+<td style="text-align:right;">
+2.298
+</td>
+<td style="text-align:right;">
+2.827
+</td>
+<td style="text-align:right;">
+1.792
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[PSO,BentCigarN6]
+</td>
+<td style="text-align:right;">
+0.006
+</td>
+<td style="text-align:right;">
+-1.100
+</td>
+<td style="text-align:right;">
+1.212
+</td>
+<td style="text-align:right;">
+62.334
+</td>
+<td style="text-align:right;">
+1.032
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[SimulatedAnnealing,BentCigarN6]
+</td>
+<td style="text-align:right;">
+0.015
+</td>
+<td style="text-align:right;">
+-1.285
+</td>
+<td style="text-align:right;">
+1.259
+</td>
+<td style="text-align:right;">
+8.370
+</td>
+<td style="text-align:right;">
+1.147
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[DifferentialEvolution,BentCigarN6]
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+-1.285
+</td>
+<td style="text-align:right;">
+1.333
+</td>
+<td style="text-align:right;">
+4.098
+</td>
+<td style="text-align:right;">
+1.373
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[RandomSearch1,BentCigarN6]
+</td>
+<td style="text-align:right;">
+-0.009
+</td>
+<td style="text-align:right;">
+-1.316
+</td>
+<td style="text-align:right;">
+1.421
+</td>
+<td style="text-align:right;">
+95.716
+</td>
+<td style="text-align:right;">
+1.029
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[CMAES,BentCigarN6]
+</td>
+<td style="text-align:right;">
+0.003
+</td>
+<td style="text-align:right;">
+-3.105
+</td>
+<td style="text-align:right;">
+3.130
+</td>
+<td style="text-align:right;">
+6.313
+</td>
+<td style="text-align:right;">
+1.204
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[NelderMead,ChenBird]
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+<td style="text-align:right;">
+-1.125
+</td>
+<td style="text-align:right;">
+1.241
+</td>
+<td style="text-align:right;">
+248.290
+</td>
+<td style="text-align:right;">
+1.017
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[PSO,ChenBird]
+</td>
+<td style="text-align:right;">
+-0.003
+</td>
+<td style="text-align:right;">
+-1.162
+</td>
+<td style="text-align:right;">
+1.332
+</td>
+<td style="text-align:right;">
+2.797
+</td>
+<td style="text-align:right;">
+1.815
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[SimulatedAnnealing,ChenBird]
+</td>
+<td style="text-align:right;">
+0.014
+</td>
+<td style="text-align:right;">
+-1.913
+</td>
+<td style="text-align:right;">
+1.972
+</td>
+<td style="text-align:right;">
+45.550
+</td>
+<td style="text-align:right;">
+1.035
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[DifferentialEvolution,ChenBird]
+</td>
+<td style="text-align:right;">
+0.018
+</td>
+<td style="text-align:right;">
+-1.550
+</td>
+<td style="text-align:right;">
+1.244
+</td>
+<td style="text-align:right;">
+4.136
+</td>
+<td style="text-align:right;">
+1.369
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[RandomSearch1,ChenBird]
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+-1.518
+</td>
+<td style="text-align:right;">
+1.555
+</td>
+<td style="text-align:right;">
+3104.326
+</td>
+<td style="text-align:right;">
+1.008
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[CMAES,ChenBird]
+</td>
+<td style="text-align:right;">
+-0.009
+</td>
+<td style="text-align:right;">
+-3.037
+</td>
+<td style="text-align:right;">
+3.076
+</td>
+<td style="text-align:right;">
+23.532
+</td>
+<td style="text-align:right;">
+1.055
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[NelderMead,ChungReynoldsN2]
+</td>
+<td style="text-align:right;">
+-0.020
+</td>
+<td style="text-align:right;">
+-1.332
+</td>
+<td style="text-align:right;">
+1.418
+</td>
+<td style="text-align:right;">
+3333.595
+</td>
+<td style="text-align:right;">
+1.007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[PSO,ChungReynoldsN2]
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+-1.248
+</td>
+<td style="text-align:right;">
+1.093
+</td>
+<td style="text-align:right;">
+3445.480
+</td>
+<td style="text-align:right;">
+1.007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[SimulatedAnnealing,ChungReynoldsN2]
+</td>
+<td style="text-align:right;">
+-0.004
+</td>
+<td style="text-align:right;">
+-1.997
+</td>
+<td style="text-align:right;">
+1.981
+</td>
+<td style="text-align:right;">
+1233.130
+</td>
+<td style="text-align:right;">
+1.013
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[DifferentialEvolution,ChungReynoldsN2]
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+-2.134
+</td>
+<td style="text-align:right;">
+2.180
+</td>
+<td style="text-align:right;">
+25.515
+</td>
+<td style="text-align:right;">
+1.052
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[RandomSearch1,ChungReynoldsN2]
+</td>
+<td style="text-align:right;">
+-0.006
+</td>
+<td style="text-align:right;">
+-1.318
+</td>
+<td style="text-align:right;">
+1.255
+</td>
+<td style="text-align:right;">
+108.590
+</td>
+<td style="text-align:right;">
+1.022
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[CMAES,ChungReynoldsN2]
+</td>
+<td style="text-align:right;">
+-0.008
+</td>
+<td style="text-align:right;">
+-1.541
+</td>
+<td style="text-align:right;">
+1.480
+</td>
+<td style="text-align:right;">
+2.500
+</td>
+<td style="text-align:right;">
+2.156
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[NelderMead,ExponentialN2]
+</td>
+<td style="text-align:right;">
+0.016
+</td>
+<td style="text-align:right;">
+-1.991
+</td>
+<td style="text-align:right;">
+1.973
+</td>
+<td style="text-align:right;">
+3.513
+</td>
+<td style="text-align:right;">
+1.485
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[PSO,ExponentialN2]
+</td>
+<td style="text-align:right;">
+0.003
+</td>
+<td style="text-align:right;">
+-1.111
+</td>
+<td style="text-align:right;">
+1.068
+</td>
+<td style="text-align:right;">
+2.515
+</td>
+<td style="text-align:right;">
+2.124
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[SimulatedAnnealing,ExponentialN2]
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+-1.234
+</td>
+<td style="text-align:right;">
+1.349
+</td>
+<td style="text-align:right;">
+10.504
+</td>
+<td style="text-align:right;">
+1.118
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[DifferentialEvolution,ExponentialN2]
+</td>
+<td style="text-align:right;">
+-0.005
+</td>
+<td style="text-align:right;">
+-1.383
+</td>
+<td style="text-align:right;">
+1.345
+</td>
+<td style="text-align:right;">
+2.599
+</td>
+<td style="text-align:right;">
+2.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[RandomSearch1,ExponentialN2]
+</td>
+<td style="text-align:right;">
+0.005
+</td>
+<td style="text-align:right;">
+-1.116
+</td>
+<td style="text-align:right;">
+1.070
+</td>
+<td style="text-align:right;">
+2.621
+</td>
+<td style="text-align:right;">
+1.976
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[CMAES,ExponentialN2]
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+<td style="text-align:right;">
+-1.794
+</td>
+<td style="text-align:right;">
+1.742
+</td>
+<td style="text-align:right;">
+5.675
+</td>
+<td style="text-align:right;">
+1.235
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[NelderMead,PinterN6]
+</td>
+<td style="text-align:right;">
+-0.012
+</td>
+<td style="text-align:right;">
+-1.179
+</td>
+<td style="text-align:right;">
+1.262
+</td>
+<td style="text-align:right;">
+3.649
+</td>
+<td style="text-align:right;">
+1.460
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[PSO,PinterN6]
+</td>
+<td style="text-align:right;">
+-0.007
+</td>
+<td style="text-align:right;">
+-1.122
+</td>
+<td style="text-align:right;">
+1.101
+</td>
+<td style="text-align:right;">
+6.440
+</td>
+<td style="text-align:right;">
+1.198
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[SimulatedAnnealing,PinterN6]
+</td>
+<td style="text-align:right;">
+-0.003
+</td>
+<td style="text-align:right;">
+-1.398
+</td>
+<td style="text-align:right;">
+1.400
+</td>
+<td style="text-align:right;">
+2.354
+</td>
+<td style="text-align:right;">
+2.465
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[DifferentialEvolution,PinterN6]
+</td>
+<td style="text-align:right;">
+-0.015
+</td>
+<td style="text-align:right;">
+-1.967
+</td>
+<td style="text-align:right;">
+2.002
+</td>
+<td style="text-align:right;">
+3042.040
+</td>
+<td style="text-align:right;">
+1.004
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[RandomSearch1,PinterN6]
+</td>
+<td style="text-align:right;">
+0.014
+</td>
+<td style="text-align:right;">
+-1.015
+</td>
+<td style="text-align:right;">
+1.054
+</td>
+<td style="text-align:right;">
+2.920
+</td>
+<td style="text-align:right;">
+1.725
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[CMAES,PinterN6]
+</td>
+<td style="text-align:right;">
+-0.005
+</td>
+<td style="text-align:right;">
+-2.326
+</td>
+<td style="text-align:right;">
+2.252
+</td>
+<td style="text-align:right;">
+2.678
+</td>
+<td style="text-align:right;">
+1.919
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[NelderMead,RosenbrockRotatedN6]
+</td>
+<td style="text-align:right;">
+-0.013
+</td>
+<td style="text-align:right;">
+-1.363
+</td>
+<td style="text-align:right;">
+1.443
+</td>
+<td style="text-align:right;">
+13.125
+</td>
+<td style="text-align:right;">
+1.091
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[PSO,RosenbrockRotatedN6]
+</td>
+<td style="text-align:right;">
+-0.016
+</td>
+<td style="text-align:right;">
+-1.173
+</td>
+<td style="text-align:right;">
+1.164
+</td>
+<td style="text-align:right;">
+8.319
+</td>
+<td style="text-align:right;">
+1.145
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[SimulatedAnnealing,RosenbrockRotatedN6]
+</td>
+<td style="text-align:right;">
+-0.027
+</td>
+<td style="text-align:right;">
+-1.295
+</td>
+<td style="text-align:right;">
+1.381
+</td>
+<td style="text-align:right;">
+2.989
+</td>
+<td style="text-align:right;">
+1.683
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[DifferentialEvolution,RosenbrockRotatedN6]
+</td>
+<td style="text-align:right;">
+-0.005
+</td>
+<td style="text-align:right;">
+-1.238
+</td>
+<td style="text-align:right;">
+1.167
+</td>
+<td style="text-align:right;">
+5.634
+</td>
+<td style="text-align:right;">
+1.237
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[RandomSearch1,RosenbrockRotatedN6]
+</td>
+<td style="text-align:right;">
+-0.004
+</td>
+<td style="text-align:right;">
+-1.361
+</td>
+<td style="text-align:right;">
+1.293
+</td>
+<td style="text-align:right;">
+4.906
+</td>
+<td style="text-align:right;">
+1.284
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[CMAES,RosenbrockRotatedN6]
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+<td style="text-align:right;">
+-1.731
+</td>
+<td style="text-align:right;">
+1.697
+</td>
+<td style="text-align:right;">
+52.218
+</td>
+<td style="text-align:right;">
+1.032
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[NelderMead,Schwefel2d23N6]
+</td>
+<td style="text-align:right;">
+-0.006
+</td>
+<td style="text-align:right;">
+-1.164
+</td>
+<td style="text-align:right;">
+1.286
+</td>
+<td style="text-align:right;">
+2.735
+</td>
+<td style="text-align:right;">
+1.860
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[PSO,Schwefel2d23N6]
+</td>
+<td style="text-align:right;">
+-0.015
+</td>
+<td style="text-align:right;">
+-1.160
+</td>
+<td style="text-align:right;">
+1.148
+</td>
+<td style="text-align:right;">
+10.351
+</td>
+<td style="text-align:right;">
+1.120
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[SimulatedAnnealing,Schwefel2d23N6]
+</td>
+<td style="text-align:right;">
+-0.017
+</td>
+<td style="text-align:right;">
+-2.304
+</td>
+<td style="text-align:right;">
+2.406
+</td>
+<td style="text-align:right;">
+3.208
+</td>
+<td style="text-align:right;">
+1.580
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[DifferentialEvolution,Schwefel2d23N6]
+</td>
+<td style="text-align:right;">
+-0.006
+</td>
+<td style="text-align:right;">
+-2.301
+</td>
+<td style="text-align:right;">
+2.288
+</td>
+<td style="text-align:right;">
+723.524
+</td>
+<td style="text-align:right;">
+1.013
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[RandomSearch1,Schwefel2d23N6]
+</td>
+<td style="text-align:right;">
+0.011
+</td>
+<td style="text-align:right;">
+-1.310
+</td>
+<td style="text-align:right;">
+1.280
+</td>
+<td style="text-align:right;">
+6.558
+</td>
+<td style="text-align:right;">
+1.196
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[CMAES,Schwefel2d23N6]
+</td>
+<td style="text-align:right;">
+0.003
+</td>
+<td style="text-align:right;">
+-1.758
+</td>
+<td style="text-align:right;">
+1.898
+</td>
+<td style="text-align:right;">
+3.620
+</td>
+<td style="text-align:right;">
+1.462
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[NelderMead,Schwefel2d26N6]
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+<td style="text-align:right;">
+-1.722
+</td>
+<td style="text-align:right;">
+1.661
+</td>
+<td style="text-align:right;">
+11.467
+</td>
+<td style="text-align:right;">
+1.109
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[PSO,Schwefel2d26N6]
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+-1.774
+</td>
+<td style="text-align:right;">
+1.882
+</td>
+<td style="text-align:right;">
+1992.341
+</td>
+<td style="text-align:right;">
+1.010
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[SimulatedAnnealing,Schwefel2d26N6]
+</td>
+<td style="text-align:right;">
+-0.006
+</td>
+<td style="text-align:right;">
+-1.051
+</td>
+<td style="text-align:right;">
+1.022
+</td>
+<td style="text-align:right;">
+2452.960
+</td>
+<td style="text-align:right;">
+1.009
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[DifferentialEvolution,Schwefel2d26N6]
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+<td style="text-align:right;">
+-1.279
+</td>
+<td style="text-align:right;">
+1.334
+</td>
+<td style="text-align:right;">
+6.804
+</td>
+<td style="text-align:right;">
+1.187
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[RandomSearch1,Schwefel2d26N6]
+</td>
+<td style="text-align:right;">
+-0.011
+</td>
+<td style="text-align:right;">
+-1.957
+</td>
+<td style="text-align:right;">
+1.970
+</td>
+<td style="text-align:right;">
+7.343
+</td>
+<td style="text-align:right;">
+1.172
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[CMAES,Schwefel2d26N6]
+</td>
+<td style="text-align:right;">
+-0.003
+</td>
+<td style="text-align:right;">
+-1.548
+</td>
+<td style="text-align:right;">
+1.503
+</td>
+<td style="text-align:right;">
+2.433
+</td>
+<td style="text-align:right;">
+2.285
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[NelderMead,StrechedVSineWave2N]
+</td>
+<td style="text-align:right;">
+0.020
+</td>
+<td style="text-align:right;">
+-1.207
+</td>
+<td style="text-align:right;">
+1.195
+</td>
+<td style="text-align:right;">
+13.383
+</td>
+<td style="text-align:right;">
+1.093
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[PSO,StrechedVSineWave2N]
+</td>
+<td style="text-align:right;">
+0.003
+</td>
+<td style="text-align:right;">
+-1.719
+</td>
+<td style="text-align:right;">
+1.661
+</td>
+<td style="text-align:right;">
+10.734
+</td>
+<td style="text-align:right;">
+1.114
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[SimulatedAnnealing,StrechedVSineWave2N]
+</td>
+<td style="text-align:right;">
+-0.002
+</td>
+<td style="text-align:right;">
+-1.657
+</td>
+<td style="text-align:right;">
+1.694
+</td>
+<td style="text-align:right;">
+2.182
+</td>
+<td style="text-align:right;">
+3.304
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[DifferentialEvolution,StrechedVSineWave2N]
+</td>
+<td style="text-align:right;">
+-0.013
+</td>
+<td style="text-align:right;">
+-2.120
+</td>
+<td style="text-align:right;">
+2.141
+</td>
+<td style="text-align:right;">
+2.197
+</td>
+<td style="text-align:right;">
+3.187
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[RandomSearch1,StrechedVSineWave2N]
+</td>
+<td style="text-align:right;">
+-0.022
+</td>
+<td style="text-align:right;">
+-1.182
+</td>
+<td style="text-align:right;">
+1.150
+</td>
+<td style="text-align:right;">
+3.968
+</td>
+<td style="text-align:right;">
+1.397
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[CMAES,StrechedVSineWave2N]
+</td>
+<td style="text-align:right;">
+0.006
+</td>
+<td style="text-align:right;">
+-3.339
+</td>
+<td style="text-align:right;">
+3.331
+</td>
+<td style="text-align:right;">
+2.794
+</td>
+<td style="text-align:right;">
+1.814
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[NelderMead,Trefethen]
+</td>
+<td style="text-align:right;">
+-0.010
+</td>
+<td style="text-align:right;">
+-1.897
+</td>
+<td style="text-align:right;">
+1.931
+</td>
+<td style="text-align:right;">
+2.249
+</td>
+<td style="text-align:right;">
+2.881
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[PSO,Trefethen]
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+<td style="text-align:right;">
+-2.150
+</td>
+<td style="text-align:right;">
+2.207
+</td>
+<td style="text-align:right;">
+2.871
+</td>
+<td style="text-align:right;">
+1.756
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[SimulatedAnnealing,Trefethen]
+</td>
+<td style="text-align:right;">
+-0.004
+</td>
+<td style="text-align:right;">
+-1.794
+</td>
+<td style="text-align:right;">
+1.825
+</td>
+<td style="text-align:right;">
+2.919
+</td>
+<td style="text-align:right;">
+1.725
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[DifferentialEvolution,Trefethen]
+</td>
+<td style="text-align:right;">
+-0.009
+</td>
+<td style="text-align:right;">
+-1.197
+</td>
+<td style="text-align:right;">
+1.273
+</td>
+<td style="text-align:right;">
+2.973
+</td>
+<td style="text-align:right;">
+1.705
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[RandomSearch1,Trefethen]
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+-1.156
+</td>
+<td style="text-align:right;">
+1.194
+</td>
+<td style="text-align:right;">
+2.106
+</td>
+<td style="text-align:right;">
+4.241
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U[CMAES,Trefethen]
+</td>
+<td style="text-align:right;">
+-0.001
+</td>
+<td style="text-align:right;">
+-2.375
+</td>
+<td style="text-align:right;">
+2.536
+</td>
+<td style="text-align:right;">
+2.243
+</td>
+<td style="text-align:right;">
+2.895
+</td>
 </tr>
 </tbody>
 </table>
@@ -1347,982 +2658,2236 @@
       caption <span class="op">=</span> <span class="st">"Probabilities of one an algorithm beating the other in different benchmarks"</span>,
       digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></pre></div>
 <table class="table">
-<caption>Probabilities of one an algorithm beating the other in different benchmarks</caption>
-<thead><tr class="header">
-<th align="left">i</th>
-<th align="left">j</th>
-<th align="left">U</th>
-<th align="right">i_beats_j</th>
+<caption>
+Probabilities of one an algorithm beating the other in different benchmarks
+</caption>
+<thead><tr>
+<th style="text-align:left;">
+i
+</th>
+<th style="text-align:left;">
+j
+</th>
+<th style="text-align:left;">
+U
+</th>
+<th style="text-align:right;">
+i_beats_j
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">DifferentialEvolution</td>
-<td align="left">BentCigarN6</td>
-<td align="right">0.941</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">NelderMead</td>
-<td align="left">BentCigarN6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">PSO</td>
-<td align="left">BentCigarN6</td>
-<td align="right">0.998</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">RandomSearch1</td>
-<td align="left">BentCigarN6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">BentCigarN6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">NelderMead</td>
-<td align="left">BentCigarN6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">PSO</td>
-<td align="left">BentCigarN6</td>
-<td align="right">0.955</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">RandomSearch1</td>
-<td align="left">BentCigarN6</td>
-<td align="right">0.999</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">BentCigarN6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">NelderMead</td>
-<td align="left">PSO</td>
-<td align="left">BentCigarN6</td>
-<td align="right">0.000</td>
-</tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">RandomSearch1</td>
-<td align="left">BentCigarN6</td>
-<td align="right">0.004</td>
-</tr>
-<tr class="even">
-<td align="left">NelderMead</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">BentCigarN6</td>
-<td align="right">0.027</td>
-</tr>
-<tr class="odd">
-<td align="left">PSO</td>
-<td align="left">RandomSearch1</td>
-<td align="left">BentCigarN6</td>
-<td align="right">0.955</td>
-</tr>
-<tr class="even">
-<td align="left">PSO</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">BentCigarN6</td>
-<td align="right">0.990</td>
-</tr>
-<tr class="odd">
-<td align="left">RandomSearch1</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">BentCigarN6</td>
-<td align="right">0.869</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">DifferentialEvolution</td>
-<td align="left">ChenBird</td>
-<td align="right">0.936</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">NelderMead</td>
-<td align="left">ChenBird</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">PSO</td>
-<td align="left">ChenBird</td>
-<td align="right">0.996</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">RandomSearch1</td>
-<td align="left">ChenBird</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">ChenBird</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">NelderMead</td>
-<td align="left">ChenBird</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">PSO</td>
-<td align="left">ChenBird</td>
-<td align="right">0.955</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">RandomSearch1</td>
-<td align="left">ChenBird</td>
-<td align="right">0.998</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">ChenBird</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">PSO</td>
-<td align="left">ChenBird</td>
-<td align="right">0.005</td>
-</tr>
-<tr class="even">
-<td align="left">NelderMead</td>
-<td align="left">RandomSearch1</td>
-<td align="left">ChenBird</td>
-<td align="right">0.084</td>
-</tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">ChenBird</td>
-<td align="right">0.711</td>
-</tr>
-<tr class="even">
-<td align="left">PSO</td>
-<td align="left">RandomSearch1</td>
-<td align="left">ChenBird</td>
-<td align="right">0.963</td>
-</tr>
-<tr class="odd">
-<td align="left">PSO</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">ChenBird</td>
-<td align="right">0.999</td>
-</tr>
-<tr class="even">
-<td align="left">RandomSearch1</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">ChenBird</td>
-<td align="right">0.962</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">DifferentialEvolution</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">0.025</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">NelderMead</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">PSO</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">0.869</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">RandomSearch1</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">0.995</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">NelderMead</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">PSO</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">0.997</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">RandomSearch1</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">NelderMead</td>
-<td align="left">PSO</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">0.000</td>
-</tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">RandomSearch1</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">0.016</td>
-</tr>
-<tr class="even">
-<td align="left">NelderMead</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">0.405</td>
-</tr>
-<tr class="odd">
-<td align="left">PSO</td>
-<td align="left">RandomSearch1</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">0.965</td>
-</tr>
-<tr class="even">
-<td align="left">PSO</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">0.999</td>
-</tr>
-<tr class="odd">
-<td align="left">RandomSearch1</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">ChungReynoldsN2</td>
-<td align="right">0.979</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">DifferentialEvolution</td>
-<td align="left">ExponentialN2</td>
-<td align="right">0.519</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">NelderMead</td>
-<td align="left">ExponentialN2</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">PSO</td>
-<td align="left">ExponentialN2</td>
-<td align="right">0.952</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">RandomSearch1</td>
-<td align="left">ExponentialN2</td>
-<td align="right">0.998</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">ExponentialN2</td>
-<td align="right">0.999</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">NelderMead</td>
-<td align="left">ExponentialN2</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">PSO</td>
-<td align="left">ExponentialN2</td>
-<td align="right">0.949</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">RandomSearch1</td>
-<td align="left">ExponentialN2</td>
-<td align="right">0.997</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">ExponentialN2</td>
-<td align="right">0.999</td>
-</tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">PSO</td>
-<td align="left">ExponentialN2</td>
-<td align="right">0.000</td>
-</tr>
-<tr class="even">
-<td align="left">NelderMead</td>
-<td align="left">RandomSearch1</td>
-<td align="left">ExponentialN2</td>
-<td align="right">0.006</td>
-</tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">ExponentialN2</td>
-<td align="right">0.014</td>
-</tr>
-<tr class="even">
-<td align="left">PSO</td>
-<td align="left">RandomSearch1</td>
-<td align="left">ExponentialN2</td>
-<td align="right">0.926</td>
-</tr>
-<tr class="odd">
-<td align="left">PSO</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">ExponentialN2</td>
-<td align="right">0.974</td>
-</tr>
-<tr class="even">
-<td align="left">RandomSearch1</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">ExponentialN2</td>
-<td align="right">0.718</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">DifferentialEvolution</td>
-<td align="left">PinterN6</td>
-<td align="right">0.001</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">NelderMead</td>
-<td align="left">PinterN6</td>
-<td align="right">0.960</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">PSO</td>
-<td align="left">PinterN6</td>
-<td align="right">0.026</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">RandomSearch1</td>
-<td align="left">PinterN6</td>
-<td align="right">0.261</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">PinterN6</td>
-<td align="right">0.487</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">NelderMead</td>
-<td align="left">PinterN6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">PSO</td>
-<td align="left">PinterN6</td>
-<td align="right">0.984</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">RandomSearch1</td>
-<td align="left">PinterN6</td>
-<td align="right">0.999</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">PinterN6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">NelderMead</td>
-<td align="left">PSO</td>
-<td align="left">PinterN6</td>
-<td align="right">0.002</td>
-</tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">RandomSearch1</td>
-<td align="left">PinterN6</td>
-<td align="right">0.011</td>
-</tr>
-<tr class="even">
-<td align="left">NelderMead</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">PinterN6</td>
-<td align="right">0.038</td>
-</tr>
-<tr class="odd">
-<td align="left">PSO</td>
-<td align="left">RandomSearch1</td>
-<td align="left">PinterN6</td>
-<td align="right">0.936</td>
-</tr>
-<tr class="even">
-<td align="left">PSO</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">PinterN6</td>
-<td align="right">0.974</td>
-</tr>
-<tr class="odd">
-<td align="left">RandomSearch1</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">PinterN6</td>
-<td align="right">0.718</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">DifferentialEvolution</td>
-<td align="left">RosenbrockRotatedN6</td>
-<td align="right">0.192</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">NelderMead</td>
-<td align="left">RosenbrockRotatedN6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">PSO</td>
-<td align="left">RosenbrockRotatedN6</td>
-<td align="right">0.902</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">RandomSearch1</td>
-<td align="left">RosenbrockRotatedN6</td>
-<td align="right">0.997</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">RosenbrockRotatedN6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">NelderMead</td>
-<td align="left">RosenbrockRotatedN6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">PSO</td>
-<td align="left">RosenbrockRotatedN6</td>
-<td align="right">0.979</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">RandomSearch1</td>
-<td align="left">RosenbrockRotatedN6</td>
-<td align="right">0.999</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">RosenbrockRotatedN6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">PSO</td>
-<td align="left">RosenbrockRotatedN6</td>
-<td align="right">0.000</td>
-</tr>
-<tr class="even">
-<td align="left">NelderMead</td>
-<td align="left">RandomSearch1</td>
-<td align="left">RosenbrockRotatedN6</td>
-<td align="right">0.013</td>
-</tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">RosenbrockRotatedN6</td>
-<td align="right">0.106</td>
-</tr>
-<tr class="even">
-<td align="left">PSO</td>
-<td align="left">RandomSearch1</td>
-<td align="left">RosenbrockRotatedN6</td>
-<td align="right">0.971</td>
-</tr>
-<tr class="odd">
-<td align="left">PSO</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">RosenbrockRotatedN6</td>
-<td align="right">0.997</td>
-</tr>
-<tr class="even">
-<td align="left">RandomSearch1</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">RosenbrockRotatedN6</td>
-<td align="right">0.892</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">DifferentialEvolution</td>
-<td align="left">Schwefel2d23N6</td>
-<td align="right">0.032</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">NelderMead</td>
-<td align="left">Schwefel2d23N6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">PSO</td>
-<td align="left">Schwefel2d23N6</td>
-<td align="right">0.938</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">RandomSearch1</td>
-<td align="left">Schwefel2d23N6</td>
-<td align="right">0.998</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Schwefel2d23N6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">NelderMead</td>
-<td align="left">Schwefel2d23N6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">PSO</td>
-<td align="left">Schwefel2d23N6</td>
-<td align="right">0.998</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">RandomSearch1</td>
-<td align="left">Schwefel2d23N6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Schwefel2d23N6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">NelderMead</td>
-<td align="left">PSO</td>
-<td align="left">Schwefel2d23N6</td>
-<td align="right">0.001</td>
-</tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">RandomSearch1</td>
-<td align="left">Schwefel2d23N6</td>
-<td align="right">0.034</td>
-</tr>
-<tr class="even">
-<td align="left">NelderMead</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Schwefel2d23N6</td>
-<td align="right">0.763</td>
-</tr>
-<tr class="odd">
-<td align="left">PSO</td>
-<td align="left">RandomSearch1</td>
-<td align="left">Schwefel2d23N6</td>
-<td align="right">0.947</td>
-</tr>
-<tr class="even">
-<td align="left">PSO</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Schwefel2d23N6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">RandomSearch1</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Schwefel2d23N6</td>
-<td align="right">0.991</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">DifferentialEvolution</td>
-<td align="left">Schwefel2d26N6</td>
-<td align="right">0.015</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">NelderMead</td>
-<td align="left">Schwefel2d26N6</td>
-<td align="right">0.977</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">PSO</td>
-<td align="left">Schwefel2d26N6</td>
-<td align="right">0.808</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">RandomSearch1</td>
-<td align="left">Schwefel2d26N6</td>
-<td align="right">0.151</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Schwefel2d26N6</td>
-<td align="right">0.973</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">NelderMead</td>
-<td align="left">Schwefel2d26N6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">PSO</td>
-<td align="left">Schwefel2d26N6</td>
-<td align="right">0.996</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">RandomSearch1</td>
-<td align="left">Schwefel2d26N6</td>
-<td align="right">0.927</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Schwefel2d26N6</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">PSO</td>
-<td align="left">Schwefel2d26N6</td>
-<td align="right">0.093</td>
-</tr>
-<tr class="even">
-<td align="left">NelderMead</td>
-<td align="left">RandomSearch1</td>
-<td align="left">Schwefel2d26N6</td>
-<td align="right">0.004</td>
-</tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Schwefel2d26N6</td>
-<td align="right">0.452</td>
-</tr>
-<tr class="even">
-<td align="left">PSO</td>
-<td align="left">RandomSearch1</td>
-<td align="left">Schwefel2d26N6</td>
-<td align="right">0.036</td>
-</tr>
-<tr class="odd">
-<td align="left">PSO</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Schwefel2d26N6</td>
-<td align="right">0.897</td>
-</tr>
-<tr class="even">
-<td align="left">RandomSearch1</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Schwefel2d26N6</td>
-<td align="right">0.997</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">DifferentialEvolution</td>
-<td align="left">StrechedVSineWave2N</td>
-<td align="right">0.000</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">NelderMead</td>
-<td align="left">StrechedVSineWave2N</td>
-<td align="right">0.811</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">PSO</td>
-<td align="left">StrechedVSineWave2N</td>
-<td align="right">0.000</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">RandomSearch1</td>
-<td align="left">StrechedVSineWave2N</td>
-<td align="right">0.022</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">StrechedVSineWave2N</td>
-<td align="right">0.039</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">NelderMead</td>
-<td align="left">StrechedVSineWave2N</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">PSO</td>
-<td align="left">StrechedVSineWave2N</td>
-<td align="right">0.978</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">RandomSearch1</td>
-<td align="left">StrechedVSineWave2N</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">StrechedVSineWave2N</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">NelderMead</td>
-<td align="left">PSO</td>
-<td align="left">StrechedVSineWave2N</td>
-<td align="right">0.000</td>
-</tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">RandomSearch1</td>
-<td align="left">StrechedVSineWave2N</td>
-<td align="right">0.005</td>
-</tr>
-<tr class="even">
-<td align="left">NelderMead</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">StrechedVSineWave2N</td>
-<td align="right">0.009</td>
-</tr>
-<tr class="odd">
-<td align="left">PSO</td>
-<td align="left">RandomSearch1</td>
-<td align="left">StrechedVSineWave2N</td>
-<td align="right">0.967</td>
-</tr>
-<tr class="even">
-<td align="left">PSO</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">StrechedVSineWave2N</td>
-<td align="right">0.984</td>
-</tr>
-<tr class="odd">
-<td align="left">RandomSearch1</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">StrechedVSineWave2N</td>
-<td align="right">0.682</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">DifferentialEvolution</td>
-<td align="left">Trefethen</td>
-<td align="right">0.001</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">NelderMead</td>
-<td align="left">Trefethen</td>
-<td align="right">0.987</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">PSO</td>
-<td align="left">Trefethen</td>
-<td align="right">0.002</td>
-</tr>
-<tr class="odd">
-<td align="left">CMAES</td>
-<td align="left">RandomSearch1</td>
-<td align="left">Trefethen</td>
-<td align="right">0.145</td>
-</tr>
-<tr class="even">
-<td align="left">CMAES</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Trefethen</td>
-<td align="right">0.218</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">NelderMead</td>
-<td align="left">Trefethen</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">PSO</td>
-<td align="left">Trefethen</td>
-<td align="right">0.609</td>
-</tr>
-<tr class="odd">
-<td align="left">DifferentialEvolution</td>
-<td align="left">RandomSearch1</td>
-<td align="left">Trefethen</td>
-<td align="right">0.993</td>
-</tr>
-<tr class="even">
-<td align="left">DifferentialEvolution</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Trefethen</td>
-<td align="right">0.998</td>
-</tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">PSO</td>
-<td align="left">Trefethen</td>
-<td align="right">0.000</td>
-</tr>
-<tr class="even">
-<td align="left">NelderMead</td>
-<td align="left">RandomSearch1</td>
-<td align="left">Trefethen</td>
-<td align="right">0.002</td>
-</tr>
-<tr class="odd">
-<td align="left">NelderMead</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Trefethen</td>
-<td align="right">0.004</td>
-</tr>
-<tr class="even">
-<td align="left">PSO</td>
-<td align="left">RandomSearch1</td>
-<td align="left">Trefethen</td>
-<td align="right">0.989</td>
-</tr>
-<tr class="odd">
-<td align="left">PSO</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Trefethen</td>
-<td align="right">0.995</td>
-</tr>
-<tr class="even">
-<td align="left">RandomSearch1</td>
-<td align="left">SimulatedAnnealing</td>
-<td align="left">Trefethen</td>
-<td align="right">0.624</td>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+0.942
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+0.952
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+0.004
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+0.025
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+0.962
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+0.991
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+BentCigarN6
+</td>
+<td style="text-align:right;">
+0.870
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:right;">
+0.933
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:right;">
+0.959
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:right;">
+0.005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:right;">
+0.082
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:right;">
+0.718
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:right;">
+0.967
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+ChenBird
+</td>
+<td style="text-align:right;">
+0.965
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:right;">
+0.027
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:right;">
+0.865
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:right;">
+0.995
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:right;">
+0.014
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:right;">
+0.401
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:right;">
+0.962
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+ChungReynoldsN2
+</td>
+<td style="text-align:right;">
+0.979
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:right;">
+0.520
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:right;">
+0.956
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:right;">
+0.950
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:right;">
+0.016
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:right;">
+0.919
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:right;">
+0.973
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+ExponentialN2
+</td>
+<td style="text-align:right;">
+0.728
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
+<td style="text-align:right;">
+0.963
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
+<td style="text-align:right;">
+0.026
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
+<td style="text-align:right;">
+0.256
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
+<td style="text-align:right;">
+0.490
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
+<td style="text-align:right;">
+0.984
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
+<td style="text-align:right;">
+0.013
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
+<td style="text-align:right;">
+0.039
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
+<td style="text-align:right;">
+0.935
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
+<td style="text-align:right;">
+0.972
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+PinterN6
+</td>
+<td style="text-align:right;">
+0.715
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+0.180
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+0.898
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+0.980
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+0.014
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+0.098
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+0.971
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+0.897
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:right;">
+0.032
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:right;">
+0.945
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:right;">
+0.030
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:right;">
+0.756
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:right;">
+0.948
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Schwefel2d23N6
+</td>
+<td style="text-align:right;">
+0.989
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+0.015
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+0.975
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+0.812
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+0.144
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+0.972
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+0.920
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+0.102
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+0.004
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+0.448
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+0.041
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+0.893
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Schwefel2d26N6
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+0.820
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+0.023
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+0.038
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+0.975
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+0.004
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+0.963
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+0.985
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+0.672
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+Trefethen
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+Trefethen
+</td>
+<td style="text-align:right;">
+0.988
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+Trefethen
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+Trefethen
+</td>
+<td style="text-align:right;">
+0.142
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Trefethen
+</td>
+<td style="text-align:right;">
+0.209
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+Trefethen
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+Trefethen
+</td>
+<td style="text-align:right;">
+0.601
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+Trefethen
+</td>
+<td style="text-align:right;">
+0.993
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Trefethen
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+Trefethen
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+Trefethen
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Trefethen
+</td>
+<td style="text-align:right;">
+0.004
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+Trefethen
+</td>
+<td style="text-align:right;">
+0.988
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Trefethen
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Trefethen
+</td>
+<td style="text-align:right;">
+0.617
+</td>
 </tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="../reference/rank_players.html">rank_players</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>,
+<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_rank_of_players.html">get_rank_of_players</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>,<span class="op">-</span><span class="va">PosteriorRank</span><span class="op">)</span>,
       caption <span class="op">=</span> <span class="st">"Ranking the algorithms"</span>,
       digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></pre></div>
 <table class="table">
-<caption>Ranking the algorithms</caption>
-<colgroup>
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="98%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">Parameter</th>
-<th align="right">MedianRank</th>
-<th align="right">MeanRank</th>
-<th align="right">StdRank</th>
-<th align="left">PosteriorRank</th>
+<caption>
+Ranking the algorithms
+</caption>
+<thead><tr>
+<th style="text-align:left;">
+Parameter
+</th>
+<th style="text-align:right;">
+MedianRank
+</th>
+<th style="text-align:right;">
+MeanRank
+</th>
+<th style="text-align:right;">
+StdRank
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left">lambda[DifferentialEvolution]</td>
-<td align="right">1</td>
-<td align="right">1.01</td>
-<td align="right">0.10</td>
-<td align="left">1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1</td>
+<tr>
+<td style="text-align:left;">
+lambda[DifferentialEvolution]
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1.01
+</td>
+<td style="text-align:right;">
+0.10
+</td>
 </tr>
-<tr class="even">
-<td align="left">lambda[CMAES]</td>
-<td align="right">2</td>
-<td align="right">2.34</td>
-<td align="right">0.50</td>
-<td align="left">2, 2, 3, 2, 3, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 3, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 2, 2, 3, 2, 2, 2, 3, 2, 2, 3, 3, 2, 3, 2, 2, 2, 2, 2, 3, 3, 3, 2, 2, 2, 3, 2, 3, 2, 2, 2, 2, 3, 3, 2, 2, 2, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 3, 2, 3, 3, 2, 3, 3, 3, 2, 2, 3, 3, 2, 2, 3, 2, 2, 4, 2, 2, 2, 2, 1, 2, 3, 3, 2, 2, 2, 2, 2, 3, 2, 3, 2, 4, 2, 2, 2, 2, 1, 3, 3, 2, 3, 3, 3, 2, 2, 2, 3, 3, 2, 3, 3, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 2, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 2, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 2, 2, 2, 2, 3, 3, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 2, 3, 2, 2, 2, 2, 3, 3, 2, 2, 2, 3, 2, 2, 3, 2, 3, 2, 3, 3, 3, 3, 2, 2, 2, 3, 2, 3, 2, 2, 4, 2, 3, 3, 2, 3, 2, 2, 2, 2, 3, 2, 2, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 2, 3, 3, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 2, 3, 2, 3, 2, 3, 3, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 3, 2, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 2, 3, 3, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 2, 3, 3, 2, 2, 2, 3, 2, 3, 2, 1, 3, 2, 2, 2, 2, 2, 2, 3, 2, 3, 2, 3, 3, 2, 2, 3, 3, 2, 2, 2, 2, 3, 2, 3, 3, 3, 2, 2, 2, 2, 2, 3, 3, 3, 2, 3, 2, 2, 2, 3, 2, 2, 3, 3, 3, 3, 2, 3, 2, 3, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 2, 3, 2, 2, 4, 2, 3, 2, 2, 2, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 2, 3, 3, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 4, 2, 2, 2, 2, 3, 3, 3, 2, 2, 2, 3, 3, 2, 2, 2, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 3, 2, 2, 3, 2, 2, 2, 2, 3, 2, 2, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 3, 2, 2, 2, 2, 2, 2, 3, 2, 2, 3, 3, 2, 3, 2, 2, 2, 3, 2, 3, 2, 3, 2, 2, 2, 2, 2, 2, 3, 2, 3, 2, 2, 2, 2, 3, 2, 2, 2, 3, 2, 2, 3, 2, 1, 3, 3, 3, 3, 2, 2, 2, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 3, 3, 2, 2, 2, 2, 3, 2, 3, 3, 2, 2, 3, 3, 2, 3, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 3, 2, 3, 3, 2, 3, 3, 2, 1, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 2, 3, 2, 3, 3, 2, 2, 3, 3, 2, 2, 3, 3, 3, 3, 2, 2, 2, 2, 3, 3, 3, 2, 3, 2, 2, 3, 2, 2, 3, 2, 2, 2, 3, 2, 2, 3, 2, 2, 3, 3, 3, 2, 3, 2, 2, 2, 2, 3, 2, 3, 3, 2, 3, 3, 3, 2, 3, 3, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 3, 3, 2, 2, 2, 3, 3, 2, 3, 2, 2, 3, 2, 2, 2, 3, 3, 2, 3, 2, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 2, 2, 2, 3, 2, 3, 2, 2, 2, 2, 3, 2, 3, 2, 2, 2, 2, 2, 3, 3, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 2, 2, 2, 3, 3, 2, 2, 2, 2, 3, 3, 3, 2, 2, 2, 3, 2, 2, 2, 2, 2, 3, 3, 2, 3, 3, 2, 3, 2, 2, 2, 3, 2, 3, 2, 2, 3, 3, 2, 2, 2, 3, 2, 3, 2, 2, 2, 2, 3, 2, 3, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 2, 3, 2, 2, 3, 3, 2, 3, 3, 2, 2, 2, 3, 3, 3, 2, 2, 2, 3, 2, 3, 3, 2, 3, 2, 3, 2, 3, 3, 3, 2, 2, 2, 3, 2, 3, 3, 3, 3, 3, 2, 3, 2, 3, 2, 2, 2, 2, 1, 2, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 3, 2, 3, 2, 2, 2, 2, 2, 3, 3, 3, 2, 2, 2, 3, 3, 3, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 2, 3, 3, 3, 3, 2, 3, 3, 2, 3, 3, 2, 3, 2, 2, 2, 1, 2, 3, 2, 2, 3, 2, 2, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2</td>
+<tr>
+<td style="text-align:left;">
+lambda[CMAES]
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2.35
+</td>
+<td style="text-align:right;">
+0.51
+</td>
 </tr>
-<tr class="odd">
-<td align="left">lambda[PSO]</td>
-<td align="right">3</td>
-<td align="right">2.69</td>
-<td align="right">0.51</td>
-<td align="left">3, 3, 2, 3, 2, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 2, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 3, 3, 2, 3, 4, 3, 2, 4, 3, 2, 2, 3, 2, 3, 3, 3, 3, 3, 2, 2, 2, 3, 3, 3, 2, 3, 2, 3, 3, 4, 3, 2, 2, 3, 3, 4, 3, 2, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 2, 3, 2, 2, 3, 2, 2, 2, 3, 3, 2, 2, 3, 3, 2, 3, 3, 2, 3, 3, 3, 3, 3, 3, 2, 2, 3, 3, 3, 3, 4, 2, 3, 2, 3, 2, 3, 3, 3, 3, 3, 2, 2, 3, 2, 2, 2, 3, 3, 3, 2, 2, 3, 2, 1, 3, 3, 3, 3, 2, 3, 3, 3, 2, 2, 2, 3, 3, 3, 3, 3, 2, 3, 3, 3, 2, 3, 2, 3, 3, 3, 3, 3, 2, 4, 3, 3, 2, 3, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 3, 3, 3, 3, 2, 2, 3, 3, 3, 3, 2, 3, 3, 3, 2, 2, 3, 2, 3, 3, 3, 3, 2, 2, 3, 3, 3, 2, 3, 3, 4, 3, 2, 3, 2, 2, 2, 2, 3, 3, 3, 2, 3, 2, 3, 3, 2, 3, 2, 2, 3, 2, 3, 3, 3, 3, 2, 4, 3, 3, 2, 3, 2, 3, 3, 3, 2, 3, 3, 3, 3, 3, 2, 2, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 3, 2, 3, 2, 3, 2, 2, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 2, 3, 3, 3, 3, 2, 3, 3, 2, 3, 3, 3, 2, 3, 3, 3, 3, 3, 2, 2, 3, 3, 3, 3, 2, 3, 3, 3, 2, 2, 3, 2, 2, 3, 3, 3, 2, 3, 2, 3, 3, 2, 3, 3, 3, 3, 3, 3, 2, 3, 2, 3, 2, 2, 3, 4, 2, 2, 3, 3, 3, 4, 2, 3, 2, 2, 2, 3, 3, 3, 3, 3, 2, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 2, 2, 2, 2, 3, 2, 3, 2, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 2, 3, 2, 3, 3, 2, 3, 2, 3, 3, 3, 3, 2, 3, 3, 4, 2, 3, 3, 3, 3, 3, 2, 2, 3, 2, 3, 2, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 3, 3, 3, 2, 2, 3, 3, 3, 2, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 2, 3, 3, 2, 3, 3, 4, 3, 2, 3, 3, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 2, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 2, 3, 3, 3, 3, 3, 3, 2, 3, 3, 2, 2, 3, 2, 3, 3, 3, 2, 3, 2, 3, 2, 3, 3, 3, 3, 3, 3, 2, 3, 4, 3, 3, 3, 3, 2, 3, 3, 3, 2, 3, 3, 2, 3, 3, 2, 2, 2, 2, 3, 3, 3, 2, 3, 3, 3, 3, 3, 2, 3, 3, 3, 2, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 2, 2, 3, 3, 3, 3, 2, 3, 2, 2, 3, 3, 2, 2, 3, 2, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 2, 3, 3, 3, 2, 2, 3, 2, 2, 3, 2, 2, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 2, 2, 2, 3, 2, 3, 2, 2, 3, 3, 2, 2, 4, 3, 2, 2, 2, 2, 3, 3, 3, 3, 2, 2, 2, 3, 2, 3, 3, 2, 3, 3, 2, 3, 3, 3, 2, 3, 3, 2, 3, 3, 2, 2, 2, 3, 2, 3, 3, 3, 3, 2, 3, 2, 2, 3, 2, 2, 2, 3, 2, 2, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 2, 3, 3, 3, 3, 3, 2, 3, 3, 4, 2, 3, 3, 3, 3, 2, 2, 3, 3, 3, 2, 2, 3, 2, 4, 3, 2, 3, 3, 3, 2, 2, 3, 2, 3, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 3, 3, 3, 2, 3, 2, 3, 3, 3, 3, 2, 3, 2, 3, 3, 3, 3, 3, 2, 2, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 2, 3, 3, 3, 2, 2, 4, 3, 3, 3, 2, 2, 2, 3, 3, 3, 2, 3, 3, 3, 3, 3, 2, 2, 3, 2, 2, 3, 2, 3, 3, 3, 2, 4, 2, 3, 3, 2, 2, 3, 3, 3, 2, 3, 2, 3, 3, 3, 3, 2, 3, 2, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 3, 2, 3, 3, 2, 2, 3, 2, 2, 3, 3, 3, 2, 2, 2, 3, 3, 3, 2, 3, 4, 2, 3, 2, 3, 2, 3, 2, 2, 2, 3, 3, 3, 2, 3, 2, 2, 2, 2, 2, 3, 2, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 3, 3, 2, 2, 3, 3, 2, 3, 2, 3, 3, 3, 3, 3, 2, 2, 2, 3, 3, 3, 2, 2, 2, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 2, 3, 3, 3, 2, 3, 3, 3, 4, 3, 2, 2, 2, 2, 3, 2, 2, 3, 2, 2, 3, 2, 3, 3, 3, 2, 3, 2, 3, 3, 2, 3, 3, 3, 2, 3, 3, 3, 2, 3, 3, 3, 3</td>
+<tr>
+<td style="text-align:left;">
+lambda[PSO]
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2.66
+</td>
+<td style="text-align:right;">
+0.51
+</td>
 </tr>
-<tr class="even">
-<td align="left">lambda[RandomSearch1]</td>
-<td align="right">4</td>
-<td align="right">4.02</td>
-<td align="right">0.31</td>
-<td align="left">4, 4, 4, 4, 5, 4, 4, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4, 5, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 5, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 5, 4, 4, 4, 4, 4, 5, 4, 4, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 5, 4, 4, 4, 4, 5, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 5, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 5, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4</td>
+<tr>
+<td style="text-align:left;">
+lambda[RandomSearch1]
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4.01
+</td>
+<td style="text-align:right;">
+0.26
+</td>
 </tr>
-<tr class="odd">
-<td align="left">lambda[SimulatedAnnealing]</td>
-<td align="right">5</td>
-<td align="right">4.98</td>
-<td align="right">0.30</td>
-<td align="left">5, 5, 5, 5, 4, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 6, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 4, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 4, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 4, 5, 4, 5, 5, 5, 5, 4, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 4, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 6, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 4, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 6, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 5, 5, 4, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 4, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 6, 5, 4, 5, 5, 5, 4, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5</td>
+<tr>
+<td style="text-align:left;">
+lambda[SimulatedAnnealing]
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+0.27
+</td>
 </tr>
-<tr class="even">
-<td align="left">lambda[NelderMead]</td>
-<td align="right">6</td>
-<td align="right">5.96</td>
-<td align="right">0.19</td>
-<td align="left">6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 5, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 5, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6</td>
+<tr>
+<td style="text-align:left;">
+lambda[NelderMead]
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+5.96
+</td>
+<td style="text-align:right;">
+0.19
+</td>
 </tr>
 </tbody>
 </table>
-<p>We can also have nice plots of the parameters with bayesplot</p>
+<p>We can also have nice plots of the parameters with <code>bayesplot</code> package.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit">
 <span class="co">#changing the names of the parameters in the posterior </span>
 <span class="va">dimnames</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">posterior</span>, <span class="st">'dimnames'</span><span class="op">)</span>

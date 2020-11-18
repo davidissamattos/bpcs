@@ -6,9 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Summary of the model bpc model
-Table 1: Contains the parameter estimates and respective HPD interval
-Table 2: Contains the empirical probability for the combination of all players — summary.bpc • bpcs</title>
+<title>Summary of the model bpc model. — summary.bpc • bpcs</title>
 
 
 <!-- jquery -->
@@ -41,12 +39,14 @@ Table 2: Contains the empirical probability for the combination of all players �
 
 
 
-<meta property="og:title" content="Summary of the model bpc model
+<meta property="og:title" content="Summary of the model bpc model. — summary.bpc" />
+<meta property="og:description" content="
+
 Table 1: Contains the parameter estimates and respective HPD interval
-Table 2: Contains the empirical probability for the combination of all players — summary.bpc" />
-<meta property="og:description" content="Summary of the model bpc model
-Table 1: Contains the parameter estimates and respective HPD interval
-Table 2: Contains the empirical probability for the combination of all players" />
+Table 2: Contains the posterior probability for the combination of all players
+Table 3: Contains the ranking of the players' abilities based on the posterior distribution of the ranks
+
+" />
 
 
 
@@ -107,9 +107,6 @@ Table 2: Contains the empirical probability for the combination of all players" 
       <a href="../articles/get_started.html">Getting Started with the bpcs package</a>
     </li>
     <li>
-      <a href="../articles/handling_ties.html">Handling ties</a>
-    </li>
-    <li>
       <a href="../articles/home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
     </li>
   </ul>
@@ -138,28 +135,34 @@ Table 2: Contains the empirical probability for the combination of all players" 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Summary of the model bpc model
-Table 1: Contains the parameter estimates and respective HPD interval
-Table 2: Contains the empirical probability for the combination of all players</h1>
+    <h1>Summary of the model bpc model.</h1>
     <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_s3.R'><code>R/bpc_s3.R</code></a></small>
     <div class="hidden name"><code>summary.bpc.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Summary of the model bpc model
-Table 1: Contains the parameter estimates and respective HPD interval
-Table 2: Contains the empirical probability for the combination of all players</p>
+    
+<ul>
+<li><p>Table 1: Contains the parameter estimates and respective HPD interval</p></li>
+<li><p>Table 2: Contains the posterior probability for the combination of all players</p></li>
+<li><p>Table 3: Contains the ranking of the players' abilities based on the posterior distribution of the ranks</p></li>
+</ul>
+
     </div>
 
     <pre class="usage"><span class='co'># S3 method for bpc</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>object</span>, digits <span class='op'>=</span> <span class='fl'>2</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
+      <th>object</th>
       <td><p>bpc object</p></td>
+    </tr>
+    <tr>
+      <th>digits</th>
+      <td><p>number of decimal digits in the table</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -167,14 +170,14 @@ Table 2: Contains the empirical probability for the combination of all players</
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    
-
-
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>m</span><span class='op'>&lt;-</span><span class='fu'><a href='bpc.html'>bpc</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>, player0 <span class='op'>=</span> <span class='st'>'player0'</span>,player1 <span class='op'>=</span> <span class='st'>'player1'</span>,result_column <span class='op'>=</span> <span class='st'>'y'</span>,model_type <span class='op'>=</span> <span class='st'>'bt'</span>, solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>m</span><span class='op'>&lt;-</span><span class='fu'><a href='bpc.html'>bpc</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,
+player0 <span class='op'>=</span> <span class='st'>'player0'</span>,
+player1 <span class='op'>=</span> <span class='st'>'player1'</span>,
+result_column <span class='op'>=</span> <span class='st'>'y'</span>,
+model_type <span class='op'>=</span> <span class='st'>'bt'</span>,
+solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #&gt; Chain 1: 
@@ -196,15 +199,15 @@ Table 2: Contains the empirical probability for the combination of all players</
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.103761 seconds (Warm-up)
-#&gt; Chain 1:                0.118882 seconds (Sampling)
-#&gt; Chain 1:                0.222643 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.095745 seconds (Warm-up)
+#&gt; Chain 1:                0.105513 seconds (Sampling)
+#&gt; Chain 1:                0.201258 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 1.3e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
+#&gt; Chain 2: Gradient evaluation took 1.5e-05 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -221,9 +224,9 @@ Table 2: Contains the empirical probability for the combination of all players</
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.110683 seconds (Warm-up)
-#&gt; Chain 2:                0.110173 seconds (Sampling)
-#&gt; Chain 2:                0.220856 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.097904 seconds (Warm-up)
+#&gt; Chain 2:                0.101935 seconds (Sampling)
+#&gt; Chain 2:                0.199839 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
@@ -246,9 +249,9 @@ Table 2: Contains the empirical probability for the combination of all players</
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.10645 seconds (Warm-up)
-#&gt; Chain 3:                0.115487 seconds (Sampling)
-#&gt; Chain 3:                0.221937 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.09111 seconds (Warm-up)
+#&gt; Chain 3:                0.091125 seconds (Sampling)
+#&gt; Chain 3:                0.182235 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
@@ -271,54 +274,11 @@ Table 2: Contains the empirical probability for the combination of all players</
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.101482 seconds (Warm-up)
-#&gt; Chain 4:                0.102135 seconds (Sampling)
-#&gt; Chain 4:                0.203617 seconds (Total)
-#&gt; Chain 4: </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Estimated baseline parameters with HPD intervals:
-#&gt; 
-#&gt; 
-#&gt; Parameter                    Mean   HPD_lower   HPD_higher
-#&gt; --------------------  -----------  ----------  -----------
-#&gt; lambda[Seles]           0.4698971   -2.373613     3.100974
-#&gt; lambda[Graf]            0.8946366   -1.748178     3.574417
-#&gt; lambda[Sabatini]       -0.3902821   -3.210818     2.231928
-#&gt; lambda[Navratilova]    -0.0084540   -2.587253     2.737255
-#&gt; lambda[Sanchez]        -1.1670951   -3.840710     1.578320
-#&gt; NOTES:
-#&gt; * A higher lambda indicates a higher team ability
-#&gt; 
-#&gt; 
-#&gt; Posterior probabilities:
-#&gt; These probabilities are calculated from the predictive posterior distribution
-#&gt; for all player combinations
-#&gt; 
-#&gt; 
-#&gt; i             j              i_beats_j
-#&gt; ------------  ------------  ----------
-#&gt; Graf          Navratilova         0.68
-#&gt; Graf          Sabatini            0.76
-#&gt; Graf          Sanchez             0.86
-#&gt; Graf          Seles               0.59
-#&gt; Navratilova   Sabatini            0.58
-#&gt; Navratilova   Sanchez             0.75
-#&gt; Navratilova   Seles               0.40
-#&gt; Sabatini      Sanchez             0.68
-#&gt; Sabatini      Seles               0.33
-#&gt; Sanchez       Seles               0.18
-#&gt; 
-#&gt; 
-#&gt; Rank of the players' abilities:
-#&gt; The rank is based on the posterior rank distribution of the lambda parameter
-#&gt; 
-#&gt; 
-#&gt; Parameter              MedianRank   MeanRank   StdRank
-#&gt; --------------------  -----------  ---------  --------
-#&gt; lambda[Graf]                    1       1.36      0.60
-#&gt; lambda[Seles]                   2       2.12      0.88
-#&gt; lambda[Navratilova]             3       3.02      0.88
-#&gt; lambda[Sabatini]                4       3.70      0.81
-#&gt; lambda[Sanchez]                 5       4.80      0.48</div></pre>
+#&gt; Chain 4:  Elapsed Time: 0.095882 seconds (Warm-up)
+#&gt; Chain 4:                0.097941 seconds (Sampling)
+#&gt; Chain 4:                0.193823 seconds (Total)
+#&gt; Chain 4: </div><div class='input'><span class='co'>#' summary(m)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

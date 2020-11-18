@@ -101,9 +101,6 @@
       <a href="../articles/get_started.html">Getting Started with the bpcs package</a>
     </li>
     <li>
-      <a href="../articles/handling_ties.html">Handling ties</a>
-    </li>
-    <li>
       <a href="../articles/home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
     </li>
   </ul>
@@ -133,7 +130,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Inverse logit function</h1>
-    <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_helpers.R'><code>R/bpc_helpers.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_exports.R'><code>R/bpc_exports.R</code></a></small>
     <div class="hidden name"><code>inv_logit.Rd</code></div>
     </div>
 
@@ -160,10 +157,10 @@
     <p>https://en.wikipedia.org/wiki/Logit</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='logit.html'>logit</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in logit(5): Error! x not between 0 and 1</span></div><div class='input'><span class='fu'><a href='logit.html'>logit</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in logit(-5): Error! x not between 0 and 1</span></div><div class='input'><span class='fu'><a href='logit.html'>logit</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] -Inf</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>inv_logit</span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.9933071</div><div class='input'><span class='fu'>inv_logit</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.006692851</div><div class='input'><span class='fu'>inv_logit</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.5</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

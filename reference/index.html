@@ -100,9 +100,6 @@
       <a href="../articles/get_started.html">Getting Started with the bpcs package</a>
     </li>
     <li>
-      <a href="../articles/handling_ties.html">Handling ties</a>
-    </li>
-    <li>
       <a href="../articles/home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
     </li>
   </ul>
@@ -145,8 +142,8 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-basic-usage-functions" class="hasAnchor"><a href="#section-basic-usage-functions" class="anchor"></a>Basic usage functions</h2>
+          <p class="section-desc"><p>Basic functions that are used in the R console for model fitting and simple investigatiosn</p></p>
         </th>
       </tr>
       
@@ -157,216 +154,101 @@
       <tr>
         
         <td>
-          <p><code><a href="HPDI_from_stanfit.html">HPDI_from_stanfit()</a></code> </p>
-        </td>
-        <td><p>Calculate HPDI for all parameters from a stanfit object
-Here we use the coda package</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="HPD_higher_from_column.html">HPD_higher_from_column()</a></code> </p>
-        </td>
-        <td><p>Returns the higher value of the HPD interval for a data frame column</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="HPD_lower_from_column.html">HPD_lower_from_column()</a></code> </p>
-        </td>
-        <td><p>Returns the lower value of the HPD interval for a data frame column</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="bpc.html">bpc()</a></code> </p>
         </td>
-        <td><p>Bayesian Paired comparison  regression models in Stan
-This is the main function of the package.
-This function utilizes precompiled stan models to sample the posterior distribution of the specified model with the input data.
-Currently have implemented the following models in their Bayesian version:
-<ul>
-<li><p>Bradley-Terry: 'bradleyterry'. For this method ties should be handled, either by random solving or by removing them. Otherwise we get an error from Stan.</p></li>
-<li><p>Davidson model (for handling ties): 'davidson'
-For more information regarding the dataset format see the vignettes.</p></li>
-</ul></p></td>
+        <td><p>Bayesian Paired comparison  regression models in Stan</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="bpcs-package.html">bpcs-package</a></code> </p>
+          <p><code><a href="summary.bpc.html">summary(<i>&lt;bpc&gt;</i>)</a></code> </p>
         </td>
-        <td><p>bpcs - A package for Bayesian Paired Comparison analysis with Stan</p></td>
+        <td><p>Summary of the model bpc model.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="brasil_soccer_league.html">brasil_soccer_league</a></code> </p>
+          <p><code><a href="print.bpc.html">print(<i>&lt;bpc&gt;</i>)</a></code> </p>
         </td>
-        <td><p>This is a dataset of the first league of the Brazilian soccer championship. It was reduced and translated from the adaduque/Brasileirao_Dataset repository
-It contains 1140 matches and 9 Columns
-Time: time of the day (24h)
-DayWeek: day of the week
-Date: date YY-MM-DD
-HomeTeam: name of the team playing home
-VisitorTeam: name of the team playing visitor
-Round: Round number of the championship
-Stadium: Name of the stadium where the game was played
-ScoreHomeTeam: number of goals for the home team
-ScoreVisitorTeam: number of goals for the visitor</p></td>
+        <td><p>Print method for the bpc object.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="check_if_there_are_na.html">check_if_there_are_na()</a></code> </p>
+          <p><code><a href="predict.bpc.html">predict(<i>&lt;bpc&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Check for NA in the specfic columns and returns T or F is there is at least 1 NA in those columns</p></td>
+        <td><p>Predict results for new data.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-model-checking-functions" class="hasAnchor"><a href="#section-model-checking-functions" class="anchor"></a>Model checking functions</h2>
+          <p class="section-desc"><p>These are a thin wrapper over other packages functions to investigate the convergence of the MCMC.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="launch_shinystan.html">launch_shinystan()</a></code> </p>
+        </td>
+        <td><p>Tiny wrapper to launch a shinystan app to investigate the MCMC.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="check_if_there_are_ties.html">check_if_there_are_ties()</a></code> </p>
+          <p><code><a href="get_waic.html">get_waic()</a></code> </p>
         </td>
-        <td><p>Check if a data frame column contains ties</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_numeric_predictor_matrix.html">check_numeric_predictor_matrix()</a></code> </p>
-        </td>
-        <td><p>Check if all values in the predictor matrix are numeric and not NA. Note that TRUE will be cast to 1 and FALSE will be cast to 0</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_predictors_df_contains_all_players.html">check_predictors_df_contains_all_players()</a></code> </p>
-        </td>
-        <td><p>Check if the predictor df contains all players and only those</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_result_column.html">check_result_column()</a></code> </p>
-        </td>
-        <td><p>Check if a data frame column contains only the values 1 0 and 2. Used to check the format of the results</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_z_column.html">check_z_column()</a></code> </p>
-        </td>
-        <td><p>Check if a data frame column contains only the values 1 or 0. For the z column</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="compute_scores.html">compute_scores()</a></code> </p>
-        </td>
-        <td><p>Giving a player0 an player1 scores, this functions adds one column to the data frame containing who won (0= player0 1=player1 2=tie) and another if it was a tie.
-The ties column superseeds the y column.
-If it was tie the y column does not matter
-y column: (0= player0 1=player1 2=tie)
-ties column (0=not tie, 1=tie)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="compute_ties.html">compute_ties()</a></code> </p>
-        </td>
-        <td><p>Giving a result column we create a new column with ties (0 and 1 if it has)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="create_array_of_par_names.html">create_array_of_par_names()</a></code> </p>
-        </td>
-        <td><p>Create an array with the parameter name and to what player/cluster it refers to in the order stan presents
-E.g  for parameter lambda with 4 players: c(lambdaBiometrika, lambdaCommStat, lambdaJASA, lambdaJRSSB)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="create_bpc_object.html">create_bpc_object()</a></code> </p>
-        </td>
-        <td><p>Defines the class bpc and creates the bpc object.
-To create we need to receive some defined parameters (the arguments from the bpc function), a lookup table and a the stanfit
-object generated from the rstan sampling procedure</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="create_cluster_index.html">create_cluster_index()</a></code> </p>
-        </td>
-        <td><p>Create two columns with the indexes for the names of the players
-Here we create a new lookup table. Should be used when sampling the parameters</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="create_cluster_index_with_existing_lookup_table.html">create_cluster_index_with_existing_lookup_table()</a></code> </p>
-        </td>
-        <td><p>Create two columns with the indexes for the names
-Here we use an existing lookup table. Should be used in predicting</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="create_index.html">create_index()</a></code> </p>
-        </td>
-        <td><p>Create two columns with the indexes for the names of the players
-Here we create a new lookup table. Should be used when sampling the parameters</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="create_index_cluster_lookuptable.html">create_index_cluster_lookuptable()</a></code> </p>
-        </td>
-        <td><p>Create a lookup table of names and indexes
-Note that the indexes will be created in the order they appear. For string this does not make much difference but for numbers the index might be different than the actual number that appears in names</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="create_index_lookuptable.html">create_index_lookuptable()</a></code> </p>
-        </td>
-        <td><p>Create a lookup table of names and indexes
-Note that the indexes will be created in the order they appear. For string this doesnt make much difference but for numbers the index might be different than the actual number that appears in names</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="create_index_predictors_with_lookup_table.html">create_index_predictors_with_lookup_table()</a></code> </p>
-        </td>
-        <td><p>Receives one column with player names and returns a data frame with the relevant index columns based on a given lookup table
-To be used with the predictors data frame</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="create_index_with_existing_lookup_table.html">create_index_with_existing_lookup_table()</a></code> </p>
-        </td>
-        <td><p>Create two columns with the indexes for the names
-Here we use an existing lookup table. Should be used in predicting</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="create_predictor_matrix_with_player_lookup_table.html">create_predictor_matrix_with_player_lookup_table()</a></code> </p>
-        </td>
-        <td><p>Receives a predictor dataframe, a string with the column of the player, a vector of strings with the columns for the predictors and a lookup table and returns an ordered matrix for Stan
-To be used with the predictors data frame</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="create_predictors_lookup_table.html">create_predictors_lookup_table()</a></code> </p>
-        </td>
-        <td><p>Receives a vector with predictors strings (the column names) and returns a predictor_lookup_table</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="expand_aggregated_data.html">expand_aggregated_data()</a></code> </p>
-        </td>
-        <td><p>Expand aggregated data
-Several datasets for the Bradley-Terry Model aggregate the number of wins for each player in a different column.
-The models we provide are intended to be used in a long format. A single result for each contest.
-This function expands datasets that have aggregated data into this long format.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_hpdi_parameters.html">get_hpdi_parameters()</a></code> </p>
-        </td>
-        <td><p>Return a data frame with the mean and with high and low 95% hpd interval for all parameters of the model</p></td>
+        <td><p>Tiny wrapper for the WAIC method from the loo package.</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="get_loo.html">get_loo()</a></code> </p>
         </td>
-        <td><p>Tiny wrapper for the PSIS-LOO-CV method from the loo package
-This is used to evaluate the fit of the model using entropy criteria</p></td>
+        <td><p>Tiny wrapper for the PSIS-LOO-CV method from the loo package.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_model_parameters.html">get_model_parameters()</a></code> </p>
+          <p><code><a href="get_stanfit.html">get_stanfit()</a></code> </p>
         </td>
-        <td><p>Return all the name of parameters in a model from a bpc_object.
-Here we exclude the log_lik and the lp__ since they are not parameters of the model</p></td>
+        <td><p>Retrieve the stanfit object generated by rstan.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_stanfit_summary.html">get_stanfit_summary()</a></code> </p>
+        </td>
+        <td><p>Get stanfit summary table of all parameters excluding log_lik.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-posterior-distribution-functions" class="hasAnchor"><a href="#section-posterior-distribution-functions" class="anchor"></a>Posterior distribution functions</h2>
+          <p class="section-desc"><p>Functions used to investigate the posterior distribution of the parameters of the model</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="get_rank_of_players.html">get_rank_of_players()</a></code> </p>
+        </td>
+        <td><p>Generate a ranking of the ability based on sampling the posterior distribution of the ranks.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_hpdi_parameters.html">get_hpdi_parameters()</a></code> </p>
+        </td>
+        <td><p>Return the mean and the HPDI of the parameters of the model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_sample_posterior.html">get_sample_posterior()</a></code> </p>
+        </td>
+        <td><p>Get the posterior samples for a parameter of the model.</p></td>
       </tr><tr>
         
         <td>
@@ -375,111 +257,41 @@ Here we exclude the log_lik and the lp__ since they are not parameters of the mo
         <td><p>Get the empirical win/draw probabilities based on the ability/strength parameters.
 Instead of calculating from the probability formula given from the model we create a predictive posterior distribution for all pair combinations and calculate the posterior wins/loose/draw
 The function returns the mean value of win/loose/draw for the player i. To calculate for player j the probability is 1-p_i</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-data" class="hasAnchor"><a href="#section-data" class="anchor"></a>Data</h2>
+          <p class="section-desc"><p>Description of the built-in datasets</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
-          <p><code><a href="get_stanfit.html">get_stanfit()</a></code> </p>
-        </td>
-        <td><p>Retrieve the stanfit object generated by rstan.
-This object can be used with any other function or package that uses rstan objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_waic.html">get_waic()</a></code> </p>
-        </td>
-        <td><p>Tiny wrapper for the WAIC method from the loo package
-This is used to evaluate the fit of the model using the Watanabe-Akaike Information criteria</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="inv_logit.html">inv_logit()</a></code> </p>
-        </td>
-        <td><p>Inverse logit function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="launch_shinystan.html">launch_shinystan()</a></code> </p>
-        </td>
-        <td><p>Tiny wrapper to launch a shinystan app to investigate the MCMC
-It launches a shinystan app automatically in the web browser</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="logit.html">logit()</a></code> </p>
-        </td>
-        <td><p>Logit function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="match_cluster_names_to_cluster_lookup_table.html">match_cluster_names_to_cluster_lookup_table()</a></code> </p>
-        </td>
-        <td><p>Receives a column with cluster names and returns a data frame with the relevant index column based on a given cluster lookup table</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="match_player_names_to_lookup_table.html">match_player_names_to_lookup_table()</a></code> </p>
-        </td>
-        <td><p>Receives two columns with player names and returns a data frame with the relevant index columns based on a given lookup table</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="predict.bpc.html">predict(<i>&lt;bpc&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Predict results for new data
-This S3 function receives the bpc model and a data frame containing the same columns as the one used to fit the model.
-It returns another data frame with with the same columns of the new data and n additional columns representing a posterior preditive distribution.
-See the vignettes for a larger example with the usage of this function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print.bpc.html">print(<i>&lt;bpc&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print method for the bpc object
-We only print the parameter values and the HDPI</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rank_players.html">rank_players()</a></code> </p>
-        </td>
-        <td><p>Generate a ranking of the ability based on sampling the posterior distribution of the ranks
-To print this object you should remove the last column PosteriorRank since it contain the whole posterior distribution for each case</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="replace_parameter_index_with_names.html">replace_parameter_index_with_names()</a></code> </p>
-        </td>
-        <td><p>Replace the name of the parameter from index to name using a lookup_table
-Receives a data frame and returns a dataframe.
-E.g  for parameter lambda with 4 players we have (lambda1, lambda2, lambda3, lambda4). This function will return (lambdaBiometrika, lambdaCommStat, lambdaJASA, lambdaJRSSB)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sample_posterior.html">sample_posterior()</a></code> </p>
-        </td>
-        <td><p>Get the posterior samples for a parameter of the model.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sample_stanfit.html">sample_stanfit()</a></code> </p>
-        </td>
-        <td><p>Return a data frame by resampling the posterior from a stanfit
-Here we select a parameter, retrieve the all the posterior from the stanfit and then we resample this posterior n times</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="summary.bpc.html">summary(<i>&lt;bpc&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Summary of the model bpc model
-Table 1: Contains the parameter estimates and respective HPD interval
-Table 2: Contains the empirical probability for the combination of all players</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tennis_aggresti.html">tennis_aggresti</a></code> </p>
+          <p><code><a href="tennis_agresti.html">tennis_agresti</a></code> </p>
         </td>
         <td><p>This is the expansion of the tennis data from  Agresti (2003) p.449
-This data refers to matches for several women tennis players during 1989 and 1990
-This is the expansion of the data where each row contains 1 match only</p></td>
+This data refers to matches for several women tennis players during 1989 and 1990</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="brasil_soccer_league.html">brasil_soccer_league</a></code> </p>
+        </td>
+        <td><p>This is a dataset  with the results matches fromo  the first league of the Brazilian soccer championship from 2017-2019.
+It was reduced and translatedfrom the adaduque/Brasileirao_Dataset repository</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="optimization_algorithms.html">optimization_algorithms</a></code> </p>
+        </td>
+        <td><p>Dataset containing an example of the performance of different optimization algorithms against different benchmark functions.
+This is a reduced version of the dataset presented at the paper: "Statistical Models for the Analysis of Optimization Algorithms with Benchmark Functions.".
+For details on how the data was collected we refer to the paper.</p></td>
       </tr>
     </tbody>
     </table>
