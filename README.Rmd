@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# bpcs - A package for Bayesian Paired Comparison analysis with Stan <img src="man/logo/logo.png" align="right" width="120" />
+# bpcs - A package for Bayesian Paired Comparison analysis with Stan <img src="inst/logo/logo.png" align="right" width="120" />
 
 <!-- badges: start -->
 `r badge_license('MIT', color='yellow')`
@@ -54,7 +54,6 @@ After install we load the package with:
 library(bpcs)
 ```
 
-
 ## Minimal example
 
 The main function of the package is the `bpc` function. For the simple Bradley-Terry model, this function requires a specific type of data frame that contains:
@@ -65,7 +64,8 @@ The main function of the package is the `bpc` function. For the simple Bradley-T
 We will utilize the tennis dataset available [@agresti2003categorical]. The dataset can be seen below and is available as `data(tennis_agresti)`:
 
 ```{r}
-knitr::kable(dplyr::sample_n(tennis_agresti,10))
+sample_n(tennis_agresti,10) %>% 
+  knitr::kable()
 ```
 
 Based on the scores of each contestant, the `bpc` function computes automatically who won the contest. Alternatively, you can provide a vector of who won if that is already available (for more information see `?bpc`.
@@ -85,7 +85,11 @@ m<-bpc(data = tennis_agresti, #datafrane
 
 If `rstan` is available and correctly working this function should sample the posterior distribution and create a `bpc` object.
 
-To see a summary of the results we can run:
+To see a summary of the results we can run the summary function. Here we get three tables:
+
+1- The parameters of the model
+2- The probabilities of one player beating the other (this probability is based on the predictive posterior distribution)
+3- The rank of the player based on their abilities (this rank is based on the predictive posterior ranks).
 
 ```{r}
 summary(m)
@@ -144,11 +148,11 @@ This package provides a series of small and self contained vignettes that exempl
 
 Below we list all our vignettes with a short description:
 
-* [Getting Started](https://davidissamattos.github.io/bpcs/articles/get_started.html): This vignette shows a basic example on tennis competition data, covering how to run a Bradley-Terry model, MCMC diagnostics, posterior predictive values, ranking, predict new matches
+* [Getting Started](https://davidissamattos.github.io/bpcs/articles/a_get_started.html): This vignette shows a basic example on tennis competition data, covering how to run a Bradley-Terry model, MCMC diagnostics, posterior predictive values, ranking, predict new matches
 
-* [Ties and home advantage](): This vignette covers a soccer example from the Brazilian soccer league. Here, we first model the results using a Bradley-Terry model and the Davidson model to handle ties. Then, we extend both models to include for order effects, this allows us to investigate the home advantage in and without the presence of ties. (TODO) 
+* [Ties and home advantage](https://davidissamattos.github.io/bpcs/articles/b_ties_and_home_advantage.html): This vignette covers a soccer example from the Brazilian soccer league. Here, we first model the results using a Bradley-Terry model and the Davidson model to handle ties. Then, we extend both models to include for order effects, this allows us to investigate the home advantage in and without the presence of ties.
 
-* [Bradley-Terry with random effects](https://davidissamattos.github.io/bpcs/articles/bt_random_effects.html): This vignette covers the problem of ranking black-box optimization algorithms based on benchmarks. Since in benchmarking we often run the same optimization algorithm more than once with the same benchmark problem, we need to compensate for the repeated measures effect. We deal with this utilizing a simple Bradley-Terry model with random effects. We also have a variation of the Davidson model to include random effects.
+* [Bradley-Terry with random effects](https://davidissamattos.github.io/bpcs/articles/c_bt_random_effects.html): This vignette covers the problem of ranking black-box optimization algorithms based on benchmarks. Since in benchmarking we often run the same optimization algorithm more than once with the same benchmark problem, we need to compensate for the repeated measures effect. We deal with this utilizing a simple Bradley-Terry model with random effects.
 
 *[Generalized Bradley-Terry model](): This vignette investigate the Bradley-Terry model when we have players specific characteristics. (TODO)
 
@@ -165,12 +169,11 @@ The points below are mostly reminders for me but hopefully it can help others
 
 * Use the `devtools` package to create R files, test files, vignettes etc
 * In the R folder:
-  - `bpc.R`: this contains a single function (rather large) that is the main function call of the package. Each new model should be added here in the if else section with the appropriated data list for stan. Dont forget to add the relevant documentation in roxygen2
+  - `bpc.R`: this contains a single function (rather large) that is the main function call of the package. Each new model should be added here in the if else section with the appropriated data list for stan. Don't forget to add the relevant documentation in roxygen2
   - `bpc_exports.R`: these are helper functions to handle the `bpc` object and are exposed to the user. Only add here functions that receive a bpc object and that the users will have an interest. 
   - `bpc_get_probabilities.R` Since this is a big export function we have moved it to its own file
   - `bpc_helpers_X.R` additional functions to facilitate and support either the bpc function or the exports functions. None of these functions should be exported, although all of them should be documented. We divided these helpers in several files. the indexes are related to creating and checking names and indexes in lookup tables, the hpd to HPDI related functions, the checks to check correct specification of the data frame columns
-  - `bpc_s3.R` all functions here are the custom implementation of the generic base functions from R, such as summary, print, predict
-  - `utils.R` dev functions to only. Not to be exported or used by the end user
+  - `bpc_s3.R` all functions here are the custom implementation of the generic base functions from R, such as `summary`, `print`, `predict`
   - `data-docs.R` documentation for the data.
   - `bpc_object.R` declaration and creation of the bpc class.
 * To add new models:
@@ -185,6 +188,8 @@ The points below are mostly reminders for me but hopefully it can help others
   - After adding a model try `devtools::document()`
   - If deleting a model file delete the appropriated line in stanmodels.R and do document again
   - If the model is not recompiling or updating do `pkgbuild::clean_dll()` then `devtools::document()` and possibly `devtools::load_all()` or `devtools::install()`
+
+There are some dev-functions in inst/devfunctions to help building the package website and running test coverage (and submitting to codecov).
 
 # Icon credits
 
