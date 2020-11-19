@@ -179,8 +179,8 @@ predict.bpc <-
       )
       standata <- list(
         N_newdata = nrow(newdata),
-        player0_indexes = as.vector(newdata$player0_index),
-        player1_indexes = as.vector(newdata$player1_index),
+        player0_indexes = as.vector(as.integer(newdata$player0_index)),
+        player1_indexes = as.vector(as.integer(newdata$player1_index)),
         N_players = nrow(lookup_table)
       )
       #create a stanfit object with the predictions
@@ -204,8 +204,8 @@ predict.bpc <-
       )
       standata <- list(
         N_newdata = nrow(newdata),
-        player0_indexes = as.vector(newdata$player0_index),
-        player1_indexes = as.vector(newdata$player1_index),
+        player0_indexes = as.vector(as.integer(newdata$player0_index)),
+        player1_indexes = as.vector(as.integer(newdata$player1_index)),
         N_players = nrow(lookup_table)
       )
       #create a stanfit object with the predictions
@@ -236,11 +236,12 @@ predict.bpc <-
       )
       standata <- list(
         N_newdata = nrow(newdata),
-        player0_indexes = as.vector(newdata$player0_index),
-        player1_indexes = as.vector(newdata$player1_index),
-        z_player1 = as.vector(newdata$z_player1),
+        player0_indexes = as.vector(as.integer(newdata$player0_index)),
+        player1_indexes = as.vector(as.integer(newdata$player1_index)),
+        z_player1 = as.vector(as.integer(newdata[ , object$call_arg$z_player1])), #for some weird reason sometimes it coerces to string
         N_players = nrow(lookup_table)
       )
+
       #create a stanfit object with the predictions
       pred <- rstan::gqs(stanmodels$btordereffectpredict,
                          data = standata,
@@ -263,9 +264,9 @@ predict.bpc <-
       )
       standata <- list(
         N_newdata = nrow(newdata),
-        player0_indexes = as.vector(newdata$player0_index),
-        player1_indexes = as.vector(newdata$player1_index),
-        z_player1 = as.vector(newdata$z_player1),
+        player0_indexes = as.vector(as.integer(newdata$player0_index)),
+        player1_indexes = as.vector(as.integer(newdata$player1_index)),
+        z_player1 = as.vector(as.integer(newdata[ , object$call_arg$z_player1])), #for some weird reason sometimes it coerces to string
         N_players = nrow(lookup_table)
       )
       #create a stanfit object with the predictions
@@ -303,11 +304,11 @@ predict.bpc <-
         )
       standata <- list(
         N_newdata = nrow(newdata),
-        player0_indexes = as.vector(newdata$player0_index),
-        player1_indexes = as.vector(newdata$player1_index),
+        player0_indexes = as.vector(as.integer(newdata$player0_index)),
+        player1_indexes = as.vector(as.integer(newdata$player1_index)),
         N_players = nrow(lookup_table),
         N_U = nrow(cluster_lookup_table),
-        U_indexes = as.vector(newdata$cluster_index)
+        U_indexes = as.vector(as.integer(newdata$cluster_index))
       )
       #create a stanfit object with the predictions
       pred <- rstan::gqs(stanmodels$btUpredict,
@@ -338,11 +339,11 @@ predict.bpc <-
 
       standata <- list(
         N_newdata = nrow(newdata),
-        player0_indexes = as.vector(newdata$player0_index),
-        player1_indexes = as.vector(newdata$player1_index),
+        player0_indexes = as.vector(as.integer(newdata$player0_index)),
+        player1_indexes = as.vector(as.integer(newdata$player1_index)),
         N_players = nrow(lookup_table),
         N_U = nrow(cluster_lookup_table),
-        U_indexes = as.vector(newdata$cluster_index)
+        U_indexes = as.vector(as.integer(newdata$cluster_index))
       )
       #create a stanfit object with the predictions
       pred <- rstan::gqs(stanmodels$davidsonUpredict,
@@ -403,8 +404,8 @@ predict.bpc <-
       )
       standata <- list(
         N_newdata = nrow(newdata),
-        player0_indexes = as.vector(newdata$player0_index),
-        player1_indexes = as.vector(newdata$player1_index),
+        player0_indexes = as.vector(as.integer(newdata$player0_index)),
+        player1_indexes = as.vector(as.integer(newdata$player1_index)),
         N_players = nrow(lookup_table),
         K = nrow(predictors_lookup_table),
         X = predictors_matrix
@@ -461,8 +462,8 @@ predict.bpc <-
       )
       standata <- list(
         N_newdata = nrow(newdata),
-        player0_indexes = as.vector(newdata$player0_index),
-        player1_indexes = as.vector(newdata$player1_index),
+        player0_indexes = as.vector(as.integer(newdata$player0_index)),
+        player1_indexes = as.vector(as.integer(newdata$player1_index)),
         N_players = nrow(lookup_table),
         K = nrow(predictors_lookup_table),
         X = predictors_matrix
