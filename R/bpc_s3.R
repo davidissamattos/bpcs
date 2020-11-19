@@ -13,9 +13,18 @@
 #' model_type = 'bt',
 #' solve_ties = 'none')
 #' #' print(m)
-print.bpc <- function(x, digits=3, ...) {
+print.bpc <- function(x, digits = 3, ...) {
   cat("Estimated baseline parameters with HPD intervals:\n")
-  print(knitr::kable(get_hpdi_parameters(x), format = 'simple', digits = digits))
+  hpdi <- tryCatch({
+    get_hpdi_parameters(x)
+  },
+  error = function(cond) {
+    message("Error when calculating the HPDI parameters")
+    message("Original error message:")
+    stop(cond)
+    return(NA)
+  })
+  print(knitr::kable(hpdi, format = 'simple', digits = digits))
   cat('NOTES:\n')
   cat('* A higher lambda indicates a higher team ability\n')
 
@@ -72,7 +81,7 @@ print.bpc <- function(x, digits=3, ...) {
 #' model_type = 'bt',
 #' solve_ties = 'none')
 #' #' summary(m)
-summary.bpc <- function(object, digits=2, ...) {
+summary.bpc <- function(object, digits = 2, ...) {
   #Table with the parameter estimates and footnotes
   print(object, digits = digits)
 
@@ -81,11 +90,21 @@ summary.bpc <- function(object, digits=2, ...) {
   cat("Posterior probabilities:\n")
   cat("These probabilities are calculated from the predictive posterior distribution\n")
   cat("for all player combinations\n")
-  print(knitr::kable(
-    get_probabilities(object)$Table,
-    format = 'simple',
-    digits = digits
-  ))
+
+  prob_table <- tryCatch({
+    get_probabilities(object)
+  },
+  error = function(cond) {
+    message("Error when calculating the probabilities")
+    message("Original error message:")
+    stop(cond)
+    return(NA)
+  })
+
+  print(knitr::kable(prob_table$Table,
+                     format = 'simple',
+                     digits = digits))
+
   if (endsWith(object$model_type, 'ordereffect')) {
     cat('NOTES:\n')
     cat('* These probabilies assume zero order effect (no home advantage).\n')
@@ -95,11 +114,22 @@ summary.bpc <- function(object, digits=2, ...) {
   cat('\n\n')
   cat("Rank of the players' abilities:\n")
   cat("The rank is based on the posterior rank distribution of the lambda parameter\n")
+
+  rank_players <- tryCatch({
+    get_rank_of_players(object)
+  },
+  error = function(cond) {
+    message("Error when calculating the rank of the players")
+    message("Original error message:")
+    stop(cond)
+    return(NA)
+  })
+
   rank_of_players <-
-    get_rank_of_players(object) %>% dplyr::select(.data$Parameter,
-                                                  .data$MedianRank,
-                                                  .data$MeanRank,
-                                                  .data$StdRank)
+    rank_players %>% dplyr::select(.data$Parameter,
+                                   .data$MedianRank,
+                                   .data$MeanRank,
+                                   .data$StdRank)
   print(knitr::kable(rank_of_players, format = 'simple', digits = digits))
 
 }
@@ -212,7 +242,7 @@ predict.bpc <-
         N_players = nrow(lookup_table)
       )
       #create a stanfit object with the predictions
-      pred <- rstan::gqs(stanmodels$btpredict,
+      pred <- rstan::gqs(stanmodels$btordereffectpredict,
                          data = standata,
                          draws = as.matrix(stanfit))
       pred <- sample_stanfit(pred, par = 'y_pred', n = n)
@@ -223,6 +253,7 @@ predict.bpc <-
     }
     if (model_type == 'davidsonordereffect')
     {
+
       lookup_table <- object$lookup_table
       newdata <- create_index_with_existing_lookup_table(
         d = newdata,
@@ -238,7 +269,7 @@ predict.bpc <-
         N_players = nrow(lookup_table)
       )
       #create a stanfit object with the predictions
-      pred <- rstan::gqs(stanmodels$btpredict,
+      pred <- rstan::gqs(stanmodels$davidsonordereffectpredict,
                          data = standata,
                          draws = as.matrix(stanfit))
       y_pred <- sample_stanfit(pred, par = 'y_pred', n = n)
@@ -314,7 +345,7 @@ predict.bpc <-
         U_indexes = as.vector(newdata$cluster_index)
       )
       #create a stanfit object with the predictions
-      pred <- rstan::gqs(stanmodels$btpredict,
+      pred <- rstan::gqs(stanmodels$davidsonUpredict,
                          data = standata,
                          draws = as.matrix(stanfit))
       y_pred <- sample_stanfit(pred, par = 'y_pred', n = n)
@@ -379,7 +410,7 @@ predict.bpc <-
         X = predictors_matrix
       )
       #create a stanfit object with the predictions
-      pred <- rstan::gqs(stanmodels$btpredict,
+      pred <- rstan::gqs(stanmodels$btgeneralizedpredict,
                          data = standata,
                          draws = as.matrix(stanfit))
       y_pred <- sample_stanfit(pred, par = 'y_pred', n = n)
@@ -437,7 +468,7 @@ predict.bpc <-
         X = predictors_matrix
       )
       #create a stanfit object with the predictions
-      pred <- rstan::gqs(stanmodels$davidsonpredict,
+      pred <- rstan::gqs(stanmodels$davidsongeneralizedpredict,
                          data = standata,
                          draws = as.matrix(stanfit))
       y_pred <- sample_stanfit(pred, par = 'y_pred', n = n)

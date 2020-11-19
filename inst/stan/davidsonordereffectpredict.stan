@@ -9,7 +9,7 @@ data {
  int <lower=1> N_players; // Number of players
  int <lower=1> player0_indexes[N_newdata];//input
  int <lower=1> player1_indexes[N_newdata];//input
- real z[N_newdata];//1 home advantage for player 1. 0 no home advantage. -1 home advantage for player 0
+ real z_player1[N_newdata];//1 home advantage for player 1. 0 no home advantage. -1 home advantage for player 0
 
  }
 
@@ -29,9 +29,9 @@ generated quantities{
     real p_draw;
     real p_1_win_not_draw;
 
-    p0 = exp(lambda[player0_indexes[i]]+gm*z[i]);
+    p0 = exp(lambda[player0_indexes[i]]+gm*z_player1[i]);
     p1 = exp(lambda[player1_indexes[i]]);
-    geom_term = exp(nu+0.5*(gm*z[i]+lambda[player0_indexes[i]]+lambda[player1_indexes[i]]));
+    geom_term = exp(nu+0.5*(gm*z_player1[i]+lambda[player0_indexes[i]]+lambda[player1_indexes[i]]));
 
     p_draw= geom_term/(p0+p1+geom_term);
     p_1_win_not_draw = p1/(p0+p1+geom_term);

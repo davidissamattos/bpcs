@@ -41,6 +41,7 @@ get_probabilities <- function(bpc_object, n = 1000) {
       c(bpc_object$call_arg$player1,
         bpc_object$call_arg$player0)
     colnames(newdata) <- col_names
+    newdata<-as.data.frame(newdata)
     pred <-
       predict.bpc(
         bpc_object,
@@ -74,6 +75,7 @@ get_probabilities <- function(bpc_object, n = 1000) {
       c(bpc_object$call_arg$player1,
         bpc_object$call_arg$player0)
     colnames(newdata) <- col_names
+    newdata<-as.data.frame(newdata)
     pred <-
       predict.bpc(
         bpc_object,
@@ -129,6 +131,7 @@ get_probabilities <- function(bpc_object, n = 1000) {
         bpc_object$call_arg$z_player1
       )
     colnames(newdata) <- col_names
+    newdata<-as.data.frame(newdata)
     pred <-
       predict.bpc(
         bpc_object,
@@ -147,7 +150,7 @@ get_probabilities <- function(bpc_object, n = 1000) {
   }
   if (model == 'davidsonordereffect')
   {
-    #first we create a data frame of new data for the BT model
+    #first we create a data frame of new data for the model
     comb <-
       gtools::combinations(
         n = bpc_object$Nplayers,
@@ -168,7 +171,7 @@ get_probabilities <- function(bpc_object, n = 1000) {
         bpc_object$call_arg$z_player1
       )
     colnames(newdata) <- col_names
-
+    newdata<-as.data.frame(newdata)
     pred <-
       predict.bpc(
         bpc_object,
@@ -232,6 +235,7 @@ get_probabilities <- function(bpc_object, n = 1000) {
         bpc_object$call_arg$cluster
       )
     colnames(newdata) <- col_names
+    newdata<-as.data.frame(newdata)
     pred <-
       predict.bpc(
         bpc_object,
@@ -282,6 +286,7 @@ get_probabilities <- function(bpc_object, n = 1000) {
         bpc_object$call_arg$cluster
       )
     colnames(newdata) <- col_names
+    newdata<-as.data.frame(newdata)
     pred <-
       predict.bpc(
         bpc_object,
@@ -331,6 +336,7 @@ get_probabilities <- function(bpc_object, n = 1000) {
       c(bpc_object$call_arg$player1,
         bpc_object$call_arg$player0)
     colnames(newdata) <- col_names
+    newdata<-as.data.frame(newdata)
     pred <-
       predict.bpc(
         bpc_object,
@@ -365,6 +371,7 @@ get_probabilities <- function(bpc_object, n = 1000) {
       c(bpc_object$call_arg$player1,
         bpc_object$call_arg$player0)
     colnames(newdata) <- col_names
+    newdata<-as.data.frame(newdata)
     pred <-
       predict.bpc(
         bpc_object,
