@@ -10,8 +10,8 @@ rebuild_documentation<-function(){
 }
 
 deploy_pkgdown_site_to_github<-function(){
-  code_coverage_with_token()
   devtools::install()
+  code_coverage_with_token()
   devtools::build_readme()
   devtools::build_vignettes()
   pkgdown::build_site(devel = F, preview = F)
