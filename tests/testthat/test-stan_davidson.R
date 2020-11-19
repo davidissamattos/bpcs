@@ -1,6 +1,6 @@
 test_that("bpc returns a bpc object with datasets using the davidson model", {
   test_davidson<-load_testdata('test_davidson')
-  m_ties<-bpc(data=test_davidson,
+  m1<-bpc(data=test_davidson,
               player0 = 'player0',
               player1 = 'player1',
               result_column = 'y',
@@ -10,5 +10,6 @@ test_that("bpc returns a bpc object with datasets using the davidson model", {
               warmup=300,
               show_chain_messages=F)
 
-  expect_s3_class(m_ties,'bpc')
+  expect_s3_class(m1,'bpc')
+  expect_no_error(summary(m1))
 })

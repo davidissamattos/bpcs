@@ -1,11 +1,11 @@
-test_that("bpc returns a bpc object the davidsongeneralized model", {
-  test_davidson<-load_testdata('test_davidson')
-  test_predictors<-load_testdata('test_predictors')
-  m1<-bpc(data=test_davidson,
+test_that("bpc returns a bpc object the btgeneralized model", {
+  test_bt<-load_testdata('test_bt')
+  test_predictors<- load_testdata('test_predictors')
+  m1<-bpc(data=test_bt,
           player0 = 'player0',
           player1 = 'player1',
           result_column = 'y',
-          model_type='davidsongeneralized',
+          model_type='btgeneralized',
           predictors = test_predictors,
           solve_ties='none',
           iter=1000,
@@ -14,5 +14,6 @@ test_that("bpc returns a bpc object the davidsongeneralized model", {
 
 
   expect_s3_class(m1,'bpc')
+  expect_no_error(summary(m1))
 
 })

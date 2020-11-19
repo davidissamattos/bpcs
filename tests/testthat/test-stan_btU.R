@@ -13,5 +13,5 @@ test_that("bpc returns a bpc object the btU model", {
           show_chain_messages=F)
 
   expect_s3_class(m1,'bpc')
-
+  expect_no_error(summary(m1))
 })
