@@ -44,7 +44,7 @@ private:
         int N_players;
         std::vector<int> player0_indexes;
         std::vector<int> player1_indexes;
-        std::vector<double> z;
+        std::vector<double> z_player1;
 public:
     model_davidsonordereffectpredict(stan::io::var_context& context__,
         std::ostream* pstream__ = 0)
@@ -118,14 +118,14 @@ public:
                 check_greater_or_equal(function__, "player1_indexes[i_0__]", player1_indexes[i_0__], 1);
             }
             current_statement_begin__ = 12;
-            validate_non_negative_index("z", "N_newdata", N_newdata);
-            context__.validate_dims("data initialization", "z", "double", context__.to_vec(N_newdata));
-            z = std::vector<double>(N_newdata, double(0));
-            vals_r__ = context__.vals_r("z");
+            validate_non_negative_index("z_player1", "N_newdata", N_newdata);
+            context__.validate_dims("data initialization", "z_player1", "double", context__.to_vec(N_newdata));
+            z_player1 = std::vector<double>(N_newdata, double(0));
+            vals_r__ = context__.vals_r("z_player1");
             pos__ = 0;
-            size_t z_k_0_max__ = N_newdata;
-            for (size_t k_0__ = 0; k_0__ < z_k_0_max__; ++k_0__) {
-                z[k_0__] = vals_r__[pos__++];
+            size_t z_player1_k_0_max__ = N_newdata;
+            for (size_t k_0__ = 0; k_0__ < z_player1_k_0_max__; ++k_0__) {
+                z_player1[k_0__] = vals_r__[pos__++];
             }
             // initialize transformed data variables
             // execute transformed data statements
@@ -374,11 +374,11 @@ public:
                 stan::math::initialize(p_1_win_not_draw, DUMMY_VAR__);
                 stan::math::fill(p_1_win_not_draw, DUMMY_VAR__);
                 current_statement_begin__ = 32;
-                stan::math::assign(p0, stan::math::exp((get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1) + (gm * get_base1(z, i, "z", 1)))));
+                stan::math::assign(p0, stan::math::exp((get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1) + (gm * get_base1(z_player1, i, "z_player1", 1)))));
                 current_statement_begin__ = 33;
                 stan::math::assign(p1, stan::math::exp(get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1)));
                 current_statement_begin__ = 34;
-                stan::math::assign(geom_term, stan::math::exp((nu + (0.5 * (((gm * get_base1(z, i, "z", 1)) + get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1)) + get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1))))));
+                stan::math::assign(geom_term, stan::math::exp((nu + (0.5 * (((gm * get_base1(z_player1, i, "z_player1", 1)) + get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1)) + get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1))))));
                 current_statement_begin__ = 36;
                 stan::math::assign(p_draw, (geom_term / ((p0 + p1) + geom_term)));
                 current_statement_begin__ = 37;
