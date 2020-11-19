@@ -94,13 +94,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+      <a href="../articles/a_get_started.html">Getting Started with the bpcs package</a>
     </li>
     <li>
-      <a href="../articles/get_started.html">Getting Started with the bpcs package</a>
+      <a href="../articles/b_ties_and_home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
     </li>
     <li>
-      <a href="../articles/home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
+      <a href="../articles/c_bt_random_effects.html">Random effects in the Bradley-Terry model</a>
     </li>
   </ul>
 </li>
@@ -143,7 +143,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-basic-usage-functions" class="hasAnchor"><a href="#section-basic-usage-functions" class="anchor"></a>Basic usage functions</h2>
-          <p class="section-desc"><p>Basic functions that are used in the R console for model fitting and simple investigatiosn</p></p>
+          <p class="section-desc"><p>Basic functions that are used in the R console for model fitting and simple investigations.</p></p>
         </th>
       </tr>
       
@@ -180,7 +180,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-model-checking-functions" class="hasAnchor"><a href="#section-model-checking-functions" class="anchor"></a>Model checking functions</h2>
-          <p class="section-desc"><p>These are a thin wrapper over other packages functions to investigate the convergence of the MCMC.</p></p>
+          <p class="section-desc"><p>These are a thin wrapper over other packages functions to facilitate the investigation of the convergence of the MCMC.</p></p>
         </th>
       </tr>
       
@@ -223,7 +223,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-posterior-distribution-functions" class="hasAnchor"><a href="#section-posterior-distribution-functions" class="anchor"></a>Posterior distribution functions</h2>
-          <p class="section-desc"><p>Functions used to investigate the posterior distribution of the parameters of the model</p></p>
+          <p class="section-desc"><p>Functions used to investigate the posterior distribution of the parameters of the model.</p></p>
         </th>
       </tr>
       
@@ -261,8 +261,30 @@ The function returns the mean value of win/loose/draw for the player i. To calcu
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-data" class="hasAnchor"><a href="#section-data" class="anchor"></a>Data</h2>
-          <p class="section-desc"><p>Description of the built-in datasets</p></p>
+          <h2 id="section-data-transformation" class="hasAnchor"><a href="#section-data-transformation" class="anchor"></a>Data Transformation</h2>
+          <p class="section-desc"><p>Functions that provide that transformations.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="expand_aggregated_data.html">expand_aggregated_data()</a></code> </p>
+        </td>
+        <td><p>Expand aggregated data
+Several datasets for the Bradley-Terry Model aggregate the number of wins for each player in a different column.
+The models we provide are intended to be used in a long format. A single result for each contest.
+This function expands datasets that have aggregated data into this long format.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-datasets" class="hasAnchor"><a href="#section-datasets" class="anchor"></a>Datasets</h2>
+          <p class="section-desc"><p>Description of the built-in datasets.</p></p>
         </th>
       </tr>
       

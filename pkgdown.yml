@@ -2,8 +2,8 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  bt_random_effects: bt_random_effects.html
-  get_started: get_started.html
-  home_advantage: home_advantage.html
-last_built: 2020-11-18T07:24Z
+  a_get_started: a_get_started.html
+  b_ties_and_home_advantage: b_ties_and_home_advantage.html
+  c_bt_random_effects: c_bt_random_effects.html
+last_built: 2020-11-19T17:19Z
 
