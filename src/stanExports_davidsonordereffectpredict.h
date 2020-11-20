@@ -378,7 +378,7 @@ public:
                 current_statement_begin__ = 33;
                 stan::math::assign(p1, stan::math::exp(get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1)));
                 current_statement_begin__ = 34;
-                stan::math::assign(geom_term, stan::math::exp((nu + (0.5 * (((gm * get_base1(z_player1, i, "z_player1", 1)) + get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1)) + get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1))))));
+                stan::math::assign(geom_term, stan::math::exp((nu + (0.5 * (get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1) + get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1))))));
                 current_statement_begin__ = 36;
                 stan::math::assign(p_draw, (geom_term / ((p0 + p1) + geom_term)));
                 current_statement_begin__ = 37;
