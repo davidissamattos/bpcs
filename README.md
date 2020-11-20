@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# bpcs - A package for Bayesian Paired Comparison analysis with Stan <img src="inst/logo/logo.png" align="right" width="120" />
+# bpcs - A package for Bayesian Paired Comparison analysis with Stan <img src="https://github.com/davidissamattos/bpcs/blob/master/inst/logo/logo.png" align="right" width="120" />
 
 <!-- badges: start -->
 
@@ -109,118 +109,6 @@ id
 
 <td style="text-align:left;">
 
-Seles
-
-</td>
-
-<td style="text-align:left;">
-
-Graf
-
-</td>
-
-<td style="text-align:right;">
-
-0
-
-</td>
-
-<td style="text-align:right;">
-
-1
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Graf
-
-</td>
-
-<td style="text-align:left;">
-
-Sanchez
-
-</td>
-
-<td style="text-align:right;">
-
-0
-
-</td>
-
-<td style="text-align:right;">
-
-28
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Sabatini
-
-</td>
-
-<td style="text-align:left;">
-
-Navratilova
-
-</td>
-
-<td style="text-align:right;">
-
-0
-
-</td>
-
-<td style="text-align:right;">
-
-35
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Seles
-
-</td>
-
-<td style="text-align:left;">
-
-Graf
-
-</td>
-
-<td style="text-align:right;">
-
-1
-
-</td>
-
-<td style="text-align:right;">
-
-4
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
 Graf
 
 </td>
@@ -249,13 +137,13 @@ Sabatini
 
 <td style="text-align:left;">
 
-Seles
+Sabatini
 
 </td>
 
 <td style="text-align:left;">
 
-Navratilova
+Sanchez
 
 </td>
 
@@ -267,7 +155,7 @@ Navratilova
 
 <td style="text-align:right;">
 
-12
+41
 
 </td>
 
@@ -311,34 +199,6 @@ Graf
 
 <td style="text-align:left;">
 
-Sabatini
-
-</td>
-
-<td style="text-align:right;">
-
-1
-
-</td>
-
-<td style="text-align:right;">
-
-22
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Navratilova
-
-</td>
-
-<td style="text-align:left;">
-
 Sanchez
 
 </td>
@@ -351,7 +211,35 @@ Sanchez
 
 <td style="text-align:right;">
 
-43
+32
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Graf
+
+</td>
+
+<td style="text-align:left;">
+
+Sabatini
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+<td style="text-align:right;">
+
+23
 
 </td>
 
@@ -385,6 +273,118 @@ Sanchez
 
 </tr>
 
+<tr>
+
+<td style="text-align:left;">
+
+Graf
+
+</td>
+
+<td style="text-align:left;">
+
+Sanchez
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+<td style="text-align:right;">
+
+31
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Seles
+
+</td>
+
+<td style="text-align:left;">
+
+Navratilova
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+<td style="text-align:right;">
+
+11
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Sabatini
+
+</td>
+
+<td style="text-align:left;">
+
+Navratilova
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+<td style="text-align:right;">
+
+37
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Navratilova
+
+</td>
+
+<td style="text-align:left;">
+
+Sanchez
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+<td style="text-align:right;">
+
+43
+
+</td>
+
+</tr>
+
 </tbody>
 
 </table>
@@ -409,8 +409,8 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 3e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.3 seconds.
+#> Chain 1: Gradient evaluation took 3.3e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.33 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -427,15 +427,15 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.096754 seconds (Warm-up)
-#> Chain 1:                0.097144 seconds (Sampling)
-#> Chain 1:                0.193898 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.088326 seconds (Warm-up)
+#> Chain 1:                0.081416 seconds (Sampling)
+#> Chain 1:                0.169742 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 1.4e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
+#> Chain 2: Gradient evaluation took 1.3e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -452,15 +452,15 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.096757 seconds (Warm-up)
-#> Chain 2:                0.103389 seconds (Sampling)
-#> Chain 2:                0.200146 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.09132 seconds (Warm-up)
+#> Chain 2:                0.091092 seconds (Sampling)
+#> Chain 2:                0.182412 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 1.7e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
+#> Chain 3: Gradient evaluation took 1.4e-05 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -477,15 +477,15 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.099054 seconds (Warm-up)
-#> Chain 3:                0.086801 seconds (Sampling)
-#> Chain 3:                0.185855 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.090308 seconds (Warm-up)
+#> Chain 3:                0.092246 seconds (Sampling)
+#> Chain 3:                0.182554 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 9.1e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.91 seconds.
+#> Chain 4: Gradient evaluation took 1.5e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -502,9 +502,9 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.09828 seconds (Warm-up)
-#> Chain 4:                0.094037 seconds (Sampling)
-#> Chain 4:                0.192317 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.092099 seconds (Warm-up)
+#> Chain 4:                0.086878 seconds (Sampling)
+#> Chain 4:                0.178977 seconds (Total)
 #> Chain 4:
 ```
 
@@ -526,11 +526,11 @@ summary(m)
 #> 
 #> Parameter               Mean   HPD_lower   HPD_higher    n_eff   Rhat
 #> --------------------  ------  ----------  -----------  -------  -----
-#> lambda[Seles]           0.51       -2.17         3.29   917.48      1
-#> lambda[Graf]            0.94       -1.83         3.54   867.37      1
-#> lambda[Sabatini]       -0.34       -3.17         2.23   881.48      1
-#> lambda[Navratilova]     0.06       -2.68         2.73   885.46      1
-#> lambda[Sanchez]        -1.13       -3.81         1.53   896.53      1
+#> lambda[Seles]           0.49       -2.37         3.15   672.61   1.01
+#> lambda[Graf]            0.91       -1.92         3.47   666.47   1.01
+#> lambda[Sabatini]       -0.36       -3.05         2.41   674.45   1.01
+#> lambda[Navratilova]     0.01       -2.77         2.58   673.00   1.01
+#> lambda[Sanchez]        -1.15       -3.80         1.74   674.86   1.01
 #> NOTES:
 #> * A higher lambda indicates a higher team ability
 #> 
@@ -542,16 +542,16 @@ summary(m)
 #> 
 #> i             j              i_beats_j
 #> ------------  ------------  ----------
-#> Graf          Navratilova         0.69
+#> Graf          Navratilova         0.68
 #> Graf          Sabatini            0.76
 #> Graf          Sanchez             0.87
-#> Graf          Seles               0.59
-#> Navratilova   Sabatini            0.59
-#> Navratilova   Sanchez             0.74
-#> Navratilova   Seles               0.38
+#> Graf          Seles               0.58
+#> Navratilova   Sabatini            0.58
+#> Navratilova   Sanchez             0.73
+#> Navratilova   Seles               0.39
 #> Sabatini      Sanchez             0.67
-#> Sabatini      Seles               0.33
-#> Sanchez       Seles               0.18
+#> Sabatini      Seles               0.32
+#> Sanchez       Seles               0.19
 #> 
 #> 
 #> Rank of the players' abilities:
@@ -560,11 +560,11 @@ summary(m)
 #> 
 #> Parameter              MedianRank   MeanRank   StdRank
 #> --------------------  -----------  ---------  --------
-#> lambda[Graf]                    1       1.40      0.62
-#> lambda[Seles]                   2       2.08      0.88
-#> lambda[Navratilova]             3       2.97      0.88
-#> lambda[Sabatini]                4       3.75      0.78
-#> lambda[Sanchez]                 5       4.80      0.50
+#> lambda[Graf]                    1       1.41      0.64
+#> lambda[Seles]                   2       2.13      0.89
+#> lambda[Navratilova]             3       2.98      0.93
+#> lambda[Sabatini]                4       3.68      0.84
+#> lambda[Sanchez]                 5       4.80      0.51
 ```
 
 # Features of the bpcs package
@@ -668,80 +668,21 @@ Below we list all our vignettes with a short description:
     effect. We deal with this utilizing a simple Bradley-Terry model
     with random effects.
 
-\*[Generalized Bradley-Terry model](): This vignette investigate the
-Bradley-Terry model when we have players specific characteristics.
-(TODO)
+  - [Generalized Bradley-Terry model](): This vignette investigate the
+    Bradley-Terry model when we have players specific characteristics.
+    (TODO)
 
-# Contributing
+  - [Paper](): This paper/vignette describes the theory and related work
+    behind the presented models. TODO
+
+# Contributing and bugs
 
 If you are interested you are welcome to contribute to the repository
-through pull requests.
+through pull requests. We have a short [contributing guide
+vignette](https://davidissamattos.github.io/bpcs/articles/e_contributin.html).
 
-If you have a strong need for a model that is not covered in this
-package (and do not want to code it yourself) send me an email or a
-suggestion in Github
-
-## Short guide/suggestions
-
-The points below are mostly reminders for me but hopefully it can help
-others
-
-  - Use the `devtools` package to create R files, test files, vignettes
-    etc
-  - In the R folder:
-      - `bpc.R`: this contains a single function (rather large) that is
-        the main function call of the package. Each new model should be
-        added here in the if else section with the appropriated data
-        list for stan. Don’t forget to add the relevant documentation in
-        roxygen2
-      - `bpc_exports.R`: these are helper functions to handle the `bpc`
-        object and are exposed to the user. Only add here functions that
-        receive a bpc object and that the users will have an interest.
-      - `bpc_get_probabilities.R` Since this is a big export function we
-        have moved it to its own file
-      - `bpc_helpers_X.R` additional functions to facilitate and support
-        either the bpc function or the exports functions. None of these
-        functions should be exported, although all of them should be
-        documented. We divided these helpers in several files. the
-        indexes are related to creating and checking names and indexes
-        in lookup tables, the hpd to HPDI related functions, the checks
-        to check correct specification of the data frame columns
-      - `bpc_s3.R` all functions here are the custom implementation of
-        the generic base functions from R, such as `summary`, `print`,
-        `predict`
-      - `data-docs.R` documentation for the data.
-      - `bpc_object.R` declaration and creation of the bpc class.
-  - To add new models:
-    1.  Add the stan file with the model in inst/stan.
-    <!-- end list -->
-      - Note that we add two stan files for each model, one that will
-        estimate the parameters and one that will make predictions
-    <!-- end list -->
-    3.  add the appropriated hooks in the `bpc` function in `bpc.R` so
-        we can call the model
-    4.  add the appropriated hooks in the `predict` function in
-        `bpc_s3.R`.
-    5.  add the appropriated hooks for the `get_probabilities` function
-        in `bpc_get_probabilities.R` to generate the appropriated
-        probability table that is called in the `summary` function.
-    6.  add the relevant tests to each of the modifications (to be
-        improved with time, since we have very few tests now)
-  - Problems with `rstantools` and compiling the models. For me at
-    least, the combination of `RStudio`+ `rstantools` + `roxygen2` +
-    `devtools` + `Rcpp`+ `devtools` gives an assorted amount of
-    stochastic errors can usually be solved with a combination of the
-    actions below. For me it is still trial and error to fix the error
-    but it usually works with these actions:
-      - Restart the r session and try `devtools::load_all()` again
-      - After adding a model try `devtools::document()`
-      - If deleting a model file delete the appropriated line in
-        stanmodels.R and do document again
-      - If the model is not recompiling or updating do
-        `pkgbuild::clean_dll()` then `devtools::document()` and possibly
-        `devtools::load_all()` or `devtools::install()`
-
-There are some dev-functions in inst/devfunctions to help building the
-package website and running test coverage (and submitting to codecov).
+If you find bugs, please report it in
+<https://github.com/davidissamattos/bpcs/issues>
 
 # Icon credits
 

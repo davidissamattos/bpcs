@@ -9,9 +9,9 @@
 #' * 'davidson' the Davidson model to handle for ties. Ref: Davidson 1970
 #' * 'btordereffect' for the Bradley-Terry with order effect (for home advantage). Ref: Davidson 1977
 #' * 'davidsonordereffect' for the Davidson model with order effect (for home advantage) and ties. Ref: Davidson 1977
-#' * 'btgeneralized': for the generalized Bradley Terry model for subject specific predictors
+#' * 'btgeneralized': for the generalized Bradley Terry model for subject specific predictors. Ref: Springall 1973
 #' * 'davidsongeneralized' for the generalized Davidson model for subject specific predictors
-#' * 'btU': for the Bradley-Terry with random effects
+#' * 'btU': for the Bradley-Terry with random effects. Ref: Böckenholt 2001
 #' * 'davidsonU': For Davidson model with random effects
 #' @param player0 A string with name of the column containing the players 0. This column should be of string/character type and not be of factor type.
 #' @param player1 A string with name of the column containing the players 0. This column should be of string/character type and not be of factor type.
@@ -48,7 +48,9 @@
 #' Davidson RR (1970). “On Extending the Bradley-Terry Model to Accommodate Ties in Paired Comparison Experiments.” Journal of the American Statistical Association, 65, 317–328.
 #' Davidson, Roger R., and Robert J. Beaver (1977). "On extending the Bradley-Terry model to incorporate within-pair order effects." Biometrics: 693-702.
 #' Stan Development Team (2020). RStan: the R interface to Stan. R package version 2.21.2. http://mc-stan.org/.
-
+#' Böckenholt, Ulf. "Hierarchical modeling of paired comparison data." Psychological Methods 6.1 (2001): 49.
+#' Springall, A. "Response Surface Fitting Using a Generalization of the Bradley‐Terry Paired Comparison Model." Journal of the Royal Statistical Society: Series C (Applied Statistics) 22.1 (1973): 59-68.
+#'
 #' @examples
 #' #For the simple Bradley-Terry model
 #' bpc(data = tennis_agresti,

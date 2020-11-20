@@ -117,10 +117,10 @@ summary(m)
 * Davidson model (`davidson`) for handling ties [@davidson1970extending]
 * Bradley-Terry with order effect (`btordereffect`). E.g. for home advantage [@davidson1977extending]
 * Davidson model with order effect (`davidsonordereffect`). E.g. for home advantage with ties [@davidson1977extending]
-* Generalized Bradley-Terry model (`btgeneralized`). When we have contestant specific predictors TODO:add ref
-* Generalized Davidson model (`davidsongeneralized`). When we have contestant specific predictors and ties TODO:add ref
-* Bradley-Terry model with intercept random effects (`btU`). For example to compensate clustering or repeated measures TODO:add ref
-* Davidson model with intercept random effects (`davidsonU`). For example to compensate clustering or repeated measures when we have ties. TODO:add ref
+* Generalized Bradley-Terry model (`btgeneralized`). When we have contestant specific predictors [@springall1973response]
+* Generalized Davidson model (`davidsongeneralized`). When we have contestant specific predictors and ties
+* Bradley-Terry model with intercept random effects (`btU`). For example to compensate clustering or repeated measures [@bockenholt2001hierarchical]
+* Davidson model with intercept random effects (`davidsonU`). For example to compensate clustering or repeated measures when we have ties.
 
 Note that we currently don't variations and combinations of these models (e.g BT with order effect and random effect or generalized BT with order effect). Contact me if there is a need for one of these models and give me some examples so we can add to the vignettes!
 
@@ -130,7 +130,7 @@ Note that we currently don't variations and combinations of these models (e.g BT
 
 - First official release
 - Working and tested models for `bt`, `btordereffect`, `btgeneralized`, `btU`, `davidson`, `davidsonordereffect`, `davidsongeneralized`, `davidsonU`
-- Vignettes covering all/most models
+- Vignettes covering most models
 
 ### Goals for bpcs 1.1.0 (Before June 2021)
 
@@ -139,7 +139,7 @@ Note that we currently don't variations and combinations of these models (e.g BT
   - This will increase the complexity of the stan model but will reduce code for the predict, get_probabilities, and the bpc function
 - Add new models for modeling time effects (newer contests have higher impact on the ability than older contests)
 - Add model for the Bayesian ELO-type rating system
-- Improve test coverage to 70%
+- Improve test coverage
 
 
 # Vignettes
@@ -154,14 +154,16 @@ Below we list all our vignettes with a short description:
 
 * [Bradley-Terry with random effects](https://davidissamattos.github.io/bpcs/articles/c_bt_random_effects.html): This vignette covers the problem of ranking black-box optimization algorithms based on benchmarks. Since in benchmarking we often run the same optimization algorithm more than once with the same benchmark problem, we need to compensate for the repeated measures effect. We deal with this utilizing a simple Bradley-Terry model with random effects.
 
-* [Generalized Bradley-Terry model](): This vignette investigate the Bradley-Terry model when we have players specific characteristics. (TODO)
+<!-- * [Generalized Bradley-Terry model](): This vignette investigate the Bradley-Terry model when we have players specific characteristics. (TODO) -->
 
-* [Paper](): This paper/vignette describes the theory and related work behind the presented models. TODO
+<!-- * [Paper](): This paper/vignette describes the theory and related work behind the presented models. TODO -->
 
 
-# Contributing
+# Contributing and bugs
 
-We have a short [contributing guide vignette](https://davidissamattos.github.io/bpcs/articles/e_contributin.html).
+If you are interested you are welcome to contribute to the repository through pull requests. We have a short [contributing guide vignette](https://davidissamattos.github.io/bpcs/articles/e_contributin.html).
+
+If you find bugs, please report it in https://github.com/davidissamattos/bpcs/issues
 
 # Icon credits
 
