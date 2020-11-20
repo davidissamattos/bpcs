@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# bpcs - A package for Bayesian Paired Comparison analysis with Stan <img src="man/logo/logo.png" align="right" width="120" />
+# bpcs - A package for Bayesian Paired Comparison analysis with Stan <img src="inst/logo/logo.png" align="right" width="120" />
 
 <!-- badges: start -->
 
@@ -65,7 +65,8 @@ We will utilize the tennis dataset available (Agresti 2003). The dataset
 can be seen below and is available as `data(tennis_agresti)`:
 
 ``` r
-knitr::kable(dplyr::sample_n(tennis_agresti,10))
+sample_n(tennis_agresti,10) %>% 
+  knitr::kable()
 ```
 
 <table>
@@ -126,7 +127,35 @@ Sabatini
 
 <td style="text-align:right;">
 
-20
+15
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Graf
+
+</td>
+
+<td style="text-align:left;">
+
+Sanchez
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+<td style="text-align:right;">
+
+29
 
 </td>
 
@@ -154,7 +183,7 @@ Sabatini
 
 <td style="text-align:right;">
 
-16
+19
 
 </td>
 
@@ -170,7 +199,7 @@ Seles
 
 <td style="text-align:left;">
 
-Graf
+Navratilova
 
 </td>
 
@@ -182,7 +211,147 @@ Graf
 
 <td style="text-align:right;">
 
-2
+8
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Graf
+
+</td>
+
+<td style="text-align:left;">
+
+Sanchez
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+<td style="text-align:right;">
+
+33
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Graf
+
+</td>
+
+<td style="text-align:left;">
+
+Sanchez
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+<td style="text-align:right;">
+
+31
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Seles
+
+</td>
+
+<td style="text-align:left;">
+
+Navratilova
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+<td style="text-align:right;">
+
+12
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Seles
+
+</td>
+
+<td style="text-align:left;">
+
+Navratilova
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+<td style="text-align:right;">
+
+11
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Sabatini
+
+</td>
+
+<td style="text-align:left;">
+
+Sanchez
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+<td style="text-align:right;">
+
+40
 
 </td>
 
@@ -216,174 +385,6 @@ Navratilova
 
 </tr>
 
-<tr>
-
-<td style="text-align:left;">
-
-Graf
-
-</td>
-
-<td style="text-align:left;">
-
-Sabatini
-
-</td>
-
-<td style="text-align:right;">
-
-1
-
-</td>
-
-<td style="text-align:right;">
-
-23
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Sabatini
-
-</td>
-
-<td style="text-align:left;">
-
-Navratilova
-
-</td>
-
-<td style="text-align:right;">
-
-1
-
-</td>
-
-<td style="text-align:right;">
-
-37
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Seles
-
-</td>
-
-<td style="text-align:left;">
-
-Sanchez
-
-</td>
-
-<td style="text-align:right;">
-
-0
-
-</td>
-
-<td style="text-align:right;">
-
-14
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Graf
-
-</td>
-
-<td style="text-align:left;">
-
-Sabatini
-
-</td>
-
-<td style="text-align:right;">
-
-1
-
-</td>
-
-<td style="text-align:right;">
-
-21
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Sabatini
-
-</td>
-
-<td style="text-align:left;">
-
-Sanchez
-
-</td>
-
-<td style="text-align:right;">
-
-0
-
-</td>
-
-<td style="text-align:right;">
-
-39
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Graf
-
-</td>
-
-<td style="text-align:left;">
-
-Sabatini
-
-</td>
-
-<td style="text-align:right;">
-
-1
-
-</td>
-
-<td style="text-align:right;">
-
-22
-
-</td>
-
-</tr>
-
 </tbody>
 
 </table>
@@ -408,8 +409,8 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 3.4e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.34 seconds.
+#> Chain 1: Gradient evaluation took 3.6e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.36 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -426,15 +427,15 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.104477 seconds (Warm-up)
-#> Chain 1:                0.102939 seconds (Sampling)
-#> Chain 1:                0.207416 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.095984 seconds (Warm-up)
+#> Chain 1:                0.103653 seconds (Sampling)
+#> Chain 1:                0.199637 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 1.4e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
+#> Chain 2: Gradient evaluation took 1.5e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -451,9 +452,9 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.095746 seconds (Warm-up)
-#> Chain 2:                0.107666 seconds (Sampling)
-#> Chain 2:                0.203412 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.09783 seconds (Warm-up)
+#> Chain 2:                0.101817 seconds (Sampling)
+#> Chain 2:                0.199647 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
@@ -476,15 +477,15 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.105149 seconds (Warm-up)
-#> Chain 3:                0.117601 seconds (Sampling)
-#> Chain 3:                0.22275 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.098854 seconds (Warm-up)
+#> Chain 3:                0.103814 seconds (Sampling)
+#> Chain 3:                0.202668 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 1.5e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
+#> Chain 4: Gradient evaluation took 1.4e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -501,16 +502,22 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.100462 seconds (Warm-up)
-#> Chain 4:                0.10791 seconds (Sampling)
-#> Chain 4:                0.208372 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.103828 seconds (Warm-up)
+#> Chain 4:                0.104677 seconds (Sampling)
+#> Chain 4:                0.208505 seconds (Total)
 #> Chain 4:
 ```
 
 If `rstan` is available and correctly working this function should
 sample the posterior distribution and create a `bpc` object.
 
-To see a summary of the results we can run:
+To see a summary of the results we can run the summary function. Here we
+get three tables:
+
+1- The parameters of the model 2- The probabilities of one player
+beating the other (this probability is based on the predictive posterior
+distribution) 3- The rank of the player based on their abilities (this
+rank is based on the predictive posterior ranks).
 
 ``` r
 summary(m)
@@ -519,11 +526,11 @@ summary(m)
 #> 
 #> Parameter               Mean   HPD_lower   HPD_higher    n_eff   Rhat
 #> --------------------  ------  ----------  -----------  -------  -----
-#> lambda[Seles]           0.48       -2.21         3.21   667.52   1.01
-#> lambda[Graf]            0.91       -1.64         3.66   602.93   1.01
-#> lambda[Sabatini]       -0.39       -3.06         2.28   691.81   1.01
-#> lambda[Navratilova]    -0.01       -2.55         2.71   675.26   1.01
-#> lambda[Sanchez]        -1.18       -3.72         1.61   662.67   1.01
+#> lambda[Seles]           0.45       -2.13         3.48   658.68   1.01
+#> lambda[Graf]            0.88       -1.94         3.56   609.42   1.01
+#> lambda[Sabatini]       -0.41       -3.31         2.20   623.50   1.01
+#> lambda[Navratilova]    -0.02       -2.80         2.79   618.54   1.01
+#> lambda[Sanchez]        -1.19       -4.07         1.47   638.50   1.01
 #> NOTES:
 #> * A higher lambda indicates a higher team ability
 #> 
@@ -535,16 +542,16 @@ summary(m)
 #> 
 #> i             j              i_beats_j
 #> ------------  ------------  ----------
-#> Graf          Navratilova         0.70
-#> Graf          Sabatini            0.77
-#> Graf          Sanchez             0.88
-#> Graf          Seles               0.59
-#> Navratilova   Sabatini            0.59
+#> Graf          Navratilova         0.69
+#> Graf          Sabatini            0.78
+#> Graf          Sanchez             0.87
+#> Graf          Seles               0.60
+#> Navratilova   Sabatini            0.60
 #> Navratilova   Sanchez             0.74
-#> Navratilova   Seles               0.39
-#> Sabatini      Sanchez             0.68
+#> Navratilova   Seles               0.40
+#> Sabatini      Sanchez             0.66
 #> Sabatini      Seles               0.32
-#> Sanchez       Seles               0.19
+#> Sanchez       Seles               0.20
 #> 
 #> 
 #> Rank of the players' abilities:
@@ -553,11 +560,11 @@ summary(m)
 #> 
 #> Parameter              MedianRank   MeanRank   StdRank
 #> --------------------  -----------  ---------  --------
-#> lambda[Graf]                    1       1.35      0.58
-#> lambda[Seles]                   2       2.13      0.87
-#> lambda[Navratilova]             3       3.00      0.89
-#> lambda[Sabatini]                4       3.72      0.82
-#> lambda[Sanchez]                 5       4.79      0.47
+#> lambda[Graf]                    1       1.37      0.62
+#> lambda[Seles]                   2       2.14      0.90
+#> lambda[Navratilova]             3       3.02      0.89
+#> lambda[Sabatini]                4       3.66      0.85
+#> lambda[Sanchez]                 5       4.81      0.47
 ```
 
 # Features of the bpcs package
@@ -639,27 +646,27 @@ examples of code for data transformation, tables and plots.
 Below we list all our vignettes with a short description:
 
   - [Getting
-    Started](https://davidissamattos.github.io/bpcs/articles/get_started.html):
+    Started](https://davidissamattos.github.io/bpcs/articles/a_get_started.html):
     This vignette shows a basic example on tennis competition data,
     covering how to run a Bradley-Terry model, MCMC diagnostics,
     posterior predictive values, ranking, predict new matches
 
-  - [Ties and home advantage](): This vignette covers a soccer example
-    from the Brazilian soccer league. Here, we first model the results
-    using a Bradley-Terry model and the Davidson model to handle ties.
-    Then, we extend both models to include for order effects, this
-    allows us to investigate the home advantage in and without the
-    presence of ties. (TODO)
+  - [Ties and home
+    advantage](https://davidissamattos.github.io/bpcs/articles/b_ties_and_home_advantage.html):
+    This vignette covers a soccer example from the Brazilian soccer
+    league. Here, we first model the results using a Bradley-Terry model
+    and the Davidson model to handle ties. Then, we extend both models
+    to include for order effects, this allows us to investigate the home
+    advantage in and without the presence of ties.
 
   - [Bradley-Terry with random
-    effects](https://davidissamattos.github.io/bpcs/articles/bt_random_effects.html):
+    effects](https://davidissamattos.github.io/bpcs/articles/c_bt_random_effects.html):
     This vignette covers the problem of ranking black-box optimization
     algorithms based on benchmarks. Since in benchmarking we often run
     the same optimization algorithm more than once with the same
     benchmark problem, we need to compensate for the repeated measures
     effect. We deal with this utilizing a simple Bradley-Terry model
-    with random effects. We also have a variation of the Davidson model
-    to include random effects.
+    with random effects.
 
 \*[Generalized Bradley-Terry model](): This vignette investigate the
 Bradley-Terry model when we have players specific characteristics.
@@ -685,7 +692,7 @@ others
       - `bpc.R`: this contains a single function (rather large) that is
         the main function call of the package. Each new model should be
         added here in the if else section with the appropriated data
-        list for stan. Dont forget to add the relevant documentation in
+        list for stan. Don’t forget to add the relevant documentation in
         roxygen2
       - `bpc_exports.R`: these are helper functions to handle the `bpc`
         object and are exposed to the user. Only add here functions that
@@ -700,10 +707,8 @@ others
         in lookup tables, the hpd to HPDI related functions, the checks
         to check correct specification of the data frame columns
       - `bpc_s3.R` all functions here are the custom implementation of
-        the generic base functions from R, such as summary, print,
-        predict
-      - `utils.R` dev functions to only. Not to be exported or used by
-        the end user
+        the generic base functions from R, such as `summary`, `print`,
+        `predict`
       - `data-docs.R` documentation for the data.
       - `bpc_object.R` declaration and creation of the bpc class.
   - To add new models:
@@ -734,6 +739,9 @@ others
       - If the model is not recompiling or updating do
         `pkgbuild::clean_dll()` then `devtools::document()` and possibly
         `devtools::load_all()` or `devtools::install()`
+
+There are some dev-functions in inst/devfunctions to help building the
+package website and running test coverage (and submitting to codecov).
 
 # Icon credits
 
