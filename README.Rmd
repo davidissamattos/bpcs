@@ -23,10 +23,10 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 `r badge_license('MIT', color='yellow')`
 `r badge_last_commit("davidissamattos/bpcs")`
-`r badge_lifecycle("experimental", "blue")`
+`r badge_lifecycle("stable")`
 `r badge_code_size("davidissamattos/bpcs")`
-
-[![Codecov test coverage](https://codecov.io/gh/davidissamattos/bpcs/branch/master/graph/badge.svg)](https://codecov.io/gh/davidissamattos/bpcs?branch=master)
+`r badge_devel("davidissamattos/bpcs", "blue")`
+`r badge_codecov("davidissamattos/bpcs")`
 <!-- badges: end -->
 
 The `bpcs` package performs Bayesian estimation of Paired Comparison models utilizing Stan, such as variations of the Bradley-Terry [@bradley1952rank] and the Davidson models [@davidson1970extending].
@@ -43,7 +43,14 @@ For the `bpcs` package to work, we rely upon the Stan software and the `rstan` p
 * For Linux: https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux
 * For Windows: https://github.com/stan-dev/rstan/wiki/Installing-RStan-from-source-on-Windows 
 
-At the moment we are not available in CRAN. To install the bpc package install directly from our Github repository
+<!-- To install the latest stable version from CRAN -->
+
+<!-- ```{r eval=FALSE, echo=T} -->
+<!-- install.packages('bpcs') -->
+<!-- ``` -->
+
+
+To install the development version of the bpcs package, install directly from the Github repository.
 
 ```{r eval=FALSE, echo=T}
 remotes::install_github('davidissamattos/bpcs')
@@ -161,7 +168,8 @@ Below we list all our vignettes with a short description:
 
 # Contributing and bugs
 
-If you are interested you are welcome to contribute to the repository through pull requests. We have a short [contributing guide vignette](https://davidissamattos.github.io/bpcs/articles/e_contributin.html).
+If you are interested you are welcome to contribute to the repository through pull requests. 
+<!-- We have a short [contributing guide vignette](https://davidissamattos.github.io/bpcs/articles/e_contributing.html). -->
 
 If you find bugs, please report it in https://github.com/davidissamattos/bpcs/issues
 
