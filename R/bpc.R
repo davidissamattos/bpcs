@@ -7,11 +7,11 @@
 #' @param model_type
 #' * 'bt' for the Bradley Terry model. Ref: Bradley-Terry 1952,
 #' * 'davidson' the Davidson model to handle for ties. Ref: Davidson 1970
-#' * 'btordereffect' for the Bradley-Terry with order effect (for home advantage). Ref: Davidson 1977
-#' * 'davidsonordereffect' for the Davidson model with order effect (for home advantage) and ties. Ref: Davidson 1977
+#' * 'btordereffect' for the Bradley-Terry with order effect, for home advantage. Ref: Davidson 1977
+#' * 'davidsonordereffect' for the Davidson model with order effect, for home advantage, and ties. Ref: Davidson 1977
 #' * 'btgeneralized': for the generalized Bradley Terry model for subject specific predictors. Ref: Springall 1973
 #' * 'davidsongeneralized' for the generalized Davidson model for subject specific predictors
-#' * 'btU': for the Bradley-Terry with random effects. Ref: Böckenholt 2001
+#' * 'btU': for the Bradley-Terry with random effects. Ref: Bockenholt 2001
 #' * 'davidsonU': For Davidson model with random effects
 #' @param player0 A string with name of the column containing the players 0. This column should be of string/character type and not be of factor type.
 #' @param player1 A string with name of the column containing the players 0. This column should be of string/character type and not be of factor type.
@@ -23,7 +23,7 @@
 #' @param predictors A data frame that contains the players predictors values when using a generalized model. Only numeric values are accepted. Booleans are accepted but will be cast into integers. The first column should be for the player name, the others will be the predictors.  The column names will be used as name for the predictors
 #' @param solve_ties A string for the method of handling ties.
 #' * 'random' for converting ties randomly,
-#' * 'remove' for removing the tie occurrencess
+#' * 'remove' for removing the tie occurrences
 #' * 'none' to ignore ties. This requires a model capable of handling  ties
 #' @param priors A list with the parameters for the priors.
 #' * 'prior_lambda_mu' Mean value of the lambda parameter in the all models. For the generalized this is also the prior for the B the parameter for  lambda ~ normal(mu, std)
@@ -44,12 +44,12 @@
 #' @return An object of the class bpc. This object should be used in conjunction with the several auxiliary functions from the package
 #' @export
 #' @references
-#' Bradley RA, Terry ME (1952). “Rank Analysis of Incomplete Block Designs I: The Method of Paired Comparisons.” Biometrika, 39, 324–45.
-#' Davidson RR (1970). “On Extending the Bradley-Terry Model to Accommodate Ties in Paired Comparison Experiments.” Journal of the American Statistical Association, 65, 317–328.
-#' Davidson, Roger R., and Robert J. Beaver (1977). "On extending the Bradley-Terry model to incorporate within-pair order effects." Biometrics: 693-702.
-#' Stan Development Team (2020). RStan: the R interface to Stan. R package version 2.21.2. http://mc-stan.org/.
-#' Böckenholt, Ulf. "Hierarchical modeling of paired comparison data." Psychological Methods 6.1 (2001): 49.
-#' Springall, A. "Response Surface Fitting Using a Generalization of the Bradley‐Terry Paired Comparison Model." Journal of the Royal Statistical Society: Series C (Applied Statistics) 22.1 (1973): 59-68.
+#' 1. Bradley RA, Terry ME 1952. Rank Analysis of Incomplete Block Designs I: The Method of Paired Comparisons. Biometrika, 39, 324 45.
+#' 2. Davidson RR 1970. On Extending the Bradley-Terry Model to Accommodate Ties in Paired Comparison Experiments. Journal of the American Statistical Association, 65, 317 328.
+#' 3. Davidson, Roger R., and Robert J. Beaver 1977. "n extending the Bradley-Terry model to incorporate within-pair order effects. Biometrics: 693 702.
+#' 4. Stan Development Team 2020. RStan: the R interface to Stan. R package version 2.21.2.
+#' 5. Bockenholt, Ulf. Hierarchical modeling of paired comparison data. Psychological Methods 6.1 2001: 49.
+#' 6. Springall, A. Response Surface Fitting Using a Generalization of the Bradley-Terry Paired Comparison Model. Journal of the Royal Statistical Society: Series C Applied Statistics 22.1 1973: 59 68.
 #'
 #' @examples
 #' #For the simple Bradley-Terry model
