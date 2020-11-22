@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -101,6 +101,12 @@
     </li>
     <li>
       <a href="../articles/c_bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+    </li>
+    <li>
+      <a href="../articles/d_paper.html">d_paper</a>
+    </li>
+    <li>
+      <a href="../articles/e_contributing.html">e_contributing</a>
     </li>
   </ul>
 </li>
@@ -132,14 +138,37 @@
       <small>Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="bpcs-100" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.0">
+<a href="#bpcs-100" class="anchor"></a>bpcs 1.0.0</h1>
+<ul>
+<li>Package is feature complete and reached version 1.0.0</li>
+<li>Test coverage &gt; 80%</li>
+<li>Bayesian computation of different variations of the Bradley-Terry (including with home advantage, random effects and the generalized model).</li>
+<li>Bayesian computation of different variations of the Davidson model to handle ties in the contest (including with home advantage, random effects and the generalized model).</li>
+<li>Accepts a column with the results of the contest or the scores for each player.</li>
+<li>Customize a normal prior distribution for every parameter.</li>
+<li>Compute HDP interval for every parameter with the <code>get_hpdi_parameters</code> function</li>
+<li>Compute rank of the players with the <code>get_rank_of_players</code> function.</li>
+<li>Compute all the probability combinations for one player beating the other with the <code>get_probabilities</code> function.</li>
+<li>Convert aggregated tables of results into long format (one contest per row) with the <code>expand_aggregated_data.</code>
+</li>
+<li>Obtain the posterior distribution for every parameter of the model with the <code>get_sample_posterior</code> function.</li>
+<li>Easy predictions using the <code>predict</code> function.</li>
+<li>We do not reinforce any table or plotting library! Results are returned as data frames for easier plotting and creating tables</li>
+<li>We reinforce the need to manually specify the model to be used.</li>
+<li>Full documentation available at the package site</li>
+</ul>
+</div>
     <div id="bpcs-0009000" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.0.9000">
 <a href="#bpcs-0009000" class="anchor"></a>bpcs 0.0.0.9000</h1>
 <ul>
+<li>Experimental stage</li>
 <li>Basic functionality</li>
 <li>pkgdown site</li>
 <li>starting testing</li>
-<li>add a few stan models and starting documentation</li>
+<li>add a few Stan models and starting documentation</li>
 </ul>
 </div>
   </div>
@@ -155,7 +184,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by David Issa Mattos.</p>
+  <p>Developed by David Issa Mattos, Erika Martins Silva Ramos.</p>
 </div>
 
 <div class="pkgdown">

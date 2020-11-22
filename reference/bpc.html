@@ -74,7 +74,7 @@ For more information and larger examples of usage see the vignettes." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -104,6 +104,12 @@ For more information and larger examples of usage see the vignettes." />
     </li>
     <li>
       <a href="../articles/c_bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+    </li>
+    <li>
+      <a href="../articles/d_paper.html">d_paper</a>
+    </li>
+    <li>
+      <a href="../articles/e_contributing.html">e_contributing</a>
     </li>
   </ul>
 </li>
@@ -207,11 +213,11 @@ For more information and larger examples of usage see the vignettes.</p>
       <td><ul>
 <li><p>'bt' for the Bradley Terry model. Ref: Bradley-Terry 1952,</p></li>
 <li><p>'davidson' the Davidson model to handle for ties. Ref: Davidson 1970</p></li>
-<li><p>'btordereffect' for the Bradley-Terry with order effect (for home advantage). Ref: Davidson 1977</p></li>
-<li><p>'davidsonordereffect' for the Davidson model with order effect (for home advantage) and ties. Ref: Davidson 1977</p></li>
-<li><p>'btgeneralized': for the generalized Bradley Terry model for subject specific predictors</p></li>
+<li><p>'btordereffect' for the Bradley-Terry with order effect, for home advantage. Ref: Davidson 1977</p></li>
+<li><p>'davidsonordereffect' for the Davidson model with order effect, for home advantage, and ties. Ref: Davidson 1977</p></li>
+<li><p>'btgeneralized': for the generalized Bradley Terry model for subject specific predictors. Ref: Springall 1973</p></li>
 <li><p>'davidsongeneralized' for the generalized Davidson model for subject specific predictors</p></li>
-<li><p>'btU': for the Bradley-Terry with random effects</p></li>
+<li><p>'btU': for the Bradley-Terry with random effects. Ref: Bockenholt 2001</p></li>
 <li><p>'davidsonU': For Davidson model with random effects</p></li>
 </ul></td>
     </tr>
@@ -219,7 +225,7 @@ For more information and larger examples of usage see the vignettes.</p>
       <th>solve_ties</th>
       <td><p>A string for the method of handling ties.</p><ul>
 <li><p>'random' for converting ties randomly,</p></li>
-<li><p>'remove' for removing the tie occurrencess</p></li>
+<li><p>'remove' for removing the tie occurrences</p></li>
 <li><p>'none' to ignore ties. This requires a model capable of handling  ties</p></li>
 </ul></td>
     </tr>
@@ -269,10 +275,16 @@ For more information and larger examples of usage see the vignettes.</p>
     <p>An object of the class bpc. This object should be used in conjunction with the several auxiliary functions from the package</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Bradley RA, Terry ME (1952). “Rank Analysis of Incomplete Block Designs I: The Method of Paired Comparisons.” Biometrika, 39, 324–45.
-Davidson RR (1970). “On Extending the Bradley-Terry Model to Accommodate Ties in Paired Comparison Experiments.” Journal of the American Statistical Association, 65, 317–328.
-Davidson, Roger R., and Robert J. Beaver (1977). "On extending the Bradley-Terry model to incorporate within-pair order effects." Biometrics: 693-702.
-Stan Development Team (2020). RStan: the R interface to Stan. R package version 2.21.2. http://mc-stan.org/.</p>
+    
+<ol>
+<li><p>Bradley RA, Terry ME 1952. Rank Analysis of Incomplete Block Designs I: The Method of Paired Comparisons. Biometrika, 39, 324 45.</p></li>
+<li><p>Davidson RR 1970. On Extending the Bradley-Terry Model to Accommodate Ties in Paired Comparison Experiments. Journal of the American Statistical Association, 65, 317 328.</p></li>
+<li><p>Davidson, Roger R., and Robert J. Beaver 1977. "n extending the Bradley-Terry model to incorporate within-pair order effects. Biometrics: 693 702.</p></li>
+<li><p>Stan Development Team 2020. RStan: the R interface to Stan. R package version 2.21.2.</p></li>
+<li><p>Bockenholt, Ulf. Hierarchical modeling of paired comparison data. Psychological Methods 6.1 2001: 49.</p></li>
+<li><p>Springall, A. Response Surface Fitting Using a Generalization of the Bradley-Terry Paired Comparison Model. Journal of the Royal Statistical Society: Series C Applied Statistics 22.1 1973: 59 68.</p></li>
+</ol>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>#For the simple Bradley-Terry model</span>
@@ -285,8 +297,8 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 </div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 5.2e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.52 seconds.
+#&gt; Chain 1: Gradient evaluation took 3.2e-05 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.32 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -303,9 +315,9 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.097335 seconds (Warm-up)
-#&gt; Chain 1:                0.092809 seconds (Sampling)
-#&gt; Chain 1:                0.190144 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.094517 seconds (Warm-up)
+#&gt; Chain 1:                0.094059 seconds (Sampling)
+#&gt; Chain 1:                0.188576 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
@@ -328,15 +340,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.114325 seconds (Warm-up)
-#&gt; Chain 2:                0.091806 seconds (Sampling)
-#&gt; Chain 2:                0.206131 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.097911 seconds (Warm-up)
+#&gt; Chain 2:                0.090202 seconds (Sampling)
+#&gt; Chain 2:                0.188113 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 1.5e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
+#&gt; Chain 3: Gradient evaluation took 1.3e-05 seconds
+#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
 #&gt; Chain 3: Adjust your expectations accordingly!
 #&gt; Chain 3: 
 #&gt; Chain 3: 
@@ -353,15 +365,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.097623 seconds (Warm-up)
-#&gt; Chain 3:                0.108385 seconds (Sampling)
-#&gt; Chain 3:                0.206008 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.098984 seconds (Warm-up)
+#&gt; Chain 3:                0.103372 seconds (Sampling)
+#&gt; Chain 3:                0.202356 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 1.6e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
+#&gt; Chain 4: Gradient evaluation took 1.5e-05 seconds
+#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
 #&gt; Chain 4: Adjust your expectations accordingly!
 #&gt; Chain 4: 
 #&gt; Chain 4: 
@@ -378,9 +390,9 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.098995 seconds (Warm-up)
-#&gt; Chain 4:                0.099444 seconds (Sampling)
-#&gt; Chain 4:                0.198439 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.096782 seconds (Warm-up)
+#&gt; Chain 4:                0.093514 seconds (Sampling)
+#&gt; Chain 4:                0.190296 seconds (Total)
 #&gt; Chain 4: </div><div class='output co'>#&gt; Estimated baseline parameters with HPD intervals:
 #&gt; 
 #&gt; 
@@ -404,7 +416,7 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 
       <footer>
       <div class="copyright">
-  <p>Developed by David Issa Mattos.</p>
+  <p>Developed by David Issa Mattos, Erika Martins Silva Ramos.</p>
 </div>
 
 <div class="pkgdown">

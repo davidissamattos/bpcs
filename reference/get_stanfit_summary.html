@@ -73,7 +73,7 @@ This excludes the log_lik paramter" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -103,6 +103,12 @@ This excludes the log_lik paramter" />
     </li>
     <li>
       <a href="../articles/c_bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+    </li>
+    <li>
+      <a href="../articles/d_paper.html">d_paper</a>
+    </li>
+    <li>
+      <a href="../articles/e_contributing.html">e_contributing</a>
     </li>
   </ul>
 </li>
@@ -183,15 +189,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.09414 seconds (Warm-up)
-#&gt; Chain 1:                0.100219 seconds (Sampling)
-#&gt; Chain 1:                0.194359 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.097352 seconds (Warm-up)
+#&gt; Chain 1:                0.102091 seconds (Sampling)
+#&gt; Chain 1:                0.199443 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 1.6e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
+#&gt; Chain 2: Gradient evaluation took 1.3e-05 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -208,15 +214,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.10693 seconds (Warm-up)
-#&gt; Chain 2:                0.101496 seconds (Sampling)
-#&gt; Chain 2:                0.208426 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.101989 seconds (Warm-up)
+#&gt; Chain 2:                0.098483 seconds (Sampling)
+#&gt; Chain 2:                0.200472 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 1.4e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
+#&gt; Chain 3: Gradient evaluation took 1.3e-05 seconds
+#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
 #&gt; Chain 3: Adjust your expectations accordingly!
 #&gt; Chain 3: 
 #&gt; Chain 3: 
@@ -233,9 +239,9 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.106287 seconds (Warm-up)
-#&gt; Chain 3:                0.112504 seconds (Sampling)
-#&gt; Chain 3:                0.218791 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.099221 seconds (Warm-up)
+#&gt; Chain 3:                0.101633 seconds (Sampling)
+#&gt; Chain 3:                0.200854 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
@@ -258,9 +264,9 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.099192 seconds (Warm-up)
-#&gt; Chain 4:                0.116888 seconds (Sampling)
-#&gt; Chain 4:                0.21608 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.094278 seconds (Warm-up)
+#&gt; Chain 4:                0.104028 seconds (Sampling)
+#&gt; Chain 4:                0.198306 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='va'>s</span> <span class='op'>&lt;-</span> <span class='fu'>get_stanfit_summary</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>s</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   Parameter        mean    se_mean       sd      2.5%        25%         50%
@@ -286,7 +292,7 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 
       <footer>
       <div class="copyright">
-  <p>Developed by David Issa Mattos.</p>
+  <p>Developed by David Issa Mattos, Erika Martins Silva Ramos.</p>
 </div>
 
 <div class="pkgdown">
