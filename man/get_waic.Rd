@@ -26,5 +26,5 @@ waic<-get_waic(m)
 print(waic)
 }
 \references{
-Gelman, Andrew, Jessica Hwang, and Aki Vehtari. "Understanding predictive information criteria for Bayesian models." Statistics and computing 24.6 (2014): 997-1016.
+Gelman, Andrew, Jessica Hwang, and Aki Vehtari. Understanding predictive information criteria for Bayesian models. Statistics and computing 24.6 (2014): 997-1016.
 }

@@ -8,6 +8,10 @@
 #' @import methods
 #' @import Rcpp
 #' @importFrom rstan sampling
+#' @importFrom ggplot2 ggplot
+#' @importFrom badger badge_license
+#' @importFrom RcppParallel CxxFlags
+#' @importFrom rstantools rstan_config
 #' @importFrom magrittr "%>%"
 #'
 #' @references

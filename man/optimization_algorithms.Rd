@@ -18,7 +18,7 @@ This is the expansion of the data where each row contains 1 match only
 }
 }
 \source{
-Mattos, David Issa, Jan Bosch, and Helena Holmström Olsson. "Statistical Models for the Analysis of Optimization Algorithms with Benchmark Functions." arXiv preprint arXiv:2010.03783 (2020).
+Mattos, David Issa, Jan Bosch, and Helena Holmstrom Olsson. Statistical Models for the Analysis of Optimization Algorithms with Benchmark Functions. arXiv preprint arXiv:2010.03783 (2020).
 }
 \usage{
 optimization_algorithms

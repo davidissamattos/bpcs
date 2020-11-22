@@ -116,6 +116,34 @@ id
 
 <td style="text-align:left;">
 
+Graf
+
+</td>
+
+<td style="text-align:left;">
+
+Sanchez
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+<td style="text-align:right;">
+
+34
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
 Seles
 
 </td>
@@ -144,124 +172,12 @@ Navratilova
 
 <td style="text-align:left;">
 
-Seles
-
-</td>
-
-<td style="text-align:left;">
-
-Sabatini
-
-</td>
-
-<td style="text-align:right;">
-
-0
-
-</td>
-
-<td style="text-align:right;">
-
-6
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Graf
-
-</td>
-
-<td style="text-align:left;">
-
-Sanchez
-
-</td>
-
-<td style="text-align:right;">
-
-0
-
-</td>
-
-<td style="text-align:right;">
-
-32
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
 Sabatini
 
 </td>
 
 <td style="text-align:left;">
 
-Sanchez
-
-</td>
-
-<td style="text-align:right;">
-
-0
-
-</td>
-
-<td style="text-align:right;">
-
-38
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Seles
-
-</td>
-
-<td style="text-align:left;">
-
-Graf
-
-</td>
-
-<td style="text-align:right;">
-
-1
-
-</td>
-
-<td style="text-align:right;">
-
-4
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Seles
-
-</td>
-
-<td style="text-align:left;">
-
 Navratilova
 
 </td>
@@ -274,7 +190,35 @@ Navratilova
 
 <td style="text-align:right;">
 
-11
+36
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Graf
+
+</td>
+
+<td style="text-align:left;">
+
+Sanchez
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+<td style="text-align:right;">
+
+28
 
 </td>
 
@@ -296,41 +240,13 @@ Sanchez
 
 <td style="text-align:right;">
 
-1
-
-</td>
-
-<td style="text-align:right;">
-
-46
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Graf
-
-</td>
-
-<td style="text-align:left;">
-
-Navratilova
-
-</td>
-
-<td style="text-align:right;">
-
 0
 
 </td>
 
 <td style="text-align:right;">
 
-24
+44
 
 </td>
 
@@ -358,7 +274,7 @@ Sabatini
 
 <td style="text-align:right;">
 
-20
+16
 
 </td>
 
@@ -368,13 +284,13 @@ Sabatini
 
 <td style="text-align:left;">
 
-Navratilova
+Graf
 
 </td>
 
 <td style="text-align:left;">
 
-Sanchez
+Navratilova
 
 </td>
 
@@ -386,7 +302,91 @@ Sanchez
 
 <td style="text-align:right;">
 
-43
+25
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Seles
+
+</td>
+
+<td style="text-align:left;">
+
+Graf
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+<td style="text-align:right;">
+
+5
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Graf
+
+</td>
+
+<td style="text-align:left;">
+
+Sabatini
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+<td style="text-align:right;">
+
+23
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Seles
+
+</td>
+
+<td style="text-align:left;">
+
+Graf
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+<td style="text-align:right;">
+
+1
 
 </td>
 
@@ -434,9 +434,9 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.092602 seconds (Warm-up)
-#> Chain 1:                0.101629 seconds (Sampling)
-#> Chain 1:                0.194231 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.095442 seconds (Warm-up)
+#> Chain 1:                0.096545 seconds (Sampling)
+#> Chain 1:                0.191987 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
@@ -459,15 +459,15 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.09334 seconds (Warm-up)
-#> Chain 2:                0.095332 seconds (Sampling)
-#> Chain 2:                0.188672 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.093949 seconds (Warm-up)
+#> Chain 2:                0.100111 seconds (Sampling)
+#> Chain 2:                0.19406 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 1.3e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
+#> Chain 3: Gradient evaluation took 1.4e-05 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -484,15 +484,15 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.088676 seconds (Warm-up)
-#> Chain 3:                0.082815 seconds (Sampling)
-#> Chain 3:                0.171491 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.097541 seconds (Warm-up)
+#> Chain 3:                0.095545 seconds (Sampling)
+#> Chain 3:                0.193086 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 1.4e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
+#> Chain 4: Gradient evaluation took 1.5e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -509,9 +509,9 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.089795 seconds (Warm-up)
-#> Chain 4:                0.085058 seconds (Sampling)
-#> Chain 4:                0.174853 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.092788 seconds (Warm-up)
+#> Chain 4:                0.101826 seconds (Sampling)
+#> Chain 4:                0.194614 seconds (Total)
 #> Chain 4:
 ```
 
@@ -533,11 +533,11 @@ summary(m)
 #> 
 #> Parameter               Mean   HPD_lower   HPD_higher    n_eff   Rhat
 #> --------------------  ------  ----------  -----------  -------  -----
-#> lambda[Seles]           0.54       -2.25         3.50   703.34   1.00
-#> lambda[Graf]            0.97       -2.02         3.65   663.71   1.01
-#> lambda[Sabatini]       -0.30       -3.09         2.59   673.57   1.01
-#> lambda[Navratilova]     0.07       -2.63         3.04   666.14   1.01
-#> lambda[Sanchez]        -1.09       -3.72         2.07   693.10   1.01
+#> lambda[Seles]           0.50       -2.06         3.44   744.52   1.01
+#> lambda[Graf]            0.92       -1.73         3.67   670.43   1.01
+#> lambda[Sabatini]       -0.35       -3.21         2.28   710.91   1.01
+#> lambda[Navratilova]     0.02       -2.70         2.80   734.57   1.01
+#> lambda[Sanchez]        -1.14       -4.02         1.62   755.26   1.01
 #> NOTES:
 #> * A higher lambda indicates a higher team ability
 #> 
@@ -549,13 +549,13 @@ summary(m)
 #> 
 #> i             j              i_beats_j
 #> ------------  ------------  ----------
-#> Graf          Navratilova         0.69
+#> Graf          Navratilova         0.68
 #> Graf          Sabatini            0.77
 #> Graf          Sanchez             0.87
-#> Graf          Seles               0.60
+#> Graf          Seles               0.59
 #> Navratilova   Sabatini            0.59
-#> Navratilova   Sanchez             0.73
-#> Navratilova   Seles               0.39
+#> Navratilova   Sanchez             0.74
+#> Navratilova   Seles               0.40
 #> Sabatini      Sanchez             0.67
 #> Sabatini      Seles               0.32
 #> Sanchez       Seles               0.19
@@ -567,11 +567,11 @@ summary(m)
 #> 
 #> Parameter              MedianRank   MeanRank   StdRank
 #> --------------------  -----------  ---------  --------
-#> lambda[Graf]                    1       1.39      0.64
-#> lambda[Seles]                   2       2.10      0.89
-#> lambda[Navratilova]             3       3.02      0.86
-#> lambda[Sabatini]                4       3.66      0.84
-#> lambda[Sanchez]                 5       4.82      0.45
+#> lambda[Graf]                    1       1.36      0.62
+#> lambda[Seles]                   2       2.19      0.89
+#> lambda[Navratilova]             3       2.99      0.91
+#> lambda[Sabatini]                4       3.66      0.87
+#> lambda[Sanchez]                 5       4.80      0.46
 ```
 
 # Features of the bpcs package

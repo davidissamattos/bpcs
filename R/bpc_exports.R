@@ -216,7 +216,7 @@ get_rank_of_players <- function(bpc_object, n = 1000) {
 #'
 #' This is used to evaluate the fit of the model using entropy criteria
 #' @references
-#' Vehtari A, Gelman A, Gabry J (2017). “Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC.” _Statistics and Computing_, *27*, 1413-1432. doi:10.1007/s11222-016-9696-4 (URL: https://doi.org/10.1007/s11222-016-9696-4).
+#' Vehtari A, Gelman A, Gabry J (2017). Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC. Statistics and Computing_, 27, 1413-1432
 #' @param bpc_object a bpc object
 #' @return a loo object
 #' @export
@@ -241,7 +241,7 @@ get_loo <- function(bpc_object) {
 #'
 #' This is used to evaluate the fit of the model using the Watanabe-Akaike Information criteria
 #' @references
-#' Gelman, Andrew, Jessica Hwang, and Aki Vehtari. "Understanding predictive information criteria for Bayesian models." Statistics and computing 24.6 (2014): 997-1016.
+#' Gelman, Andrew, Jessica Hwang, and Aki Vehtari. Understanding predictive information criteria for Bayesian models. Statistics and computing 24.6 (2014): 997-1016.
 #' @param bpc_object a bpc object
 #' @return a loo object
 #' @export

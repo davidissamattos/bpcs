@@ -43,6 +43,6 @@
 #' * Ndimensions: Number of dimensions of the benchmark problem
 #' * MaxFevalPerDimensions: Maximum allowed budget for the algorithm per dimensions of the benchmark problem
 #' * simNumber: id of the simulation. Indicates the repeated measures of each algorithm in each benchmark
-#' @source Mattos, David Issa, Jan Bosch, and Helena Holmström Olsson. "Statistical Models for the Analysis of Optimization Algorithms with Benchmark Functions." arXiv preprint arXiv:2010.03783 (2020).
+#' @source Mattos, David Issa, Jan Bosch, and Helena Holmstrom Olsson. Statistical Models for the Analysis of Optimization Algorithms with Benchmark Functions. arXiv preprint arXiv:2010.03783 (2020).
 #' @keywords data
 "optimization_algorithms"
