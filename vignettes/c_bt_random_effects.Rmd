@@ -40,7 +40,9 @@ In this example, we will show how to use the Bradley-Terry model to compensate t
 First let's load some packages
 ```{r setup, warning=F, message=F}
 library(bpcs)
-library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
 library(kableExtra)
 library(knitr)
 library(gtools)
@@ -55,7 +57,7 @@ rstan::rstan_options(auto_write = TRUE)
 The collected data is available as:
 ```{r}
 data("optimization_algorithms")
-kable(dplyr::sample_n(optimization_algorithms, size=20),
+knitr::kable(dplyr::sample_n(optimization_algorithms, size=20),
       caption= "Sample of the data set")
 ```
 
@@ -65,7 +67,7 @@ Here we have the following benchmark functions:
 ```{r}
 bm<-unique(optimization_algorithms$Benchmark)
 nbm<-length(bm)
-kable(matrix(bm,ncol = 4))
+knitr::kable(matrix(bm,ncol = 4))
 ```
 To reduce a bit the model sampling time here lets reduce the number of benchmark functions and only use 10 of them.
 
@@ -74,7 +76,7 @@ set.seed(1)
 bm_reduced <- sample(size=10, x=bm,replace = F)
 optimization_algorithms <- optimization_algorithms %>% 
   dplyr::filter(Benchmark %in% bm_reduced)
-kable(matrix(bm_reduced,ncol = 2))
+knitr::kable(matrix(bm_reduced,ncol = 2))
 ```
 
 
@@ -82,7 +84,7 @@ Here we have the optimization algorithms:
 ```{r}
 alg<-unique(optimization_algorithms$Algorithm)
 nalg<-length(alg)
-kable(alg)
+knitr::kable(alg)
 ```
 
 # Preparing the data
@@ -147,7 +149,7 @@ df_3<-as.data.frame(df_3)
 
 The table below shows how the dataset looks like now.
 ```{r}
-sample_n(df_3,size = 20)
+dplyr::sample_n(df_3,size = 20)
 ```
 
 # The model
@@ -176,7 +178,7 @@ stanfit<-get_stanfit(m)
 t <- as.data.frame(summary(stanfit)$summary)
 t <- t[1:7,c(1, 9, 10)] # getting only the first seven parameters the mean Rhat and neff
 
-kable(t)
+knitr::kable(t)
 ```
 
 
@@ -187,7 +189,7 @@ Traceplots of the chains with the bayesplot library
 ```{r}
 library(bayesplot)
 posterior<-rstan::extract(stanfit,inc_warmup=T,permuted=F)
-mcmc_trace(posterior,pars = c("lambda[1]","lambda[2]","lambda[3]","lambda[4]", "lambda[5]", "lambda[6]", "U_std"), n_warmup=1000)
+bayesplot::mcmc_trace(posterior,pars = c("lambda[1]","lambda[2]","lambda[3]","lambda[4]", "lambda[5]", "lambda[6]", "U_std"), n_warmup=1000)
 ```
 
 Everything seems in order for us to look at the predictive posterior bar plot. 
@@ -198,7 +200,7 @@ yrep<-predict(m,df_3,n=100,return_matrix = T)
 
 
 ```{r}
-ppc_bars(y=df_3$y, yrep=yrep) +
+bayesplot::ppc_bars(y=df_3$y, yrep=yrep) +
   labs(title = 'Bar plot with medians and uncertainty\n intervals superimposed')
 ```
 
@@ -214,19 +216,19 @@ summary(m)
 Of course we can get these estimates in nicer tables with kable that allows a greater deal of customization
 
 ```{r}
-kable(get_hpdi_parameters(m),
+knitr::kable(get_hpdi_parameters(m),
       caption = "Parameter distribution with the HPD intervals",
       digits = 3)
 ```
 
 ```{r}
-kable(get_probabilities(m)$Table,
+knitr::kable(get_probabilities(m)$Table,
       caption = "Probabilities of one an algorithm beating the other in different benchmarks",
       digits = 3)
 ```
 
 ```{r}
-kable(dplyr::select(get_rank_of_players(m),-PosteriorRank),
+knitr::kable(dplyr::select(get_rank_of_players(m),-PosteriorRank),
       caption = "Ranking the algorithms",
       digits = 2)
 ```
@@ -245,7 +247,7 @@ new_pars <- replace(parameters,indexes,names)
 dimnames$parameters<-new_pars
 attr(posterior,'dimnames') <- dimnames
 
-mcmc_areas(posterior,
+bayesplot::mcmc_areas(posterior,
            pars = names, 
            prob = 0.8)+
   labs(title = 'Posterior distribution with medians\n and 80% intervals')
@@ -256,13 +258,13 @@ Or directly in ggplot with the HPD intervals instead of the quantiles
 hpdi <- get_hpdi_parameters(m) %>% 
   dplyr::filter(startsWith(Parameter,"lambda"))
 
-ggplot(hpdi, aes(x=Parameter))+
-  geom_pointrange(aes(
+ggplot2::ggplot(hpdi, aes(x=Parameter))+
+  ggplot2::geom_pointrange(aes(
     ymin=HPD_lower, 
     ymax=HPD_higher, 
     y=Mean))+
-  labs(y="Estimate", x="Algorithm", title = "HPDI interval of the strength of the algorithms")+
-  coord_flip()
+  ggplot2::labs(y="Estimate", x="Algorithm", title = "HPDI interval of the strength of the algorithms")+
+  ggplot2::coord_flip()
 
 ```
 

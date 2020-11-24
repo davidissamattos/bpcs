@@ -6,7 +6,7 @@ bibliography: ./vignettes/bibliography.bib
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
-library(tidyverse)
+library(dplyr)
 library(knitr)
 library(kableExtra)
 library(badger)
@@ -57,6 +57,8 @@ To install the development version of the bpcs package, install directly from th
 remotes::install_github('davidissamattos/bpcs')
 ```
 
+**NOTE**: installation can take a long time (average 10-20min on a regular laptop) due to the compilation of the models. We plan to improve this in future versions of the package.
+
 After installing, we load the package with:
 ```{r}
 library(bpcs)
@@ -72,7 +74,7 @@ The main function of the package is the `bpc` function. For the simple Bradley-T
 We will utilize the tennis dataset available [@agresti2003categorical]. The dataset can be seen below and is available as `data(tennis_agresti)`:
 
 ```{r}
-sample_n(tennis_agresti,10) %>% 
+dplyr::sample_n(tennis_agresti,10) %>% 
   knitr::kable()
 ```
 
@@ -147,6 +149,7 @@ Note that we currently don't variations and combinations of these models (e.g BT
   - This will increase the complexity of the stan model but will reduce code for the predict, get_probabilities, and the bpc function
 - Add new models for modeling time effects (newer contests have higher impact on the ability than older contests)
 - Add model for the Bayesian ELO-type rating system
+- Add models for cummulative comparisons
 - Improve test coverage
 
 

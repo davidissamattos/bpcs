@@ -17,7 +17,9 @@ knitr::opts_chunk$set(
 
 ```{r setup, echo=T, results='hide', warning=F, message=F}
 library(bpcs)
-library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(tibble)
 library(kableExtra)
 library(bayesplot)
 library(knitr)
@@ -106,13 +108,13 @@ posterior<-rstan::extract(stanfit,inc_warmup=T,permuted=F)
 Getting the traceplots:
 
 ```{r}
-mcmc_trace(posterior,pars = c("lambda[1]","lambda[2]","lambda[3]","lambda[4]"), n_warmup=1000)
+bayesplot::mcmc_trace(posterior,pars = c("lambda[1]","lambda[2]","lambda[3]","lambda[4]"), n_warmup=1000)
 ```
 From the graph above we see a good mix between the chains. Specially after warmup (grey area)
 
 We can also look at divergent iterations between two parameters
 ```{r}
-mcmc_scatter(
+bayesplot::mcmc_scatter(
   as.matrix(stanfit),
   pars = c("lambda[1]","lambda[2]"),
   np = nuts_params(stanfit),
@@ -138,7 +140,7 @@ yrep<-predict(m1,tennis_agresti,n=100,return_matrix = T)
 
 
 ```{r}
-ppc_bars(y=y, yrep=yrep) +
+bayesplot::ppc_bars(y=y, yrep=yrep) +
   labs(title = 'Bar plot with medians and uncertainty\n intervals superimposed')
 ```
 
@@ -157,7 +159,7 @@ If we want to create nicer tables and export them to latex/html we can leverage 
 
 Parameter table with HPD intervals
 ```{r}
-kable(get_hpdi_parameters(m1), caption = 'Parameter distribution and the High Posterior Density intervals', digits = 2) %>% 
+knitr::kable(get_hpdi_parameters(m1), caption = 'Parameter distribution and the High Posterior Density intervals', digits = 2) %>% 
   kable_styling()
 ```
 
@@ -173,7 +175,7 @@ new_pars <- replace(parameters,indexes,names)
 dimnames$parameters<-new_pars
 attr(posterior,'dimnames') <- dimnames
 
-mcmc_areas(posterior,
+bayesplot::mcmc_areas(posterior,
            pars = names,
            prob = 0.8)+
   labs(title = 'Posterior distribution with medians\n and 80% intervals')
@@ -194,15 +196,15 @@ We can produce a table with the values of this dataframe.
 
 ```{r}
 t <- ranking %>% dplyr::select(Parameter, MedianRank, StdRank)
-kable(t, caption = 'Rank of the players') %>%
+knitr::kable(t, caption = 'Rank of the players') %>%
   kable_styling()
 ```
 
 If we want to visualize the histogram of the rank distribution of each player. 
 ```{r}
-ggplot()+
-  geom_histogram(aes(x=ranking$PosteriorRank[1]$rank),bins = 5)+
-  labs(title = 'Posterior distribution of the rank for Graf', x='Rank')
+ggplot2::ggplot()+
+  ggplot2::geom_histogram(aes(x=ranking$PosteriorRank[1]$rank),bins = 5)+
+  ggplot2::labs(title = 'Posterior distribution of the rank for Graf', x='Rank')
 ```
 
 ## Predicting results

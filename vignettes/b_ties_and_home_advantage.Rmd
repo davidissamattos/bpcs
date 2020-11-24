@@ -18,7 +18,8 @@ knitr::opts_chunk$set(
 ```{r setup, warning=F, message=F}
 library(bpcs)
 library(knitr)
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
 library(kableExtra)
 library(rstan)
 #Stan should use parallel cores
@@ -35,7 +36,7 @@ The data can be accessed by:
 
 ```{r}
 data("brasil_soccer_league")
-kable(head(brasil_soccer_league))
+knitr::kable(head(brasil_soccer_league))
 ```
 
 Let's analyze only the data from 2019 and remove a few columns that are not relevant for this example:
@@ -43,13 +44,13 @@ Let's analyze only the data from 2019 and remove a few columns that are not rele
 d <- brasil_soccer_league %>%
   dplyr::filter(Date >= as.Date("2019-01-01") &
                   Date <= as.Date("2019-12-31")) %>%
-  select(HomeTeam, VisitorTeam, ScoreHomeTeam, ScoreVisitorTeam, Round) 
+  dplyr::select(HomeTeam, VisitorTeam, ScoreHomeTeam, ScoreVisitorTeam, Round) 
 ```
 
 Now we have a smaller dataset (380 rows with 5 variables)
 
 ```{r}
-kable(head(d))
+knitr::kable(head(d))
 ```
 
 # Fitting a Bradley-Terry model
@@ -96,8 +97,8 @@ Let's get the rank with the simple `bt` model
 
 ```{r}
 get_rank_of_players(m1) %>% 
-  select(Parameter, MedianRank) %>% 
-  kable()
+  dplyr::select(Parameter, MedianRank) %>% 
+  knitr::kable()
 ```
 
 # Fitting the Davidson model
@@ -133,8 +134,8 @@ Let's look at the ranking with ties:
 
 ```{r}
 get_rank_of_players(m2) %>% 
-  select(Parameter, MedianRank) %>% 
-  kable()
+  dplyr::select(Parameter, MedianRank) %>% 
+  knitr::kable()
 ```
 
 We can see that when we consider ties the rank has changed a bit and the difference between the teams reduce (we can see from both the parameter table as well as many equal median ranks between the teams).
@@ -144,7 +145,7 @@ We can see that when we consider ties the rank has changed a bit and the differe
 
 ```{r}
 d_home <- d %>% 
-  mutate(home_player1 = 1)
+  dplyr::mutate(home_player1 = 1)
 
 m3 <- bpc(d_home, 
           player0 = 'VisitorTeam', 
@@ -176,8 +177,8 @@ Let's look at the ranking with home advantage:
 
 ```{r}
 get_rank_of_players(m3) %>% 
-  select(Parameter, MedianRank) %>% 
-  kable()
+  dplyr::select(Parameter, MedianRank) %>% 
+  knitr::kable()
 ```
 
 We can see that the players ranking has changed a bit from the  BT and the Davidson model when we compensate for the home advantage 
@@ -217,8 +218,8 @@ Let's look at the ranking with home advantage and ties:
 
 ```{r}
 get_rank_of_players(m4) %>% 
-  select(Parameter, MedianRank) %>% 
-  kable()
+  dplyr::select(Parameter, MedianRank) %>% 
+  knitr::kable()
 ```
 
 # Comparing the models with WAIC
