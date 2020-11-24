@@ -27,6 +27,7 @@ knitr::opts_chunk$set(
 `r badge_code_size("davidissamattos/bpcs")`
 `r badge_devel("davidissamattos/bpcs", "blue")`
 `r badge_codecov("davidissamattos/bpcs")`
+[![R build status](https://github.com/davidissamattos/bpcs/workflows/R-CMD-check/badge.svg)](https://github.com/davidissamattos/bpcs/actions)
 <!-- badges: end -->
 
 The `bpcs` package performs Bayesian estimation of Paired Comparison models utilizing Stan, such as variations of the Bradley-Terry [@bradley1952rank] and the Davidson models [@davidson1970extending].
