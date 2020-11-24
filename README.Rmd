@@ -57,7 +57,7 @@ To install the development version of the bpcs package, install directly from th
 remotes::install_github('davidissamattos/bpcs')
 ```
 
-After install we load the package with:
+After installing, we load the package with:
 ```{r}
 library(bpcs)
 ```
@@ -95,9 +95,9 @@ If `rstan` is available and correctly working this function should sample the po
 
 To see a summary of the results we can run the summary function. Here we get three tables:
 
-1- The parameters of the model
-2- The probabilities of one player beating the other (this probability is based on the predictive posterior distribution)
-3- The rank of the player based on their abilities (this rank is based on the predictive posterior ranks).
+1. The parameters of the model
+2. The probabilities of one player beating the other (this probability is based on the predictive posterior distribution)
+3. The rank of the player based on their abilities (this rank is based on the predictive posterior ranks).
 
 ```{r}
 summary(m)
