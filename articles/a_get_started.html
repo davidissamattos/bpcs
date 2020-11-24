@@ -91,7 +91,8 @@
 
       
 
-      </header><script src="a_get_started_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="a_get_started_files/kePrint-0.0.1/kePrint.js"></script><link href="a_get_started_files/lightable-0.0.1/lightable.css" rel="stylesheet">
+      </header><script src="a_get_started_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="a_get_started_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="a_get_started_files/anchor-sections-1.0/anchor-sections.js"></script><script src="a_get_started_files/kePrint-0.0.1/kePrint.js"></script><link href="a_get_started_files/lightable-0.0.1/lightable.css" rel="stylesheet">
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -105,12 +106,14 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/davidissamattos/bpcs">bpcs</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/davidissamattos/bpcs">bpcs</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/bayesplot">bayesplot</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span></code></pre></div>
 <div id="getting-started" class="section level1">
 <h1 class="hasAnchor">
 <a href="#getting-started" class="anchor"></a>Getting started</h1>
@@ -120,11 +123,11 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>The package requires installation of the <code>rstan</code> package <span class="citation">(Stan Development Team 2020)</span>. For more details see the <code>REAMDE.md</code> document.</p>
 <p>To install the latest version from Github:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">'davidissamattos/bpcs'</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">'davidissamattos/bpcs'</span><span class="op">)</span></code></pre></div>
 <p>After install we load the package with:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/davidissamattos/bpcs">bpcs</a></span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/davidissamattos/bpcs">bpcs</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
@@ -142,9 +145,9 @@
 <h1 class="hasAnchor">
 <a href="#tennis-example" class="anchor"></a>Tennis example</h1>
 <p>In this example, we will use the example from tennis players from Agresti <span class="citation">(Agresti 2003)</span>. The data <code>tennis_agresti</code> contains the information regarding tennis matches between 5 players, and who won the match, 0 for player0 or 1 for player1.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">tennis_agresti</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">tennis_agresti</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <thead><tr>
 <th style="text-align:left;">
@@ -808,8 +811,8 @@ Sanchez
 </tbody>
 </table>
 <p>We can fit a Bayesian Bradley-Terry model using the <code>bpc</code> function</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bpc.html">bpc</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">tennis_agresti</span>,
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bpc.html">bpc</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">tennis_agresti</span>,
           player0 <span class="op">=</span> <span class="st">'player0'</span>,
           player1 <span class="op">=</span> <span class="st">'player1'</span>,
           result_column <span class="op">=</span> <span class="st">'y'</span>,
@@ -819,8 +822,8 @@ Sanchez
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).</span>
 <span class="co">#&gt; Chain 1: </span>
-<span class="co">#&gt; Chain 1: Gradient evaluation took 3.7e-05 seconds</span>
-<span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.37 seconds.</span>
+<span class="co">#&gt; Chain 1: Gradient evaluation took 3e-05 seconds</span>
+<span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.3 seconds.</span>
 <span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 1: </span>
 <span class="co">#&gt; Chain 1: </span>
@@ -837,9 +840,9 @@ Sanchez
 <span class="co">#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 1: </span>
-<span class="co">#&gt; Chain 1:  Elapsed Time: 0.093912 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 1:                0.09533 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 1:                0.189242 seconds (Total)</span>
+<span class="co">#&gt; Chain 1:  Elapsed Time: 0.105742 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 1:                0.112624 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 1:                0.218366 seconds (Total)</span>
 <span class="co">#&gt; Chain 1: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).</span>
@@ -862,15 +865,15 @@ Sanchez
 <span class="co">#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 2: </span>
-<span class="co">#&gt; Chain 2:  Elapsed Time: 0.094101 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 2:                0.084814 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 2:                0.178915 seconds (Total)</span>
+<span class="co">#&gt; Chain 2:  Elapsed Time: 0.105788 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 2:                0.108884 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 2:                0.214672 seconds (Total)</span>
 <span class="co">#&gt; Chain 2: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).</span>
 <span class="co">#&gt; Chain 3: </span>
-<span class="co">#&gt; Chain 3: Gradient evaluation took 1.4e-05 seconds</span>
-<span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.</span>
+<span class="co">#&gt; Chain 3: Gradient evaluation took 1.2e-05 seconds</span>
+<span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.</span>
 <span class="co">#&gt; Chain 3: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 3: </span>
 <span class="co">#&gt; Chain 3: </span>
@@ -887,15 +890,15 @@ Sanchez
 <span class="co">#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 3: </span>
-<span class="co">#&gt; Chain 3:  Elapsed Time: 0.095813 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 3:                0.098995 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 3:                0.194808 seconds (Total)</span>
+<span class="co">#&gt; Chain 3:  Elapsed Time: 0.103306 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 3:                0.109032 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 3:                0.212338 seconds (Total)</span>
 <span class="co">#&gt; Chain 3: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).</span>
 <span class="co">#&gt; Chain 4: </span>
-<span class="co">#&gt; Chain 4: Gradient evaluation took 1.5e-05 seconds</span>
-<span class="co">#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.</span>
+<span class="co">#&gt; Chain 4: Gradient evaluation took 1.2e-05 seconds</span>
+<span class="co">#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.</span>
 <span class="co">#&gt; Chain 4: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 4: </span>
 <span class="co">#&gt; Chain 4: </span>
@@ -912,24 +915,24 @@ Sanchez
 <span class="co">#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 4: </span>
-<span class="co">#&gt; Chain 4:  Elapsed Time: 0.09827 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 4:                0.097814 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 4:                0.196084 seconds (Total)</span>
-<span class="co">#&gt; Chain 4:</span></pre></div>
+<span class="co">#&gt; Chain 4:  Elapsed Time: 0.100964 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 4:                0.101651 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 4:                0.202615 seconds (Total)</span>
+<span class="co">#&gt; Chain 4:</span></code></pre></div>
 <div id="diagnostics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#diagnostics" class="anchor"></a>Diagnostics</h2>
 <p>After the chain converges to find the result we can investigate if everything went right. For that we can use the excellent tool provided in the <code>shinystan</code> <span class="citation">(Gabry 2018)</span> package that helps to assess the convergence of the chains.</p>
 <p>The <code>bpcs</code> package provides a tiny wrapper to launch it automatically with some default parameters.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="../reference/launch_shinystan.html">launch_shinystan</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/launch_shinystan.html">launch_shinystan</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></code></pre></div>
 <p>Alternatively, you can retrieve the stanfit object and launch it with your own parameters.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">stanfit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_stanfit.html">get_stanfit</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span>
-<span class="fu">shinystan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/shinystan/man/launch_shinystan.html">launch_shinystan</a></span><span class="op">(</span><span class="va">stanfit</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">stanfit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_stanfit.html">get_stanfit</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span>
+<span class="fu">shinystan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/shinystan/man/launch_shinystan.html">launch_shinystan</a></span><span class="op">(</span><span class="va">stanfit</span><span class="op">)</span></code></pre></div>
 <p>If you prefer to investigate without <code>shinystan</code> we can retrieve the stanfit object and investigate ourselves or with the help of the <code>bayesplot</code> package <span class="citation">(Gabry et al. 2019)</span>. Here we need the stanfit and the stan posterior matrix to proceed. The indexes in Stan refer to the names and indexes available at the lookup table</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">m1</span><span class="op">$</span><span class="va">lookup_table</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">m1</span><span class="op">$</span><span class="va">lookup_table</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
@@ -982,48 +985,48 @@ Sanchez
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="va">stanfit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_stanfit.html">get_stanfit</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span>
-<span class="va">posterior</span><span class="op">&lt;-</span><span class="fu">rstan</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/rstan/reference/stanfit-method-extract.html">extract</a></span><span class="op">(</span><span class="va">stanfit</span>,inc_warmup<span class="op">=</span><span class="cn">T</span>,permuted<span class="op">=</span><span class="cn">F</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">stanfit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_stanfit.html">get_stanfit</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span>
+<span class="va">posterior</span><span class="op">&lt;-</span><span class="fu">rstan</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/rstan/reference/stanfit-method-extract.html">extract</a></span><span class="op">(</span><span class="va">stanfit</span>,inc_warmup<span class="op">=</span><span class="cn">T</span>,permuted<span class="op">=</span><span class="cn">F</span><span class="op">)</span></code></pre></div>
 <p>Getting the traceplots:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="fu"><a href="https://mc-stan.org/bayesplot/reference/MCMC-traces.html">mcmc_trace</a></span><span class="op">(</span><span class="va">posterior</span>,pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lambda[1]"</span>,<span class="st">"lambda[2]"</span>,<span class="st">"lambda[3]"</span>,<span class="st">"lambda[4]"</span><span class="op">)</span>, n_warmup<span class="op">=</span><span class="fl">1000</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">bayesplot</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/bayesplot/reference/MCMC-traces.html">mcmc_trace</a></span><span class="op">(</span><span class="va">posterior</span>,pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lambda[1]"</span>,<span class="st">"lambda[2]"</span>,<span class="st">"lambda[3]"</span>,<span class="st">"lambda[4]"</span><span class="op">)</span>, n_warmup<span class="op">=</span><span class="fl">1000</span><span class="op">)</span></code></pre></div>
 <p><img src="a_get_started_files/figure-html/unnamed-chunk-10-1.png" width="700"> From the graph above we see a good mix between the chains. Specially after warmup (grey area)</p>
 <p>We can also look at divergent iterations between two parameters</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="fu"><a href="https://mc-stan.org/bayesplot/reference/MCMC-scatterplots.html">mcmc_scatter</a></span><span class="op">(</span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">bayesplot</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/bayesplot/reference/MCMC-scatterplots.html">mcmc_scatter</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">stanfit</span><span class="op">)</span>,
   pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lambda[1]"</span>,<span class="st">"lambda[2]"</span><span class="op">)</span>,
   np <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/bayesplot/reference/bayesplot-extractors.html">nuts_params</a></span><span class="op">(</span><span class="va">stanfit</span><span class="op">)</span>,
   np_style <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/bayesplot/reference/MCMC-scatterplots.html">scatter_style_np</a></span><span class="op">(</span>div_color <span class="op">=</span> <span class="st">"green"</span>, div_alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span>
-<span class="op">)</span></pre></div>
+<span class="op">)</span></code></pre></div>
 <p><img src="a_get_started_files/figure-html/unnamed-chunk-11-1.png" width="700"> In this graph we don’t see any divergent iterations between lambda[1] and lambda[2]</p>
 <p>Verifying the Rhat and neff using the functions from <code>rstan</code></p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu">rstan</span><span class="fu">::</span><span class="fu">summary</span><span class="op">(</span><span class="va">stanfit</span> ,pars<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'lambda'</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">summary</span>
-<span class="co">#&gt;                  mean    se_mean       sd      2.5%         25%         50%</span>
-<span class="co">#&gt; lambda[1]  0.56427045 0.05143515 1.418844 -2.268148 -0.39935356  0.58265481</span>
-<span class="co">#&gt; lambda[2]  0.98655682 0.05084939 1.391141 -1.772647  0.01898504  0.99741006</span>
-<span class="co">#&gt; lambda[3] -0.30277934 0.05103536 1.402188 -3.146996 -1.22963952 -0.28655043</span>
-<span class="co">#&gt; lambda[4]  0.08586082 0.05248712 1.413487 -2.675030 -0.87261207  0.09668438</span>
-<span class="co">#&gt; lambda[5] -1.09211498 0.05165208 1.408300 -3.908388 -2.01380289 -1.07503564</span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">rstan</span><span class="fu">::</span><span class="fu">summary</span><span class="op">(</span><span class="va">stanfit</span> ,pars<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'lambda'</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">summary</span>
+<span class="co">#&gt;                   mean    se_mean       sd      2.5%          25%          50%</span>
+<span class="co">#&gt; lambda[1]  0.479735784 0.05916043 1.415085 -2.359465 -0.476924090  0.471298157</span>
+<span class="co">#&gt; lambda[2]  0.911317547 0.05811229 1.371375 -1.803602  0.004832636  0.905814039</span>
+<span class="co">#&gt; lambda[3] -0.359618423 0.05916675 1.393830 -3.187045 -1.298794267 -0.353725809</span>
+<span class="co">#&gt; lambda[4]  0.007411831 0.06015091 1.399818 -2.836964 -0.926315166  0.004020143</span>
+<span class="co">#&gt; lambda[5] -1.152327485 0.06005663 1.416943 -3.937556 -2.108313232 -1.172981907</span>
 <span class="co">#&gt;                  75%    97.5%    n_eff     Rhat</span>
-<span class="co">#&gt; lambda[1]  1.5287750 3.195086 760.9377 1.003893</span>
-<span class="co">#&gt; lambda[2]  1.9154271 3.638553 748.4633 1.004255</span>
-<span class="co">#&gt; lambda[3]  0.6140451 2.497789 754.8660 1.004559</span>
-<span class="co">#&gt; lambda[4]  1.0468706 2.805861 725.2341 1.003886</span>
-<span class="co">#&gt; lambda[5] -0.1537674 1.621370 743.3862 1.005423</span></pre></div>
+<span class="co">#&gt; lambda[1]  1.4526889 3.226653 572.1401 1.017752</span>
+<span class="co">#&gt; lambda[2]  1.8363390 3.558437 556.8990 1.017639</span>
+<span class="co">#&gt; lambda[3]  0.5888943 2.279557 554.9634 1.016527</span>
+<span class="co">#&gt; lambda[4]  0.9624011 2.743715 541.5751 1.017441</span>
+<span class="co">#&gt; lambda[5] -0.1880142 1.585907 556.6508 1.017644</span></code></pre></div>
 </div>
 <div id="predictive-posterior" class="section level2">
 <h2 class="hasAnchor">
 <a href="#predictive-posterior" class="anchor"></a>Predictive posterior</h2>
 <p>We first get the observed values and then the predictive values of the original dataframe. We can get predictive values with the predictive function and passing a data frame with the values we want to predict (in this case the original one). Note that we need to have the same column names in this new data frame</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="va">y</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="va">tennis_agresti</span><span class="op">$</span><span class="va">y</span><span class="op">)</span>
-<span class="va">yrep</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">m1</span>,<span class="va">tennis_agresti</span>,n<span class="op">=</span><span class="fl">100</span>,return_matrix <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="fu"><a href="https://mc-stan.org/bayesplot/reference/PPC-discrete.html">ppc_bars</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">y</span>, yrep<span class="op">=</span><span class="va">yrep</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">'Bar plot with medians and uncertainty\n intervals superimposed'</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">y</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="va">tennis_agresti</span><span class="op">$</span><span class="va">y</span><span class="op">)</span>
+<span class="va">yrep</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">m1</span>,<span class="va">tennis_agresti</span>,n<span class="op">=</span><span class="fl">100</span>,return_matrix <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">bayesplot</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/bayesplot/reference/PPC-discrete.html">ppc_bars</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">y</span>, yrep<span class="op">=</span><span class="va">yrep</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">'Bar plot with medians and uncertainty\n intervals superimposed'</span><span class="op">)</span></code></pre></div>
 <p><img src="a_get_started_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 <p>The plots indicate a good model as the predictive posterior and the observed values agree largely.</p>
 </div>
@@ -1032,18 +1035,18 @@ Sanchez
 <a href="#parameter-tables-and-plots" class="anchor"></a>Parameter tables and plots</h2>
 <p>Now that we are confident that our model is correct, we can create some tables to report our results.</p>
 <p>To see the results in the console the <code>summary</code> function provides a good overview of the model. With parameters, probability of winning and a ranking.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span>
 <span class="co">#&gt; Estimated baseline parameters with HPD intervals:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter               Mean   HPD_lower   HPD_higher    n_eff   Rhat</span>
 <span class="co">#&gt; --------------------  ------  ----------  -----------  -------  -----</span>
-<span class="co">#&gt; lambda[Seles]           0.56       -2.25         3.20   760.94   1.00</span>
-<span class="co">#&gt; lambda[Graf]            0.99       -1.64         3.70   748.46   1.00</span>
-<span class="co">#&gt; lambda[Sabatini]       -0.30       -3.10         2.51   754.87   1.00</span>
-<span class="co">#&gt; lambda[Navratilova]     0.09       -2.71         2.75   725.23   1.00</span>
-<span class="co">#&gt; lambda[Sanchez]        -1.09       -3.72         1.77   743.39   1.01</span>
+<span class="co">#&gt; lambda[Seles]           0.48       -2.12         3.40   572.14   1.02</span>
+<span class="co">#&gt; lambda[Graf]            0.91       -1.59         3.70   556.90   1.02</span>
+<span class="co">#&gt; lambda[Sabatini]       -0.36       -3.12         2.32   554.96   1.02</span>
+<span class="co">#&gt; lambda[Navratilova]     0.01       -2.89         2.68   541.58   1.02</span>
+<span class="co">#&gt; lambda[Sanchez]        -1.15       -3.90         1.60   556.65   1.02</span>
 <span class="co">#&gt; NOTES:</span>
 <span class="co">#&gt; * A higher lambda indicates a higher team ability</span>
 <span class="co">#&gt; </span>
@@ -1055,13 +1058,13 @@ Sanchez
 <span class="co">#&gt; </span>
 <span class="co">#&gt; i             j              i_beats_j</span>
 <span class="co">#&gt; ------------  ------------  ----------</span>
-<span class="co">#&gt; Graf          Navratilova         0.69</span>
-<span class="co">#&gt; Graf          Sabatini            0.76</span>
-<span class="co">#&gt; Graf          Sanchez             0.86</span>
+<span class="co">#&gt; Graf          Navratilova         0.70</span>
+<span class="co">#&gt; Graf          Sabatini            0.77</span>
+<span class="co">#&gt; Graf          Sanchez             0.87</span>
 <span class="co">#&gt; Graf          Seles               0.60</span>
-<span class="co">#&gt; Navratilova   Sabatini            0.60</span>
-<span class="co">#&gt; Navratilova   Sanchez             0.74</span>
-<span class="co">#&gt; Navratilova   Seles               0.41</span>
+<span class="co">#&gt; Navratilova   Sabatini            0.58</span>
+<span class="co">#&gt; Navratilova   Sanchez             0.75</span>
+<span class="co">#&gt; Navratilova   Seles               0.39</span>
 <span class="co">#&gt; Sabatini      Sanchez             0.68</span>
 <span class="co">#&gt; Sabatini      Seles               0.32</span>
 <span class="co">#&gt; Sanchez       Seles               0.20</span>
@@ -1073,16 +1076,16 @@ Sanchez
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter              MedianRank   MeanRank   StdRank</span>
 <span class="co">#&gt; --------------------  -----------  ---------  --------</span>
-<span class="co">#&gt; lambda[Graf]                    1       1.39      0.63</span>
-<span class="co">#&gt; lambda[Seles]                   2       2.15      0.90</span>
-<span class="co">#&gt; lambda[Navratilova]             3       2.98      0.93</span>
-<span class="co">#&gt; lambda[Sabatini]                4       3.69      0.86</span>
-<span class="co">#&gt; lambda[Sanchez]                 5       4.78      0.48</span></pre></div>
+<span class="co">#&gt; lambda[Graf]                    1       1.38      0.61</span>
+<span class="co">#&gt; lambda[Seles]                   2       2.12      0.90</span>
+<span class="co">#&gt; lambda[Navratilova]             3       3.03      0.89</span>
+<span class="co">#&gt; lambda[Sabatini]                4       3.68      0.86</span>
+<span class="co">#&gt; lambda[Sanchez]                 5       4.79      0.49</span></code></pre></div>
 <p>If we want to create nicer tables and export them to latex/html we can leverage this with the <code>kable</code> function and the <code>kableExtra</code> package. Note that for extensive customization (and examples) we refer to the packages documentation.</p>
 <p>Parameter table with HPD intervals</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_hpdi_parameters.html">get_hpdi_parameters</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span>, caption <span class="op">=</span> <span class="st">'Parameter distribution and the High Posterior Density intervals'</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_hpdi_parameters.html">get_hpdi_parameters</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span>, caption <span class="op">=</span> <span class="st">'Parameter distribution and the High Posterior Density intervals'</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <caption>
 Parameter distribution and the High Posterior Density intervals
@@ -1113,19 +1116,19 @@ Rhat
 lambda[Seles]
 </td>
 <td style="text-align:right;">
-0.56
+0.48
 </td>
 <td style="text-align:right;">
--2.25
+-2.12
 </td>
 <td style="text-align:right;">
-3.20
+3.40
 </td>
 <td style="text-align:right;">
-760.94
+572.14
 </td>
 <td style="text-align:right;">
-1.00
+1.02
 </td>
 </tr>
 <tr>
@@ -1133,19 +1136,19 @@ lambda[Seles]
 lambda[Graf]
 </td>
 <td style="text-align:right;">
-0.99
+0.91
 </td>
 <td style="text-align:right;">
--1.64
+-1.59
 </td>
 <td style="text-align:right;">
 3.70
 </td>
 <td style="text-align:right;">
-748.46
+556.90
 </td>
 <td style="text-align:right;">
-1.00
+1.02
 </td>
 </tr>
 <tr>
@@ -1153,19 +1156,19 @@ lambda[Graf]
 lambda[Sabatini]
 </td>
 <td style="text-align:right;">
--0.30
+-0.36
 </td>
 <td style="text-align:right;">
--3.10
+-3.12
 </td>
 <td style="text-align:right;">
-2.51
+2.32
 </td>
 <td style="text-align:right;">
-754.87
+554.96
 </td>
 <td style="text-align:right;">
-1.00
+1.02
 </td>
 </tr>
 <tr>
@@ -1173,19 +1176,19 @@ lambda[Sabatini]
 lambda[Navratilova]
 </td>
 <td style="text-align:right;">
-0.09
+0.01
 </td>
 <td style="text-align:right;">
--2.71
+-2.89
 </td>
 <td style="text-align:right;">
-2.75
+2.68
 </td>
 <td style="text-align:right;">
-725.23
+541.58
 </td>
 <td style="text-align:right;">
-1.00
+1.02
 </td>
 </tr>
 <tr>
@@ -1193,26 +1196,26 @@ lambda[Navratilova]
 lambda[Sanchez]
 </td>
 <td style="text-align:right;">
--1.09
+-1.15
 </td>
 <td style="text-align:right;">
--3.72
+-3.90
 </td>
 <td style="text-align:right;">
-1.77
+1.60
 </td>
 <td style="text-align:right;">
-743.39
+556.65
 </td>
 <td style="text-align:right;">
-1.01
+1.02
 </td>
 </tr>
 </tbody>
 </table>
 <p>A posterior distribution figure. The initial code is to replace the lambda[1] to lambda[4] with the name of the players.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="co">#changing the names of the parameters in the posterior </span>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#changing the names of the parameters in the posterior </span>
 <span class="va">dimnames</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">posterior</span>, <span class="st">'dimnames'</span><span class="op">)</span>
 <span class="va">parameters</span><span class="op">&lt;-</span><span class="va">dimnames</span><span class="op">$</span><span class="va">parameters</span> <span class="co">#reading the parameters of the posterior</span>
 <span class="va">names</span> <span class="op">&lt;-</span> <span class="va">m1</span><span class="op">$</span><span class="va">lookup_table</span><span class="op">$</span><span class="va">Names</span>
@@ -1222,15 +1225,15 @@ lambda[Sanchez]
 <span class="va">dimnames</span><span class="op">$</span><span class="va">parameters</span><span class="op">&lt;-</span><span class="va">new_pars</span>
 <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">posterior</span>,<span class="st">'dimnames'</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">dimnames</span>
 
-<span class="fu"><a href="https://mc-stan.org/bayesplot/reference/MCMC-intervals.html">mcmc_areas</a></span><span class="op">(</span><span class="va">posterior</span>,
+<span class="fu">bayesplot</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/bayesplot/reference/MCMC-intervals.html">mcmc_areas</a></span><span class="op">(</span><span class="va">posterior</span>,
            pars <span class="op">=</span> <span class="va">names</span>,
            prob <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">'Posterior distribution with medians\n and 80% intervals'</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">'Posterior distribution with medians\n and 80% intervals'</span><span class="op">)</span></code></pre></div>
 <p><img src="a_get_started_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="va">prob_table</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/get_probabilities.html">get_probabilities</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span><span class="op">$</span><span class="va">Table</span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">prob_table</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/get_probabilities.html">get_probabilities</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span><span class="op">$</span><span class="va">Table</span>
 <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">prob_table</span>, caption <span class="op">=</span> <span class="st">'Probabilities of one player beating the other'</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <caption>
 Probabilities of one player beating the other
@@ -1266,7 +1269,7 @@ Graf
 Sabatini
 </td>
 <td style="text-align:right;">
-0.77
+0.76
 </td>
 </tr>
 <tr>
@@ -1277,7 +1280,7 @@ Graf
 Sanchez
 </td>
 <td style="text-align:right;">
-0.88
+0.87
 </td>
 </tr>
 <tr>
@@ -1299,7 +1302,7 @@ Navratilova
 Sabatini
 </td>
 <td style="text-align:right;">
-0.59
+0.60
 </td>
 </tr>
 <tr>
@@ -1332,7 +1335,7 @@ Sabatini
 Sanchez
 </td>
 <td style="text-align:right;">
-0.67
+0.68
 </td>
 </tr>
 <tr>
@@ -1354,19 +1357,19 @@ Sanchez
 Seles
 </td>
 <td style="text-align:right;">
-0.18
+0.19
 </td>
 </tr>
 </tbody>
 </table>
 <p>We might also be interested in ranking the players based on their ability <span class="math inline">\(lambda\)</span>. In the Bayesian case, we sample the posterior distribution of <span class="math inline">\(lambda\)</span> and rank them so we have posterior distribution of the ranks. This can be achieve with the function <code>get_rank_of_players</code>.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit">
-<span class="va">ranking</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_rank_of_players.html">get_rank_of_players</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ranking</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_rank_of_players.html">get_rank_of_players</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></code></pre></div>
 <p>We can produce a table with the values of this dataframe.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="va">t</span> <span class="op">&lt;-</span> <span class="va">ranking</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Parameter</span>, <span class="va">MedianRank</span>, <span class="va">StdRank</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">t</span>, caption <span class="op">=</span> <span class="st">'Rank of the players'</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">t</span> <span class="op">&lt;-</span> <span class="va">ranking</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Parameter</span>, <span class="va">MedianRank</span>, <span class="va">StdRank</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">t</span>, caption <span class="op">=</span> <span class="st">'Rank of the players'</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table table">
 <caption>
 Rank of the players
@@ -1391,7 +1394,7 @@ lambda[Graf]
 1
 </td>
 <td style="text-align:right;">
-0.5917949
+0.6338460
 </td>
 </tr>
 <tr>
@@ -1402,7 +1405,7 @@ lambda[Seles]
 2
 </td>
 <td style="text-align:right;">
-0.9308370
+0.8844055
 </td>
 </tr>
 <tr>
@@ -1413,7 +1416,7 @@ lambda[Navratilova]
 3
 </td>
 <td style="text-align:right;">
-0.8919791
+0.9216319
 </td>
 </tr>
 <tr>
@@ -1424,7 +1427,7 @@ lambda[Sabatini]
 4
 </td>
 <td style="text-align:right;">
-0.8240723
+0.8654669
 </td>
 </tr>
 <tr>
@@ -1435,34 +1438,34 @@ lambda[Sanchez]
 5
 </td>
 <td style="text-align:right;">
-0.4483034
+0.5106239
 </td>
 </tr>
 </tbody>
 </table>
 <p>If we want to visualize the histogram of the rank distribution of each player.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu">geom_histogram</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">ranking</span><span class="op">$</span><span class="va">PosteriorRank</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">$</span><span class="va">rank</span><span class="op">)</span>,bins <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">'Posterior distribution of the rank for Graf'</span>, x<span class="op">=</span><span class="st">'Rank'</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">ranking</span><span class="op">$</span><span class="va">PosteriorRank</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">$</span><span class="va">rank</span><span class="op">)</span>,bins <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">'Posterior distribution of the rank for Graf'</span>, x<span class="op">=</span><span class="st">'Rank'</span><span class="op">)</span></code></pre></div>
 <p><img src="a_get_started_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
 </div>
 <div id="predicting-results" class="section level2">
 <h2 class="hasAnchor">
 <a href="#predicting-results" class="anchor"></a>Predicting results</h2>
 <p>To predict new results we need a data frame similar to the one used to fit the data. We use the same function as in the predicted posterior but now we provide the data we want to predict instead of the original data. Lets predict who is the winner for all games from Seles. Now we don’t want to return the matrix but a data frame</p>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="va">tennis_new_games</span><span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span><span class="op">~</span><span class="va">player0</span>, <span class="op">~</span><span class="va">player1</span>,
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tennis_new_games</span><span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span><span class="op">~</span><span class="va">player0</span>, <span class="op">~</span><span class="va">player1</span>,
                                   <span class="st">'Seles'</span>, <span class="st">'Graf'</span>,
                                   <span class="st">'Seles'</span>, <span class="st">'Sabatini'</span>,
                                   <span class="st">'Seles'</span>, <span class="st">'Navratilova'</span>,
                                   <span class="st">'Seles'</span>, <span class="st">'Sanchez'</span><span class="op">)</span>
 <span class="va">y_seles</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">m1</span>,<span class="va">tennis_new_games</span>,n<span class="op">=</span><span class="fl">100</span><span class="op">)</span>
 <span class="co">#Now let's summarize the posterior</span>
-<span class="va">y_seles</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">y_seles</span>, avg_win_player1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowMeans</a></span><span class="op">(</span><span class="fu">select</span><span class="op">(</span><span class="va">y_seles</span>, <span class="fu">starts_with</span><span class="op">(</span><span class="st">'y_pred'</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> 
+<span class="va">y_seles</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">y_seles</span>, avg_win_player1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowMeans</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">y_seles</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">'y_pred'</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> 
 <span class="va">y_seles</span> <span class="op">%&gt;%</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">player0</span>, <span class="va">player1</span>,<span class="va">avg_win_player1</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
@@ -1484,7 +1487,7 @@ Seles
 Graf
 </td>
 <td style="text-align:right;">
-0.55
+0.65
 </td>
 </tr>
 <tr>
@@ -1495,7 +1498,7 @@ Seles
 Sabatini
 </td>
 <td style="text-align:right;">
-0.36
+0.31
 </td>
 </tr>
 <tr>
@@ -1506,7 +1509,7 @@ Seles
 Navratilova
 </td>
 <td style="text-align:right;">
-0.34
+0.40
 </td>
 </tr>
 <tr>
@@ -1517,7 +1520,7 @@ Seles
 Sanchez
 </td>
 <td style="text-align:right;">
-0.15
+0.16
 </td>
 </tr>
 </tbody>
