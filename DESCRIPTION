@@ -44,7 +44,8 @@ Imports:
     magrittr,
     badger,
     stats,
-    rlang
+    rlang,
+    knitr
 LinkingTo: 
     BH (>= 1.66.0),
     Rcpp (>= 0.12.0),
@@ -54,11 +55,9 @@ LinkingTo:
     StanHeaders (>= 2.18.0)
 SystemRequirements: GNU make
 Suggests: 
-    knitr,
     rmarkdown,
     testthat,
     covr,
     bayesplot,
     kableExtra,
-    tidyverse,
 VignetteBuilder: knitr
