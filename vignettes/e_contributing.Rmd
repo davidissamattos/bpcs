@@ -1,5 +1,5 @@
 ---
-title: "e_contributing"
+title: "Contributing guide"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{e_contributing}
@@ -46,4 +46,10 @@ The points below are mostly reminders for me but hopefully it can help others
   - If deleting a model file delete the appropriated line in stanmodels.R and do document again
   - If the model is not recompiling or updating do `pkgbuild::clean_dll()` then `devtools::document()` and possibly `devtools::load_all()` or `devtools::install()`
 
-There are some dev-functions in inst/devfunctions to help building the package website and running test coverage (and submitting to codecov).
+## Github actions
+
+Currently we rely on few Github actions from r-lib
+
+* R-CMD-check standard. This checks in windows latest, macOS latest, ubuntu latest and ubuntu devel
+* pkgdown. The pkg site is build automatically
+* test-coverage. Runs covr automatically and upload to codecov
