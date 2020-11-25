@@ -24,8 +24,8 @@ There were 3 notes
   GNU make is a SystemRequirements.
   - checking for GNU extensions in Makefiles ... NOTE
   GNU make is a SystemRequirements.
-  - checking data for non-ASCII characters ... NOTE
-  Note: found 1448 marked UTF-8 strings
+  - checking CRAN incoming feasibility ... NOTE
+  New submission
       
 The package makes use of rstan (that also use the Eigen library) and Rcpp that need to be compiled at installation time and requires a large lib folder
 
