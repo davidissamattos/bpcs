@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# bpcs - A package for Bayesian Paired Comparison analysis with Stan <img src="https://github.com/davidissamattos/bpcs/blob/master/inst/logo/logo.png" align="right" width="120" />
+# bpcs - A package for Bayesian Paired Comparison analysis with Stan <img src='man/figures/logo.png' align="right" width="120" />
 
 <!-- badges: start -->
 `r badge_license('MIT', color='yellow')`
