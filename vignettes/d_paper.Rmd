@@ -1,10 +1,6 @@
 ---
 title: "d_paper"
 output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{d_paper}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}

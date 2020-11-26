@@ -2,10 +2,6 @@
 title: "Getting Started with the bpcs package"
 bibliography: bibliography.bib
 output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Getting Started with the bpcs package}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}

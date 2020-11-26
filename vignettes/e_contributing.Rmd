@@ -1,10 +1,6 @@
 ---
 title: "Contributing guide"
 output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{e_contributing}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
