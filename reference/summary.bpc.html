@@ -86,7 +86,7 @@ Table 3: Contains the ranking of the players' abilities based on the posterior d
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -122,6 +122,9 @@ Table 3: Contains the ranking of the players' abilities based on the posterior d
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
+    </li>
+    <li>
+      <a href="../articles/overview.html">Overview</a>
     </li>
   </ul>
 </li>
@@ -186,112 +189,15 @@ Table 3: Contains the ranking of the players' abilities based on the posterior d
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>m</span><span class='op'>&lt;-</span><span class='fu'><a href='bpc.html'>bpc</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>m</span><span class='op'>&lt;-</span><span class='fu'><a href='bpc.html'>bpc</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,
 player0 <span class='op'>=</span> <span class='st'>'player0'</span>,
 player1 <span class='op'>=</span> <span class='st'>'player1'</span>,
 result_column <span class='op'>=</span> <span class='st'>'y'</span>,
 model_type <span class='op'>=</span> <span class='st'>'bt'</span>,
 solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
-#&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 1.8e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.18 seconds.
-#&gt; Chain 1: Adjust your expectations accordingly!
-#&gt; Chain 1: 
-#&gt; Chain 1: 
-#&gt; Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.099303 seconds (Warm-up)
-#&gt; Chain 1:                0.095541 seconds (Sampling)
-#&gt; Chain 1:                0.194844 seconds (Total)
-#&gt; Chain 1: 
-#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
-#&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 1.3e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
-#&gt; Chain 2: Adjust your expectations accordingly!
-#&gt; Chain 2: 
-#&gt; Chain 2: 
-#&gt; Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.099636 seconds (Warm-up)
-#&gt; Chain 2:                0.100828 seconds (Sampling)
-#&gt; Chain 2:                0.200464 seconds (Total)
-#&gt; Chain 2: 
-#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
-#&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 1.3e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
-#&gt; Chain 3: Adjust your expectations accordingly!
-#&gt; Chain 3: 
-#&gt; Chain 3: 
-#&gt; Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.102643 seconds (Warm-up)
-#&gt; Chain 3:                0.110485 seconds (Sampling)
-#&gt; Chain 3:                0.213128 seconds (Total)
-#&gt; Chain 3: 
-#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
-#&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 1.2e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
-#&gt; Chain 4: Adjust your expectations accordingly!
-#&gt; Chain 4: 
-#&gt; Chain 4: 
-#&gt; Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.104169 seconds (Warm-up)
-#&gt; Chain 4:                0.096939 seconds (Sampling)
-#&gt; Chain 4:                0.201108 seconds (Total)
-#&gt; Chain 4: </div><div class='input'><span class='co'>#' summary(m)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

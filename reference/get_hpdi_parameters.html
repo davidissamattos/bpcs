@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -116,6 +116,9 @@
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
+    </li>
+    <li>
+      <a href="../articles/overview.html">Overview</a>
     </li>
   </ul>
 </li>
@@ -168,119 +171,16 @@
     <p>a data frame containing a column with the parameters, a column with mean and two columns with higher and lower hpdi</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>m</span><span class='op'>&lt;-</span><span class='fu'><a href='bpc.html'>bpc</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>m</span><span class='op'>&lt;-</span><span class='fu'><a href='bpc.html'>bpc</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,
 player0 <span class='op'>=</span> <span class='st'>'player0'</span>,
 player1 <span class='op'>=</span> <span class='st'>'player1'</span>,
 result_column <span class='op'>=</span> <span class='st'>'y'</span>,
 model_type <span class='op'>=</span> <span class='st'>'bt'</span>,
 solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
-#&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 1.6e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
-#&gt; Chain 1: Adjust your expectations accordingly!
-#&gt; Chain 1: 
-#&gt; Chain 1: 
-#&gt; Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.103599 seconds (Warm-up)
-#&gt; Chain 1:                0.104474 seconds (Sampling)
-#&gt; Chain 1:                0.208073 seconds (Total)
-#&gt; Chain 1: 
-#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
-#&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 1.6e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
-#&gt; Chain 2: Adjust your expectations accordingly!
-#&gt; Chain 2: 
-#&gt; Chain 2: 
-#&gt; Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.094792 seconds (Warm-up)
-#&gt; Chain 2:                0.10718 seconds (Sampling)
-#&gt; Chain 2:                0.201972 seconds (Total)
-#&gt; Chain 2: 
-#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
-#&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 1.3e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
-#&gt; Chain 3: Adjust your expectations accordingly!
-#&gt; Chain 3: 
-#&gt; Chain 3: 
-#&gt; Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.101654 seconds (Warm-up)
-#&gt; Chain 3:                0.099564 seconds (Sampling)
-#&gt; Chain 3:                0.201218 seconds (Total)
-#&gt; Chain 3: 
-#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
-#&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 1.2e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
-#&gt; Chain 4: Adjust your expectations accordingly!
-#&gt; Chain 4: 
-#&gt; Chain 4: 
-#&gt; Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.10418 seconds (Warm-up)
-#&gt; Chain 4:                0.111334 seconds (Sampling)
-#&gt; Chain 4:                0.215514 seconds (Total)
-#&gt; Chain 4: </div><div class='input'><span class='va'>hpdi</span><span class='op'>&lt;-</span><span class='fu'>get_hpdi_parameters</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>hpdi</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;             Parameter       Mean HPD_lower HPD_higher    n_eff     Rhat
-#&gt; 1       lambda[Seles]  0.5121784 -2.092412   3.230588 765.1917 1.002967
-#&gt; 2        lambda[Graf]  0.9345258 -1.625175   3.634112 746.2193 1.003840
-#&gt; 3    lambda[Sabatini] -0.3311739 -2.888626   2.504166 735.4606 1.003636
-#&gt; 4 lambda[Navratilova]  0.0435603 -2.549842   2.715727 750.6639 1.003540
-#&gt; 5     lambda[Sanchez] -1.1277106 -3.861647   1.469895 761.8539 1.003644</div></pre>
+<span class='va'>hpdi</span><span class='op'>&lt;-</span><span class='fu'>get_hpdi_parameters</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>hpdi</span><span class='op'>)</span><span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

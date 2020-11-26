@@ -81,7 +81,7 @@ This excludes the log_lik paramter" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -117,6 +117,9 @@ This excludes the log_lik paramter" />
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
+    </li>
+    <li>
+      <a href="../articles/overview.html">Overview</a>
     </li>
   </ul>
 </li>
@@ -170,125 +173,17 @@ This excludes the log_lik paramter</p>
     <p>a data frame with the summary including quantiles, Rhat and neff</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>m</span><span class='op'>&lt;-</span><span class='fu'><a href='bpc.html'>bpc</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>m</span><span class='op'>&lt;-</span><span class='fu'><a href='bpc.html'>bpc</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,
 player0 <span class='op'>=</span> <span class='st'>'player0'</span>,
 player1 <span class='op'>=</span> <span class='st'>'player1'</span>,
 result_column <span class='op'>=</span> <span class='st'>'y'</span>,
 model_type <span class='op'>=</span> <span class='st'>'bt'</span>,
 solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
-#&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 1.6e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
-#&gt; Chain 1: Adjust your expectations accordingly!
-#&gt; Chain 1: 
-#&gt; Chain 1: 
-#&gt; Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.101536 seconds (Warm-up)
-#&gt; Chain 1:                0.111156 seconds (Sampling)
-#&gt; Chain 1:                0.212692 seconds (Total)
-#&gt; Chain 1: 
-#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
-#&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 1.3e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
-#&gt; Chain 2: Adjust your expectations accordingly!
-#&gt; Chain 2: 
-#&gt; Chain 2: 
-#&gt; Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.104999 seconds (Warm-up)
-#&gt; Chain 2:                0.102269 seconds (Sampling)
-#&gt; Chain 2:                0.207268 seconds (Total)
-#&gt; Chain 2: 
-#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
-#&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 1.3e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
-#&gt; Chain 3: Adjust your expectations accordingly!
-#&gt; Chain 3: 
-#&gt; Chain 3: 
-#&gt; Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.104146 seconds (Warm-up)
-#&gt; Chain 3:                0.10513 seconds (Sampling)
-#&gt; Chain 3:                0.209276 seconds (Total)
-#&gt; Chain 3: 
-#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
-#&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 1.3e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
-#&gt; Chain 4: Adjust your expectations accordingly!
-#&gt; Chain 4: 
-#&gt; Chain 4: 
-#&gt; Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.104835 seconds (Warm-up)
-#&gt; Chain 4:                0.096652 seconds (Sampling)
-#&gt; Chain 4:                0.201487 seconds (Total)
-#&gt; Chain 4: </div><div class='input'><span class='va'>s</span> <span class='op'>&lt;-</span> <span class='fu'>get_stanfit_summary</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+<span class='va'>s</span> <span class='op'>&lt;-</span> <span class='fu'>get_stanfit_summary</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>s</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   Parameter        mean    se_mean       sd      2.5%         25%         50%
-#&gt; 1 lambda[1]  0.50790662 0.05018684 1.415231 -2.270588 -0.44213361  0.49783700
-#&gt; 2 lambda[2]  0.92152902 0.04960111 1.387096 -1.864188 -0.02295135  0.90664861
-#&gt; 3 lambda[3] -0.35326172 0.04962600 1.406067 -3.144179 -1.30361354 -0.33613566
-#&gt; 4 lambda[4]  0.02614042 0.05029999 1.417449 -2.694352 -0.93739931  0.05543139
-#&gt; 5 lambda[5] -1.12247802 0.04978962 1.411373 -3.940752 -2.05807326 -1.11192953
-#&gt;          75%    97.5%    n_eff     Rhat
-#&gt; 1  1.4701260 3.280028 795.1969 1.001261
-#&gt; 2  1.8547524 3.651093 782.0428 1.001244
-#&gt; 3  0.6155708 2.435102 802.7740 1.001245
-#&gt; 4  0.9740450 2.788083 794.1068 1.001752
-#&gt; 5 -0.1701459 1.659937 803.5370 1.001267</div></pre>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
