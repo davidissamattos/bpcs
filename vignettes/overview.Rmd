@@ -31,7 +31,7 @@ The main function of the package is the `bpc` function. For the simple Bradley-T
 * Two columns containing the name of the contestants in the paired comparison
 * Two columns containing the score of each player OR  one column containing the result of the match (0 if player0 won, 1 if player1 won, 2 if it was a tie)
 
-We will utilize the tennis dataset available [@agresti2003categorical]. The dataset can be seen below and is available as `data(tennis_agresti)`:
+We will utilize the tennis dataset available as `data(tennis_agresti)`:
 
 ```{r}
 dplyr::sample_n(tennis_agresti,10) %>% 

@@ -1,6 +1,6 @@
 Package: bpcs
 Title:  Bayesian Paired Comparison Analysis with Stan
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(
     person(given = "David",
            family = "Issa Mattos",
