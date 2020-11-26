@@ -1,4 +1,5 @@
 test_that("bpc returns a bpc object the davidsongeneralized model", {
+  skip_on_cran()
   test_davidson<-load_testdata('test_davidson')
   test_predictors<-load_testdata('test_predictors')
   m1<-bpc(data=test_davidson,

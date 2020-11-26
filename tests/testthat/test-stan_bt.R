@@ -1,4 +1,5 @@
 test_that("bpc returns a bpc object the bt model", {
+  skip_on_cran()
   test_bt<-load_testdata('test_bt')
   test_btscores<-load_testdata('test_btscores')
 

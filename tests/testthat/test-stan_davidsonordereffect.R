@@ -1,4 +1,5 @@
 test_that("bpc returns a bpc object the davidsonordereffect model", {
+  skip_on_cran()
   test_davidsonorder<-load_testdata('test_davidsonorder')
   m1<-bpc(data=test_davidsonorder,
           player0 = 'player0',

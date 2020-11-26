@@ -1,4 +1,5 @@
 test_that("bpc returns a bpc object the btU model", {
+  skip_on_cran()
   test_btU<-load_testdata('test_btU')
   m1<-bpc(data=test_btU,
           player0 = 'player0',

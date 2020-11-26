@@ -1,4 +1,5 @@
 test_that("get_stanfit works", {
+  skip_on_cran()
   test_bt<-load_testdata("test_bt")
   m<-bpc(data=test_bt,
          player0 = 'player0',
@@ -12,6 +13,7 @@ test_that("get_stanfit works", {
 })
 
 test_that("get_sample_posterior works", {
+  skip_on_cran()
   test_bt<-load_testdata("test_bt")
   m<-bpc(data=test_bt,
       player0 = 'player0',

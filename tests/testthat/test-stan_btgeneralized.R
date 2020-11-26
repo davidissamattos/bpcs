@@ -1,4 +1,5 @@
 test_that("bpc returns a bpc object the btgeneralized model", {
+  skip_on_cran()
   test_bt<-load_testdata('test_bt')
   test_predictors<- load_testdata('test_predictors')
   m1<-bpc(data=test_bt,
