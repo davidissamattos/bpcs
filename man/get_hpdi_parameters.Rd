@@ -16,6 +16,7 @@ a data frame containing a column with the parameters, a column with mean and two
 Return a data frame with the mean and with high and low 95\% hpd interval for all parameters of the model
 }
 \examples{
+\dontrun{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',
@@ -23,5 +24,5 @@ result_column = 'y',
 model_type = 'bt',
 solve_ties = 'none')
 hpdi<-get_hpdi_parameters(m)
-print(hpdi)
+print(hpdi)}
 }

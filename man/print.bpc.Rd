@@ -17,6 +17,7 @@
 This S3 functions only prints the mean and the HDPI values of all the parameters in the model
 }
 \examples{
+\dontrun{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',
@@ -24,4 +25,5 @@ result_column = 'y',
 model_type = 'bt',
 solve_ties = 'none')
 #' print(m)
+}
 }

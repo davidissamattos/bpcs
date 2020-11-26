@@ -17,6 +17,7 @@ Important to investigate the neff and the Rhat from the MCMC
 This excludes the log_lik paramter
 }
 \examples{
+\dontrun{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',
@@ -25,4 +26,5 @@ model_type = 'bt',
 solve_ties = 'none')
 s <- get_stanfit_summary(m)
 print(s)
+}
 }

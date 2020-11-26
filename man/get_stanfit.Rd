@@ -16,6 +16,7 @@ a stanfit object
 This object can be used with any other function or package that uses stanfit objects from rstan
 }
 \examples{
+\dontrun{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',
@@ -24,4 +25,5 @@ model_type = 'bt',
 solve_ties = 'none')
 stanfit<- get_stanfit(m)
 print(class(stanfit))
+}
 }

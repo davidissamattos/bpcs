@@ -6,6 +6,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -14,6 +15,7 @@
 #' solve_ties = 'none')
 #' stanfit<- get_stanfit(m)
 #' print(class(stanfit))
+#' }
 get_stanfit <- function(bpc_object) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
@@ -29,6 +31,7 @@ get_stanfit <- function(bpc_object) {
 #' @return a data frame with the summary including quantiles, Rhat and neff
 #' @export
 #' @examples
+#' \dontrun{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -37,6 +40,7 @@ get_stanfit <- function(bpc_object) {
 #' solve_ties = 'none')
 #' s <- get_stanfit_summary(m)
 #' print(s)
+#' }
 get_stanfit_summary <- function(bpc_object) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
@@ -63,6 +67,7 @@ get_stanfit_summary <- function(bpc_object) {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -71,6 +76,7 @@ get_stanfit_summary <- function(bpc_object) {
 #' solve_ties = 'none')
 #' s <- get_sample_posterior(m, par='lambda', n=100)
 #' print(head(s))
+#' }
 get_sample_posterior <-
   function(bpc_object, par = 'lambda', n = 1000) {
     #TODO: verify the predictors condition
@@ -103,6 +109,7 @@ get_sample_posterior <-
 #' @export
 #' @importFrom rlang .data
 #' @examples
+#' \dontrun{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -110,7 +117,7 @@ get_sample_posterior <-
 #' model_type = 'bt',
 #' solve_ties = 'none')
 #' hpdi<-get_hpdi_parameters(m)
-#' print(hpdi)
+#' print(hpdi)}
 get_hpdi_parameters <- function(bpc_object) {
   #TODO: verify the predictors condition
   if (class(bpc_object) != 'bpc')
@@ -174,6 +181,7 @@ get_hpdi_parameters <- function(bpc_object) {
 #' @importFrom rlang .data
 #' @importFrom stats var median
 #' @examples
+#' \dontrun{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -183,6 +191,7 @@ get_hpdi_parameters <- function(bpc_object) {
 #' rank_m<-get_rank_of_players(m,n=100)
 #' rank_table <- dplyr::select(rank_m,-MeanRank, -StdRank,-PosteriorRank)
 #' print(rank_table)
+#' }
 get_rank_of_players <- function(bpc_object, n = 1000) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
@@ -222,6 +231,7 @@ get_rank_of_players <- function(bpc_object, n = 1000) {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -230,6 +240,7 @@ get_rank_of_players <- function(bpc_object, n = 1000) {
 #' solve_ties = 'none')
 #'  l<-get_loo(m)
 #' print(l)
+#' }
 get_loo <- function(bpc_object) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
@@ -247,6 +258,7 @@ get_loo <- function(bpc_object) {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -255,6 +267,7 @@ get_loo <- function(bpc_object) {
 #' solve_ties = 'none')
 #' waic<-get_waic(m)
 #' print(waic)
+#' }
 get_waic <- function(bpc_object) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')

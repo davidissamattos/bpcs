@@ -16,6 +16,7 @@ a loo object
 This is used to evaluate the fit of the model using entropy criteria
 }
 \examples{
+\dontrun{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',
@@ -24,6 +25,7 @@ model_type = 'bt',
 solve_ties = 'none')
  l<-get_loo(m)
 print(l)
+}
 }
 \references{
 Vehtari A, Gelman A, Gabry J (2017). Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC. Statistics and Computing_, 27, 1413-1432

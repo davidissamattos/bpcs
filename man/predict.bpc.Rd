@@ -29,6 +29,7 @@ It returns another data frame with with the same columns of the new data and n a
 See the vignettes for a larger examples with the usage of this function
 }
 \examples{
+\dontrun{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',
@@ -36,5 +37,5 @@ result_column = 'y',
 model_type = 'bt',
 solve_ties = 'none')
 predict(m,newdata=tennis_agresti)
-
+}
 }

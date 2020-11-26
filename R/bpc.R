@@ -52,6 +52,7 @@
 #' 6. Springall, A. Response Surface Fitting Using a Generalization of the Bradley-Terry Paired Comparison Model. Journal of the Royal Statistical Society: Series C Applied Statistics 22.1 1973: 59 68.
 #'
 #' @examples
+#' \dontrun{
 #' #For the simple Bradley-Terry model
 #' bpc(data = tennis_agresti,
 #' player0 = 'player0',
@@ -59,6 +60,7 @@
 #' result_column = 'y',
 #' model_type = 'bt',
 #' solve_ties = 'none')
+#' }
 bpc <- function(data,
                 player0,
                 player1,

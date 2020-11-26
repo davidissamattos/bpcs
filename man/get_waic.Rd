@@ -16,6 +16,7 @@ a loo object
 This is used to evaluate the fit of the model using the Watanabe-Akaike Information criteria
 }
 \examples{
+\dontrun{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',
@@ -24,6 +25,7 @@ model_type = 'bt',
 solve_ties = 'none')
 waic<-get_waic(m)
 print(waic)
+}
 }
 \references{
 Gelman, Andrew, Jessica Hwang, and Aki Vehtari. Understanding predictive information criteria for Bayesian models. Statistics and computing 24.6 (2014): 997-1016.

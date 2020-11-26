@@ -20,6 +20,7 @@ Return a data frame with the posterior samples for the parameters. One column fo
 Return a data frame with the posterior samples for the parameters of the model
 }
 \examples{
+\dontrun{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',
@@ -28,4 +29,5 @@ model_type = 'bt',
 solve_ties = 'none')
 s <- get_sample_posterior(m, par='lambda', n=100)
 print(head(s))
+}
 }

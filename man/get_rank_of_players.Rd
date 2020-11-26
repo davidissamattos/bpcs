@@ -18,6 +18,7 @@ a data frame. This data frame contains the median of the rank, the mean, the sta
 To print this object you should remove the last column PosteriorRank since it contain the whole posterior distribution for each case
 }
 \examples{
+\dontrun{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',
@@ -27,4 +28,5 @@ solve_ties = 'none')
 rank_m<-get_rank_of_players(m,n=100)
 rank_table <- dplyr::select(rank_m,-MeanRank, -StdRank,-PosteriorRank)
 print(rank_table)
+}
 }

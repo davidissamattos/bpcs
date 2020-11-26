@@ -21,11 +21,13 @@
 }
 }
 \examples{
+\dontrun{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',
 result_column = 'y',
 model_type = 'bt',
 solve_ties = 'none')
-#' summary(m)
+summary(m)
+}
 }
