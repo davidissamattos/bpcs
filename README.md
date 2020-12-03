@@ -29,13 +29,7 @@ For the `bpcs` package to work, we rely upon the Stan software and the
 `rstan` package (Stan Development Team 2020).
 
   - For general installation of Stan and RStan see:
-    <https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started>
-  - For macOS:
-    <https://github.com/stan-dev/rstan/wiki/Installing-RStan-from-source-on-a-Mac>
-  - For Linux:
-    <https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux>
-  - For Windows:
-    <https://github.com/stan-dev/rstan/wiki/Installing-RStan-from-source-on-Windows>
+    <https://github.com/stan-dev/rstan>
 
 <!-- To install the latest stable version from CRAN -->
 
@@ -124,34 +118,6 @@ Seles
 
 <td style="text-align:left;">
 
-Navratilova
-
-</td>
-
-<td style="text-align:right;">
-
-1
-
-</td>
-
-<td style="text-align:right;">
-
-10
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Graf
-
-</td>
-
-<td style="text-align:left;">
-
 Sanchez
 
 </td>
@@ -164,7 +130,35 @@ Sanchez
 
 <td style="text-align:right;">
 
-33
+14
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Sabatini
+
+</td>
+
+<td style="text-align:left;">
+
+Sanchez
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+<td style="text-align:right;">
+
+42
 
 </td>
 
@@ -180,7 +174,7 @@ Seles
 
 <td style="text-align:left;">
 
-Sabatini
+Graf
 
 </td>
 
@@ -192,7 +186,91 @@ Sabatini
 
 <td style="text-align:right;">
 
-6
+1
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Graf
+
+</td>
+
+<td style="text-align:left;">
+
+Sabatini
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+<td style="text-align:right;">
+
+22
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Sabatini
+
+</td>
+
+<td style="text-align:left;">
+
+Sanchez
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+<td style="text-align:right;">
+
+41
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Seles
+
+</td>
+
+<td style="text-align:left;">
+
+Navratilova
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+<td style="text-align:right;">
+
+12
 
 </td>
 
@@ -220,91 +298,7 @@ Sanchez
 
 <td style="text-align:right;">
 
-30
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Sabatini
-
-</td>
-
-<td style="text-align:left;">
-
-Navratilova
-
-</td>
-
-<td style="text-align:right;">
-
-1
-
-</td>
-
-<td style="text-align:right;">
-
-37
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Graf
-
-</td>
-
-<td style="text-align:left;">
-
-Sabatini
-
-</td>
-
-<td style="text-align:right;">
-
-0
-
-</td>
-
-<td style="text-align:right;">
-
-15
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Graf
-
-</td>
-
-<td style="text-align:left;">
-
-Sabatini
-
-</td>
-
-<td style="text-align:right;">
-
-0
-
-</td>
-
-<td style="text-align:right;">
-
-19
+32
 
 </td>
 
@@ -342,35 +336,7 @@ Navratilova
 
 <td style="text-align:left;">
 
-Graf
-
-</td>
-
-<td style="text-align:left;">
-
 Sabatini
-
-</td>
-
-<td style="text-align:right;">
-
-0
-
-</td>
-
-<td style="text-align:right;">
-
-18
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Graf
 
 </td>
 
@@ -388,7 +354,35 @@ Sanchez
 
 <td style="text-align:right;">
 
-29
+39
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Seles
+
+</td>
+
+<td style="text-align:left;">
+
+Graf
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+<td style="text-align:right;">
+
+4
 
 </td>
 
@@ -418,8 +412,8 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 9.2e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.92 seconds.
+#> Chain 1: Gradient evaluation took 8.7e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.87 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -436,15 +430,15 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.325915 seconds (Warm-up)
-#> Chain 1:                0.340657 seconds (Sampling)
-#> Chain 1:                0.666572 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.299618 seconds (Warm-up)
+#> Chain 1:                0.312838 seconds (Sampling)
+#> Chain 1:                0.612456 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 5e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.5 seconds.
+#> Chain 2: Gradient evaluation took 3.9e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.39 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -461,15 +455,15 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.315112 seconds (Warm-up)
-#> Chain 2:                0.332516 seconds (Sampling)
-#> Chain 2:                0.647628 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.284584 seconds (Warm-up)
+#> Chain 2:                0.344625 seconds (Sampling)
+#> Chain 2:                0.629209 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 4.4e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.44 seconds.
+#> Chain 3: Gradient evaluation took 4.1e-05 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.41 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -486,15 +480,15 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.310478 seconds (Warm-up)
-#> Chain 3:                0.358521 seconds (Sampling)
-#> Chain 3:                0.668999 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.305793 seconds (Warm-up)
+#> Chain 3:                0.292243 seconds (Sampling)
+#> Chain 3:                0.598036 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 4.8e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.48 seconds.
+#> Chain 4: Gradient evaluation took 4.2e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.42 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -511,9 +505,9 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.333144 seconds (Warm-up)
-#> Chain 4:                0.325283 seconds (Sampling)
-#> Chain 4:                0.658427 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.30643 seconds (Warm-up)
+#> Chain 4:                0.300302 seconds (Sampling)
+#> Chain 4:                0.606732 seconds (Total)
 #> Chain 4:
 ```
 
@@ -538,11 +532,11 @@ summary(m)
 #> 
 #> Parameter               Mean   HPD_lower   HPD_higher    n_eff   Rhat
 #> --------------------  ------  ----------  -----------  -------  -----
-#> lambda[Seles]           0.42       -2.71         3.32   750.67   1.00
-#> lambda[Graf]            0.84       -2.18         3.71   690.32   1.01
-#> lambda[Sabatini]       -0.42       -3.35         2.59   693.80   1.01
-#> lambda[Navratilova]    -0.05       -2.81         3.13   693.64   1.00
-#> lambda[Sanchez]        -1.19       -4.07         1.84   693.15   1.01
+#> lambda[Seles]           0.51       -2.37         3.34   663.50   1.01
+#> lambda[Graf]            0.94       -1.85         3.71   622.34   1.01
+#> lambda[Sabatini]       -0.33       -3.12         2.50   662.40   1.01
+#> lambda[Navratilova]     0.04       -2.87         2.91   637.48   1.01
+#> lambda[Sanchez]        -1.12       -4.04         1.64   670.86   1.01
 #> NOTES:
 #> * A higher lambda indicates a higher team ability
 #> 
@@ -555,15 +549,15 @@ summary(m)
 #> i             j              i_beats_j
 #> ------------  ------------  ----------
 #> Graf          Navratilova         0.70
-#> Graf          Sabatini            0.76
-#> Graf          Sanchez             0.87
+#> Graf          Sabatini            0.77
+#> Graf          Sanchez             0.86
 #> Graf          Seles               0.60
 #> Navratilova   Sabatini            0.58
 #> Navratilova   Sanchez             0.74
-#> Navratilova   Seles               0.40
+#> Navratilova   Seles               0.41
 #> Sabatini      Sanchez             0.66
-#> Sabatini      Seles               0.31
-#> Sanchez       Seles               0.19
+#> Sabatini      Seles               0.32
+#> Sanchez       Seles               0.20
 #> 
 #> 
 #> Rank of the players' abilities:
@@ -572,11 +566,11 @@ summary(m)
 #> 
 #> Parameter              MedianRank   MeanRank   StdRank
 #> --------------------  -----------  ---------  --------
-#> lambda[Graf]                    1       1.38      0.61
-#> lambda[Seles]                   2       2.13      0.89
-#> lambda[Navratilova]             3       3.03      0.93
+#> lambda[Graf]                    1       1.42      0.64
+#> lambda[Seles]                   2       2.08      0.88
+#> lambda[Navratilova]             3       3.04      0.91
 #> lambda[Sabatini]                4       3.65      0.83
-#> lambda[Sanchez]                 5       4.80      0.47
+#> lambda[Sanchez]                 5       4.81      0.48
 ```
 
 # Features of the bpcs package

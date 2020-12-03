@@ -39,10 +39,7 @@ Package documentation and vignette articles can be found at: https://davidissama
 
 For the `bpcs` package to work, we rely upon the Stan software and the `rstan` package [@rstan]. 
 
-* For general installation of Stan and RStan see: https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
-* For macOS: https://github.com/stan-dev/rstan/wiki/Installing-RStan-from-source-on-a-Mac
-* For Linux: https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux
-* For Windows: https://github.com/stan-dev/rstan/wiki/Installing-RStan-from-source-on-Windows 
+* For general installation of Stan and RStan see: https://github.com/stan-dev/rstan 
 
 <!-- To install the latest stable version from CRAN -->
 
