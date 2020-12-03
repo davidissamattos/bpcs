@@ -4,15 +4,16 @@
 #' This function utilizes precompiled stan models to sample the posterior distribution of the specified model with the input data.
 #' For more information and larger examples of usage see the vignettes.
 #' @param data A data frame containing the observations. The other parameters specify the name of the columns
-#' @param model_type
+#' @param model_type We first add a base model 'bt' or 'davidson' and then additional options with '-'
 #' * 'bt' for the Bradley Terry model. Ref: Bradley-Terry 1952,
 #' * 'davidson' the Davidson model to handle for ties. Ref: Davidson 1970
-#' * 'btordereffect' for the Bradley-Terry with order effect, for home advantage. Ref: Davidson 1977
-#' * 'davidsonordereffect' for the Davidson model with order effect, for home advantage, and ties. Ref: Davidson 1977
-#' * 'btgeneralized': for the generalized Bradley Terry model for subject specific predictors. Ref: Springall 1973
-#' * 'davidsongeneralized' for the generalized Davidson model for subject specific predictors
-#' * 'btU': for the Bradley-Terry with random effects. Ref: Bockenholt 2001
-#' * 'davidsonU': For Davidson model with random effects
+#' * 'bt-ordereffect' for the Bradley-Terry with order effect, for home advantage. Ref: Davidson 1977
+#' * 'davidson-ordereffect' for the Davidson model with order effect, for home advantage, and ties. Ref: Davidson 1977
+#' * 'bt-generalized': for the generalized Bradley Terry model for subject specific predictors. Ref: Springall 1973
+#' * 'davidson-generalized' for the generalized Davidson model for subject specific predictors
+#' * 'bt-U': for the Bradley-Terry with random effects. Ref: Bockenholt 2001
+#' * 'davidson-U': For Davidson model with random effects
+#' * 'bt-ordereffect-U' for Bradley-Terry with order effects and random effects, use similar syntax for other variations by appending the correct options
 #' @param player0 A string with name of the column containing the players 0. This column should be of string/character type and not be of factor type.
 #' @param player1 A string with name of the column containing the players 0. This column should be of string/character type and not be of factor type.
 #' @param player0_score A string with name of the column containing the scores of players 0
@@ -89,22 +90,23 @@ bpc <- function(data,
     stop('Error! Wrong data format. data should be either a data frame or a tibble')
 
   #checking inputs with the type of model
-  if (!is.null(z_player1) & !endsWith(model_type, 'ordereffect'))
+  if (!is.null(z_player1) &
+      !stringr::str_detect(model_type, '-ordereffect'))
     stop(
-      'Error! If the order effect column is specified you should choose either the btordereffect or the davidsonordereffect model'
+      'Error! If the order effect column is specified you should choose a model with ordereffect'
     )
 
-  if (!is.null(cluster) & !endsWith(model_type, 'U'))
+  if (!is.null(cluster) &  !stringr::str_detect(model_type, '-U'))
     stop(
-      'Error! If the cluster column is specified you should choose either the btU or the davidsonU model to handle the random effects of the cluster'
+      'Error! If the cluster column is specified you should choose a model to handle the random effects of the cluster'
     )
 
-  if (!is.null(predictors) & !endsWith(model_type, 'generalized'))
-    stop(
-      'Error! If the predictors dataframe is specified you should choose either the generalized models btgeneralized or davidsongeneralized.'
-    )
+  if (!is.null(predictors) &
+      !stringr::str_detect(model_type, '-generalized'))
+    stop('Error! If the predictors dataframe is specified you should choose a generalized model')
 
-  if (solve_ties != 'none' & startsWith(model_type, 'davidson'))
+  if (solve_ties != 'none' &
+      startsWith(model_type, 'davidson'))
     warning(
       'You are calling a variation of the Davidson model but you are handling the ties. Consider switching to a Bradley-Terry model'
     )
@@ -181,8 +183,9 @@ bpc <- function(data,
   ## if there are ties we should not use any of the BT models
   ties_present <- check_if_there_are_ties(d$y)
   if (solve_ties == 'none' &
-      !startsWith(model_type, 'davidson') & ties_present == T)
-    stop('Error! If not handling the ties a verison of Davidson model should be used')
+      !stringr::str_detect(model_type, 'davidson') &
+      ties_present == T)
+    stop('Error! If not handling the ties a version of Davidson model should be used')
 
   # check the z column
   if (!is.null(z_player1))
@@ -236,9 +239,7 @@ bpc <- function(data,
       stop(
         'The predictors are mispecified. Only numeric values are accepted. Booleans are accepted but will be cast into integers'
       )
-
     predictors_df <- predictors
-
   }
   else{
     predictors_lookup_table <- NULL
@@ -285,18 +286,82 @@ bpc <- function(data,
   else
     prior_U_std <- priors$prior_U_std
 
-  # Select the appropriated model
+  #Base standata
+  standata <- list(
+    y = as.vector(d$y),
+    ties = as.vector(d$ties),
+    N_total = nrow(d),
+    N_players = nrow(lookup_table),
+    player0_indexes = as.vector(d$player0_index),
+    player1_indexes = as.vector(d$player1_index),
+    prior_lambda_mu = prior_lambda_mu,
+    prior_lambda_std = prior_lambda_std,
+    prior_gm_mu = prior_gm_mu,
+    prior_gm_std = prior_gm_std,
+    prior_nu_mu = prior_nu_mu,
+    prior_nu_std = prior_nu_std
+  )
+  stanfit <- NULL
 
-  if (model_type == 'bt') {
-    standata <- list(
-      y = as.vector(d$y),
-      N_total = nrow(d),
-      N_players = nrow(lookup_table),
-      player0_indexes = as.vector(d$player0_index),
-      player1_indexes = as.vector(d$player1_index),
-      prior_lambda_mu = prior_lambda_mu,
-      prior_lambda_std = prior_lambda_std
-    )
+  # Add order effect or not
+  if (stringr::str_detect(model_type, '-ordereffect')) {
+    standata <- c(standata, list(use_Ordereffect = 1,
+                                 z_player1 = as.vector(d[, z_player1])))
+  } else{
+    standata <- c(standata, list(use_Ordereffect = 0,
+                                 z_player1 = numeric(0)))
+  }
+
+  # Add random effects or not
+  if (stringr::str_detect(model_type, '-U')) {
+    standata <- c(standata,
+                  list(
+                    use_U = 1,
+                    N_U = nrow(cluster_lookup_table),
+                    z_player1 = as.vector(d[, z_player1]),
+                    U_indexes = as.vector(d$cluster_index)
+                  ))
+  } else{
+    standata <- c(standata,
+                  list(
+                    use_U = 0,
+                    N_U = 0,
+                    z_player1 = numeric(0),
+                    U_indexes = numeric(0)
+                  ))
+  }
+
+  # Generalized or not
+  if (stringr::str_detect(model_type, '-generalized')) {
+    standata <- c(standata,
+                  list(
+                    use_Generalized = 1,
+                    K = nrow(predictors_lookup_table),
+                    X = predictors_matrix
+                  ))
+  } else{
+    standata <- c(standata,
+                  list(
+                    use_Generalized = 0,
+                    K = 0,
+                    X = matrix(NA_real_, ncol = 0,nrow = 0)
+                  ))
+  }
+
+  # Davidson or not
+  if (startsWith(model_type, 'davidson')) {
+    standata <- c(standata,
+                  list(use_Davidson = 1))
+  } else{
+    standata <- c(standata,
+                  list(use_Davidson = 0))
+  }
+
+
+
+  # Now we do the sampling in Stan
+  if (startsWith(model_type, 'bt') |
+      startsWith(model_type, 'davidson')) {
     stanfit <-
       rstan::sampling(
         stanmodels$bt,
@@ -307,191 +372,12 @@ bpc <- function(data,
         refresh = refresh,
         seed = seed
       )
-
-  }
-  else if (model_type == 'davidson') {
-    standata <- list(
-      y = as.vector(d$y),
-      N_total = nrow(d),
-      N_players = nrow(lookup_table),
-      player0_indexes = as.vector(d$player0_index),
-      player1_indexes = as.vector(d$player1_index),
-      ties = as.vector(d$ties),
-      prior_lambda_mu = prior_lambda_mu,
-      prior_lambda_std = prior_lambda_std,
-      prior_nu_mu = prior_nu_mu,
-      prior_nu_std = prior_nu_std
-    )
-    stanfit <-
-      rstan::sampling(
-        stanmodels$davidson,
-        data = standata,
-        chains = chains,
-        iter = iter,
-        warmup = warmup,
-        refresh = refresh,
-        seed = seed
-      )
-  }
-  else if (model_type == 'btordereffect') {
-    standata <- list(
-      y = as.vector(d$y),
-      N_total = nrow(d),
-      N_players = nrow(lookup_table),
-      player0_indexes = as.vector(d$player0_index),
-      player1_indexes = as.vector(d$player1_index),
-      z_player1 = as.vector(d[, z_player1]),
-      prior_lambda_mu = prior_lambda_mu,
-      prior_lambda_std = prior_lambda_std,
-      prior_gm_mu = prior_gm_mu,
-      prior_gm_std = prior_gm_std
-    )
-    stanfit <-
-      rstan::sampling(
-        stanmodels$btordereffect,
-        data = standata,
-        chains = chains,
-        iter = iter,
-        warmup = warmup,
-        refresh = refresh,
-        seed = seed
-      )
-  }
-  else if (model_type == 'davidsonordereffect') {
-    standata <- list(
-      y = as.vector(d$y),
-      N_total = nrow(d),
-      N_players = nrow(lookup_table),
-      player0_indexes = as.vector(d$player0_index),
-      player1_indexes = as.vector(d$player1_index),
-      ties = as.vector(d$ties),
-      prior_lambda_mu = prior_lambda_mu,
-      prior_lambda_std = prior_lambda_std,
-      prior_nu_mu = prior_nu_mu,
-      prior_nu_std = prior_nu_std,
-      z_player1 = as.vector(d[, z_player1]),
-      prior_gm_mu = prior_gm_mu,
-      prior_gm_std = prior_gm_std
-    )
-    stanfit <-
-      rstan::sampling(
-        stanmodels$davidsonordereffect,
-        data = standata,
-        chains = chains,
-        iter = iter,
-        warmup = warmup,
-        refresh = refresh,
-        seed = seed
-      )
-
-  }
-  else if (model_type == 'btgeneralized') {
-    standata <- list(
-      y = as.vector(d$y),
-      N_total = nrow(d),
-      N_players = nrow(lookup_table),
-      player0_indexes = as.vector(d$player0_index),
-      player1_indexes = as.vector(d$player1_index),
-      prior_lambda_mu = prior_lambda_mu,
-      prior_lambda_std = prior_lambda_std,
-      K = nrow(predictors_lookup_table),
-      X = predictors_matrix
-    )
-    stanfit <-
-      rstan::sampling(
-        stanmodels$btgeneralized,
-        data = standata,
-        chains = chains,
-        iter = iter,
-        warmup = warmup,
-        refresh = refresh,
-        seed = seed
-      )
-
-  }
-  else if (model_type == 'davidsongeneralized') {
-    standata <- list(
-      y = as.vector(d$y),
-      N_total = nrow(d),
-      N_players = nrow(lookup_table),
-      player0_indexes = as.vector(d$player0_index),
-      player1_indexes = as.vector(d$player1_index),
-      ties = as.vector(d$ties),
-      prior_lambda_mu = prior_lambda_mu,
-      prior_lambda_std = prior_lambda_std,
-      prior_nu_mu = prior_nu_mu,
-      prior_nu_std = prior_nu_std,
-      K = nrow(predictors_lookup_table),
-      X = predictors_matrix
-    )
-    stanfit <-
-      rstan::sampling(
-        stanmodels$davidsongeneralized,
-        data = standata,
-        chains = chains,
-        iter = iter,
-        warmup = warmup,
-        refresh = refresh,
-        seed = seed
-      )
-  }
-  else if (model_type == 'davidsonU') {
-    standata <- list(
-      y = as.vector(d$y),
-      N_total = nrow(d),
-      N_players = nrow(lookup_table),
-      player0_indexes = as.vector(d$player0_index),
-      player1_indexes = as.vector(d$player1_index),
-      ties = as.vector(d$ties),
-      N_U = nrow(cluster_lookup_table),
-      U_indexes = as.vector(d$cluster_index),
-      prior_lambda_mu = prior_lambda_mu,
-      prior_lambda_std = prior_lambda_std,
-      prior_nu_mu = prior_nu_mu,
-      prior_nu_std = prior_nu_std,
-      prior_U_std = prior_U_std
-    )
-    stanfit <-
-      rstan::sampling(
-        stanmodels$davidsonU,
-        data = standata,
-        chains = chains,
-        iter = iter,
-        warmup = warmup,
-        refresh = refresh,
-        seed = seed
-      )
-
-  }
-  else if (model_type == 'btU') {
-    standata <- list(
-      y = as.vector(d$y),
-      N_total = nrow(d),
-      N_players = nrow(lookup_table),
-      N_U = nrow(cluster_lookup_table),
-      U_indexes = as.vector(d$cluster_index),
-      player0_indexes = as.vector(d$player0_index),
-      player1_indexes = as.vector(d$player1_index),
-      prior_lambda_mu = prior_lambda_mu,
-      prior_lambda_std = prior_lambda_std,
-      prior_U_std = prior_U_std
-    )
-    stanfit <-
-      rstan::sampling(
-        stanmodels$btU,
-        data = standata,
-        chains = chains,
-        iter = iter,
-        warmup = warmup,
-        refresh = refresh,
-        seed = seed
-      )
-  }
-  else
+  } else
     stop("Invalid model type")
 
 
   #Defining a bpc object
+
   out <- create_bpc_object(
     stanfit,
     lookup_table,
@@ -504,4 +390,5 @@ bpc <- function(data,
     predictors_matrix = predictors_matrix
   )
   return(out)
+
 }

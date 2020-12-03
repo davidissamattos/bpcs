@@ -13,4 +13,5 @@ Meta
 /src/*.gcda
 /src/*.gcno
 /src/*.temp
+/src/*.tmp
 /data-raw/data-to-try/*

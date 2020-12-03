@@ -53,33 +53,33 @@ rstan::rstan_options(auto_write = TRUE)
 The collected data is available as:
 ```{r}
 data("optimization_algorithms")
-knitr::kable(dplyr::sample_n(optimization_algorithms, size=20),
-      caption= "Sample of the data set")
+knitr::kable(dplyr::sample_n(optimization_algorithms, size = 20),
+             caption = "Sample of the data set")
 ```
 
 In this dataset, we have one main metrics that we can use to compare the algorithms. The `TrueRewardDifference` is the difference between the minimum found by the algorithm and the global minimum of the benchmark function. `simNumber` indicates the number of the replication of the same algorithm in the same benchmark function (but with different seeds). All algorithms had a budget of 10,000 function evaluations per number of dimensions for each benchmark function.
 
 Here we have the following benchmark functions:
 ```{r}
-bm<-unique(optimization_algorithms$Benchmark)
-nbm<-length(bm)
-knitr::kable(matrix(bm,ncol = 4))
+bm <- unique(optimization_algorithms$Benchmark)
+nbm <- length(bm)
+knitr::kable(matrix(bm, ncol = 4))
 ```
 To reduce a bit the model sampling time here lets reduce the number of benchmark functions and only use 10 of them.
 
 ```{r}
 set.seed(1)
-bm_reduced <- sample(size=10, x=bm,replace = F)
-optimization_algorithms <- optimization_algorithms %>% 
+bm_reduced <- sample(size = 10, x = bm, replace = F)
+optimization_algorithms <- optimization_algorithms %>%
   dplyr::filter(Benchmark %in% bm_reduced)
-knitr::kable(matrix(bm_reduced,ncol = 2))
+knitr::kable(matrix(bm_reduced, ncol = 2))
 ```
 
 
 Here we have the optimization algorithms:
 ```{r}
-alg<-unique(optimization_algorithms$Algorithm)
-nalg<-length(alg)
+alg <- unique(optimization_algorithms$Algorithm)
+nalg <- length(alg)
 knitr::kable(alg)
 ```
 
@@ -99,48 +99,53 @@ comb <- gtools::combinations(n=nalg, r=2, v=seq(1:nalg), repeats.allowed = F)
 Creating the dataset
 ```{r}
 #1 Grouping and ranking
-df_1<- optimization_algorithms %>%  dplyr::group_by(Benchmark, simNumber) %>% 
-  dplyr::mutate(rankReward=rank(TrueRewardDifference, ties.method = 'random')) %>% 
-  dplyr::ungroup() %>% 
+df_1 <-
+  optimization_algorithms %>%  dplyr::group_by(Benchmark, simNumber) %>%
+  dplyr::mutate(rankReward = rank(TrueRewardDifference, ties.method = 'random')) %>%
+  dplyr::ungroup() %>%
   dplyr::select(-TrueRewardDifference)
 
 #2 Expanding in wide format
-df_2<- df_1 %>%
+df_2 <- df_1 %>%
   tidyr::pivot_wider(names_from = Algorithm,
-                     values_from=rankReward) %>% 
-  dplyr::select(-MaxFevalPerDimensions, -Ndimensions) #dropping some variables that we will not use
+                     values_from = rankReward) %>%
+  dplyr::select(-MaxFevalPerDimensions,-Ndimensions) #dropping some variables that we will not use
 
 #3 Computing the paired comparisons
 ## Maybe not the most efficient code, but for this number of variables it is fast enough, only a few seconds...
 #We first go row by row of the wide data frame df_2 and expand each row into the number of combinations
 #available of the different ranks
-df_3<-  dplyr::tribble(~algo0_name, ~algo1_name, ~y, ~simNumber, ~Benchmark)
+df_3 <-
+  dplyr::tribble( ~ algo0_name, ~ algo1_name, ~ y, ~ simNumber, ~ Benchmark)
 
-for(i in 1:nrow(df_2))
+for (i in 1:nrow(df_2))
 {
-  current_row <- df_2[i,]
-  for(j in 1:nrow(comb)){
-    comb_row <- comb[j,]
-
+  current_row <- df_2[i, ]
+  for (j in 1:nrow(comb)) {
+    comb_row <- comb[j, ]
+    
     algo0_name <- alg[comb_row[1]]
     algo0 <- comb_row[1]
-    algo0_rank <- current_row[[1,algo0_name]]
-
+    algo0_rank <- current_row[[1, algo0_name]]
+    
     algo1_name <- alg[comb_row[2]]
     algo1 <- comb_row[2]
-    algo1_rank <- current_row[[1,algo1_name]]
-
+    algo1_rank <- current_row[[1, algo1_name]]
+    
     diff_rank <- algo1_rank - algo0_rank
-    y <- ifelse(diff_rank<0, 1, 0) # if rank0 is higher than rank1, algo1 wins
-    df_3 <- tibble::add_row(df_3,
-                      algo0_name=algo0_name,
-                      algo1_name=algo1_name,
-                      y=y,
-                      simNumber=current_row$simNumber,
-                      Benchmark=current_row$Benchmark)
+    y <-
+      ifelse(diff_rank < 0, 1, 0) # if rank0 is higher than rank1, algo1 wins
+    df_3 <- tibble::add_row(
+      df_3,
+      algo0_name = algo0_name,
+      algo1_name = algo1_name,
+      y = y,
+      simNumber = current_row$simNumber,
+      Benchmark = current_row$Benchmark
+    )
   }
 }
-df_3<-as.data.frame(df_3)
+df_3 <- as.data.frame(df_3)
 ```
 
 The table below shows how the dataset looks like now.
@@ -163,7 +168,16 @@ Now we can estimate and control the effect of each benchmark in each algorithm w
 Lets also specify a wide prior for the standard deviation of the random effects. This will help the convergence
 
 ```{r}
-m <- bpc(data=df_3, player0 = 'algo0_name', player1 = 'algo1_name', result_column = 'y', cluster = 'Benchmark', model_type = 'btU', priors=list(prior_U_std=10.0))
+m <-
+  bpc(
+    data = df_3,
+    player0 = 'algo0_name',
+    player1 = 'algo1_name',
+    result_column = 'y',
+    cluster = 'Benchmark',
+    model_type = 'bt-U',
+    priors = list(prior_U_std = 10.0)
+  )
 ```
 
 ## Diagnostics
@@ -184,8 +198,20 @@ Traceplots of the chains with the bayesplot library
 
 ```{r}
 library(bayesplot)
-posterior<-rstan::extract(stanfit,inc_warmup=T,permuted=F)
-bayesplot::mcmc_trace(posterior,pars = c("lambda[1]","lambda[2]","lambda[3]","lambda[4]", "lambda[5]", "lambda[6]", "U_std"), n_warmup=1000)
+posterior <- rstan::extract(stanfit, inc_warmup = T, permuted = F)
+bayesplot::mcmc_trace(
+  posterior,
+  pars = c(
+    "lambda[1]",
+    "lambda[2]",
+    "lambda[3]",
+    "lambda[4]",
+    "lambda[5]",
+    "lambda[6]",
+    "U_std"
+  ),
+  n_warmup = 1000
+)
 ```
 
 Everything seems in order for us to look at the predictive posterior bar plot. 
@@ -196,7 +222,7 @@ yrep<-predict(m,df_3,n=100,return_matrix = T)
 
 
 ```{r}
-bayesplot::ppc_bars(y=df_3$y, yrep=yrep) +
+bayesplot::ppc_bars(y = df_3$y, yrep = yrep) +
   labs(title = 'Bar plot with medians and uncertainty\n intervals superimposed')
 ```
 
@@ -234,32 +260,32 @@ We can also have nice plots of the parameters with `bayesplot` package.
 
 ```{r}
 #changing the names of the parameters in the posterior 
-dimnames<-attr(posterior, 'dimnames')
-parameters<-dimnames$parameters #reading the parameters of the posterior
+dimnames <- attr(posterior, 'dimnames')
+parameters <-
+  dimnames$parameters #reading the parameters of the posterior
 names <- m$lookup_table$Names
-indexes <-m$lookup_table$Index
-new_pars <- replace(parameters,indexes,names)
+indexes <- m$lookup_table$Index
+new_pars <- replace(parameters, indexes, names)
 #changin the attributes
-dimnames$parameters<-new_pars
-attr(posterior,'dimnames') <- dimnames
+dimnames$parameters <- new_pars
+attr(posterior, 'dimnames') <- dimnames
 
 bayesplot::mcmc_areas(posterior,
-           pars = names, 
-           prob = 0.8)+
+                      pars = names,
+                      prob = 0.8) +
   labs(title = 'Posterior distribution with medians\n and 80% intervals')
 ```
 
 Or directly in ggplot with the HPD intervals instead of the quantiles
 ```{r}
-hpdi <- get_hpdi_parameters(m) %>% 
-  dplyr::filter(startsWith(Parameter,"lambda"))
+hpdi <- get_hpdi_parameters(m) %>%
+  dplyr::filter(startsWith(Parameter, "lambda"))
 
-ggplot2::ggplot(hpdi, aes(x=Parameter))+
-  ggplot2::geom_pointrange(aes(
-    ymin=HPD_lower, 
-    ymax=HPD_higher, 
-    y=Mean))+
-  ggplot2::labs(y="Estimate", x="Algorithm", title = "HPDI interval of the strength of the algorithms")+
+ggplot2::ggplot(hpdi, aes(x = Parameter)) +
+  ggplot2::geom_pointrange(aes(ymin = HPD_lower,
+                               ymax = HPD_higher,
+                               y = Mean)) +
+  ggplot2::labs(y = "Estimate", x = "Algorithm", title = "HPDI interval of the strength of the algorithms") +
   ggplot2::coord_flip()
 
 ```

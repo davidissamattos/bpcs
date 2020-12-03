@@ -168,6 +168,54 @@ test_predictors<-tibble::tribble(~Player, ~Pred1, ~Pred2, ~Pred3, ~Pred4,
 test_predictors<-as.data.frame(test_predictors)
 
 
+
+
+
+#### Some combinations
+# Test sets for random effects
+# Player 1 always have home advantage
+test_btUordereffect<-tibble::tribble(~player0, ~player1, ~y, ~cluster, ~z1,
+                          'A', 'B', 0, 'c1', 1,
+                          'A', 'B', 0, 'c1', 1,
+                          'A', 'B', 0, 'c1', 1,
+                          'A', 'C', 0, 'c1', 1,
+                          'A', 'C', 0, 'c1', 1,
+                          'A', 'C', 0, 'c1', 1,
+                          'B', 'C', 0, 'c1', 1,
+                          'B', 'C', 1, 'c1', 1,
+                          'B', 'C', 1, 'c1', 1,
+                          'A', 'B', 0, 'c2', 1,
+                          'A', 'B', 1, 'c2', 1,
+                          'A', 'B', 1, 'c2', 1,
+                          'A', 'C', 0, 'c2', 1,
+                          'A', 'C', 1, 'c2', 1,
+                          'A', 'C', 0, 'c2', 1,
+                          'B', 'C', 0, 'c2', 1,
+                          'B', 'C', 1, 'c2', 1,
+                          'B', 'C', 1, 'c2', 1,
+                          'A', 'B', 0, 'c3', 1,
+                          'A', 'B', 0, 'c3', 1,
+                          'A', 'B', 1, 'c3', 1,
+                          'A', 'C', 1, 'c3', 1,
+                          'A', 'C', 1, 'c3', 1,
+                          'A', 'C', 1, 'c3', 1,
+                          'B', 'C', 0, 'c3', 1,
+                          'B', 'C', 0, 'c3', 1,
+                          'B', 'C', 1, 'c3', 1,
+                          'A', 'B', 0, 'c4', 1,
+                          'A', 'B', 0, 'c4', 1,
+                          'A', 'B', 1, 'c4', 1,
+                          'A', 'C', 0, 'c4', 1,
+                          'A', 'C', 1, 'c4', 1,
+                          'A', 'C', 1, 'c4', 1,
+                          'B', 'C', 0, 'c4', 1,
+                          'B', 'C', 1, 'c4', 1,
+                          'B', 'C', 1, 'c4', 1
+)
+test_btUordereffect<-as.data.frame(test_btUordereffect)
+
+
+
 save(test_bt, file = "inst/testdata/test_bt.rda")
 save(test_btscores, file = "inst/testdata/test_btscores.rda")
 save(test_davidson, file = "inst/testdata/test_davidson.rda")
@@ -177,3 +225,4 @@ save(test_davidsonorder, file = "inst/testdata/test_davidsonorder.rda")
 save(test_btU, file = "inst/testdata/test_btU.rda")
 save(test_davidsonU, file = "inst/testdata/test_davidsonU.rda")
 save(test_predictors, file = "inst/testdata/test_predictors.rda")
+save(test_btUordereffect, file = "inst/testdata/test_btUordereffect.rda")

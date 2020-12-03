@@ -30,7 +30,7 @@ print.bpc <- function(x, digits = 3, ...) {
   cat('NOTES:\n')
   cat('* A higher lambda indicates a higher team ability\n')
 
-  if (startsWith(x$model_type, 'davidson')) {
+  if (stringr::str_detect(x$model_type, 'davidson')) {
     cat(
       '* Large positive values of the nu parameter indicates a high probability of tie regardless of the abilities of theplayers.\n'
     )
@@ -41,7 +41,7 @@ print.bpc <- function(x, digits = 3, ...) {
       '* Values of nu close to zero indicate that the probability of tie is more dependable on abilities of the players. If nu=0 the model reduces to the Bradley-Terry model.\n'
     )
   }
-  if (endsWith(x$model_type, 'ordereffect')) {
+  if (stringr::str_detect(x$model_type, 'ordereffect')) {
     cat(
       '* Large positive values of the gm parameter indicate that player 1 has a disadvantage. E.g. in a home effect scenario positive values indicate a home disadvantage.\n'
     )
@@ -52,7 +52,7 @@ print.bpc <- function(x, digits = 3, ...) {
       '* Values of gm close to zero indicate that the order effect does not influence the contest. E.g. in a home effect it indicates that player 1 does not have a home advantage nor disadvantage.\n'
     )
   }
-  if (endsWith(x$model_type, 'U')) {
+  if (stringr::str_detect(x$model_type, 'U')) {
     cat(
       '* The U_std indicates the standard deviation of the normal distribution where the parameters U[player, cluster] are drawn from. Higher values of U_std indicates a higher effect of the cluster in the team abitilies.\n'
     )
@@ -89,6 +89,8 @@ summary.bpc <- function(object, digits = 2, ...) {
   #Table with the parameter estimates and footnotes
   print(object, digits = digits)
 
+
+  #TODO: we commented out the posterior probabilities table until we fix the get_probabilities
   #Table with the posterior probabilities
   cat('\n\n')
   cat("Posterior probabilities:\n")
@@ -109,7 +111,7 @@ summary.bpc <- function(object, digits = 2, ...) {
                      format = 'simple',
                      digits = digits))
 
-  if (endsWith(object$model_type, 'ordereffect')) {
+  if (stringr::str_detect(object$model_type, 'ordereffect')) {
     cat('NOTES:\n')
     cat('* These probabilies assume zero order effect (no home advantage).\n')
   }
@@ -163,6 +165,8 @@ summary.bpc <- function(object, digits = 2, ...) {
 #' solve_ties = 'none')
 #' predict(m,newdata=tennis_agresti)
 #'}
+
+#TODO: fix B variable in btpredict and the predictors in get_probabilities
 predict.bpc <-
   function(object,
            newdata,
@@ -170,209 +174,67 @@ predict.bpc <-
            n = 100,
            return_matrix = F,
            ...) {
+    # Get some basic information for all models
     model_type <- object$model_type
     stanfit <- object$stanfit
+    lookup_table <- object$lookup_table
 
-    if (model_type == 'bt')
-    {
-      lookup_table <- object$lookup_table
-      newdata <- create_index_with_existing_lookup_table(
-        d = newdata,
-        player0 = object$call_arg$player0,
-        player1 = object$call_arg$player1,
-        lookup_table = lookup_table
-      )
-      standata <- list(
-        N_newdata = nrow(newdata),
-        player0_indexes = as.vector(as.integer(newdata$player0_index)),
-        player1_indexes = as.vector(as.integer(newdata$player1_index)),
-        N_players = nrow(lookup_table)
-      )
-      #create a stanfit object with the predictions
-      pred <- rstan::gqs(stanmodels$btpredict,
-                         data = standata,
-                         draws = as.matrix(stanfit))
-      y_pred <- sample_stanfit(pred, par = 'y_pred', n = n)
-      y_pred_df <- as.data.frame(y_pred) %>% t()
-      colnames(y_pred_df) <-
-        paste(rep('y_pred[', n), seq(1, n), ']', sep = "")
-      pred_df <- cbind(newdata, y_pred_df)
+    #Prepare the newdata for prediction
+    newdata <- create_index_with_existing_lookup_table(
+      d = newdata,
+      player0 = object$call_arg$player0,
+      player1 = object$call_arg$player1,
+      lookup_table = lookup_table
+    )
+
+    # prepare the standata that is used in each model
+    # This first step is used in all models then we customize the standata depending on the model options
+    standata <- list(
+      N_newdata = nrow(newdata),
+      player0_indexes = as.vector(as.integer(newdata$player0_index)),
+      player1_indexes = as.vector(as.integer(newdata$player1_index)),
+      N_players = nrow(lookup_table)
+    )
+
+    # Add order effect or not
+    if (stringr::str_detect(model_type, '-ordereffect')) {
+      standata <- c(standata, list(
+        use_Ordereffect = 1,
+        z_player1 = as.vector(as.integer(newdata[, object$call_arg$z_player1]))
+      ))
+    } else{
+      standata <- c(standata, list(use_Ordereffect = 0,
+                                   z_player1 = numeric(0)))
     }
-    if (model_type == 'davidson')
+
+    # Add random effects or not
+    if (stringr::str_detect(model_type, '-U'))
     {
-      lookup_table <- object$lookup_table
-      newdata <- create_index_with_existing_lookup_table(
-        d = newdata,
-        player0 = object$call_arg$player0,
-        player1 = object$call_arg$player1,
-        lookup_table = lookup_table
-      )
-      standata <- list(
-        N_newdata = nrow(newdata),
-        player0_indexes = as.vector(as.integer(newdata$player0_index)),
-        player1_indexes = as.vector(as.integer(newdata$player1_index)),
-        N_players = nrow(lookup_table)
-      )
-      #create a stanfit object with the predictions
-      pred <- rstan::gqs(stanmodels$davidsonpredict,
-                         data = standata,
-                         draws = as.matrix(stanfit))
-      y_pred <- sample_stanfit(pred, par = 'y_pred', n = n)
-      ties_pred <- sample_stanfit(pred, par = 'ties_pred', n = n)
-
-      y_pred_df <- as.data.frame(y_pred) %>% t()
-      colnames(y_pred_df) <-
-        paste(rep('y_pred[', n), seq(1, n), ']', sep = "")
-
-      ties_pred_df <- as.data.frame(ties_pred) %>% t()
-      colnames(ties_pred_df) <-
-        paste(rep('ties_pred[', n), seq(1, n), ']', sep = "")
-
-      pred_df <- cbind(newdata, y_pred_df, ties_pred_df)
-    }
-    if (model_type == 'btordereffect')
-    {
-      lookup_table <- object$lookup_table
-      newdata <- create_index_with_existing_lookup_table(
-        d = newdata,
-        player0 = object$call_arg$player0,
-        player1 = object$call_arg$player1,
-        lookup_table = lookup_table
-      )
-      standata <- list(
-        N_newdata = nrow(newdata),
-        player0_indexes = as.vector(as.integer(newdata$player0_index)),
-        player1_indexes = as.vector(as.integer(newdata$player1_index)),
-        z_player1 = as.vector(as.integer(newdata[ , object$call_arg$z_player1])), #for some weird reason sometimes it coerces to string
-        N_players = nrow(lookup_table)
-      )
-
-      #create a stanfit object with the predictions
-      pred <- rstan::gqs(stanmodels$btordereffectpredict,
-                         data = standata,
-                         draws = as.matrix(stanfit))
-      pred <- sample_stanfit(pred, par = 'y_pred', n = n)
-      pred_df <- as.data.frame(pred) %>% t()
-      colnames(pred_df) <-
-        paste(rep('y_pred[', n), seq(1, n), ']', sep = "")
-      pred_df <- cbind(newdata, pred_df)
-    }
-    if (model_type == 'davidsonordereffect')
-    {
-
-      lookup_table <- object$lookup_table
-      newdata <- create_index_with_existing_lookup_table(
-        d = newdata,
-        player0 = object$call_arg$player0,
-        player1 = object$call_arg$player1,
-        lookup_table = lookup_table
-      )
-      standata <- list(
-        N_newdata = nrow(newdata),
-        player0_indexes = as.vector(as.integer(newdata$player0_index)),
-        player1_indexes = as.vector(as.integer(newdata$player1_index)),
-        z_player1 = as.vector(as.integer(newdata[ , object$call_arg$z_player1])), #for some weird reason sometimes it coerces to string
-        N_players = nrow(lookup_table)
-      )
-      #create a stanfit object with the predictions
-      pred <- rstan::gqs(stanmodels$davidsonordereffectpredict,
-                         data = standata,
-                         draws = as.matrix(stanfit))
-      y_pred <- sample_stanfit(pred, par = 'y_pred', n = n)
-      ties_pred <- sample_stanfit(pred, par = 'ties_pred', n = n)
-
-      y_pred_df <- as.data.frame(y_pred) %>% t()
-      colnames(y_pred_df) <-
-        paste(rep('y_pred[', n), seq(1, n), ']', sep = "")
-
-      ties_pred_df <- as.data.frame(ties_pred) %>% t()
-      colnames(ties_pred_df) <-
-        paste(rep('ties_pred[', n), seq(1, n), ']', sep = "")
-
-      pred_df <- cbind(newdata, y_pred_df, ties_pred_df)
-    }
-    if (model_type == 'btU')
-    {
-      lookup_table <- object$lookup_table
       cluster_lookup_table <- object$cluster_lookup_table
-      newdata <- create_index_with_existing_lookup_table(
-        d = newdata,
-        player0 = object$call_arg$player0,
-        player1 = object$call_arg$player1,
-        lookup_table = lookup_table
-      )
       newdata <-
         create_cluster_index_with_existing_lookup_table(
           d = newdata,
           cluster = object$call_arg$cluster,
           cluster_lookup_table = cluster_lookup_table
         )
-      standata <- list(
-        N_newdata = nrow(newdata),
-        player0_indexes = as.vector(as.integer(newdata$player0_index)),
-        player1_indexes = as.vector(as.integer(newdata$player1_index)),
-        N_players = nrow(lookup_table),
+      standata <- c(standata, list(
+        use_U = 1,
         N_U = nrow(cluster_lookup_table),
         U_indexes = as.vector(as.integer(newdata$cluster_index))
-      )
-      #create a stanfit object with the predictions
-      pred <- rstan::gqs(stanmodels$btUpredict,
-                         data = standata,
-                         draws = as.matrix(stanfit))
-      y_pred <- sample_stanfit(pred, par = 'y_pred', n = n)
-      y_pred_df <- as.data.frame(y_pred) %>% t()
-      colnames(y_pred_df) <-
-        paste(rep('y_pred[', n), seq(1, n), ']', sep = "")
-      pred_df <- cbind(newdata, y_pred_df)
+      ))
+    } else{
+      standata <- c(standata, list(
+        use_U = 0,
+        N_U = 0,
+        U_indexes = numeric(0)
+      ))
     }
-    if (model_type == 'davidsonU')
-    {
-      lookup_table <- object$lookup_table
-      cluster_lookup_table <- object$cluster_lookup_table
-      newdata <- create_index_with_existing_lookup_table(
-        d = newdata,
-        player0 = object$call_arg$player0,
-        player1 = object$call_arg$player1,
-        lookup_table = lookup_table
-      )
-      newdata <-
-        create_cluster_index_with_existing_lookup_table(
-          d = newdata,
-          cluster = object$call_arg$cluster,
-          cluster_lookup_table = cluster_lookup_table
-        )
 
-      standata <- list(
-        N_newdata = nrow(newdata),
-        player0_indexes = as.vector(as.integer(newdata$player0_index)),
-        player1_indexes = as.vector(as.integer(newdata$player1_index)),
-        N_players = nrow(lookup_table),
-        N_U = nrow(cluster_lookup_table),
-        U_indexes = as.vector(as.integer(newdata$cluster_index))
-      )
-      #create a stanfit object with the predictions
-      pred <- rstan::gqs(stanmodels$davidsonUpredict,
-                         data = standata,
-                         draws = as.matrix(stanfit))
-      y_pred <- sample_stanfit(pred, par = 'y_pred', n = n)
-      ties_pred <- sample_stanfit(pred, par = 'ties_pred', n = n)
-
-      y_pred_df <- as.data.frame(y_pred) %>% t()
-      colnames(y_pred_df) <-
-        paste(rep('y_pred[', n), seq(1, n), ']', sep = "")
-
-      ties_pred_df <- as.data.frame(ties_pred) %>% t()
-      colnames(ties_pred_df) <-
-        paste(rep('ties_pred[', n), seq(1, n), ']', sep = "")
-
-      pred_df <- cbind(newdata, y_pred_df, ties_pred_df)
-    }
-    if (model_type == 'btgeneralized')
+    # Add random effects or not
+    if (stringr::str_detect(model_type, '-generalized'))
     {
       if (is.null(predictors))
         stop('For this model we require the predictors argument')
-
-      lookup_table <- object$lookup_table
       predictors_lookup_table <- object$predictors_lookup_table
 
       predictor_all_columns <- colnames(predictors)
@@ -391,6 +253,7 @@ predict.bpc <-
         )
       new_predictors_lookup_table <-
         create_predictors_lookup_table(predictors_columns)
+
       if (!dplyr::all_equal(new_predictors_lookup_table, predictors_lookup_table))
         stop(
           'The predictor data frame is specified differently than the predictors data frame used to generate the model. We found different predictors or predictors in different order. The columns should be in the same order and contain only the predictors and the players name'
@@ -401,95 +264,62 @@ predict.bpc <-
           'The predictors are mispecified. Only numeric values are accepted. Booleans are accepted but will be cast into integers'
         )
 
-      newdata <- create_index_with_existing_lookup_table(
-        d = newdata,
-        player0 = object$call_arg$player0,
-        player1 = object$call_arg$player1,
-        lookup_table = lookup_table
-      )
-      standata <- list(
-        N_newdata = nrow(newdata),
-        player0_indexes = as.vector(as.integer(newdata$player0_index)),
-        player1_indexes = as.vector(as.integer(newdata$player1_index)),
-        N_players = nrow(lookup_table),
-        K = nrow(predictors_lookup_table),
-        X = predictors_matrix
-      )
-      #create a stanfit object with the predictions
-      pred <- rstan::gqs(stanmodels$btgeneralizedpredict,
-                         data = standata,
-                         draws = as.matrix(stanfit))
-      y_pred <- sample_stanfit(pred, par = 'y_pred', n = n)
-      y_pred_df <- as.data.frame(y_pred) %>% t()
-      colnames(y_pred_df) <-
-        paste(rep('y_pred[', n), seq(1, n), ']', sep = "")
-      pred_df <- cbind(newdata, y_pred_df)
+      standata <- c(standata,
+                    list(
+                      use_Generalized = 1,
+                      K = nrow(predictors_lookup_table),
+                      X = predictors_matrix
+                    ))
+    } else{
+      standata <- c(standata, list(
+        use_Generalized = 0,
+        K = 0,
+        X =  matrix(NA_real_, ncol = 0, nrow = 0)
+      ))
     }
-    if (model_type == 'davidsongeneralized')
+
+    if (startsWith(model_type, 'davidson'))
     {
-      if (is.null(predictors))
-        stop('For this model we require the predictors argument')
-
-      lookup_table <- object$lookup_table
-      predictors_lookup_table <- object$predictors_lookup_table
-
-      predictor_all_columns <- colnames(predictors)
-      predictors_columns <-
-        predictor_all_columns[2:length(predictor_all_columns)]
-      player_column <- predictor_all_columns[1]
-      predictors_matrix <-
-        create_predictor_matrix_with_player_lookup_table(
-          d = predictors,
-          player =
-            player_column,
-          predictors_columns =
-            predictors_columns,
-          lookup_table =
-            lookup_table
-        )
-      new_predictors_lookup_table <-
-        create_predictors_lookup_table(predictors_columns)
-      if (!dplyr::all_equal(new_predictors_lookup_table, predictors_lookup_table))
-        stop(
-          'The predictor data frame is specified differently than the predictors data frame used to generate the model. We found different predictors or predictors in different order. The columns should be in the same order and contain only the predictors and the players name'
-        )
-
-      if (!check_numeric_predictor_matrix(predictors_matrix))
-        stop(
-          'The predictors are mispecified. Only numeric values are accepted. Booleans are accepted but will be cast into integers'
-        )
-
-      newdata <- create_index_with_existing_lookup_table(
-        d = newdata,
-        player0 = object$call_arg$player0,
-        player1 = object$call_arg$player1,
-        lookup_table = lookup_table
-      )
-      standata <- list(
-        N_newdata = nrow(newdata),
-        player0_indexes = as.vector(as.integer(newdata$player0_index)),
-        player1_indexes = as.vector(as.integer(newdata$player1_index)),
-        N_players = nrow(lookup_table),
-        K = nrow(predictors_lookup_table),
-        X = predictors_matrix
-      )
-      #create a stanfit object with the predictions
-      pred <- rstan::gqs(stanmodels$davidsongeneralizedpredict,
-                         data = standata,
-                         draws = as.matrix(stanfit))
-      y_pred <- sample_stanfit(pred, par = 'y_pred', n = n)
-      ties_pred <- sample_stanfit(pred, par = 'ties_pred', n = n)
-
-      y_pred_df <- as.data.frame(y_pred) %>% t()
-      colnames(y_pred_df) <-
-        paste(rep('y_pred[', n), seq(1, n), ']', sep = "")
-
-      ties_pred_df <- as.data.frame(ties_pred) %>% t()
-      colnames(ties_pred_df) <-
-        paste(rep('ties_pred[', n), seq(1, n), ']', sep = "")
-
-      pred_df <- cbind(newdata, y_pred_df, ties_pred_df)
+      standata <- c(standata, list(use_Davidson = 1))
+    } else{
+      standata <- c(standata, list(use_Davidson = 0))
     }
+
+
+    #This is a weird fix do to a possible bugs in rstan
+    #rstan does not return parameters with zero dimension
+    #gqs requires all parameters including those with zero dimensions
+    # I am keeping this here just in case for the future
+
+    #create a stanfit object with the predictions
+    # draws <- as.matrix(stanfit)
+    # nrows_draws <- nrow(draws)
+    # pars_draws <- colnames(draws)
+    # #lambda is always there so we don't need to worry about it
+    # all_pars <- c('gm_param','U_std_param','U','nu_param')
+    # not_in_draws <- setdiff(all_pars, pars_draws)#which of the allpars are not in pars_draws
+    # for(i in 1:length(not_in_draws)){ #adding fake sample to the stanfit matrix
+    #   draws<-cbind(not_in_draws[i]=rep(0,nrows_draws))
+    # }
+
+
+    draws <- as.matrix(stanfit)
+    pred <- rstan::gqs(stanmodels$btpredict,
+                       data = standata,
+                       draws = draws)
+
+    pred_df <- NULL #the return object
+
+    # Now we compute the predictions
+    y_pred <- sample_stanfit(pred, par = 'y_pred', n = n)
+    ties_pred <- sample_stanfit(pred, par = 'ties_pred', n = n)
+    y_pred_df <- as.data.frame(y_pred) %>% t()
+    colnames(y_pred_df) <-
+      paste(rep('y_pred[', n), seq(1, n), ']', sep = "")
+    ties_pred_df <- as.data.frame(ties_pred) %>% t()
+    colnames(ties_pred_df) <-
+      paste(rep('ties_pred[', n), seq(1, n), ']', sep = "")
+    pred_df <- cbind(newdata, y_pred_df, ties_pred_df)
 
 
 

@@ -1,17 +1,18 @@
-test_that("bpc returns a bpc object the davidsonordereffect model", {
+test_that("bpc returns a bpc object the bt-U-ordereffect model", {
   skip_on_cran()
-  test_davidsonorder <- load_testdata('test_davidsonorder')
+  test_btU <- load_testdata('test_btUordereffect')
   m1 <- bpc(
-    data = test_davidsonorder,
+    data = test_btU,
     player0 = 'player0',
     player1 = 'player1',
     result_column = 'y',
+    cluster = 'cluster',
     z_player1 = 'z1',
-    model_type = 'davidson-ordereffect',
-    solve_ties = 'none',
+    model_type = 'bt-U-ordereffect',
+    solve_ties = 'random',
     win_score = 'higher',
-    iter = 1000,
-    warmup = 300,
+    iter = 2000,
+    warmup = 600,
     show_chain_messages = F,
     seed = 8484
   )

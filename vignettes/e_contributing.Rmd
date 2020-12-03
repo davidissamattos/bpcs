@@ -32,15 +32,17 @@ The points below are mostly reminders for me but hopefully it can help others
 * To add new models:
   1. Add the stan file with the model in inst/stan.
     - Note that we add two stan files for each model, one that will estimate the parameters and one that will make predictions
+    - The goal is to keep the number of models small. If the models are related to an existing one add that functionality to the existing models.
+    - More models -> longer installation time
   3. add the appropriated hooks in the `bpc` function in `bpc.R` so we can call the model
   4. add the appropriated hooks in the `predict` function in `bpc_s3.R`.
   5. add the appropriated hooks for the `get_probabilities` function in `bpc_get_probabilities.R`  to generate the appropriated probability table that is called in the `summary` function.
   6. add the relevant tests to each of the modifications (to be improved with time, since we have very few tests now)
 * Problems with `rstantools` and compiling the models. For me at least, the combination of `RStudio`+ `rstantools` + `roxygen2` + `devtools` + `Rcpp`+ `devtools` gives an assorted amount of stochastic errors can usually be solved with a combination of the actions below. For me it is still trial and error to fix the error but it usually works with these actions:
-  - Restart the r session and try `devtools::load_all()` again
-  - After adding a model try `devtools::document()`
-  - If deleting a model file delete the appropriated line in stanmodels.R and do document again
-  - If the model is not recompiling or updating do `pkgbuild::clean_dll()` then `devtools::document()` and possibly `devtools::load_all()` or `devtools::install()`
+  1. `pkgbuild::clean_dll()` to clean the source files. This will force recompile
+  2. `devtools::document()`. This will update the package and recompile the models
+  3. Restart the r session
+  4. Run`devtools::load_all()` again
 
 ## Github actions
 

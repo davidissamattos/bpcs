@@ -149,7 +149,7 @@ m3 <- bpc(d_home,
           player0_score = 'ScoreVisitorTeam',
           player1_score = 'ScoreHomeTeam',
           z_player1 = 'home_player1',
-          model_type = 'btordereffect',
+          model_type = 'bt-ordereffect',
           solve_ties = 'random',
           priors = list(prior_lambda_std=2.0), # making a more informative prior to improve convergence
           iter = 3000) #stan indicates a low bulk ESS so we are increasing the number of iterations
@@ -190,7 +190,7 @@ m4 <- bpc(d_home,
           player0_score = 'ScoreVisitorTeam',
           player1_score = 'ScoreHomeTeam',
           z_player1 = 'home_player1',
-          model_type = 'davidsonordereffect',
+          model_type = 'davidson-ordereffect',
           solve_ties = 'none',
           priors = list(prior_lambda_std=2.0), # making a more informative prior to improve convergence
           iter = 3000) #stan indicates a low bulk ESS so we are increasing the number of iterations

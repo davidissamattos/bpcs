@@ -23,6 +23,7 @@ create_bpc_object <-
            predictors_df = NULL,
            predictors_lookup_table = NULL,
            predictors_matrix = NULL) {
+
     hpdi <- HPDI_from_stanfit(stanfit)
 
     #Creating the object

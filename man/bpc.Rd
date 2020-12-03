@@ -44,15 +44,17 @@ bpc(
 
 \item{predictors}{A data frame that contains the players predictors values when using a generalized model. Only numeric values are accepted. Booleans are accepted but will be cast into integers. The first column should be for the player name, the others will be the predictors.  The column names will be used as name for the predictors}
 
-\item{model_type}{\itemize{
+\item{model_type}{We first add a base model 'bt' or 'davidson' and then additional options with '-'
+\itemize{
 \item 'bt' for the Bradley Terry model. Ref: Bradley-Terry 1952,
 \item 'davidson' the Davidson model to handle for ties. Ref: Davidson 1970
-\item 'btordereffect' for the Bradley-Terry with order effect, for home advantage. Ref: Davidson 1977
-\item 'davidsonordereffect' for the Davidson model with order effect, for home advantage, and ties. Ref: Davidson 1977
-\item 'btgeneralized': for the generalized Bradley Terry model for subject specific predictors. Ref: Springall 1973
-\item 'davidsongeneralized' for the generalized Davidson model for subject specific predictors
-\item 'btU': for the Bradley-Terry with random effects. Ref: Bockenholt 2001
-\item 'davidsonU': For Davidson model with random effects
+\item 'bt-ordereffect' for the Bradley-Terry with order effect, for home advantage. Ref: Davidson 1977
+\item 'davidson-ordereffect' for the Davidson model with order effect, for home advantage, and ties. Ref: Davidson 1977
+\item 'bt-generalized': for the generalized Bradley Terry model for subject specific predictors. Ref: Springall 1973
+\item 'davidson-generalized' for the generalized Davidson model for subject specific predictors
+\item 'bt-U': for the Bradley-Terry with random effects. Ref: Bockenholt 2001
+\item 'davidson-U': For Davidson model with random effects
+\item 'bt-ordereffect-U' for Bradley-Terry with order effects and random effects, use similar syntax for other variations by appending the correct options
 }}
 
 \item{solve_ties}{A string for the method of handling ties.

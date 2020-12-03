@@ -57,8 +57,6 @@ To install the development version of the bpcs package, install directly from th
 remotes::install_github('davidissamattos/bpcs')
 ```
 
-**NOTE**: installation can take a long time (average 10-20min on a regular laptop) due to the compilation of the models. We plan to improve this in future versions of the package.
-
 After installing, we load the package with:
 ```{r}
 library(bpcs)
@@ -125,32 +123,35 @@ summary(m)
 
 * Bradley-Terry (`bt`)  [@bradley1952rank]
 * Davidson model (`davidson`) for handling ties [@davidson1970extending]
-* Bradley-Terry with order effect (`btordereffect`). E.g. for home advantage [@davidson1977extending]
-* Davidson model with order effect (`davidsonordereffect`). E.g. for home advantage with ties [@davidson1977extending]
-* Generalized Bradley-Terry model (`btgeneralized`). When we have contestant specific predictors [@springall1973response]
-* Generalized Davidson model (`davidsongeneralized`). When we have contestant specific predictors and ties
-* Bradley-Terry model with intercept random effects (`btU`). For example to compensate clustering or repeated measures [@bockenholt2001hierarchical]
-* Davidson model with intercept random effects (`davidsonU`). For example to compensate clustering or repeated measures when we have ties.
 
-Note that we currently don't variations and combinations of these models (e.g BT with order effect and random effect or generalized BT with order effect). Contact me if there is a need for one of these models and give me some examples so we can add to the vignettes!
+Options to add to the models:
+
+* Order effect (`-ordereffect`). E.g. for home advantage [@davidson1977extending]
+* Generalized models (`-generalized`). When we have contestant specific predictors [@springall1973response]
+* Intercept random effects (`-U`). For example, to compensate clustering or repeated measures [@bockenholt2001hierarchical]
+
+E.g.:
+
+* Simple BT model: `bt`
+* Davidson model with random effects: `davidson-U`
+* Generalized BT model with order effect: `bt-generalized-ordereffect`
+
+Notes:
+
+* The model type should be first
+* The order of the options do not matter: `bt-U-ordereffect` is equivalent to `bt-ordereffect-U`
+* The `-` is mandatory
 
 ## Roadmap
 
-### Goals for bpcs 1.0.0 (before Chirstmas 2020)
-
-- First official release
-- Working and tested models for `bt`, `btordereffect`, `btgeneralized`, `btU`, `davidson`, `davidsonordereffect`, `davidsongeneralized`, `davidsonU`
-- Vignettes covering most models
 
 ### Goals for bpcs 1.1.0 (Before June 2021)
 
-- Reduce installation time by reducing number of stan models
-  - The goal is to have fewer but more general stan models. 
-  - This will increase the complexity of the stan model but will reduce code for the predict, get_probabilities, and the bpc function
 - Add new models for modeling time effects (newer contests have higher impact on the ability than older contests)
 - Add model for the Bayesian ELO-type rating system
-- Add models for cummulative comparisons
+- Add models for cumulative comparisons
 - Improve test coverage
+- Add ties to `expand_aggregated_data`.
 
 
 # Vignettes

@@ -119,7 +119,8 @@ get_sample_posterior <-
 #' hpdi<-get_hpdi_parameters(m)
 #' print(hpdi)}
 get_hpdi_parameters <- function(bpc_object) {
-  #TODO: verify the predictors condition
+  #TODO:  REMOVE the parameters that are either not relevant to the model or the ones that are transformed
+
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
   hpdi <- bpc_object$hpdi
@@ -136,7 +137,7 @@ get_hpdi_parameters <- function(bpc_object) {
   pars <- get_model_parameters(bpc_object)
   for (i in 1:length(pars)) {
     parameter <- pars[i]
-    if (parameter == 'U') {
+    if (parameter == 'U' & stringr::str_detect(bpc_object$model_type,'-U')) {
       hpdi <-
         replace_parameter_index_with_names(
           hpdi,
@@ -155,7 +156,7 @@ get_hpdi_parameters <- function(bpc_object) {
           lookup_table = bpc_object$lookup_table
         )
     }
-    else if (parameter == 'B') {
+    else if (parameter == 'B' & stringr::str_detect(bpc_object$model_type,'-generalized')) {
       hpdi <-
         replace_parameter_index_with_names(
           hpdi,
@@ -166,6 +167,21 @@ get_hpdi_parameters <- function(bpc_object) {
         )
     }
   }
+
+  # Now that we have replaced the parameters name let's select only the ones that the model wants
+  hpdi <- hpdi %>%
+    dplyr::filter(!stringr::str_detect(.data$Parameter, "_param"))
+
+  if(!stringr::str_detect(bpc_object$model_type, "-U"))
+    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "U"))
+  if(!stringr::str_detect(bpc_object$model_type, "-ordereffect"))
+    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "gm"))
+  if(!startsWith(bpc_object$model_type, "davidson"))
+    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "nu"))
+  if(!stringr::str_detect(bpc_object$model_type, "-generalized"))
+    hpdi <- dplyr::filter(hpdi, !startsWith(.data$Parameter, "B"))
+
+
   return(hpdi)
 }
 
