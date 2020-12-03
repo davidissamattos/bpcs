@@ -1,6 +1,5 @@
 ---
 title: "d_paper"
-output: rmarkdown::html_vignette
 ---
 
 ```{r, include = FALSE}

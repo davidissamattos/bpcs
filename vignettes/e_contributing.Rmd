@@ -1,6 +1,5 @@
 ---
 title: "Contributing guide"
-output: rmarkdown::html_vignette
 ---
 
 ```{r, include = FALSE}

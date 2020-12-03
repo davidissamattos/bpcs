@@ -1,7 +1,6 @@
 ---
 title: "Home advantage in the Bradley-Terry and in the Davidson model"
 bibliography: bibliography.bib
-output: rmarkdown::html_vignette
 ---
 
 ```{r, include = FALSE}

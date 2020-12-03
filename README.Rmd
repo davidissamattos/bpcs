@@ -174,7 +174,8 @@ Below we list all our vignettes with a short description:
 # Contributing and bugs
 
 If you are interested you are welcome to contribute to the repository through pull requests. 
-<!-- We have a short [contributing guide vignette](https://davidissamattos.github.io/bpcs/articles/e_contributing.html). -->
+
+We have a short [contributing guide vignette](https://davidissamattos.github.io/bpcs/articles/e_contributing.html).
 
 If you find bugs, please report it in https://github.com/davidissamattos/bpcs/issues
 

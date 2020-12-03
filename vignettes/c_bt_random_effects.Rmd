@@ -1,7 +1,6 @@
 ---
 title: "Random effects in the Bradley-Terry model"
 bibliography: bibliography.bib
-output: rmarkdown::html_vignette
 ---
 
 ```{r, include = FALSE}
@@ -218,6 +217,7 @@ Everything seems in order for us to look at the predictive posterior bar plot.
 
 ```{r}
 yrep<-predict(m,df_3,n=100,return_matrix = T)
+yrep<-yrep[,1:nrow(df_3)]#to get only the y_pred and not the ties_pred that is always 0
 ```
 
 
@@ -256,27 +256,7 @@ knitr::kable(dplyr::select(get_rank_of_players(m),-PosteriorRank),
 ```
 
 
-We can also have nice plots of the parameters with `bayesplot` package.
-
-```{r}
-#changing the names of the parameters in the posterior 
-dimnames <- attr(posterior, 'dimnames')
-parameters <-
-  dimnames$parameters #reading the parameters of the posterior
-names <- m$lookup_table$Names
-indexes <- m$lookup_table$Index
-new_pars <- replace(parameters, indexes, names)
-#changin the attributes
-dimnames$parameters <- new_pars
-attr(posterior, 'dimnames') <- dimnames
-
-bayesplot::mcmc_areas(posterior,
-                      pars = names,
-                      prob = 0.8) +
-  labs(title = 'Posterior distribution with medians\n and 80% intervals')
-```
-
-Or directly in ggplot with the HPD intervals instead of the quantiles
+Plot the HPD intervals
 ```{r}
 hpdi <- get_hpdi_parameters(m) %>%
   dplyr::filter(startsWith(Parameter, "lambda"))

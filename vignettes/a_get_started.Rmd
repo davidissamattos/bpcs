@@ -2,6 +2,10 @@
 title: "Getting Started with the bpcs package"
 bibliography: bibliography.bib
 output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{overview}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
@@ -132,6 +136,7 @@ We first get the observed values and then the predictive values of the original 
 ```{r}
 y<-as.vector(tennis_agresti$y)
 yrep<-predict(m1,tennis_agresti,n=100,return_matrix = T)
+yrep<-yrep[,1:46] #from column 47 we have if it was a tie or not. We just need to remove this
 ```
 
 
