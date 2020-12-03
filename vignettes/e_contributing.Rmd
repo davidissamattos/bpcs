@@ -43,6 +43,10 @@ The points below are mostly reminders for me but hopefully it can help others
   3. Restart the r session
   4. Run`devtools::load_all()` again
 
+
+After adding the models and tests run `devtools::test()` and then `devtools::check()`. If everything is fine we can add the code and run R CMD check on the different platforms with Github actions
+
+
 ## Github actions
 
 Currently we rely on few Github actions from r-lib
