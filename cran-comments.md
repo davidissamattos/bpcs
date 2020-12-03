@@ -7,6 +7,7 @@ This is the first submission of this package
 Manual checks:
   - local: x86_64-apple-darwin17.0 (64-bit) R version 4.0.3 (2020-10-10) ---->  OK
   - win-builder-release ---->  OK
+  - win-builder-devel ---->  OK
 
 Github actions:
   - os: windows-latest, r: 'release' ----> OK
@@ -19,17 +20,11 @@ Github actions:
 
 There were 0 errors
 There were 0 warnings
-There were 3 notes
-  - checking for GNU extensions in Makefiles ... NOTE
-  GNU make is a SystemRequirements.
+There were 2 notes
   - checking for GNU extensions in Makefiles ... NOTE
   GNU make is a SystemRequirements.
   - checking CRAN incoming feasibility ... NOTE
   New submission
-      
-The package makes use of rstan (that also use the Eigen library) and Rcpp that need to be compiled at installation time and requires a large lib folder
-
-One of the internal datasets have names in Portuguese that utilize UTF-8 characters
   
 ## revdep
 

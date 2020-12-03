@@ -7,6 +7,7 @@
 #' @importFrom rlang .data
 #' @export
 #' @examples
+#' \dontrun{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -15,6 +16,7 @@
 #' solve_ties = 'none')
 #' prob<-get_probabilities(m)
 #' print(prob$Table)
+#' }
 get_probabilities <- function(bpc_object, n = 1000) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')

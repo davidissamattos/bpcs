@@ -93,7 +93,7 @@ stanfit <- get_stanfit(m1)
 shinystan::launch_shinystan(stanfit)
 ```
 
-If you prefer to investigate without `shinystan` we can retrieve the stanfit object and investigate ourselves or with the help of the `bayesplot` package [@bayesplot2019]. Here we need the stanfit and the stan posterior matrix to proceed. The indexes in Stan refer to the names and indexes available at the lookup table
+If you prefer to investigate without `shinystan` we can retrieve the stanfit object and investigate ourselves or with the help of the `bayesplot` package [@bayesplot2019]. Here we need the stanfit and the stan posterior matrix to proceed. The indexes in Stan refer to the names and indexes available at the lookup table.
 
 ```{r}
 knitr::kable(m1$lookup_table)
@@ -107,21 +107,9 @@ posterior<-rstan::extract(stanfit,inc_warmup=T,permuted=F)
 
 Getting the traceplots:
 
-```{r}
+```{r eval=F}
 bayesplot::mcmc_trace(posterior,pars = c("lambda[1]","lambda[2]","lambda[3]","lambda[4]"), n_warmup=1000)
 ```
-From the graph above we see a good mix between the chains. Specially after warmup (grey area)
-
-We can also look at divergent iterations between two parameters
-```{r}
-bayesplot::mcmc_scatter(
-  as.matrix(stanfit),
-  pars = c("lambda[1]","lambda[2]"),
-  np = nuts_params(stanfit),
-  np_style = scatter_style_np(div_color = "green", div_alpha = 0.8)
-)
-```
-In this graph we don't see any divergent iterations between lambda[1] and lambda[2]
 
 Verifying the Rhat and neff using the functions from `rstan`
 ```{r}
@@ -164,23 +152,20 @@ knitr::kable(get_hpdi_parameters(m1), caption = 'Parameter distribution and the 
   kable_styling()
 ```
 
-A posterior distribution figure. The initial code is to replace the lambda[1] to lambda[4] with the name of the players.
+Plot the HPD intervals of the strength
 ```{r}
-#changing the names of the parameters in the posterior 
-dimnames<-attr(posterior, 'dimnames')
-parameters<-dimnames$parameters #reading the parameters of the posterior
-names <- m1$lookup_table$Names
-indexes <-m1$lookup_table$Index
-new_pars <- replace(parameters,indexes,names)
-#changin the attributes
-dimnames$parameters<-new_pars
-attr(posterior,'dimnames') <- dimnames
+hpdi <- get_hpdi_parameters(m1) %>%
+  dplyr::filter(startsWith(Parameter, "lambda"))
 
-bayesplot::mcmc_areas(posterior,
-           pars = names,
-           prob = 0.8)+
-  labs(title = 'Posterior distribution with medians\n and 80% intervals')
+ggplot2::ggplot(hpdi, aes(x = Parameter)) +
+  ggplot2::geom_pointrange(aes(ymin = HPD_lower,
+                               ymax = HPD_higher,
+                               y = Mean)) +
+  ggplot2::labs(y = "Estimate", x = "Player", title = "HPDI interval of the strength of the players") +
+  ggplot2::coord_flip()
+
 ```
+
 
 ```{r}
 prob_table<-get_probabilities(m1)$Table
