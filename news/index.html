@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -115,9 +115,6 @@
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
-    </li>
-    <li>
-      <a href="../articles/overview.html">Overview</a>
     </li>
   </ul>
 </li>
@@ -155,9 +152,8 @@
 <ul>
 <li>Package is feature complete and reached version 1.0.0</li>
 <li>Test coverage &gt; 80%</li>
-<li>Bayesian computation of different variations of the Bradley-Terry (including with home advantage, random effects and the generalized model).</li>
-<li>Bayesian computation of different variations of the Davidson model to handle ties in the contest (including with home advantage, random effects and the generalized model).</li>
-<li>Accepts a column with the results of the contest or the scores for each player.</li>
+<li>Bayesian computation of different variations of the Bradley-Terry and the Davidson model to handle ties in the contest (including with home advantage, random effects and the generalized model).</li>
+<li>Input accepts a column with the results of the contest or the scores for each player.</li>
 <li>Customize a normal prior distribution for every parameter.</li>
 <li>Compute HDP interval for every parameter with the <code>get_hpdi_parameters</code> function</li>
 <li>Compute rank of the players with the <code>get_rank_of_players</code> function.</li>
@@ -169,6 +165,8 @@
 <li>We do not reinforce any table or plotting library! Results are returned as data frames for easier plotting and creating tables</li>
 <li>We reinforce the need to manually specify the model to be used.</li>
 <li>Full documentation available at the package site</li>
+<li>Dependence on Stan &gt;= 2.20 for faster compilation times</li>
+<li>Removing vignettes from building with the package. Now they are available only in the package website</li>
 </ul>
 </div>
     <div id="bpcs-0009000" class="section level1">

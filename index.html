@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -74,9 +74,6 @@
     </li>
     <li>
       <a href="articles/e_contributing.html">Contributing guide</a>
-    </li>
-    <li>
-      <a href="articles/overview.html">Overview</a>
     </li>
   </ul>
 </li>
@@ -129,7 +126,6 @@
 <!-- To install the latest stable version from CRAN --><!-- ```{r eval=FALSE, echo=T} --><!-- install.packages('bpcs') --><!-- ``` --><p>To install the development version of the bpcs package, install directly from the Github repository.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">'davidissamattos/bpcs'</span><span class="op">)</span></code></pre></div>
-<p><strong>NOTE</strong>: installation can take a long time (average 10-20min on a regular laptop) due to the compilation of the models. We plan to improve this in future versions of the package.</p>
 <p>After installing, we load the package with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/davidissamattos/bpcs">bpcs</a></span><span class="op">)</span></code></pre></div>
@@ -164,6 +160,90 @@
 <tbody>
 <tr>
 <td style="text-align:left;">
+<p>Seles</p>
+</td>
+<td style="text-align:left;">
+<p>Navratilova</p>
+</td>
+<td style="text-align:right;">
+<p>1</p>
+</td>
+<td style="text-align:right;">
+<p>10</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>Graf</p>
+</td>
+<td style="text-align:left;">
+<p>Sanchez</p>
+</td>
+<td style="text-align:right;">
+<p>0</p>
+</td>
+<td style="text-align:right;">
+<p>33</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>Seles</p>
+</td>
+<td style="text-align:left;">
+<p>Sabatini</p>
+</td>
+<td style="text-align:right;">
+<p>0</p>
+</td>
+<td style="text-align:right;">
+<p>6</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>Graf</p>
+</td>
+<td style="text-align:left;">
+<p>Sanchez</p>
+</td>
+<td style="text-align:right;">
+<p>0</p>
+</td>
+<td style="text-align:right;">
+<p>30</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>Sabatini</p>
+</td>
+<td style="text-align:left;">
+<p>Navratilova</p>
+</td>
+<td style="text-align:right;">
+<p>1</p>
+</td>
+<td style="text-align:right;">
+<p>37</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>Graf</p>
+</td>
+<td style="text-align:left;">
+<p>Sabatini</p>
+</td>
+<td style="text-align:right;">
+<p>0</p>
+</td>
+<td style="text-align:right;">
+<p>15</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 <p>Graf</p>
 </td>
 <td style="text-align:left;">
@@ -178,30 +258,16 @@
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>Seles</p>
+<p>Sabatini</p>
 </td>
 <td style="text-align:left;">
-<p>Sanchez</p>
+<p>Navratilova</p>
 </td>
 <td style="text-align:right;">
 <p>0</p>
 </td>
 <td style="text-align:right;">
-<p>14</p>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<p>Seles</p>
-</td>
-<td style="text-align:left;">
-<p>Graf</p>
-</td>
-<td style="text-align:right;">
-<p>0</p>
-</td>
-<td style="text-align:right;">
-<p>1</p>
+<p>35</p>
 </td>
 </tr>
 <tr>
@@ -226,80 +292,10 @@
 <p>Sanchez</p>
 </td>
 <td style="text-align:right;">
-<p>1</p>
-</td>
-<td style="text-align:right;">
-<p>34</p>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<p>Seles</p>
-</td>
-<td style="text-align:left;">
-<p>Navratilova</p>
-</td>
-<td style="text-align:right;">
 <p>0</p>
 </td>
 <td style="text-align:right;">
-<p>7</p>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<p>Sabatini</p>
-</td>
-<td style="text-align:left;">
-<p>Sanchez</p>
-</td>
-<td style="text-align:right;">
-<p>0</p>
-</td>
-<td style="text-align:right;">
-<p>39</p>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<p>Seles</p>
-</td>
-<td style="text-align:left;">
-<p>Navratilova</p>
-</td>
-<td style="text-align:right;">
-<p>0</p>
-</td>
-<td style="text-align:right;">
-<p>9</p>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<p>Graf</p>
-</td>
-<td style="text-align:left;">
-<p>Sanchez</p>
-</td>
-<td style="text-align:right;">
-<p>0</p>
-</td>
-<td style="text-align:right;">
-<p>32</p>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<p>Graf</p>
-</td>
-<td style="text-align:left;">
-<p>Sabatini</p>
-</td>
-<td style="text-align:right;">
-<p>0</p>
-</td>
-<td style="text-align:right;">
-<p>17</p>
+<p>29</p>
 </td>
 </tr>
 </tbody>
@@ -317,8 +313,8 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).</span>
 <span class="co">#&gt; Chain 1: </span>
-<span class="co">#&gt; Chain 1: Gradient evaluation took 3.1e-05 seconds</span>
-<span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.31 seconds.</span>
+<span class="co">#&gt; Chain 1: Gradient evaluation took 9.2e-05 seconds</span>
+<span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.92 seconds.</span>
 <span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 1: </span>
 <span class="co">#&gt; Chain 1: </span>
@@ -335,15 +331,15 @@
 <span class="co">#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 1: </span>
-<span class="co">#&gt; Chain 1:  Elapsed Time: 0.094973 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 1:                0.098962 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 1:                0.193935 seconds (Total)</span>
+<span class="co">#&gt; Chain 1:  Elapsed Time: 0.325915 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 1:                0.340657 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 1:                0.666572 seconds (Total)</span>
 <span class="co">#&gt; Chain 1: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).</span>
 <span class="co">#&gt; Chain 2: </span>
-<span class="co">#&gt; Chain 2: Gradient evaluation took 1.5e-05 seconds</span>
-<span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.</span>
+<span class="co">#&gt; Chain 2: Gradient evaluation took 5e-05 seconds</span>
+<span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.5 seconds.</span>
 <span class="co">#&gt; Chain 2: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 2: </span>
 <span class="co">#&gt; Chain 2: </span>
@@ -360,15 +356,15 @@
 <span class="co">#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 2: </span>
-<span class="co">#&gt; Chain 2:  Elapsed Time: 0.097487 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 2:                0.095969 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 2:                0.193456 seconds (Total)</span>
+<span class="co">#&gt; Chain 2:  Elapsed Time: 0.315112 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 2:                0.332516 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 2:                0.647628 seconds (Total)</span>
 <span class="co">#&gt; Chain 2: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).</span>
 <span class="co">#&gt; Chain 3: </span>
-<span class="co">#&gt; Chain 3: Gradient evaluation took 1.6e-05 seconds</span>
-<span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.</span>
+<span class="co">#&gt; Chain 3: Gradient evaluation took 4.4e-05 seconds</span>
+<span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.44 seconds.</span>
 <span class="co">#&gt; Chain 3: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 3: </span>
 <span class="co">#&gt; Chain 3: </span>
@@ -385,15 +381,15 @@
 <span class="co">#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 3: </span>
-<span class="co">#&gt; Chain 3:  Elapsed Time: 0.096798 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 3:                0.098831 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 3:                0.195629 seconds (Total)</span>
+<span class="co">#&gt; Chain 3:  Elapsed Time: 0.310478 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 3:                0.358521 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 3:                0.668999 seconds (Total)</span>
 <span class="co">#&gt; Chain 3: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).</span>
 <span class="co">#&gt; Chain 4: </span>
-<span class="co">#&gt; Chain 4: Gradient evaluation took 1.3e-05 seconds</span>
-<span class="co">#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.</span>
+<span class="co">#&gt; Chain 4: Gradient evaluation took 4.8e-05 seconds</span>
+<span class="co">#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.48 seconds.</span>
 <span class="co">#&gt; Chain 4: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 4: </span>
 <span class="co">#&gt; Chain 4: </span>
@@ -410,9 +406,9 @@
 <span class="co">#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 4: </span>
-<span class="co">#&gt; Chain 4:  Elapsed Time: 0.091387 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 4:                0.100559 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 4:                0.191946 seconds (Total)</span>
+<span class="co">#&gt; Chain 4:  Elapsed Time: 0.333144 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 4:                0.325283 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 4:                0.658427 seconds (Total)</span>
 <span class="co">#&gt; Chain 4:</span></code></pre></div>
 <p>If <code>rstan</code> is available and correctly working this function should sample the posterior distribution and create a <code>bpc</code> object.</p>
 <p>To see a summary of the results we can run the summary function. Here we get three tables:</p>
@@ -428,11 +424,11 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter               Mean   HPD_lower   HPD_higher    n_eff   Rhat</span>
 <span class="co">#&gt; --------------------  ------  ----------  -----------  -------  -----</span>
-<span class="co">#&gt; lambda[Seles]           0.47       -2.23         3.22   617.95   1.01</span>
-<span class="co">#&gt; lambda[Graf]            0.92       -1.67         3.78   614.49   1.01</span>
-<span class="co">#&gt; lambda[Sabatini]       -0.37       -3.04         2.40   695.13   1.01</span>
-<span class="co">#&gt; lambda[Navratilova]     0.01       -2.55         2.90   610.47   1.01</span>
-<span class="co">#&gt; lambda[Sanchez]        -1.14       -4.10         1.43   633.17   1.01</span>
+<span class="co">#&gt; lambda[Seles]           0.42       -2.71         3.32   750.67   1.00</span>
+<span class="co">#&gt; lambda[Graf]            0.84       -2.18         3.71   690.32   1.01</span>
+<span class="co">#&gt; lambda[Sabatini]       -0.42       -3.35         2.59   693.80   1.01</span>
+<span class="co">#&gt; lambda[Navratilova]    -0.05       -2.81         3.13   693.64   1.00</span>
+<span class="co">#&gt; lambda[Sanchez]        -1.19       -4.07         1.84   693.15   1.01</span>
 <span class="co">#&gt; NOTES:</span>
 <span class="co">#&gt; * A higher lambda indicates a higher team ability</span>
 <span class="co">#&gt; </span>
@@ -444,16 +440,16 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; i             j              i_beats_j</span>
 <span class="co">#&gt; ------------  ------------  ----------</span>
-<span class="co">#&gt; Graf          Navratilova         0.69</span>
-<span class="co">#&gt; Graf          Sabatini            0.77</span>
-<span class="co">#&gt; Graf          Sanchez             0.86</span>
-<span class="co">#&gt; Graf          Seles               0.59</span>
+<span class="co">#&gt; Graf          Navratilova         0.70</span>
+<span class="co">#&gt; Graf          Sabatini            0.76</span>
+<span class="co">#&gt; Graf          Sanchez             0.87</span>
+<span class="co">#&gt; Graf          Seles               0.60</span>
 <span class="co">#&gt; Navratilova   Sabatini            0.58</span>
 <span class="co">#&gt; Navratilova   Sanchez             0.74</span>
 <span class="co">#&gt; Navratilova   Seles               0.40</span>
 <span class="co">#&gt; Sabatini      Sanchez             0.66</span>
-<span class="co">#&gt; Sabatini      Seles               0.32</span>
-<span class="co">#&gt; Sanchez       Seles               0.20</span>
+<span class="co">#&gt; Sabatini      Seles               0.31</span>
+<span class="co">#&gt; Sanchez       Seles               0.19</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Rank of the players' abilities:</span>
@@ -462,11 +458,11 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter              MedianRank   MeanRank   StdRank</span>
 <span class="co">#&gt; --------------------  -----------  ---------  --------</span>
-<span class="co">#&gt; lambda[Graf]                    1       1.37      0.62</span>
-<span class="co">#&gt; lambda[Seles]                   2       2.12      0.88</span>
-<span class="co">#&gt; lambda[Navratilova]             3       3.02      0.88</span>
-<span class="co">#&gt; lambda[Sabatini]                4       3.69      0.84</span>
-<span class="co">#&gt; lambda[Sanchez]                 5       4.80      0.48</span></code></pre></div>
+<span class="co">#&gt; lambda[Graf]                    1       1.38      0.61</span>
+<span class="co">#&gt; lambda[Seles]                   2       2.13      0.89</span>
+<span class="co">#&gt; lambda[Navratilova]             3       3.03      0.93</span>
+<span class="co">#&gt; lambda[Sabatini]                4       3.65      0.83</span>
+<span class="co">#&gt; lambda[Sanchez]                 5       4.80      0.47</span></code></pre></div>
 </div>
 </div>
 <div id="features-of-the-bpcs-package" class="section level1">
@@ -493,42 +489,42 @@
 <ul>
 <li>Bradley-Terry (<code>bt</code>) (Bradley and Terry 1952)</li>
 <li>Davidson model (<code>davidson</code>) for handling ties (Davidson 1970)</li>
-<li>Bradley-Terry with order effect (<code>btordereffect</code>). E.g. for home advantage (Davidson and Beaver 1977)</li>
-<li>Davidson model with order effect (<code>davidsonordereffect</code>). E.g. for home advantage with ties (Davidson and Beaver 1977)</li>
-<li>Generalized Bradley-Terry model (<code>btgeneralized</code>). When we have contestant specific predictors (Springall 1973)</li>
-<li>Generalized Davidson model (<code>davidsongeneralized</code>). When we have contestant specific predictors and ties</li>
-<li>Bradley-Terry model with intercept random effects (<code>btU</code>). For example to compensate clustering or repeated measures (Böckenholt 2001)</li>
-<li>Davidson model with intercept random effects (<code>davidsonU</code>). For example to compensate clustering or repeated measures when we have ties.</li>
 </ul>
-<p>Note that we currently don’t variations and combinations of these models (e.g BT with order effect and random effect or generalized BT with order effect). Contact me if there is a need for one of these models and give me some examples so we can add to the vignettes!</p>
+<p>Options to add to the models:</p>
+<ul>
+<li>Order effect (<code>-ordereffect</code>). E.g. for home advantage (Davidson and Beaver 1977)</li>
+<li>Generalized models (<code>-generalized</code>). When we have contestant specific predictors (Springall 1973)</li>
+<li>Intercept random effects (<code>-U</code>). For example, to compensate clustering or repeated measures (Böckenholt 2001)</li>
+</ul>
+<p>E.g.:</p>
+<ul>
+<li>Simple BT model: <code>bt</code>
+</li>
+<li>Davidson model with random effects: <code>davidson-U</code>
+</li>
+<li>Generalized BT model with order effect: <code>bt-generalized-ordereffect</code>
+</li>
+</ul>
+<p>Notes:</p>
+<ul>
+<li>The model type should be first</li>
+<li>The order of the options do not matter: <code>bt-U-ordereffect</code> is equivalent to <code>bt-ordereffect-U</code>
+</li>
+<li>The <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> is mandatory</li>
+</ul>
 </div>
 <div id="roadmap" class="section level2">
 <h2 class="hasAnchor">
 <a href="#roadmap" class="anchor"></a>Roadmap</h2>
-<div id="goals-for-bpcs-100-before-chirstmas-2020" class="section level3">
-<h3 class="hasAnchor">
-<a href="#goals-for-bpcs-100-before-chirstmas-2020" class="anchor"></a>Goals for bpcs 1.0.0 (before Chirstmas 2020)</h3>
-<ul>
-<li>First official release</li>
-<li>Working and tested models for <code>bt</code>, <code>btordereffect</code>, <code>btgeneralized</code>, <code>btU</code>, <code>davidson</code>, <code>davidsonordereffect</code>, <code>davidsongeneralized</code>, <code>davidsonU</code>
-</li>
-<li>Vignettes covering most models</li>
-</ul>
-</div>
 <div id="goals-for-bpcs-110-before-june-2021" class="section level3">
 <h3 class="hasAnchor">
 <a href="#goals-for-bpcs-110-before-june-2021" class="anchor"></a>Goals for bpcs 1.1.0 (Before June 2021)</h3>
 <ul>
-<li>Reduce installation time by reducing number of stan models
-<ul>
-<li>The goal is to have fewer but more general stan models.</li>
-<li>This will increase the complexity of the stan model but will reduce code for the predict, get_probabilities, and the bpc function</li>
-</ul>
-</li>
 <li>Add new models for modeling time effects (newer contests have higher impact on the ability than older contests)</li>
 <li>Add model for the Bayesian ELO-type rating system</li>
-<li>Add models for cummulative comparisons</li>
+<li>Add models for cumulative comparisons</li>
 <li>Improve test coverage</li>
+<li>Add ties to <code>expand_aggregated_data</code>.</li>
 </ul>
 </div>
 </div>
@@ -548,7 +544,8 @@
 <div id="contributing-and-bugs" class="section level1">
 <h1 class="hasAnchor">
 <a href="#contributing-and-bugs" class="anchor"></a>Contributing and bugs</h1>
-<p>If you are interested you are welcome to contribute to the repository through pull requests. <!-- We have a short [contributing guide vignette](https://davidissamattos.github.io/bpcs/articles/e_contributing.html). --></p>
+<p>If you are interested you are welcome to contribute to the repository through pull requests.</p>
+<p>We have a short <a href="https://davidissamattos.github.io/bpcs/articles/e_contributing.html">contributing guide vignette</a>.</p>
 <p>If you find bugs, please report it in <a href="https://github.com/davidissamattos/bpcs/issues" class="uri">https://github.com/davidissamattos/bpcs/issues</a></p>
 </div>
 <div id="icon-credits" class="section level1">

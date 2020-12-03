@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -74,9 +74,6 @@
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
-    </li>
-    <li>
-      <a href="../articles/overview.html">Overview</a>
     </li>
   </ul>
 </li>
@@ -151,6 +148,8 @@
 </ol>
 <ul>
 <li>Note that we add two stan files for each model, one that will estimate the parameters and one that will make predictions</li>
+<li>The goal is to keep the number of models small. If the models are related to an existing one add that functionality to the existing models.</li>
+<li>More models -&gt; longer installation time</li>
 </ul>
 <ol start="3" style="list-style-type: decimal">
 <li>add the appropriated hooks in the <code>bpc</code> function in <code>bpc.R</code> so we can call the model</li>
@@ -160,14 +159,14 @@
 </ol>
 </li>
 <li>Problems with <code>rstantools</code> and compiling the models. For me at least, the combination of <code>RStudio</code>+ <code>rstantools</code> + <code>roxygen2</code> + <code>devtools</code> + <code>Rcpp</code>+ <code>devtools</code> gives an assorted amount of stochastic errors can usually be solved with a combination of the actions below. For me it is still trial and error to fix the error but it usually works with these actions:
-<ul>
-<li>Restart the r session and try <code>devtools::load_all()</code> again</li>
-<li>After adding a model try <code>devtools::document()</code>
-</li>
-<li>If deleting a model file delete the appropriated line in stanmodels.R and do document again</li>
-<li>If the model is not recompiling or updating do <code><a href="https://rdrr.io/pkg/pkgbuild/man/clean_dll.html">pkgbuild::clean_dll()</a></code> then <code>devtools::document()</code> and possibly <code>devtools::load_all()</code> or <code>devtools::install()</code>
-</li>
-</ul>
+<ol style="list-style-type: decimal">
+<li>
+<code><a href="https://rdrr.io/pkg/pkgbuild/man/clean_dll.html">pkgbuild::clean_dll()</a></code> to clean the source files. This will force recompile</li>
+<li>
+<code>devtools::document()</code>. This will update the package and recompile the models</li>
+<li>Restart the r session</li>
+<li>Run<code>devtools::load_all()</code> again</li>
+</ol>
 </li>
 </ul>
 </div>

@@ -82,7 +82,7 @@ For more information and larger examples of usage see the vignettes." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -118,9 +118,6 @@ For more information and larger examples of usage see the vignettes." />
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
-    </li>
-    <li>
-      <a href="../articles/overview.html">Overview</a>
     </li>
   </ul>
 </li>
@@ -221,15 +218,16 @@ For more information and larger examples of usage see the vignettes.</p>
     </tr>
     <tr>
       <th>model_type</th>
-      <td><ul>
+      <td><p>We first add a base model 'bt' or 'davidson' and then additional options with '-'</p><ul>
 <li><p>'bt' for the Bradley Terry model. Ref: Bradley-Terry 1952,</p></li>
 <li><p>'davidson' the Davidson model to handle for ties. Ref: Davidson 1970</p></li>
-<li><p>'btordereffect' for the Bradley-Terry with order effect, for home advantage. Ref: Davidson 1977</p></li>
-<li><p>'davidsonordereffect' for the Davidson model with order effect, for home advantage, and ties. Ref: Davidson 1977</p></li>
-<li><p>'btgeneralized': for the generalized Bradley Terry model for subject specific predictors. Ref: Springall 1973</p></li>
-<li><p>'davidsongeneralized' for the generalized Davidson model for subject specific predictors</p></li>
-<li><p>'btU': for the Bradley-Terry with random effects. Ref: Bockenholt 2001</p></li>
-<li><p>'davidsonU': For Davidson model with random effects</p></li>
+<li><p>'bt-ordereffect' for the Bradley-Terry with order effect, for home advantage. Ref: Davidson 1977</p></li>
+<li><p>'davidson-ordereffect' for the Davidson model with order effect, for home advantage, and ties. Ref: Davidson 1977</p></li>
+<li><p>'bt-generalized': for the generalized Bradley Terry model for subject specific predictors. Ref: Springall 1973</p></li>
+<li><p>'davidson-generalized' for the generalized Davidson model for subject specific predictors</p></li>
+<li><p>'bt-U': for the Bradley-Terry with random effects. Ref: Bockenholt 2001</p></li>
+<li><p>'davidson-U': For Davidson model with random effects</p></li>
+<li><p>'bt-ordereffect-U' for Bradley-Terry with order effects and random effects, use similar syntax for other variations by appending the correct options</p></li>
 </ul></td>
     </tr>
     <tr>
