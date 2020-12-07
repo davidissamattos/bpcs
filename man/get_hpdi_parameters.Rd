@@ -16,7 +16,7 @@ a data frame containing a column with the parameters, a column with mean and two
 Return a data frame with the mean and with high and low 95\% hpd interval for all parameters of the model
 }
 \examples{
-\dontrun{
+\donttest{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',

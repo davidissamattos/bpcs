@@ -100,7 +100,7 @@ This function utilizes precompiled stan models to sample the posterior distribut
 For more information and larger examples of usage see the vignettes.
 }
 \examples{
-\dontrun{
+\donttest{
 #For the simple Bradley-Terry model
 bpc(data = tennis_agresti,
 player0 = 'player0',

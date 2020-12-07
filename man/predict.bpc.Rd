@@ -29,7 +29,7 @@ It returns another data frame with with the same columns of the new data and n a
 See the vignettes for a larger examples with the usage of this function
 }
 \examples{
-\dontrun{
+\donttest{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',

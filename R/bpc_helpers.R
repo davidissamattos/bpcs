@@ -9,7 +9,7 @@
 #' @param solve_ties Method to solve the ties, either randomly allocate, or do nothing, or remove the row from the datasetc('random', 'none', 'remove').
 #' @param win_score decides if who wins is the one that has the highest score or the lowest score
 #' @return a dataframe with column 'y' that contains the results of the comparison and a ties column indicating if there was ties
-#'  @importFrom rlang .data
+#' @importFrom rlang .data
 compute_scores <- function(d,
                            player0_score,
                            player1_score,

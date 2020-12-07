@@ -6,7 +6,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -31,7 +31,7 @@ get_stanfit <- function(bpc_object) {
 #' @return a data frame with the summary including quantiles, Rhat and neff
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -67,7 +67,7 @@ get_stanfit_summary <- function(bpc_object) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -109,7 +109,7 @@ get_sample_posterior <-
 #' @export
 #' @importFrom rlang .data
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -197,7 +197,7 @@ get_hpdi_parameters <- function(bpc_object) {
 #' @importFrom rlang .data
 #' @importFrom stats var median
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -247,7 +247,7 @@ get_rank_of_players <- function(bpc_object, n = 1000) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -274,7 +274,7 @@ get_loo <- function(bpc_object) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -297,6 +297,16 @@ get_waic <- function(bpc_object) {
 #' It launches a shinystan app automatically in the web browser
 #' @param bpc_object a bpc object
 #' @export
+#' @examples
+#' \donttest{
+#' m<-bpc(data = tennis_agresti,
+#' player0 = 'player0',
+#' player1 = 'player1',
+#' result_column = 'y',
+#' model_type = 'bt',
+#' solve_ties = 'none')
+#' launch_shinystan(m)
+#' }
 launch_shinystan <- function(bpc_object) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')

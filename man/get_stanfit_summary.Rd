@@ -17,7 +17,7 @@ Important to investigate the neff and the Rhat from the MCMC
 This excludes the log_lik paramter
 }
 \examples{
-\dontrun{
+\donttest{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',

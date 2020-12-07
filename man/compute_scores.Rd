@@ -29,7 +29,6 @@ compute_scores(
 }
 \value{
 a dataframe with column 'y' that contains the results of the comparison and a ties column indicating if there was ties
-@importFrom rlang .data
 }
 \description{
 Giving a player0 an player1 scores, this functions adds one column to the data frame containing who won (0= player0 1=player1 2=tie) and another if it was a tie.

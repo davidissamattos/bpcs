@@ -16,7 +16,7 @@ a loo object
 This is used to evaluate the fit of the model using entropy criteria
 }
 \examples{
-\dontrun{
+\donttest{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',

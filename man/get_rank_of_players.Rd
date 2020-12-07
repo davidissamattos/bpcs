@@ -18,7 +18,7 @@ a data frame. This data frame contains the median of the rank, the mean, the sta
 To print this object you should remove the last column PosteriorRank since it contain the whole posterior distribution for each case
 }
 \examples{
-\dontrun{
+\donttest{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',

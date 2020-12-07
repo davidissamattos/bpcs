@@ -16,7 +16,7 @@ a stanfit object
 This object can be used with any other function or package that uses stanfit objects from rstan
 }
 \examples{
-\dontrun{
+\donttest{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',

@@ -22,7 +22,7 @@ Instead of calculating from the probability formula given from the model we crea
 The function returns the mean value of win/loose/draw for the player i. To calculate for player j the probability is 1-p_i
 }
 \examples{
-\dontrun{
+\donttest{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',

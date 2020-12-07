@@ -20,7 +20,7 @@ Return a data frame with the posterior samples for the parameters. One column fo
 Return a data frame with the posterior samples for the parameters of the model
 }
 \examples{
-\dontrun{
+\donttest{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',

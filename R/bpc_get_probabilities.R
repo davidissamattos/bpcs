@@ -7,7 +7,7 @@
 #' @importFrom rlang .data
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',

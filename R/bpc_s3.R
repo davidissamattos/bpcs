@@ -6,7 +6,7 @@
 #' @param digits number of decimal digits in the table
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -76,7 +76,7 @@ print.bpc <- function(x, digits = 3, ...) {
 #' @export
 #' @importFrom rlang .data
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -156,7 +156,7 @@ summary.bpc <- function(object, digits = 2, ...) {
 #' @return a dataframe or a matrix depending on the return_matrix parameter
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',

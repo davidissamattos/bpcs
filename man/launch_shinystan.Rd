@@ -12,3 +12,14 @@ launch_shinystan(bpc_object)
 \description{
 It launches a shinystan app automatically in the web browser
 }
+\examples{
+\donttest{
+m<-bpc(data = tennis_agresti,
+player0 = 'player0',
+player1 = 'player1',
+result_column = 'y',
+model_type = 'bt',
+solve_ties = 'none')
+launch_shinystan(m)
+}
+}
