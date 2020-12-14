@@ -20,7 +20,7 @@ Calculate the posterior predictive distributions.
 Helps to check the fitness of the model. Use it in conjunction with the shinystan app to visualize some nice posterior predictive plots
 }
 \examples{
-#' \donttest{
+\donttest{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',

@@ -38,5 +38,6 @@ result_column = 'y',
 model_type = 'bt',
 solve_ties = 'none')
 hpdi<-get_parameters(m)
-print(hpdi)}
+print(hpdi)
+}
 }
