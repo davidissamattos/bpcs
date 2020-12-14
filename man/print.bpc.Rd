@@ -11,7 +11,7 @@
 
 \item{digits}{number of decimal digits in the table}
 
-\item{\dots}{additional parameters for the generic print function}
+\item{\dots}{additional parameters for the generic print function. Not used}
 }
 \description{
 This S3 functions only prints the mean and the HDPI values of all the parameters in the model

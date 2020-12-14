@@ -18,7 +18,7 @@
 \item{return_matrix}{should we return only a matrix with the predictive values. Default F. Use this to combine with predictive posterior plots in bayesplot
 This parameter also ignores the n parameter above since it passes all the predictions from stan}
 
-\item{\dots}{additional parameters for the generic print function}
+\item{\dots}{additional parameters for the generic predict function. Not used.}
 }
 \value{
 a dataframe or a matrix depending on the return_matrix parameter

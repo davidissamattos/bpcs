@@ -7,7 +7,15 @@ Several datasets for the Bradley-Terry Model aggregate the number of wins for ea
 The models we provide are intended to be used in a long format. A single result for each contest.
 This function expands datasets that have aggregated data into this long format.}
 \usage{
-expand_aggregated_data(d, player0, player1, wins0, wins1, keep)
+expand_aggregated_data(
+  d,
+  player0,
+  player1,
+  wins0,
+  wins1,
+  ties = NULL,
+  keep = NULL
+)
 }
 \arguments{
 \item{d}{a data frame}
@@ -19,6 +27,8 @@ expand_aggregated_data(d, player0, player1, wins0, wins1, keep)
 \item{wins0}{string with column name of the number of wins of player 0}
 
 \item{wins1}{string with column name of the number of wins of player 1}
+
+\item{ties}{string with the column of the ties}
 
 \item{keep}{an array of strings with the name of columns we want to keep in the new data frame (and repeat in every expanded row)}
 }

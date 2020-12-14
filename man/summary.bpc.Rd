@@ -4,14 +4,16 @@
 \alias{summary.bpc}
 \title{Summary of the model bpc model.}
 \usage{
-\method{summary}{bpc}(object, digits = 2, ...)
+\method{summary}{bpc}(object, digits = 2, show_probabilities = TRUE, ...)
 }
 \arguments{
 \item{object}{bpc object}
 
 \item{digits}{number of decimal digits in the table}
 
-\item{\dots}{additional parameters for the generic summary function}
+\item{show_probabilities}{should the tables of probabilities (Table 2) be displayed or not. Default to T but it is recommended to turn to F if either it has a large number of players (15+) or a large number of players and cluster, the table grows combinatorially.}
+
+\item{\dots}{additional parameters for the generic summary function. Not used.}
 }
 \description{
 \itemize{
