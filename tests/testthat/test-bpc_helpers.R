@@ -50,3 +50,24 @@ test_that('compute_ties works',{
   expect_equal(compute_ties(v3,'results')$ties, rv3$ties)
 })
 
+test_that('calculate_prob_from_vector works',{
+  v1 <- c(1,0,2,0,0,1)
+  v2 <- c(1,1,1,0,0,0)
+  v3 <- c(1,1,1,1,1)
+  v4 <- c(0,0,0,0)
+
+
+  expect_equal(calculate_prob_from_vector(v1,1), 2/6)
+  expect_equal(calculate_prob_from_vector(v1,0), 3/6)
+  expect_equal(calculate_prob_from_vector(v1,2), 1/6)
+  expect_equal(calculate_prob_from_vector(v2,1), 3/6)
+  expect_equal(calculate_prob_from_vector(v2,0), 3/6)
+  expect_equal(calculate_prob_from_vector(v2,2), 0)
+  expect_equal(calculate_prob_from_vector(v3,1), 1)
+  expect_equal(calculate_prob_from_vector(v3,0), 0)
+  expect_equal(calculate_prob_from_vector(v3,2), 0)
+  expect_equal(calculate_prob_from_vector(v4,1), 0)
+  expect_equal(calculate_prob_from_vector(v4,0), 1)
+  expect_equal(calculate_prob_from_vector(v4,2), 0)
+})
+
