@@ -191,7 +191,7 @@ get_probabilities_newdata <- function(bpc_object, newdata, n = 1000) {
   s <- get_sample_posterior(bpc_object, n = n)
   lookup <- bpc_object$lookup_table
   cluster_lookup <- bpc_object$cluster_lookup_table
-
+  col_names<-colnames(newdata)
   #Evaluate the predictions
   pred <-
     predict.bpc(
@@ -213,6 +213,38 @@ get_probabilities_newdata <- function(bpc_object, newdata, n = 1000) {
   )  %>%
     tibble::remove_rownames()
 
+  ##Some copy and paste code but it is necessary
+  ##########
+  #Rearranging the table if we have the clusters
+  if (stringr::str_detect(model_type, '-U'))
+  {
+    newdata_colnames <- colnames(newdata)
+    U_name <- bpc_object$call_arg$cluster
+    t_names <- colnames(t)
+    t <- cbind(t, newdata[, U_name])
+    colnames(t) <- c(t_names, U_name)
+    t <- t %>% dplyr::relocate(U_name, .after = .data$j)
+  }
+  #Rearranging the table if we have the ordereffect
+  if (stringr::str_detect(model_type, '-ordereffect'))
+  {
+    newdata_colnames <- colnames(newdata)
+    z_name <- bpc_object$call_arg$z_player1
+    t_names <- colnames(t)
+    t <- cbind(t, newdata[, z_name])
+    colnames(t) <- c(t_names, z_name)
+    t <- t %>% dplyr::relocate(z_name, .after = .data$j)
+  }
+
+  # if it is bt (then there are no ties) we remove the ties column
+  if (startsWith(model_type, 'bt'))
+  {
+    t <- t %>%
+      dplyr::select(-.data$i_ties_j)
+  }
+  ##############
+
+
   out <- list(Table = t,
               Posterior = t(pred))
 
@@ -229,6 +261,16 @@ get_probabilities_newdata <- function(bpc_object, newdata, n = 1000) {
 #' @importFrom rlang .data
 #' @export
 #' @examples
+#' \donttest{
+#' m<-bpc(data = tennis_agresti,
+#' player0 = 'player0',
+#' player1 = 'player1',
+#' result_column = 'y',
+#' model_type = 'bt',
+#' solve_ties = 'none')
+#' prob<-get_probabilities_newdata_df(m, newdata=tennis_agresti[c(1,15),])
+#' print(prob)
+#' }
 get_probabilities_newdata_df <- function(bpc_object, newdata, n = 1000) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
@@ -245,6 +287,16 @@ get_probabilities_newdata_df <- function(bpc_object, newdata, n = 1000) {
 #' @importFrom rlang .data
 #' @export
 #' @examples
+#' \donttest{
+#' m<-bpc(data = tennis_agresti,
+#' player0 = 'player0',
+#' player1 = 'player1',
+#' result_column = 'y',
+#' model_type = 'bt',
+#' solve_ties = 'none')
+#' post<-get_probabilities_newdata_posterior(m, newdata=tennis_agresti[c(1,15),])
+#' print(post)
+#' }
 get_probabilities_newdata_posterior <- function(bpc_object, newdata, n = 1000) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
