@@ -44,14 +44,15 @@ get_stanfit <- function(bpc_object) {
 get_stanfit_summary <- function(bpc_object) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
-  s<-rstan::summary(bpc_object$stanfit) #returns a list
-  out<-as.data.frame(s$summary) # returns a matrix which we convert to dataframe
-  out<- out %>%
-    tibble::rownames_to_column(var="Parameter") %>%
+  s <- rstan::summary(bpc_object$stanfit) #returns a list
+  out <-
+    as.data.frame(s$summary) # returns a matrix which we convert to dataframe
+  out <- out %>%
+    tibble::rownames_to_column(var = "Parameter") %>%
     dplyr::filter(!startsWith(.data$Parameter, "log_lik")) %>%
     dplyr::filter(!startsWith(.data$Parameter, "lp__"))
 
-  out<-as.data.frame(out)
+  out <- as.data.frame(out)
 
   return(out)
 }
@@ -184,6 +185,49 @@ launch_shinystan <- function(bpc_object) {
 }
 
 
+
+#' Calculate the posterior predictive distributions.
+#' Helps to check the fitness of the model. Use it in conjunction with the shinystan app to visualize some nice posterior predictive plots
+#'
+#' @param bpc_object a bpc object
+#' @param n number of times to sample from the posterior
+#'
+#' @return a list containing two values: y value that represents the collected data and y_pred that represents the predictive posterior matrix
+#' @export
+#'
+#' @examples
+#' #' \donttest{
+#' m<-bpc(data = tennis_agresti,
+#' player0 = 'player0',
+#' player1 = 'player1',
+#' result_column = 'y',
+#' model_type = 'bt',
+#' solve_ties = 'none')
+#' pp<-posterior_predictive(m)
+#' print(pp$y)
+#' print(pp$y_pred)
+#' }
+posterior_predictive <- function(bpc_object, n = 100) {
+  if (class(bpc_object) != 'bpc')
+    stop('Error! The object is not of bpc class')
+
+  y <- bpc_object$standata$y
+  d <- bpc_object$call_arg$data
+  pred <- predict.bpc(
+    bpc_object,
+    newdata = d,
+    predictors = bpc_object$predictors_matrix,
+    n = n,
+    return_matrix = TRUE
+  )
+  y_pred <- pred[, startsWith(colnames(pred), "y_pred")]
+  out <- list(y = y,
+              y_pred = y_pred)
+  return(out)
+}
+
+
+
 #' Logit function
 #' @references
 #' https://en.wikipedia.org/wiki/Logit
@@ -216,4 +260,3 @@ inv_logit <- function(x) {
   y <- exp(x) / (1 + exp(x))
   return(y)
 }
-
