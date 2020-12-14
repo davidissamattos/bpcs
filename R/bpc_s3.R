@@ -2,7 +2,7 @@
 #'
 #' This S3 functions only prints the mean and the HDPI values of all the parameters in the model
 #' @param x a bpc object
-#' @param \dots  additional parameters for the generic print function
+#' @param \dots  additional parameters for the generic print function. Not used
 #' @param digits number of decimal digits in the table
 #' @export
 #' @examples
@@ -73,7 +73,7 @@ print.bpc <- function(x, digits = 3, ...) {
 #' @param object bpc object
 #' @param digits number of decimal digits in the table
 #' @param show_probabilities should the tables of probabilities (Table 2) be displayed or not. Default to T but it is recommended to turn to F if either it has a large number of players (15+) or a large number of players and cluster, the table grows combinatorially.
-#' @param \dots  additional parameters for the generic summary function
+#' @param \dots  additional parameters for the generic summary function. Not used.
 #' @export
 #' @importFrom rlang .data
 #' @examples
@@ -150,7 +150,7 @@ summary.bpc <- function(object, digits = 2, show_probabilities = TRUE, ...) {
 #' @param n number of time we will iterate and get the posterior. default is 100 so we dont get too many
 #' @param return_matrix should we return only a matrix with the predictive values. Default F. Use this to combine with predictive posterior plots in bayesplot
 #' This parameter also ignores the n parameter above since it passes all the predictions from stan
-#' @param \dots  additional parameters for the generic print function
+#' @param \dots  additional parameters for the generic predict function. Not used.
 #' @return a dataframe or a matrix depending on the return_matrix parameter
 #' @export
 #' @examples
@@ -163,8 +163,6 @@ summary.bpc <- function(object, digits = 2, show_probabilities = TRUE, ...) {
 #' solve_ties = 'none')
 #' predict(m,newdata=tennis_agresti)
 #'}
-
-#TODO: fix B variable in btpredict and the predictors in get_probabilities
 predict.bpc <-
   function(object,
            newdata,
@@ -329,3 +327,55 @@ predict.bpc <-
     }
 
   }
+
+
+#' S3 plot function for the parameter plot of a bpc model
+#' This is just a wrapper for the get_parameters_plot function and can be used interchangebly
+#' @param x a bpc object
+#' @param y Not used. Default to NULL
+#' @param HPDI use HPD (TRUE) or credible intervals (FALSE) for the plots
+#' @param params a vector of string for of the parameters to be plotted
+#' @param title the title of the plot
+#' @param subtitle optional subtitle for the plot
+#' @param xaxis title of the x axis
+#' @param yaxis title of the y axis
+#' @param rotate_x_labels should the labels be shown horizontally (default, FALSE) or vertically (TRUE)
+#' @param APA should the graphic be formatted in APA style (default TRUE)
+#' @param ... additional parameters for the generic S3 plot function. Not used.
+#' @return a ggplot2 caterpillar plot
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' m<-bpc(data = tennis_agresti,
+#' player0 = 'player0',
+#' player1 = 'player1',
+#' result_column = 'y',
+#' model_type = 'bt',
+#' solve_ties = 'none')
+#' p<-get_parameters_plot(m)
+#' p
+#' }
+plot.bpc <- function(x,
+                     y = NULL,
+                     HPDI = T,
+                     params = c('lambda'),
+                     title = 'Parameter estimates',
+                     subtitle = NULL,
+                     xaxis = 'Parameter',
+                     yaxis = 'Value',
+                     rotate_x_labels = FALSE,
+                     APA = TRUE,
+                     ...) {
+
+  out <- get_parameters_plot(x,
+                             HPDI=HPDI,
+                             params=params,
+                             title=title,
+                             subtitle=subtitle,
+                             xaxis=xaxis,
+                             yaxis=yaxis,
+                             rotate_x_labels=rotate_x_labels,
+                             APA=APA)
+  return(out)
+}
