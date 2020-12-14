@@ -105,3 +105,18 @@ sample_stanfit <- function(stanfit, par, n = 100) {
   s <- dplyr::sample_n(posterior, size = n, replace = T)
   return(as.data.frame(s))
 }
+
+
+#' Calculate the probability of occurrence of a in a vector x
+#'
+#' @param x a vector
+#' @param a a value in x
+#'
+#' @return a value of the probability of a in vector x
+calculate_prob_from_vector <- function(x, a){
+  x_is_a <- x==a
+  out<-length(x[x_is_a])/length(x)
+  return(out)
+}
+
+
