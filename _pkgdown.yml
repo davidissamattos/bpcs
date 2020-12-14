@@ -14,6 +14,7 @@ reference:
   - summary.bpc
   - print.bpc
   - predict.bpc
+  - plot.bpc
   - get_probabilities_df
   - get_probabilities_newdata_df
   - get_rank_of_players_df
