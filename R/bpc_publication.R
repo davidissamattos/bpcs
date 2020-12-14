@@ -22,7 +22,7 @@
 #' result_column = 'y',
 #' model_type = 'bt',
 #' solve_ties = 'none')
-#' t<-get_parameter_table(m)
+#' t<-get_parameters_table(m)
 #' print(t)
 #' }
 get_parameters_table <-

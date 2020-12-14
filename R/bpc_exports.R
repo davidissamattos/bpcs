@@ -196,7 +196,7 @@ launch_shinystan <- function(bpc_object) {
 #' @export
 #'
 #' @examples
-#' #' \donttest{
+#' \donttest{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',

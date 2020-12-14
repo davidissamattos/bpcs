@@ -18,7 +18,8 @@
 #' model_type = 'bt',
 #' solve_ties = 'none')
 #' hpdi<-get_parameters(m)
-#' print(hpdi)}
+#' print(hpdi)
+#' }
 get_parameters <- function(bpc_object, params=NULL, HPDI = TRUE, n_eff=TRUE, Rhat=FALSE) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
