@@ -101,140 +101,10 @@ get_sample_posterior <-
     return(as.data.frame(posterior))
   }
 
-#' Return the mean and the HPDI of the parameters of the model
-#'
-#' Return a data frame with the mean and with high and low 95% hpd interval for all parameters of the model
-#' @param bpc_object a bpc object
-#' @return a data frame containing a column with the parameters, a column with mean and two columns with higher and lower hpdi
-#' @export
-#' @importFrom rlang .data
-#' @examples
-#' \donttest{
-#' m<-bpc(data = tennis_agresti,
-#' player0 = 'player0',
-#' player1 = 'player1',
-#' result_column = 'y',
-#' model_type = 'bt',
-#' solve_ties = 'none')
-#' hpdi<-get_hpdi_parameters(m)
-#' print(hpdi)}
-get_hpdi_parameters <- function(bpc_object) {
-  #TODO:  REMOVE the parameters that are either not relevant to the model or the ones that are transformed
-
-  if (class(bpc_object) != 'bpc')
-    stop('Error! The object is not of bpc class')
-  hpdi <- bpc_object$hpdi
-  #the parameters are in order as in the hpdi
-  neff_rhat <- get_stanfit_summary(bpc_object) %>%
-    dplyr::select(.data$n_eff, .data$Rhat)
-  #excluding some parameters that are not used
-  hpdi <- hpdi %>%
-    dplyr::filter(!stringr::str_detect(.data$Parameter, "log_lik")) %>%
-    dplyr::filter(!stringr::str_detect(.data$Parameter, "lp__"))
-
-  hpdi <- cbind(hpdi,neff_rhat)
-
-  pars <- get_model_parameters(bpc_object)
-  for (i in 1:length(pars)) {
-    parameter <- pars[i]
-    if (parameter == 'U' & stringr::str_detect(bpc_object$model_type,'-U')) {
-      hpdi <-
-        replace_parameter_index_with_names(
-          hpdi,
-          column = 'Parameter',
-          par = parameter,
-          lookup_table = bpc_object$lookup_table,
-          cluster_lookup_table = bpc_object$cluster_lookup_table
-        )
-    }
-    else if (parameter == 'lambda') {
-      hpdi <-
-        replace_parameter_index_with_names(
-          hpdi,
-          column = 'Parameter',
-          par = parameter,
-          lookup_table = bpc_object$lookup_table
-        )
-    }
-    else if (parameter == 'B' & stringr::str_detect(bpc_object$model_type,'-generalized')) {
-      hpdi <-
-        replace_parameter_index_with_names(
-          hpdi,
-          column = 'Parameter',
-          par = parameter,
-          lookup_table = bpc_object$lookup_table,
-          predictors_lookup_table = bpc_object$predictors_lookup_table
-        )
-    }
-  }
-
-  # Now that we have replaced the parameters name let's select only the ones that the model wants
-  hpdi <- hpdi %>%
-    dplyr::filter(!stringr::str_detect(.data$Parameter, "_param"))
-
-  if(!stringr::str_detect(bpc_object$model_type, "-U"))
-    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "U"))
-  if(!stringr::str_detect(bpc_object$model_type, "-ordereffect"))
-    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "gm"))
-  if(!startsWith(bpc_object$model_type, "davidson"))
-    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "nu"))
-  if(!stringr::str_detect(bpc_object$model_type, "-generalized"))
-    hpdi <- dplyr::filter(hpdi, !startsWith(.data$Parameter, "B"))
-
-
-  return(hpdi)
-}
 
 
 
-#' Generate a ranking of the ability based on sampling the posterior distribution of the ranks.
-#'
-#' To print this object you should remove the last column PosteriorRank since it contain the whole posterior distribution for each case
-#' @param bpc_object a bpc object
-#' @param n Number of times we will sample the posterior
-#' @return a data frame. This data frame contains the median of the rank, the mean, the standard deviation and column with a list containing all the posterior values for the rank
-#' @export
-#' @importFrom rlang .data
-#' @importFrom stats var median
-#' @examples
-#' \donttest{
-#' m<-bpc(data = tennis_agresti,
-#' player0 = 'player0',
-#' player1 = 'player1',
-#' result_column = 'y',
-#' model_type = 'bt',
-#' solve_ties = 'none')
-#' rank_m<-get_rank_of_players(m,n=100)
-#' rank_table <- dplyr::select(rank_m,-MeanRank, -StdRank,-PosteriorRank)
-#' print(rank_table)
-#' }
-get_rank_of_players <- function(bpc_object, n = 1000) {
-  if (class(bpc_object) != 'bpc')
-    stop('Error! The object is not of bpc class')
-  s <- get_sample_posterior(bpc_object, par = 'lambda', n = n)
-  s <- dplyr::mutate(s, rown = dplyr::row_number())
-  wide_s <-
-    tidyr::pivot_longer(
-      s,
-      cols = tidyselect::starts_with('lambda'),
-      names_to = "Parameter",
-      values_to = "value"
-    )
-  rank_df <- wide_s %>%
-    dplyr::group_by(.data$rown) %>%
-    dplyr::mutate(Rank = rank(-.data$value, ties.method = 'random')) %>%
-    dplyr::ungroup() %>%
-    dplyr::select(-.data$value) %>%
-    dplyr::group_by(.data$Parameter) %>%
-    dplyr::summarise(
-      MedianRank = median(.data$Rank),
-      MeanRank = mean(.data$Rank),
-      StdRank = sqrt(var(.data$Rank)),
-      PosteriorRank = list(rank = .data$Rank)
-    ) %>%
-    dplyr::arrange(.data$MedianRank)
-  return(rank_df)
-}
+
 
 
 #' Tiny wrapper for the PSIS-LOO-CV method from the loo package.
@@ -346,3 +216,4 @@ inv_logit <- function(x) {
   y <- exp(x) / (1 + exp(x))
   return(y)
 }
+
