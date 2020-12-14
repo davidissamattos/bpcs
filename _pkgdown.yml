@@ -14,6 +14,9 @@ reference:
   - summary.bpc
   - print.bpc
   - predict.bpc
+  - get_probabilities_df
+  - get_probabilities_newdata_df
+  - get_rank_of_players_df
 - title: "Model checking functions"
   desc: "These are a thin wrapper over other packages functions to facilitate the investigation of the convergence of the MCMC."
 - contents:
@@ -22,13 +25,20 @@ reference:
   - get_loo
   - get_stanfit
   - get_stanfit_summary
-- title: "Posterior distribution functions"
-  desc: "Functions used to investigate the posterior distribution of the parameters of the model."
+- title: "Publication-ready functions"
+  desc: "Functions used to generate publication-ready plots and tables."
 - contents:
-  - get_rank_of_players
-  - get_hpdi_parameters
+  - get_rank_of_players_table
+  - get_parameters_table
+  - get_probabilities_table
+  - get_parameters_plot
+- title: "Posterior distribution functions"
+  desc: "Functions used to investigate the posterior distribution."
+- contents:
   - get_sample_posterior
-  - get_probabilities
+  - get_rank_of_players_posterior
+  - get_probabilities_posterior
+  - get_probabilities_newdata_posterior
 - title: "Data Transformation"
   desc: "Functions that provide that transformations."
 - contents:
