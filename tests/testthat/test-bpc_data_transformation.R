@@ -27,8 +27,23 @@ test_that("expand_aggregated_data works", {
                                'A','C', 1, 'c2','a2', 9,
                                'A','C', 1, 'c2','a2', 10))
 
-  expect_equal(expand_aggregated_data(df1,'player0', 'player1', 'wins0', 'wins1', keep=c('cluster')),df1_result)
+  df3<- tibble::tribble(~player0, ~player1, ~wins0, ~wins1, ~ties, ~cluster,
+                        'A','B',4, 3, 2, 'c1')
+
+  df3_result <-  as.data.frame(tibble::tribble(~player0, ~player1, ~y, ~rowid,
+                                                  'A','B', 0, 1,
+                                                  'A','B', 0, 2,
+                                                  'A','B', 0, 3,
+                                                  'A','B', 0, 4,
+                                                  'A','B', 1, 5,
+                                                  'A','B', 1, 6,
+                                                  'A','B', 1, 7,
+                                                  'A','B', 2, 8,
+                                                  'A','B', 2, 9,))
+
+  expect_equal(expand_aggregated_data(df1,'player0', 'player1', 'wins0', 'wins1', keep=c('cluster')), df1_result)
   expect_equal(expand_aggregated_data(df2,'player0', 'player1', 'wins0', 'wins1', keep=c('cluster1','cluster2')), df2_result)
+  expect_equal(expand_aggregated_data(df3,'player0', 'player1', 'wins0', 'wins1', ties='ties', keep = NULL),df3_result)
 
 
 })
