@@ -112,9 +112,9 @@ plot(m, rotate_x_labels = T)
 * Bayesian computation of different variations of the Davidson model to handle ties in the contest (including with home advantage, random effects and the generalized model).
 * Accepts a column with the results of the contest or the scores for each player.
 * Customize a normal prior distribution for every parameter.
-* Compute HDP interval for every parameter with the `get_hpdi_parameters` function
-* Compute rank of the players with the `get_rank_of_players` function.
-* Compute all the probability combinations for one player beating the other with the `get_probabilities` function.
+* Compute HDP interval for every parameter with the `get_parameters` function
+* Compute rank of the players with the `get_rank_of_players_df` function.
+* Compute all the probability combinations for one player beating the other with the `get_probabilities_df` function.
 * Convert aggregated tables of results into long format (one contest per row) with the `expand_aggregated_data.`
 * Obtain the posterior distribution for every parameter of the model with the `get_sample_posterior` function.
 * Easy predictions using the `predict` function.

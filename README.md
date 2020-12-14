@@ -123,34 +123,6 @@ Navratilova
 
 <td style="text-align:right;">
 
-1
-
-</td>
-
-<td style="text-align:right;">
-
-10
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Seles
-
-</td>
-
-<td style="text-align:left;">
-
-Navratilova
-
-</td>
-
-<td style="text-align:right;">
-
 0
 
 </td>
@@ -167,13 +139,13 @@ Navratilova
 
 <td style="text-align:left;">
 
-Seles
+Sabatini
 
 </td>
 
 <td style="text-align:left;">
 
-Sabatini
+Sanchez
 
 </td>
 
@@ -185,7 +157,7 @@ Sabatini
 
 <td style="text-align:right;">
 
-6
+40
 
 </td>
 
@@ -201,35 +173,7 @@ Graf
 
 <td style="text-align:left;">
 
-Sabatini
-
-</td>
-
-<td style="text-align:right;">
-
-1
-
-</td>
-
-<td style="text-align:right;">
-
-23
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Graf
-
-</td>
-
-<td style="text-align:left;">
-
-Sabatini
+Sanchez
 
 </td>
 
@@ -241,7 +185,7 @@ Sabatini
 
 <td style="text-align:right;">
 
-20
+29
 
 </td>
 
@@ -263,13 +207,13 @@ Sanchez
 
 <td style="text-align:right;">
 
-0
+1
 
 </td>
 
 <td style="text-align:right;">
 
-44
+46
 
 </td>
 
@@ -285,7 +229,7 @@ Graf
 
 <td style="text-align:left;">
 
-Sabatini
+Sanchez
 
 </td>
 
@@ -297,7 +241,63 @@ Sabatini
 
 <td style="text-align:right;">
 
-19
+27
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Seles
+
+</td>
+
+<td style="text-align:left;">
+
+Sanchez
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+<td style="text-align:right;">
+
+13
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Seles
+
+</td>
+
+<td style="text-align:left;">
+
+Graf
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+<td style="text-align:right;">
+
+4
 
 </td>
 
@@ -325,7 +325,35 @@ Sanchez
 
 <td style="text-align:right;">
 
-38
+39
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Graf
+
+</td>
+
+<td style="text-align:left;">
+
+Sanchez
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+<td style="text-align:right;">
+
+32
 
 </td>
 
@@ -353,35 +381,7 @@ Navratilova
 
 <td style="text-align:right;">
 
-12
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Seles
-
-</td>
-
-<td style="text-align:left;">
-
-Graf
-
-</td>
-
-<td style="text-align:right;">
-
-1
-
-</td>
-
-<td style="text-align:right;">
-
-5
+10
 
 </td>
 
@@ -411,8 +411,8 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 0.00011 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.1 seconds.
+#> Chain 1: Gradient evaluation took 0.000111 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.11 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -429,15 +429,15 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.291601 seconds (Warm-up)
-#> Chain 1:                0.340995 seconds (Sampling)
-#> Chain 1:                0.632596 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.308794 seconds (Warm-up)
+#> Chain 1:                0.331351 seconds (Sampling)
+#> Chain 1:                0.640145 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 3.8e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.38 seconds.
+#> Chain 2: Gradient evaluation took 4e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.4 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -454,15 +454,15 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.317005 seconds (Warm-up)
-#> Chain 2:                0.308665 seconds (Sampling)
-#> Chain 2:                0.62567 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.303815 seconds (Warm-up)
+#> Chain 2:                0.34211 seconds (Sampling)
+#> Chain 2:                0.645925 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 3.9e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.39 seconds.
+#> Chain 3: Gradient evaluation took 3.8e-05 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.38 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -479,15 +479,15 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.322571 seconds (Warm-up)
-#> Chain 3:                0.307226 seconds (Sampling)
-#> Chain 3:                0.629797 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.293928 seconds (Warm-up)
+#> Chain 3:                0.334411 seconds (Sampling)
+#> Chain 3:                0.628339 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 4.1e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.41 seconds.
+#> Chain 4: Gradient evaluation took 3.5e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.35 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -504,9 +504,9 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.306924 seconds (Warm-up)
-#> Chain 4:                0.329079 seconds (Sampling)
-#> Chain 4:                0.636003 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.307246 seconds (Warm-up)
+#> Chain 4:                0.284794 seconds (Sampling)
+#> Chain 4:                0.59204 seconds (Total)
 #> Chain 4:
 ```
 
@@ -529,13 +529,15 @@ summary(m)
 #> Estimated baseline parameters with HPD intervals:
 #> 
 #> 
-#> Parameter               Mean   HPD_lower   HPD_higher    n_eff   Rhat
-#> --------------------  ------  ----------  -----------  -------  -----
-#> lambda[Seles]           0.40       -2.44         3.13   598.37   1.01
-#> lambda[Graf]            0.84       -1.93         3.49   587.12   1.01
-#> lambda[Sabatini]       -0.44       -3.11         2.48   598.81   1.01
-#> lambda[Navratilova]    -0.06       -2.88         2.59   592.43   1.01
-#> lambda[Sanchez]        -1.21       -4.09         1.45   614.94   1.01
+#> Table: Parameters estimates
+#> 
+#> Parameter               Mean   HPD_lower   HPD_higher    n_eff
+#> --------------------  ------  ----------  -----------  -------
+#> lambda[Seles]           0.59       -1.99         3.35   671.03
+#> lambda[Graf]            1.02       -1.54         3.64   613.82
+#> lambda[Sabatini]       -0.26       -2.86         2.41   643.46
+#> lambda[Navratilova]     0.12       -2.47         2.83   673.31
+#> lambda[Sanchez]        -1.04       -3.88         1.52   657.55
 #> NOTES:
 #> * A higher lambda indicates a higher team ability
 #> 
@@ -545,32 +547,42 @@ summary(m)
 #> for all player combinations
 #> 
 #> 
-#> i             j              i_beats_j
-#> ------------  ------------  ----------
-#> Graf          Navratilova         0.70
-#> Graf          Sabatini            0.76
-#> Graf          Sanchez             0.86
-#> Graf          Seles               0.60
-#> Navratilova   Sabatini            0.59
-#> Navratilova   Sanchez             0.73
-#> Navratilova   Seles               0.40
-#> Sabatini      Sanchez             0.67
-#> Sabatini      Seles               0.33
-#> Sanchez       Seles               0.20
+#> Table: Estimated posterior probabilites
+#> 
+#> i             j              i_beats_j   j_beats_i
+#> ------------  ------------  ----------  ----------
+#> Graf          Navratilova         0.30        0.70
+#> Graf          Sabatini            0.24        0.76
+#> Graf          Sanchez             0.13        0.87
+#> Graf          Seles               0.41        0.59
+#> Navratilova   Sabatini            0.43        0.57
+#> Navratilova   Sanchez             0.27        0.73
+#> Navratilova   Seles               0.59        0.41
+#> Sabatini      Sanchez             0.32        0.68
+#> Sabatini      Seles               0.67        0.33
+#> Sanchez       Seles               0.81        0.19
 #> 
 #> 
 #> Rank of the players' abilities:
 #> The rank is based on the posterior rank distribution of the lambda parameter
 #> 
 #> 
+#> Table: Estimated posterior ranks
+#> 
 #> Parameter              MedianRank   MeanRank   StdRank
 #> --------------------  -----------  ---------  --------
-#> lambda[Graf]                    1       1.39      0.64
-#> lambda[Seles]                   2       2.17      0.91
-#> lambda[Navratilova]             3       3.00      0.94
-#> lambda[Sabatini]                4       3.65      0.85
-#> lambda[Sanchez]                 5       4.79      0.49
+#> lambda[Graf]                    1       1.38      0.62
+#> lambda[Seles]                   2       2.12      0.88
+#> lambda[Navratilova]             3       3.03      0.91
+#> lambda[Sabatini]                4       3.69      0.83
+#> lambda[Sanchez]                 5       4.78      0.52
 ```
+
+``` r
+plot(m, rotate_x_labels = T)
+```
+
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
 # Features of the bpcs package
 
@@ -583,11 +595,12 @@ summary(m)
   - Accepts a column with the results of the contest or the scores for
     each player.
   - Customize a normal prior distribution for every parameter.
-  - Compute HDP interval for every parameter with the
-    `get_hpdi_parameters` function
-  - Compute rank of the players with the `get_rank_of_players` function.
+  - Compute HDP interval for every parameter with the `get_parameters`
+    function
+  - Compute rank of the players with the `get_rank_of_players_df`
+    function.
   - Compute all the probability combinations for one player beating the
-    other with the `get_probabilities` function.
+    other with the `get_probabilities_df` function.
   - Convert aggregated tables of results into long format (one contest
     per row) with the `expand_aggregated_data.`
   - Obtain the posterior distribution for every parameter of the model
