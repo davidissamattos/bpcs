@@ -18,7 +18,7 @@
 print.bpc <- function(x, digits = 3, ...) {
   cat("Estimated baseline parameters with HPD intervals:\n")
   hpdi <- tryCatch({
-    get_hpdi_parameters(x)
+    get_parameters(x)
   },
   error = function(cond) {
     message("Error when calculating the HPDI parameters")
@@ -26,7 +26,7 @@ print.bpc <- function(x, digits = 3, ...) {
     stop(cond)
     return(NA)
   })
-  print(knitr::kable(hpdi, format = 'simple', digits = digits))
+  print(get_parameters_table(x, format = 'simple', digits = digits, HPDI=T))
   cat('NOTES:\n')
   cat('* A higher lambda indicates a higher team ability\n')
 
@@ -72,6 +72,7 @@ print.bpc <- function(x, digits = 3, ...) {
 #' * Table 3: Contains the ranking of the players' abilities based on the posterior distribution of the ranks
 #' @param object bpc object
 #' @param digits number of decimal digits in the table
+#' @param show_probabilities should the tables of probabilities (Table 2) be displayed or not. Default to T but it is recommended to turn to F if either it has a large number of players (15+) or a large number of players and cluster, the table grows combinatorially.
 #' @param \dots  additional parameters for the generic summary function
 #' @export
 #' @importFrom rlang .data
@@ -85,36 +86,39 @@ print.bpc <- function(x, digits = 3, ...) {
 #' solve_ties = 'none')
 #' summary(m)
 #' }
-summary.bpc <- function(object, digits = 2, ...) {
+summary.bpc <- function(object, digits = 2, show_probabilities = TRUE, ...) {
+
   #Table with the parameter estimates and footnotes
   print(object, digits = digits)
 
-
-  #TODO: we commented out the posterior probabilities table until we fix the get_probabilities
   #Table with the posterior probabilities
-  cat('\n\n')
-  cat("Posterior probabilities:\n")
-  cat("These probabilities are calculated from the predictive posterior distribution\n")
-  cat("for all player combinations\n")
+  if(show_probabilities)
+  {
+    cat('\n\n')
+    cat("Posterior probabilities:\n")
+    cat("These probabilities are calculated from the predictive posterior distribution\n")
+    cat("for all player combinations\n")
 
-  prob_table <- tryCatch({
-    get_probabilities(object)
-  },
-  error = function(cond) {
-    message("Error when calculating the probabilities")
-    message("Original error message:")
-    stop(cond)
-    return(NA)
-  })
+    prob_table <- tryCatch({
+      get_probabilities_table(object,
+                              format = 'simple',
+                              digits = digits)
+    },
+    error = function(cond) {
+      message("Error when calculating the probabilities")
+      message("Original error message:")
+      stop(cond)
+      return(NA)
+    })
 
-  print(knitr::kable(prob_table$Table,
-                     format = 'simple',
-                     digits = digits))
+    print(prob_table)
 
-  if (stringr::str_detect(object$model_type, 'ordereffect')) {
-    cat('NOTES:\n')
-    cat('* These probabilies assume zero order effect (no home advantage).\n')
+    if (stringr::str_detect(object$model_type, 'ordereffect')) {
+      cat('NOTES:\n')
+      cat('* These probabilies assume zero order effect (no home advantage).\n')
+    }
   }
+
 
   #Table with the ranks
   cat('\n\n')
@@ -122,7 +126,7 @@ summary.bpc <- function(object, digits = 2, ...) {
   cat("The rank is based on the posterior rank distribution of the lambda parameter\n")
 
   rank_players <- tryCatch({
-    get_rank_of_players(object)
+    get_rank_of_players_table(object, format = 'simple', digits = digits)
   },
   error = function(cond) {
     message("Error when calculating the rank of the players")
@@ -130,13 +134,7 @@ summary.bpc <- function(object, digits = 2, ...) {
     stop(cond)
     return(NA)
   })
-
-  rank_of_players <-
-    rank_players %>% dplyr::select(.data$Parameter,
-                                   .data$MedianRank,
-                                   .data$MeanRank,
-                                   .data$StdRank)
-  print(knitr::kable(rank_of_players, format = 'simple', digits = digits))
+  print(rank_players)
 
 }
 
@@ -312,16 +310,10 @@ predict.bpc <-
 
     # Now we compute the predictions
     y_pred <- sample_stanfit(pred, par = 'y_pred', n = n)
-    ties_pred <- sample_stanfit(pred, par = 'ties_pred', n = n)
     y_pred_df <- as.data.frame(y_pred) %>% t()
     colnames(y_pred_df) <-
       paste(rep('y_pred[', n), seq(1, n), ']', sep = "")
-    ties_pred_df <- as.data.frame(ties_pred) %>% t()
-    colnames(ties_pred_df) <-
-      paste(rep('ties_pred[', n), seq(1, n), ']', sep = "")
-    pred_df <- cbind(newdata, y_pred_df, ties_pred_df)
-
-
+    pred_df <- cbind(newdata, y_pred_df)
 
     # After we get the posterior of the y_pred parameter we resample it
     # for most purposes  we want 1 row for each observation and 1 col for each predictive sample
