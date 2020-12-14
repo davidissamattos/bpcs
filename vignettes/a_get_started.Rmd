@@ -122,14 +122,14 @@ rstan::summary(stanfit ,pars=c('lambda'))$summary
 We first get the observed values and then the predictive values of the original dataframe. We can get predictive values with the predictive function and passing a data frame with the values we want to predict (in this case the original one). Note that we need to have the same column names in this new data frame
 
 ```{r}
-y<-as.vector(tennis_agresti$y)
-yrep<-predict(m1,tennis_agresti,n=100,return_matrix = T)
-yrep<-yrep[,1:46] #from column 47 we have if it was a tie or not. We just need to remove this
+y_pp <- posterior_predictive(m1)
+y<-as.vector(y_pp$y)
+y_pred <- y_pp$y_pred
 ```
 
 
 ```{r}
-bayesplot::ppc_bars(y=y, yrep=yrep) +
+bayesplot::ppc_bars(y=y, yrep=y_pred) +
   labs(title = 'Bar plot with medians and uncertainty\n intervals superimposed')
 ```
 
@@ -148,49 +148,27 @@ If we want to create nicer tables and export them to latex/html we can leverage 
 
 Parameter table with HPD intervals
 ```{r}
-knitr::kable(get_hpdi_parameters(m1), caption = 'Parameter distribution and the High Posterior Density intervals', digits = 2) %>% 
+get_parameters_table(m1, format='html') %>% 
   kable_styling()
 ```
 
 Plot the HPD intervals of the strength
 ```{r}
-hpdi <- get_hpdi_parameters(m1) %>%
-  dplyr::filter(startsWith(Parameter, "lambda"))
-
-ggplot2::ggplot(hpdi, aes(x = Parameter)) +
-  ggplot2::geom_pointrange(aes(ymin = HPD_lower,
-                               ymax = HPD_higher,
-                               y = Mean)) +
-  ggplot2::labs(y = "Estimate", x = "Player", title = "HPDI interval of the strength of the players") +
-  ggplot2::coord_flip()
-
+plot(m1, rotate_x_labels = T)
 ```
 
 
 ```{r}
-prob_table<-get_probabilities(m1)$Table
-knitr::kable(prob_table, caption = 'Probabilities of one player beating the other', digits = 2) %>% 
+get_probabilities_table(m1, format='html') %>% 
   kableExtra::kable_styling()
 ```
-We might also be interested in ranking the players based on their ability $lambda$. In the Bayesian case, we sample the posterior distribution of $lambda$ and rank them so we have posterior distribution of the ranks. This can be achieve with the function `get_rank_of_players`.
-
-```{r}
-ranking <- get_rank_of_players(m1)
-```
+We might also be interested in ranking the players based on their ability $lambda$. In the Bayesian case, we sample the posterior distribution of $lambda$ and rank them so we have posterior distribution of the ranks.
 
 We can produce a table with the values of this dataframe.
 
 ```{r}
-t <- ranking %>% dplyr::select(Parameter, MedianRank, StdRank)
-knitr::kable(t, caption = 'Rank of the players') %>%
+get_rank_of_players_table(m1, format='html') %>%
   kable_styling()
-```
-
-If we want to visualize the histogram of the rank distribution of each player. 
-```{r}
-ggplot2::ggplot()+
-  ggplot2::geom_histogram(aes(x=ranking$PosteriorRank[1]$rank),bins = 5)+
-  ggplot2::labs(title = 'Posterior distribution of the rank for Graf', x='Rank')
 ```
 
 ## Predicting results
@@ -213,3 +191,5 @@ y_seles %>%
 If the average number of wins of player 1 is higher than 0.5 than player 1 wins more times than player 0.
 
 Note that this is consistent with the obtained ranking and the probabilities of beating.
+
+# References

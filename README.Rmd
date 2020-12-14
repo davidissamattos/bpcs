@@ -26,6 +26,7 @@ knitr::opts_chunk$set(
 `r badge_lifecycle("stable")`
 `r badge_code_size("davidissamattos/bpcs")`
 `r badge_devel("davidissamattos/bpcs", "blue")`
+`r badger::badge_cran_release('bpcs', color="blue")`
 `r badge_codecov("davidissamattos/bpcs")`
 [![R build status](https://github.com/davidissamattos/bpcs/workflows/R-CMD-check/badge.svg)](https://github.com/davidissamattos/bpcs/actions)
 <!-- badges: end -->
@@ -41,11 +42,11 @@ For the `bpcs` package to work, we rely upon the Stan software and the `rstan` p
 
 * For general installation of Stan and RStan see: https://github.com/stan-dev/rstan 
 
-<!-- To install the latest stable version from CRAN -->
+To install the latest stable version from CRAN
 
-<!-- ```{r eval=FALSE, echo=T} -->
-<!-- install.packages('bpcs') -->
-<!-- ``` -->
+```{r eval=FALSE, echo=T}
+install.packages('bpcs')
+```
 
 
 To install the development version of the bpcs package, install directly from the Github repository.
@@ -101,6 +102,10 @@ summary(m)
 ```
 
 
+```{r}
+plot(m, rotate_x_labels = T)
+```
+
 # Features of the bpcs package
 
 * Bayesian computation of different variations of the Bradley-Terry (including with home advantage, random effects and the generalized model).
@@ -138,17 +143,6 @@ Notes:
 * The model type should be first
 * The order of the options do not matter: `bt-U-ordereffect` is equivalent to `bt-ordereffect-U`
 * The `-` is mandatory
-
-## Roadmap
-
-
-### Goals for bpcs 1.1.0 (Before June 2021)
-
-- Add new models for modeling time effects (newer contests have higher impact on the ability than older contests)
-- Add model for the Bayesian ELO-type rating system
-- Add models for cumulative comparisons
-- Improve test coverage
-- Add ties to `expand_aggregated_data`.
 
 
 # Vignettes

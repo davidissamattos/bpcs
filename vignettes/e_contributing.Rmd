@@ -23,7 +23,10 @@ The points below are mostly reminders for me but hopefully it can help others
 * In the R folder:
   - `bpc.R`: this contains a single function (rather large) that is the main function call of the package. Each new model should be added here in the if else section with the appropriated data list for stan. Don't forget to add the relevant documentation in roxygen2
   - `bpc_exports.R`: these are helper functions to handle the `bpc` object and are exposed to the user. Only add here functions that receive a bpc object and that the users will have an interest. 
-  - `bpc_get_probabilities.R` Since this is a big export function we have moved it to its own file
+  - `bpc_get_probabilities.R` Get probabilities related functions
+  - `bpc_get_rank_of_players.R` Get rank related functions
+  - `bpc_get_parameters.R` Get parameters related functions
+  - `bpc_publciation.R` Functions for publication ready tables and plots
   - `bpc_helpers_X.R` additional functions to facilitate and support either the bpc function or the exports functions. None of these functions should be exported, although all of them should be documented. We divided these helpers in several files. the indexes are related to creating and checking names and indexes in lookup tables, the hpd to HPDI related functions, the checks to check correct specification of the data frame columns
   - `bpc_s3.R` all functions here are the custom implementation of the generic base functions from R, such as `summary`, `print`, `predict`
   - `data-docs.R` documentation for the data.

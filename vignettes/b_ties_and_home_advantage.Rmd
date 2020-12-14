@@ -91,9 +91,7 @@ They sound ok so there is no reason why we should not trust our data
 Let's get the rank with the simple `bt` model
 
 ```{r}
-get_rank_of_players(m1) %>% 
-  dplyr::select(Parameter, MedianRank) %>% 
-  knitr::kable()
+get_rank_of_players_table(m1, format = 'html')
 ```
 
 # Fitting the Davidson model
@@ -128,9 +126,7 @@ print(m2)
 Let's look at the ranking with ties:
 
 ```{r}
-get_rank_of_players(m2) %>% 
-  dplyr::select(Parameter, MedianRank) %>% 
-  knitr::kable()
+get_rank_of_players_table(m2, format = 'html')
 ```
 
 We can see that when we consider ties the rank has changed a bit and the difference between the teams reduce (we can see from both the parameter table as well as many equal median ranks between the teams).
@@ -171,9 +167,7 @@ We can see that the gm parameter is negative indicating that playing home indeed
 Let's look at the ranking with home advantage:
 
 ```{r}
-get_rank_of_players(m3) %>% 
-  dplyr::select(Parameter, MedianRank) %>% 
-  knitr::kable()
+get_rank_of_players_table(m3, format = 'html')
 ```
 
 We can see that the players ranking has changed a bit from the  BT and the Davidson model when we compensate for the home advantage 
@@ -212,9 +206,7 @@ We can see again that the home advantage gm parameter was negative, indicating t
 Let's look at the ranking with home advantage and ties:
 
 ```{r}
-get_rank_of_players(m4) %>% 
-  dplyr::select(Parameter, MedianRank) %>% 
-  knitr::kable()
+get_rank_of_players_table(m4, format = 'html')
 ```
 
 # Comparing the models with WAIC

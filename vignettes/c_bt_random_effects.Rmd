@@ -184,10 +184,7 @@ m <-
 First let's look at the MCMC convergence with the traceplots and look at the Rhat and neff
 ```{r}
 stanfit<-get_stanfit(m)
-t <- as.data.frame(summary(stanfit)$summary)
-t <- t[1:7,c(1, 9, 10)] # getting only the first seven parameters the mean Rhat and neff
-
-knitr::kable(t)
+summary(m)
 ```
 
 
@@ -216,8 +213,10 @@ bayesplot::mcmc_trace(
 Everything seems in order for us to look at the predictive posterior bar plot. 
 
 ```{r}
-yrep<-predict(m,df_3,n=100,return_matrix = T)
-yrep<-yrep[,1:nrow(df_3)]#to get only the y_pred and not the ties_pred that is always 0
+
+y_pp <- posterior_predictive(m)
+y <- y_pp$y
+yrep <- y_pp$y_pred
 ```
 
 
@@ -238,36 +237,21 @@ summary(m)
 Of course we can get these estimates in nicer tables with kable that allows a greater deal of customization
 
 ```{r}
-knitr::kable(get_hpdi_parameters(m),
-      caption = "Parameter distribution with the HPD intervals",
-      digits = 3)
+get_parameters_table(m, format = 'html')
 ```
 
 ```{r}
-knitr::kable(get_probabilities(m)$Table,
-      caption = "Probabilities of one an algorithm beating the other in different benchmarks",
-      digits = 3)
+get_probabilities_table(m, format='html')
 ```
 
 ```{r}
-knitr::kable(dplyr::select(get_rank_of_players(m),-PosteriorRank),
-      caption = "Ranking the algorithms",
-      digits = 2)
+get_rank_of_players_table(m, format='html')
 ```
 
 
 Plot the HPD intervals
 ```{r}
-hpdi <- get_hpdi_parameters(m) %>%
-  dplyr::filter(startsWith(Parameter, "lambda"))
-
-ggplot2::ggplot(hpdi, aes(x = Parameter)) +
-  ggplot2::geom_pointrange(aes(ymin = HPD_lower,
-                               ymax = HPD_higher,
-                               y = Mean)) +
-  ggplot2::labs(y = "Estimate", x = "Algorithm", title = "HPDI interval of the strength of the algorithms") +
-  ggplot2::coord_flip()
-
+plot(m,rotate_x_labels = T)
 ```
 
 
