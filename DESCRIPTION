@@ -1,6 +1,6 @@
 Package: bpcs
-Title:  Bayesian Paired Comparison Analysis with Stan
-Version: 1.0.0
+Title: Bayesian Paired Comparison Analysis with Stan
+Version: 1.0.0.900
 Authors@R: c(
     person(given = "David",
            family = "Issa Mattos",
@@ -45,7 +45,8 @@ Imports:
     badger,
     stats,
     rlang,
-    knitr
+    knitr,
+    jtools
 LinkingTo: 
     BH (>= 1.66.0),
     Rcpp (>= 0.12.0),
