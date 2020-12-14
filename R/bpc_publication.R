@@ -47,7 +47,8 @@ get_parameters_table <-
 #' Publication-ready table for the probabilities
 #'
 #' @param bpc_object a bpc object
-#' @param newdata default to NULL. If used then it will calculate the probabilities only for the newdata
+#' @param newdata default to NULL. If used,  it will calculate the probabilities only for the newdata. Otherwise it will calculate for all combinations
+#' @param n Number of times to sample from the posterior
 #' @param format A character string. same formats utilized in the knitr::kable function
 #' * 'latex': output in latex format
 #' * 'simple': appropriated for the console
@@ -74,16 +75,13 @@ get_parameters_table <-
 get_probabilities_table <-
   function(bpc_object,
            newdata=NULL,
+           n=100,
            format = 'latex',
            digits = 3,
            caption = 'Estimated posterior probabilites') {
     if (class(bpc_object) != 'bpc')
       stop('Error! The object is not of bpc class')
-    t<-NULL
-    if(is.null(newdata))
-      t <- get_probabilities_df(bpc_object)
-    else
-      t <- get_probabilities_newdata_df(bpc_object)
+    t <- get_probabilities_df(bpc_object, newdata=newdata, n = n)
     out <-
       knitr::kable(t,
                    format = format,
