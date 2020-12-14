@@ -29,7 +29,6 @@ create_bpc_object <-
     #Creating the object
     obj <- list(
       Nplayers = nrow(lookup_table),
-      # PlayersParametersNames=PlayersParametersNames,
       stanfit = stanfit,
       hpdi = hpdi,
       lookup_table = lookup_table,

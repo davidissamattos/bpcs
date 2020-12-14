@@ -910,8 +910,6 @@ public:
                     current_statement_begin__ = 210;
                     lp_accum__.add(bernoulli_log(1, p_tie));
                 } else {
-                    current_statement_begin__ = 214;
-                    lp_accum__.add(bernoulli_log(0, p_tie));
                     current_statement_begin__ = 215;
                     lp_accum__.add(bernoulli_log(get_base1(y, i, "y", 1), p1_win));
                 }
