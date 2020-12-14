@@ -289,7 +289,6 @@ bpc <- function(data,
   #Base standata
   standata <- list(
     y = as.vector(d$y),
-    ties = as.vector(d$ties),
     N_total = nrow(d),
     N_players = nrow(lookup_table),
     player0_indexes = as.vector(d$player0_index),
