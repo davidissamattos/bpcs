@@ -4,10 +4,12 @@
 \alias{get_probabilities}
 \title{Get the empirical win/draw probabilities based on the ability/strength parameters.}
 \usage{
-get_probabilities(bpc_object, n = 1000)
+get_probabilities(bpc_object, newdata = NULL, n = 1000)
 }
 \arguments{
 \item{bpc_object}{a bpc object}
+
+\item{newdata}{default to NULL. If used,  it will calculate the probabilities only for the newdata. Otherwise it will calculate for all combinations}
 
 \item{n}{number of samples to draw from the posterior}
 }

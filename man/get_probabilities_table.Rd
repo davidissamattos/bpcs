@@ -6,6 +6,8 @@
 \usage{
 get_probabilities_table(
   bpc_object,
+  newdata = NULL,
+  n = 100,
   format = "latex",
   digits = 3,
   caption = "Estimated posterior probabilites"
@@ -13,6 +15,10 @@ get_probabilities_table(
 }
 \arguments{
 \item{bpc_object}{a bpc object}
+
+\item{newdata}{default to NULL. If used,  it will calculate the probabilities only for the newdata. Otherwise it will calculate for all combinations}
+
+\item{n}{Number of times to sample from the posterior}
 
 \item{format}{A character string. same formats utilized in the knitr::kable function
 \itemize{

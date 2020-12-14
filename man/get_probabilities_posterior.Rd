@@ -4,10 +4,12 @@
 \alias{get_probabilities_posterior}
 \title{Get the posterior of the probabilities}
 \usage{
-get_probabilities_posterior(bpc_object, n = 1000)
+get_probabilities_posterior(bpc_object, newdata = NULL, n = 1000)
 }
 \arguments{
 \item{bpc_object}{a bpc object}
+
+\item{newdata}{default to NULL. If used,  it will calculate the probabilities only for the newdata. Otherwise it will calculate for all combinations}
 
 \item{n}{number of samples to draw from the posterior}
 }
