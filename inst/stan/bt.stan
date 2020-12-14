@@ -8,7 +8,6 @@ functions{
 data {
   int <lower=1> N_total; // Sample size
   int <lower=0, upper=2> y[N_total]; //variable that indicates which one wins player0 or player1
-  int <lower=0, upper=1> ties[N_total];
   int <lower=1> N_players; // Number of players
   int <lower=1> player0_indexes[N_total];
   int <lower=1> player1_indexes[N_total];
@@ -150,9 +149,15 @@ model {
     p_tie= p_win_ties[2];
 
     //tie
-    if(ties[i]==1) target += bernoulli_lpmf(ties[i] | p_tie);
-    //no tie
-    if(ties[i]==0) target += bernoulli_lpmf(y[i] | p1_win);
+    if(y[i]==2){
+       target += bernoulli_lpmf(1 | p_tie);
+    }
+    else{
+      //Probability of not being a tie
+      // target += bernoulli_lpmf(0 | p_tie);
+      target += bernoulli_lpmf(y[i] | p1_win);
+    }
+
   }
 }
 
@@ -176,8 +181,12 @@ generated quantities{
     p_tie= p_win_ties[2];
 
   //parameters
-    if(ties[i]==1)   log_lik[i] = bernoulli_lpmf(ties[i] | p_tie);
-    //no tie
-    if(ties[i]==0)   log_lik[i] = bernoulli_lpmf(y[i] | p1_win);
+  //Probability of being a tie
+    if(y[i]==2){
+      log_lik[i] = bernoulli_lpmf(1 | p_tie);
+    }
+    else{
+      log_lik[i] = bernoulli_lpmf(y[i] | p1_win);
+    }
   }
 }

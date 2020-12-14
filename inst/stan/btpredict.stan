@@ -45,8 +45,6 @@ parameters {
 
 generated quantities{
   vector[N_newdata] y_pred;
-  vector[N_newdata] ties_pred;
-
   real lambda_call[N_players];
 
   //If we are doing a Generalized model we first need to convert the BX to lambda in case we have new predictors matrix
@@ -63,6 +61,7 @@ generated quantities{
     real p1_win;
     real p_tie;
     real p_win_ties[2];
+    real ties_pred;
     p_win_ties = calculate_p1_win_and_ties(i,
                        use_Ordereffect,  use_U, use_Davidson,//data switches
                        player1_indexes,  player0_indexes, //data vectors
@@ -71,9 +70,12 @@ generated quantities{
     p1_win = p_win_ties[1];
     p_tie= p_win_ties[2];
 
-   //tie
-    ties_pred[i] = bernoulli_rng(p_tie);
-   //no tie
-    y_pred[i] = bernoulli_rng(p1_win);
+    ties_pred = bernoulli_rng(p_tie);
+    if(ties_pred==1){
+       y_pred[i] = 2;
+    }
+    else{
+      y_pred[i] = bernoulli_rng(p1_win);
+    }
   }
 }

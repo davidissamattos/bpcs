@@ -37,7 +37,7 @@ stan::io::program_reader prog_reader__() {
     reader.add_event(6, 0, "start", "/include/bt_calculate_p1_win_and_ties.stan");
     reader.add_event(64, 58, "end", "/include/bt_calculate_p1_win_and_ties.stan");
     reader.add_event(64, 7, "restart", "model_btpredict");
-    reader.add_event(138, 79, "end", "model_btpredict");
+    reader.add_event(140, 81, "end", "model_btpredict");
     return reader;
 }
 template <typename T6__, typename T8__, typename T9__, typename T10__, typename T11__, typename T12__>
@@ -631,7 +631,6 @@ public:
         names__.push_back("U");
         names__.push_back("B");
         names__.push_back("y_pred");
-        names__.push_back("ties_pred");
         names__.push_back("lambda_call");
     }
     void get_dims(std::vector<std::vector<size_t> >& dimss__) const {
@@ -652,9 +651,6 @@ public:
         dimss__.push_back(dims__);
         dims__.resize(0);
         dims__.push_back((use_Generalized ? K : 2 ));
-        dimss__.push_back(dims__);
-        dims__.resize(0);
-        dims__.push_back(N_newdata);
         dimss__.push_back(dims__);
         dims__.resize(0);
         dims__.push_back(N_newdata);
@@ -736,64 +732,70 @@ public:
             stan::math::initialize(y_pred, DUMMY_VAR__);
             stan::math::fill(y_pred, DUMMY_VAR__);
             current_statement_begin__ = 105;
-            validate_non_negative_index("ties_pred", "N_newdata", N_newdata);
-            Eigen::Matrix<double, Eigen::Dynamic, 1> ties_pred(N_newdata);
-            stan::math::initialize(ties_pred, DUMMY_VAR__);
-            stan::math::fill(ties_pred, DUMMY_VAR__);
-            current_statement_begin__ = 107;
             validate_non_negative_index("lambda_call", "N_players", N_players);
             std::vector<double> lambda_call(N_players, double(0));
             stan::math::initialize(lambda_call, DUMMY_VAR__);
             stan::math::fill(lambda_call, DUMMY_VAR__);
             // generated quantities statements
-            current_statement_begin__ = 110;
+            current_statement_begin__ = 108;
             if (as_bool(use_Generalized)) {
-                current_statement_begin__ = 111;
+                current_statement_begin__ = 109;
                 for (int i = 1; i <= N_players; ++i) {
-                    current_statement_begin__ = 112;
+                    current_statement_begin__ = 110;
                     stan::model::assign(lambda_call, 
                                 stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                                 dot_product(to_vector(B), to_vector(stan::model::rvalue(X, stan::model::cons_list(stan::model::index_uni(i), stan::model::cons_list(stan::model::index_omni(), stan::model::nil_index_list())), "X"))), 
                                 "assigning variable lambda_call");
                 }
             } else {
-                current_statement_begin__ = 115;
+                current_statement_begin__ = 113;
                 stan::math::assign(lambda_call, lambda);
             }
-            current_statement_begin__ = 118;
+            current_statement_begin__ = 116;
             for (int i = 1; i <= N_newdata; ++i) {
                 {
-                current_statement_begin__ = 120;
+                current_statement_begin__ = 118;
                 local_scalar_t__ p1_win(DUMMY_VAR__);
                 (void) p1_win;  // dummy to suppress unused var warning
                 stan::math::initialize(p1_win, DUMMY_VAR__);
                 stan::math::fill(p1_win, DUMMY_VAR__);
-                current_statement_begin__ = 121;
+                current_statement_begin__ = 119;
                 local_scalar_t__ p_tie(DUMMY_VAR__);
                 (void) p_tie;  // dummy to suppress unused var warning
                 stan::math::initialize(p_tie, DUMMY_VAR__);
                 stan::math::fill(p_tie, DUMMY_VAR__);
-                current_statement_begin__ = 122;
+                current_statement_begin__ = 120;
                 validate_non_negative_index("p_win_ties", "2", 2);
                 std::vector<local_scalar_t__  > p_win_ties(2, local_scalar_t__(DUMMY_VAR__));
                 stan::math::initialize(p_win_ties, DUMMY_VAR__);
                 stan::math::fill(p_win_ties, DUMMY_VAR__);
-                current_statement_begin__ = 123;
+                current_statement_begin__ = 121;
+                local_scalar_t__ ties_pred(DUMMY_VAR__);
+                (void) ties_pred;  // dummy to suppress unused var warning
+                stan::math::initialize(ties_pred, DUMMY_VAR__);
+                stan::math::fill(ties_pred, DUMMY_VAR__);
+                current_statement_begin__ = 122;
                 stan::math::assign(p_win_ties, calculate_p1_win_and_ties(i, use_Ordereffect, use_U, use_Davidson, player1_indexes, player0_indexes, z_player1, U_indexes, U, lambda_call, U_std, gm, nu, pstream__));
-                current_statement_begin__ = 128;
+                current_statement_begin__ = 127;
                 stan::math::assign(p1_win, get_base1(p_win_ties, 1, "p_win_ties", 1));
-                current_statement_begin__ = 129;
+                current_statement_begin__ = 128;
                 stan::math::assign(p_tie, get_base1(p_win_ties, 2, "p_win_ties", 1));
-                current_statement_begin__ = 132;
-                stan::model::assign(ties_pred, 
-                            stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
-                            bernoulli_rng(p_tie, base_rng__), 
-                            "assigning variable ties_pred");
-                current_statement_begin__ = 134;
-                stan::model::assign(y_pred, 
-                            stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
-                            bernoulli_rng(p1_win, base_rng__), 
-                            "assigning variable y_pred");
+                current_statement_begin__ = 130;
+                stan::math::assign(ties_pred, bernoulli_rng(p_tie, base_rng__));
+                current_statement_begin__ = 131;
+                if (as_bool(logical_eq(ties_pred, 1))) {
+                    current_statement_begin__ = 132;
+                    stan::model::assign(y_pred, 
+                                stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
+                                2, 
+                                "assigning variable y_pred");
+                } else {
+                    current_statement_begin__ = 135;
+                    stan::model::assign(y_pred, 
+                                stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
+                                bernoulli_rng(p1_win, base_rng__), 
+                                "assigning variable y_pred");
+                }
                 }
             }
             // validate, write generated quantities
@@ -803,11 +805,6 @@ public:
                 vars__.push_back(y_pred(j_1__));
             }
             current_statement_begin__ = 105;
-            size_t ties_pred_j_1_max__ = N_newdata;
-            for (size_t j_1__ = 0; j_1__ < ties_pred_j_1_max__; ++j_1__) {
-                vars__.push_back(ties_pred(j_1__));
-            }
-            current_statement_begin__ = 107;
             size_t lambda_call_k_0_max__ = N_players;
             for (size_t k_0__ = 0; k_0__ < lambda_call_k_0_max__; ++k_0__) {
                 vars__.push_back(lambda_call[k_0__]);
@@ -882,12 +879,6 @@ public:
             param_name_stream__ << "y_pred" << '.' << j_1__ + 1;
             param_names__.push_back(param_name_stream__.str());
         }
-        size_t ties_pred_j_1_max__ = N_newdata;
-        for (size_t j_1__ = 0; j_1__ < ties_pred_j_1_max__; ++j_1__) {
-            param_name_stream__.str(std::string());
-            param_name_stream__ << "ties_pred" << '.' << j_1__ + 1;
-            param_names__.push_back(param_name_stream__.str());
-        }
         size_t lambda_call_k_0_max__ = N_players;
         for (size_t k_0__ = 0; k_0__ < lambda_call_k_0_max__; ++k_0__) {
             param_name_stream__.str(std::string());
@@ -937,12 +928,6 @@ public:
         for (size_t j_1__ = 0; j_1__ < y_pred_j_1_max__; ++j_1__) {
             param_name_stream__.str(std::string());
             param_name_stream__ << "y_pred" << '.' << j_1__ + 1;
-            param_names__.push_back(param_name_stream__.str());
-        }
-        size_t ties_pred_j_1_max__ = N_newdata;
-        for (size_t j_1__ = 0; j_1__ < ties_pred_j_1_max__; ++j_1__) {
-            param_name_stream__.str(std::string());
-            param_name_stream__ << "ties_pred" << '.' << j_1__ + 1;
             param_names__.push_back(param_name_stream__.str());
         }
         size_t lambda_call_k_0_max__ = N_players;
