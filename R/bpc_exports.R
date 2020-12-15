@@ -260,3 +260,44 @@ inv_logit <- function(x) {
   y <- exp(x) / (1 + exp(x))
   return(y)
 }
+
+
+#' Thin wrapper to save the bpc model for examining later
+#'
+#' @param bpc_object a bpc object
+#' @param filename the file name with path following the conventions of the operating system
+#' @export
+save_bpc_model <- function(bpc_object, filename, path='.'){
+  if (class(bpc_object) != 'bpc')
+    stop('Error! The object is not of bpc class')
+  tryCatch({
+    saveRDS(bpc_object, file=file.path(path,paste(filename,'.RDS',sep = "")))
+  },
+  error = function(cond) {
+    message("Error when saving the model")
+    message("Original error message:")
+    stop(cond)
+  })
+}
+
+#' Thin wrapper to load a saved bpc model for examining later
+#'
+#' @param file_name_with_path the file name with path following the conventions of the operating system that points to a saved bpc object including the RDS
+#' @export
+load_bpc_model <- function(file_name_with_path){
+  bpc_object <- tryCatch({
+    if(file.exists(file_name_with_path))
+      readRDS(file=file.path(file_name_with_path))
+    else
+      stop('File does not exists')
+  },
+  error = function(cond) {
+    message("Error when loading the model")
+    message("Original error message:")
+    stop(cond)
+  })
+  if (class(bpc_object) != 'bpc')
+    stop('Error! The loaded object is not of bpc class')
+  else
+    return(bpc_object)
+}
