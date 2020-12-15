@@ -6,9 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get the empirical win/draw probabilities based on the ability/strength parameters.
-Instead of calculating from the probability formula given from the model we create a predictive posterior distribution for all pair combinations and calculate the posterior wins/loose/draw
-The function returns the mean value of win/loose/draw for the player i. To calculate for player j the probability is 1-p_i — get_probabilities • bpcs</title>
+<title>Get the empirical win/draw probabilities based on the ability/strength parameters. — get_probabilities • bpcs</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,12 +46,8 @@ The function returns the mean value of win/loose/draw for the player i. To calcu
 
 
 
-<meta property="og:title" content="Get the empirical win/draw probabilities based on the ability/strength parameters.
-Instead of calculating from the probability formula given from the model we create a predictive posterior distribution for all pair combinations and calculate the posterior wins/loose/draw
-The function returns the mean value of win/loose/draw for the player i. To calculate for player j the probability is 1-p_i — get_probabilities" />
-<meta property="og:description" content="Get the empirical win/draw probabilities based on the ability/strength parameters.
-Instead of calculating from the probability formula given from the model we create a predictive posterior distribution for all pair combinations and calculate the posterior wins/loose/draw
-The function returns the mean value of win/loose/draw for the player i. To calculate for player j the probability is 1-p_i" />
+<meta property="og:title" content="Get the empirical win/draw probabilities based on the ability/strength parameters. — get_probabilities" />
+<meta property="og:description" content="Get the empirical win/draw probabilities based on the ability/strength parameters." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -86,7 +80,7 @@ The function returns the mean value of win/loose/draw for the player i. To calcu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -94,7 +88,7 @@ The function returns the mean value of win/loose/draw for the player i. To calcu
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -132,7 +126,7 @@ The function returns the mean value of win/loose/draw for the player i. To calcu
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/davidissamattos/bpcs/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -149,20 +143,16 @@ The function returns the mean value of win/loose/draw for the player i. To calcu
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get the empirical win/draw probabilities based on the ability/strength parameters.
-Instead of calculating from the probability formula given from the model we create a predictive posterior distribution for all pair combinations and calculate the posterior wins/loose/draw
-The function returns the mean value of win/loose/draw for the player i. To calculate for player j the probability is 1-p_i</h1>
+    <h1>Get the empirical win/draw probabilities based on the ability/strength parameters.</h1>
     <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_get_probabilities.R'><code>R/bpc_get_probabilities.R</code></a></small>
     <div class="hidden name"><code>get_probabilities.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Get the empirical win/draw probabilities based on the ability/strength parameters.
-Instead of calculating from the probability formula given from the model we create a predictive posterior distribution for all pair combinations and calculate the posterior wins/loose/draw
-The function returns the mean value of win/loose/draw for the player i. To calculate for player j the probability is 1-p_i</p>
+    <p>Get the empirical win/draw probabilities based on the ability/strength parameters.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_probabilities</span><span class='op'>(</span><span class='va'>bpc_object</span>, n <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_probabilities</span><span class='op'>(</span><span class='va'>bpc_object</span>, newdata <span class='op'>=</span> <span class='cn'>NULL</span>, n <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,6 +160,10 @@ The function returns the mean value of win/loose/draw for the player i. To calcu
     <tr>
       <th>bpc_object</th>
       <td><p>a bpc object</p></td>
+    </tr>
+    <tr>
+      <th>newdata</th>
+      <td><p>default to NULL. If used,  it will calculate the probabilities only for the newdata. Otherwise it will calculate for all combinations</p></td>
     </tr>
     <tr>
       <th>n</th>
@@ -181,18 +175,6 @@ The function returns the mean value of win/loose/draw for the player i. To calcu
 
     <p>a list with data frame table with the respective probabilities and a matrix with the corresponding posterior</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>m</span><span class='op'>&lt;-</span><span class='fu'><a href='bpc.html'>bpc</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,
-player0 <span class='op'>=</span> <span class='st'>'player0'</span>,
-player1 <span class='op'>=</span> <span class='st'>'player1'</span>,
-result_column <span class='op'>=</span> <span class='st'>'y'</span>,
-model_type <span class='op'>=</span> <span class='st'>'bt'</span>,
-solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span>
-<span class='va'>prob</span><span class='op'>&lt;-</span><span class='fu'>get_probabilities</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>prob</span><span class='op'>$</span><span class='va'>Table</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

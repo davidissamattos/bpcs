@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -125,7 +125,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/davidissamattos/bpcs/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -189,6 +189,25 @@
           <p><code><a href="predict.bpc.html">predict(<i>&lt;bpc&gt;</i>)</a></code> </p>
         </td>
         <td><p>Predict results for new data.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot.bpc.html">plot(<i>&lt;bpc&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>S3 plot function for the parameter plot of a bpc model
+This is just a wrapper for the get_parameters_plot function and can be used interchangebly</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_probabilities_df.html">get_probabilities_df()</a></code> </p>
+        </td>
+        <td><p>Get the empirical win/draw probabilities based on the ability/strength parameters.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_rank_of_players_df.html">get_rank_of_players_df()</a></code> </p>
+        </td>
+        <td><p>Generate a ranking of the ability based on sampling the posterior distribution of the ranks.</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -236,8 +255,8 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-posterior-distribution-functions" class="hasAnchor"><a href="#section-posterior-distribution-functions" class="anchor"></a>Posterior distribution functions</h2>
-          <p class="section-desc"><p>Functions used to investigate the posterior distribution of the parameters of the model.</p></p>
+          <h2 id="section-publication-ready-functions" class="hasAnchor"><a href="#section-publication-ready-functions" class="anchor"></a>Publication-ready functions</h2>
+          <p class="section-desc"><p>Functions used to generate publication-ready plots and tables.</p></p>
         </th>
       </tr>
       
@@ -248,16 +267,42 @@
       <tr>
         
         <td>
-          <p><code><a href="get_rank_of_players.html">get_rank_of_players()</a></code> </p>
+          <p><code><a href="get_rank_of_players_table.html">get_rank_of_players_table()</a></code> </p>
         </td>
-        <td><p>Generate a ranking of the ability based on sampling the posterior distribution of the ranks.</p></td>
+        <td><p>Publication-ready table for the rank table</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_hpdi_parameters.html">get_hpdi_parameters()</a></code> </p>
+          <p><code><a href="get_parameters_table.html">get_parameters_table()</a></code> </p>
         </td>
-        <td><p>Return the mean and the HPDI of the parameters of the model</p></td>
+        <td><p>Publication-ready table for the parameter estimates</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="get_probabilities_table.html">get_probabilities_table()</a></code> </p>
+        </td>
+        <td><p>Publication-ready table for the probabilities</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_parameters_plot.html">get_parameters_plot()</a></code> </p>
+        </td>
+        <td><p>Return a publication-ready plot for the parameters estimates based on the HPD interval
+The returned plot is a caterpillar type of plot</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-posterior-distribution-functions" class="hasAnchor"><a href="#section-posterior-distribution-functions" class="anchor"></a>Posterior distribution functions</h2>
+          <p class="section-desc"><p>Functions used to investigate the posterior distribution.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
           <p><code><a href="get_sample_posterior.html">get_sample_posterior()</a></code> </p>
@@ -266,11 +311,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="get_probabilities.html">get_probabilities()</a></code> </p>
+          <p><code><a href="get_rank_of_players_posterior.html">get_rank_of_players_posterior()</a></code> </p>
         </td>
-        <td><p>Get the empirical win/draw probabilities based on the ability/strength parameters.
-Instead of calculating from the probability formula given from the model we create a predictive posterior distribution for all pair combinations and calculate the posterior wins/loose/draw
-The function returns the mean value of win/loose/draw for the player i. To calculate for player j the probability is 1-p_i</p></td>
+        <td><p>Generate a ranking of the ability based on sampling the posterior distribution of the ranks.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_probabilities_posterior.html">get_probabilities_posterior()</a></code> </p>
+        </td>
+        <td><p>Get the posterior of the probabilities</p></td>
       </tr>
     </tbody><tbody>
       <tr>

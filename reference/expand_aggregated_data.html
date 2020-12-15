@@ -89,7 +89,7 @@ This function expands datasets that have aggregated data into this long format."
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@ This function expands datasets that have aggregated data into this long format."
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -135,7 +135,7 @@ This function expands datasets that have aggregated data into this long format."
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/davidissamattos/bpcs/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -167,7 +167,15 @@ The models we provide are intended to be used in a long format. A single result 
 This function expands datasets that have aggregated data into this long format.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>expand_aggregated_data</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>player0</span>, <span class='va'>player1</span>, <span class='va'>wins0</span>, <span class='va'>wins1</span>, <span class='va'>keep</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>expand_aggregated_data</span><span class='op'>(</span>
+  <span class='va'>d</span>,
+  <span class='va'>player0</span>,
+  <span class='va'>player1</span>,
+  <span class='va'>wins0</span>,
+  <span class='va'>wins1</span>,
+  ties <span class='op'>=</span> <span class='cn'>NULL</span>,
+  keep <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,6 +201,10 @@ This function expands datasets that have aggregated data into this long format.<
       <td><p>string with column name of the number of wins of player 1</p></td>
     </tr>
     <tr>
+      <th>ties</th>
+      <td><p>string with the column of the ties</p></td>
+    </tr>
+    <tr>
       <th>keep</th>
       <td><p>an array of strings with the name of columns we want to keep in the new data frame (and repeat in every expanded row)</p></td>
     </tr>
@@ -203,13 +215,25 @@ This function expands datasets that have aggregated data into this long format.<
     <p>a data frame with the expanded dataset. It will have the columns player1, player0, y, the keep columns, and a rowid column (to make each row unique)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'>#Creating a simple data frame with only one row to illustrate how the function works</span>
+    <pre class="examples"><div class='input'><span class='co'>#Creating a simple data frame with only one row to illustrate how the function works</span>
 <span class='va'>df1</span> <span class='op'>&lt;-</span> <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>player0</span>, <span class='op'>~</span><span class='va'>player1</span>, <span class='op'>~</span><span class='va'>wins0</span>, <span class='op'>~</span><span class='va'>wins1</span>,<span class='op'>~</span><span class='va'>cluster</span>, <span class='st'>'A'</span>,<span class='st'>'B'</span>,<span class='fl'>4</span>, <span class='fl'>3</span>, <span class='st'>'c1'</span><span class='op'>)</span>
 <span class='va'>df2</span> <span class='op'>&lt;-</span> <span class='fu'>expand_aggregated_data</span><span class='op'>(</span><span class='va'>df1</span>,<span class='st'>'player0'</span>, <span class='st'>'player1'</span>, <span class='st'>'wins0'</span>, <span class='st'>'wins1'</span>, keep<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'cluster'</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>df2</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+</div><div class='output co'>#&gt;   player0 player1 y cluster rowid
+#&gt; 1       A       B 0      c1     1
+#&gt; 2       A       B 0      c1     2
+#&gt; 3       A       B 0      c1     3
+#&gt; 4       A       B 0      c1     4
+#&gt; 5       A       B 1      c1     5
+#&gt; 6       A       B 1      c1     6
+#&gt; 7       A       B 1      c1     7</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>df2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   player0 player1 y cluster rowid
+#&gt; 1       A       B 0      c1     1
+#&gt; 2       A       B 0      c1     2
+#&gt; 3       A       B 0      c1     3
+#&gt; 4       A       B 0      c1     4
+#&gt; 5       A       B 1      c1     5
+#&gt; 6       A       B 1      c1     6
+#&gt; 7       A       B 1      c1     7</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

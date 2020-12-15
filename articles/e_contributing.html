@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -84,7 +84,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/davidissamattos/bpcs/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -98,8 +98,7 @@
 
       
 
-      </header><script src="e_contributing_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="e_contributing_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="e_contributing_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="e_contributing_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Contributing guide</h1>
@@ -130,7 +129,13 @@
 <li>
 <code>bpc_exports.R</code>: these are helper functions to handle the <code>bpc</code> object and are exposed to the user. Only add here functions that receive a bpc object and that the users will have an interest.</li>
 <li>
-<code>bpc_get_probabilities.R</code> Since this is a big export function we have moved it to its own file</li>
+<code>bpc_get_probabilities.R</code> Get probabilities related functions</li>
+<li>
+<code>bpc_get_rank_of_players.R</code> Get rank related functions</li>
+<li>
+<code>bpc_get_parameters.R</code> Get parameters related functions</li>
+<li>
+<code>bpc_publciation.R</code> Functions for publication ready tables and plots</li>
 <li>
 <code>bpc_helpers_X.R</code> additional functions to facilitate and support either the bpc function or the exports functions. None of these functions should be exported, although all of them should be documented. We divided these helpers in several files. the indexes are related to creating and checking names and indexes in lookup tables, the hpd to HPDI related functions, the checks to check correct specification of the data frame columns</li>
 <li>
