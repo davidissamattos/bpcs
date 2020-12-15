@@ -19,16 +19,3 @@ a list containing the data frame that represents the table and a matrix containi
 Generate a ranking of the ability based on sampling the posterior distribution of the ranks.
 This is not exported. Use either the get_rank_of_players_df or the get_rank_of_players_posterior functions
 }
-\examples{
-\donttest{
-m<-bpc(data = tennis_agresti,
-player0 = 'player0',
-player1 = 'player1',
-result_column = 'y',
-model_type = 'bt',
-solve_ties = 'none')
-rank_m<-get_rank_of_players(m,n=100)
-rank_table <- dplyr::select(rank_m,-MeanRank, -StdRank,-PosteriorRank)
-print(rank_table)
-}
-}

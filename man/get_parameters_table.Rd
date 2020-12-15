@@ -10,7 +10,8 @@ get_parameters_table(
   format = "latex",
   digits = 3,
   caption = "Parameters estimates",
-  HPDI = T
+  HPDI = T,
+  n_eff = F
 )
 }
 \arguments{
@@ -32,6 +33,8 @@ get_parameters_table(
 \item{caption}{a string containing the caption of the table}
 
 \item{HPDI}{a boolean if the intervals should be credible (F) or HPD intervals (T)}
+
+\item{n_eff}{a boolean. Should the number of effective samples be presented (T) or not (F default).}
 }
 \value{
 a formatted table

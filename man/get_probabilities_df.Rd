@@ -30,13 +30,14 @@ solve_ties = 'none')
 prob<-get_probabilities_df(m)
 print(prob)
 
+# Now we can try just specifying a few data combinations of probabilities
 m2<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',
 result_column = 'y',
 model_type = 'bt',
 solve_ties = 'none')
-prob<-get_probabilities_newdata_df(m2, newdata=tennis_agresti[c(1,15),])
+prob<-get_probabilities_df(m2, newdata=tennis_agresti[c(1,15),])
 print(prob)
 
 }
