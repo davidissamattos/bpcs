@@ -15,3 +15,5 @@ Meta
 /src/*.temp
 /src/*.tmp
 /data-raw/data-to-try/*
+tarversions
+.DS_Store

@@ -17,3 +17,4 @@
 ^vignettes/c_bt_random_effects\.Rmd$
 ^vignettes/d_paper\.Rmd$
 ^vignettes/e_contributing\.Rmd$
+^tarversions$
