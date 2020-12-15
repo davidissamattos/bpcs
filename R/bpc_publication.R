@@ -11,6 +11,7 @@
 #' @param digits number of digits in the table
 #' @param caption a string containing the caption of the table
 #' @param HPDI a boolean if the intervals should be credible (F) or HPD intervals (T)
+#' @param n_eff a boolean. Should the number of effective samples be presented (T) or not (F default).
 #' @return a formatted table
 #' @export
 #'
@@ -31,10 +32,11 @@ get_parameters_table <-
            format = 'latex',
            digits = 3,
            caption = 'Parameters estimates',
-           HPDI = T) {
+           HPDI = T,
+           n_eff = F) {
     if (class(bpc_object) != 'bpc')
       stop('Error! The object is not of bpc class')
-    t <- get_parameters(bpc_object, params=params, HPDI = HPDI)
+    t <- get_parameters(bpc_object, params=params, HPDI = HPDI,n_eff = n_eff)
     out <-
       knitr::kable(t,
                    format = format,

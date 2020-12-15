@@ -5,18 +5,6 @@
 #' @return a list containing the data frame that represents the table and a matrix containing the posterior distribution of the ranks
 #' @importFrom rlang .data
 #' @importFrom stats var median
-#' @examples
-#' \donttest{
-#' m<-bpc(data = tennis_agresti,
-#' player0 = 'player0',
-#' player1 = 'player1',
-#' result_column = 'y',
-#' model_type = 'bt',
-#' solve_ties = 'none')
-#' rank_m<-get_rank_of_players(m,n=100)
-#' rank_table <- dplyr::select(rank_m,-MeanRank, -StdRank,-PosteriorRank)
-#' print(rank_table)
-#' }
 get_rank_of_players <- function(bpc_object, n = 1000) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
