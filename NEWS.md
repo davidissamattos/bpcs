@@ -10,7 +10,7 @@
   - Add possibility to add more than one random effects
 - TODO: Improve test coverage
 
-# bpcs 1.0.0.900
+# bpcs 1.0.1
 
 * removed ties_pred from models that do not have ties
 * fixed predict for models with ties, so we return a vector y_pred with 0, 1, 2 and not separate as now
@@ -23,6 +23,7 @@
 * `get_hpdi_parameters`  became `get_parameters` and the user specify if credible intervals or hpdi
 * Added ties to `expand_aggregated_data`.
 * We can get now both credible and HPD intervals in `get_parameters`. n_eff and Rhat are also now possible to add and remove from this df
+* Added functions to save and load bpc models
 
 # bpcs 1.0.0
 

@@ -169,7 +169,7 @@ get_waic <- function(bpc_object) {
 #' @param bpc_object a bpc object
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' m<-bpc(data = tennis_agresti,
 #' player0 = 'player0',
 #' player1 = 'player1',
@@ -265,7 +265,8 @@ inv_logit <- function(x) {
 #' Thin wrapper to save the bpc model for examining later
 #'
 #' @param bpc_object a bpc object
-#' @param filename the file name with path following the conventions of the operating system
+#' @param filename string with the file name
+#' @param path string with path following the conventions of the operating system
 #' @export
 save_bpc_model <- function(bpc_object, filename, path='.'){
   if (class(bpc_object) != 'bpc')

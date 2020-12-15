@@ -13,7 +13,7 @@ launch_shinystan(bpc_object)
 It launches a shinystan app automatically in the web browser
 }
 \examples{
-\donttest{
+\dontrun{
 m<-bpc(data = tennis_agresti,
 player0 = 'player0',
 player1 = 'player1',
