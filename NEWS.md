@@ -12,7 +12,7 @@
 
 # bpcs 1.0.1
 
-* removed ties_pred from models that do not have ties
+* removed ties_pred from models that do not have ties and from the stan models.
 * fixed predict for models with ties, so we return a vector y_pred with 0, 1, 2 and not separate as now
 * removed posterior distributions from the get_rank_of_players and get_probabilities. Now we have new functions to obtain the data frame or the posterior distributions separately. The posterior is now returned as matrix
 * Probabilities table is now optional in the summary function

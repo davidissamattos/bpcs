@@ -1,6 +1,6 @@
 # bpcs 1.0.0.900
 
-* Minor updates to interfaces
+* Minor updates to interfaces and bug corrections
 * New functions
 * Minor improvements
 
@@ -8,8 +8,6 @@
 
 Manual checks:
   - local: x86_64-apple-darwin17.0 (64-bit) R version 4.0.3 (2020-10-10) ---->  OK
-  - win-builder-release ---->  OK
-  - win-builder-devel ---->  OK
 
 Github actions:
   - os: windows-latest, r: 'release' ----> OK
