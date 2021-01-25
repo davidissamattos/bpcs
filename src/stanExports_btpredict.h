@@ -35,27 +35,38 @@ stan::io::program_reader prog_reader__() {
     reader.add_event(0, 0, "start", "model_btpredict");
     reader.add_event(6, 6, "include", "/include/bt_calculate_p1_win_and_ties.stan");
     reader.add_event(6, 0, "start", "/include/bt_calculate_p1_win_and_ties.stan");
-    reader.add_event(64, 58, "end", "/include/bt_calculate_p1_win_and_ties.stan");
-    reader.add_event(64, 7, "restart", "model_btpredict");
-    reader.add_event(140, 81, "end", "model_btpredict");
+    reader.add_event(99, 93, "end", "/include/bt_calculate_p1_win_and_ties.stan");
+    reader.add_event(99, 7, "restart", "model_btpredict");
+    reader.add_event(198, 104, "end", "model_btpredict");
     return reader;
 }
-template <typename T6__, typename T8__, typename T9__, typename T10__, typename T11__, typename T12__>
-std::vector<typename boost::math::tools::promote_args<T6__, T8__, T9__, T10__, typename boost::math::tools::promote_args<T11__, T12__>::type>::type>
+template <typename T3__, typename T5__, typename T6__, typename T8__, typename T11__, typename T12__, typename T15__, typename T16__, typename T19__, typename T20__, typename T22__, typename T23__>
+std::vector<typename boost::math::tools::promote_args<T3__, T5__, T6__, T8__, typename boost::math::tools::promote_args<T11__, T12__, T15__, T16__, typename boost::math::tools::promote_args<T19__, T20__, T22__, T23__>::type>::type>::type>
 calculate_p1_win_and_ties(const int& i,
-                              const int& use_Ordereffect,
-                              const int& use_U,
-                              const int& use_Davidson,
                               const std::vector<int>& player1_indexes,
                               const std::vector<int>& player0_indexes,
-                              const std::vector<T6__>& z_player1,
-                              const std::vector<int>& U_indexes,
-                              const std::vector<std::vector<T8__> >& U,
-                              const std::vector<T9__>& lambda,
-                              const T10__& U_std,
-                              const T11__& gm,
-                              const T12__& nu, std::ostream* pstream__) {
-    typedef typename boost::math::tools::promote_args<T6__, T8__, T9__, T10__, typename boost::math::tools::promote_args<T11__, T12__>::type>::type local_scalar_t__;
+                              const std::vector<T3__>& lambda,
+                              const int& use_Ordereffect,
+                              const std::vector<T5__>& z_player1,
+                              const T6__& gm,
+                              const int& use_Davidson,
+                              const T8__& nu,
+                              const int& use_U1,
+                              const std::vector<int>& U1_indexes,
+                              const std::vector<std::vector<T11__> >& U1,
+                              const T12__& U1_std,
+                              const int& use_U2,
+                              const std::vector<int>& U2_indexes,
+                              const std::vector<std::vector<T15__> >& U2,
+                              const T16__& U2_std,
+                              const int& use_U3,
+                              const std::vector<int>& U3_indexes,
+                              const std::vector<std::vector<T19__> >& U3,
+                              const T20__& U3_std,
+                              const int& use_SubjectPredictors,
+                              const std::vector<std::vector<T22__> >& S,
+                              const Eigen::Matrix<T23__, Eigen::Dynamic, Eigen::Dynamic>& X_subject, std::ostream* pstream__) {
+    typedef typename boost::math::tools::promote_args<T3__, T5__, T6__, T8__, typename boost::math::tools::promote_args<T11__, T12__, T15__, T16__, typename boost::math::tools::promote_args<T19__, T20__, T22__, T23__>::type>::type>::type local_scalar_t__;
     typedef local_scalar_t__ fun_return_scalar_t__;
     const static bool propto__ = true;
     (void) propto__;
@@ -64,124 +75,190 @@ calculate_p1_win_and_ties(const int& i,
     int current_statement_begin__ = -1;
     try {
         {
-        current_statement_begin__ = 15;
+        current_statement_begin__ = 18;
         local_scalar_t__ p1_win(DUMMY_VAR__);
         (void) p1_win;  // dummy to suppress unused var warning
         stan::math::initialize(p1_win, DUMMY_VAR__);
         stan::math::fill(p1_win, DUMMY_VAR__);
-        current_statement_begin__ = 16;
+        current_statement_begin__ = 19;
         local_scalar_t__ p_tie(DUMMY_VAR__);
         (void) p_tie;  // dummy to suppress unused var warning
         stan::math::initialize(p_tie, DUMMY_VAR__);
         stan::math::fill(p_tie, DUMMY_VAR__);
-        current_statement_begin__ = 17;
+        current_statement_begin__ = 20;
         local_scalar_t__ p1(DUMMY_VAR__);
         (void) p1;  // dummy to suppress unused var warning
         stan::math::initialize(p1, DUMMY_VAR__);
         stan::math::fill(p1, DUMMY_VAR__);
-        current_statement_begin__ = 18;
+        current_statement_begin__ = 21;
         local_scalar_t__ p0(DUMMY_VAR__);
         (void) p0;  // dummy to suppress unused var warning
         stan::math::initialize(p0, DUMMY_VAR__);
         stan::math::fill(p0, DUMMY_VAR__);
-        current_statement_begin__ = 19;
+        current_statement_begin__ = 22;
         local_scalar_t__ lambda1(DUMMY_VAR__);
         (void) lambda1;  // dummy to suppress unused var warning
         stan::math::initialize(lambda1, DUMMY_VAR__);
         stan::math::fill(lambda1, DUMMY_VAR__);
-        current_statement_begin__ = 20;
+        current_statement_begin__ = 23;
         local_scalar_t__ lambda0(DUMMY_VAR__);
         (void) lambda0;  // dummy to suppress unused var warning
         stan::math::initialize(lambda0, DUMMY_VAR__);
         stan::math::fill(lambda0, DUMMY_VAR__);
-        current_statement_begin__ = 21;
+        current_statement_begin__ = 24;
         validate_non_negative_index("return_value", "2", 2);
         std::vector<local_scalar_t__  > return_value(2, local_scalar_t__(DUMMY_VAR__));
         stan::math::initialize(return_value, DUMMY_VAR__);
         stan::math::fill(return_value, DUMMY_VAR__);
-        current_statement_begin__ = 24;
+        current_statement_begin__ = 27;
         local_scalar_t__ z(DUMMY_VAR__);
         (void) z;  // dummy to suppress unused var warning
         stan::math::initialize(z, DUMMY_VAR__);
         stan::math::fill(z, DUMMY_VAR__);
-        current_statement_begin__ = 25;
-        local_scalar_t__ U0(DUMMY_VAR__);
-        (void) U0;  // dummy to suppress unused var warning
-        stan::math::initialize(U0, DUMMY_VAR__);
-        stan::math::fill(U0, DUMMY_VAR__);
-        current_statement_begin__ = 26;
-        local_scalar_t__ U1(DUMMY_VAR__);
-        (void) U1;  // dummy to suppress unused var warning
-        stan::math::initialize(U1, DUMMY_VAR__);
-        stan::math::fill(U1, DUMMY_VAR__);
-        current_statement_begin__ = 27;
+        current_statement_begin__ = 28;
+        local_scalar_t__ U01(DUMMY_VAR__);
+        (void) U01;  // dummy to suppress unused var warning
+        stan::math::initialize(U01, DUMMY_VAR__);
+        stan::math::fill(U01, DUMMY_VAR__);
+        current_statement_begin__ = 29;
+        local_scalar_t__ U11(DUMMY_VAR__);
+        (void) U11;  // dummy to suppress unused var warning
+        stan::math::initialize(U11, DUMMY_VAR__);
+        stan::math::fill(U11, DUMMY_VAR__);
+        current_statement_begin__ = 30;
+        local_scalar_t__ U02(DUMMY_VAR__);
+        (void) U02;  // dummy to suppress unused var warning
+        stan::math::initialize(U02, DUMMY_VAR__);
+        stan::math::fill(U02, DUMMY_VAR__);
+        current_statement_begin__ = 31;
+        local_scalar_t__ U12(DUMMY_VAR__);
+        (void) U12;  // dummy to suppress unused var warning
+        stan::math::initialize(U12, DUMMY_VAR__);
+        stan::math::fill(U12, DUMMY_VAR__);
+        current_statement_begin__ = 32;
+        local_scalar_t__ U03(DUMMY_VAR__);
+        (void) U03;  // dummy to suppress unused var warning
+        stan::math::initialize(U03, DUMMY_VAR__);
+        stan::math::fill(U03, DUMMY_VAR__);
+        current_statement_begin__ = 33;
+        local_scalar_t__ U13(DUMMY_VAR__);
+        (void) U13;  // dummy to suppress unused var warning
+        stan::math::initialize(U13, DUMMY_VAR__);
+        stan::math::fill(U13, DUMMY_VAR__);
+        current_statement_begin__ = 34;
         local_scalar_t__ tie(DUMMY_VAR__);
         (void) tie;  // dummy to suppress unused var warning
         stan::math::initialize(tie, DUMMY_VAR__);
         stan::math::fill(tie, DUMMY_VAR__);
-        current_statement_begin__ = 28;
+        current_statement_begin__ = 35;
         local_scalar_t__ geom_term(DUMMY_VAR__);
         (void) geom_term;  // dummy to suppress unused var warning
         stan::math::initialize(geom_term, DUMMY_VAR__);
         stan::math::fill(geom_term, DUMMY_VAR__);
-        current_statement_begin__ = 29;
+        current_statement_begin__ = 36;
         local_scalar_t__ geom_term_switch(DUMMY_VAR__);
         (void) geom_term_switch;  // dummy to suppress unused var warning
         stan::math::initialize(geom_term_switch, DUMMY_VAR__);
         stan::math::fill(geom_term_switch, DUMMY_VAR__);
-        current_statement_begin__ = 32;
+        current_statement_begin__ = 37;
+        local_scalar_t__ S0(DUMMY_VAR__);
+        (void) S0;  // dummy to suppress unused var warning
+        stan::math::initialize(S0, DUMMY_VAR__);
+        stan::math::fill(S0, DUMMY_VAR__);
+        current_statement_begin__ = 38;
+        local_scalar_t__ S1(DUMMY_VAR__);
+        (void) S1;  // dummy to suppress unused var warning
+        stan::math::initialize(S1, DUMMY_VAR__);
+        stan::math::fill(S1, DUMMY_VAR__);
+        current_statement_begin__ = 41;
         if (as_bool(use_Ordereffect)) {
-            current_statement_begin__ = 33;
+            current_statement_begin__ = 42;
             stan::math::assign(z, get_base1(z_player1, i, "z_player1", 1));
         } else {
-            current_statement_begin__ = 35;
+            current_statement_begin__ = 44;
             stan::math::assign(z, 0);
         }
-        current_statement_begin__ = 37;
-        if (as_bool(use_U)) {
-            current_statement_begin__ = 38;
-            stan::math::assign(U0, get_base1(get_base1(U, get_base1(player1_indexes, i, "player1_indexes", 1), "U", 1), get_base1(U_indexes, i, "U_indexes", 1), "U", 2));
-            current_statement_begin__ = 39;
-            stan::math::assign(U1, get_base1(get_base1(U, get_base1(player0_indexes, i, "player0_indexes", 1), "U", 1), get_base1(U_indexes, i, "U_indexes", 1), "U", 2));
+        current_statement_begin__ = 47;
+        if (as_bool(use_U1)) {
+            current_statement_begin__ = 48;
+            stan::math::assign(U01, get_base1(get_base1(U1, get_base1(player1_indexes, i, "player1_indexes", 1), "U1", 1), get_base1(U1_indexes, i, "U1_indexes", 1), "U1", 2));
+            current_statement_begin__ = 49;
+            stan::math::assign(U11, get_base1(get_base1(U1, get_base1(player0_indexes, i, "player0_indexes", 1), "U1", 1), get_base1(U1_indexes, i, "U1_indexes", 1), "U1", 2));
         } else {
-            current_statement_begin__ = 41;
-            stan::math::assign(U0, 0);
-            current_statement_begin__ = 42;
-            stan::math::assign(U1, 0);
+            current_statement_begin__ = 51;
+            stan::math::assign(U01, 0);
+            current_statement_begin__ = 52;
+            stan::math::assign(U11, 0);
         }
-        current_statement_begin__ = 44;
+        current_statement_begin__ = 55;
+        if (as_bool(use_U2)) {
+            current_statement_begin__ = 56;
+            stan::math::assign(U02, get_base1(get_base1(U2, get_base1(player1_indexes, i, "player1_indexes", 1), "U2", 1), get_base1(U2_indexes, i, "U2_indexes", 1), "U2", 2));
+            current_statement_begin__ = 57;
+            stan::math::assign(U12, get_base1(get_base1(U2, get_base1(player0_indexes, i, "player0_indexes", 1), "U2", 1), get_base1(U2_indexes, i, "U2_indexes", 1), "U2", 2));
+        } else {
+            current_statement_begin__ = 59;
+            stan::math::assign(U02, 0);
+            current_statement_begin__ = 60;
+            stan::math::assign(U12, 0);
+        }
+        current_statement_begin__ = 63;
+        if (as_bool(use_U3)) {
+            current_statement_begin__ = 64;
+            stan::math::assign(U03, get_base1(get_base1(U3, get_base1(player1_indexes, i, "player1_indexes", 1), "U3", 1), get_base1(U3_indexes, i, "U3_indexes", 1), "U3", 2));
+            current_statement_begin__ = 65;
+            stan::math::assign(U13, get_base1(get_base1(U3, get_base1(player0_indexes, i, "player0_indexes", 1), "U3", 1), get_base1(U3_indexes, i, "U3_indexes", 1), "U3", 2));
+        } else {
+            current_statement_begin__ = 67;
+            stan::math::assign(U03, 0);
+            current_statement_begin__ = 68;
+            stan::math::assign(U13, 0);
+        }
+        current_statement_begin__ = 71;
         if (as_bool(use_Davidson)) {
-            current_statement_begin__ = 45;
+            current_statement_begin__ = 72;
             stan::math::assign(geom_term_switch, 1);
         } else {
-            current_statement_begin__ = 47;
+            current_statement_begin__ = 74;
             stan::math::assign(geom_term_switch, 0);
         }
-        current_statement_begin__ = 50;
-        stan::math::assign(lambda1, (get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1) + (U_std * U1)));
-        current_statement_begin__ = 51;
-        stan::math::assign(lambda0, ((get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1) + (U_std * U0)) + (gm * z)));
-        current_statement_begin__ = 53;
+        current_statement_begin__ = 77;
+        if (as_bool(use_SubjectPredictors)) {
+            current_statement_begin__ = 78;
+            stan::math::assign(S1, dot_product(to_vector(stan::model::rvalue(S, stan::model::cons_list(stan::model::index_uni(get_base1(player1_indexes, i, "player1_indexes", 1)), stan::model::cons_list(stan::model::index_omni(), stan::model::nil_index_list())), "S")), to_vector(stan::model::rvalue(X_subject, stan::model::cons_list(stan::model::index_uni(i), stan::model::cons_list(stan::model::index_omni(), stan::model::nil_index_list())), "X_subject"))));
+            current_statement_begin__ = 79;
+            stan::math::assign(S0, dot_product(to_vector(stan::model::rvalue(S, stan::model::cons_list(stan::model::index_uni(get_base1(player0_indexes, i, "player0_indexes", 1)), stan::model::cons_list(stan::model::index_omni(), stan::model::nil_index_list())), "S")), to_vector(stan::model::rvalue(X_subject, stan::model::cons_list(stan::model::index_uni(i), stan::model::cons_list(stan::model::index_omni(), stan::model::nil_index_list())), "X_subject"))));
+        } else {
+            current_statement_begin__ = 81;
+            stan::math::assign(S0, 0);
+            current_statement_begin__ = 82;
+            stan::math::assign(S1, 0);
+        }
+        current_statement_begin__ = 85;
+        stan::math::assign(lambda1, ((((get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1) + (U1_std * U11)) + (U2_std * U12)) + (U3_std * U13)) + S1));
+        current_statement_begin__ = 86;
+        stan::math::assign(lambda0, (((((get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1) + (U1_std * U01)) + (U2_std * U02)) + (U3_std * U03)) + (gm * z)) + S0));
+        current_statement_begin__ = 88;
         stan::math::assign(geom_term, (geom_term_switch * stan::math::exp((nu + (0.5 * (get_base1(lambda, get_base1(player1_indexes, i, "player1_indexes", 1), "lambda", 1) + get_base1(lambda, get_base1(player0_indexes, i, "player0_indexes", 1), "lambda", 1)))))));
-        current_statement_begin__ = 54;
+        current_statement_begin__ = 89;
         stan::math::assign(p1, stan::math::exp(lambda1));
-        current_statement_begin__ = 55;
+        current_statement_begin__ = 90;
         stan::math::assign(p0, stan::math::exp(lambda0));
-        current_statement_begin__ = 57;
+        current_statement_begin__ = 92;
         stan::math::assign(p1_win, (p1 / ((p0 + p1) + geom_term)));
-        current_statement_begin__ = 58;
+        current_statement_begin__ = 93;
         stan::math::assign(p_tie, (geom_term / ((p0 + p1) + geom_term)));
-        current_statement_begin__ = 60;
+        current_statement_begin__ = 95;
         stan::model::assign(return_value, 
                     stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), 
                     p1_win, 
                     "assigning variable return_value");
-        current_statement_begin__ = 61;
+        current_statement_begin__ = 96;
         stan::model::assign(return_value, 
                     stan::model::cons_list(stan::model::index_uni(2), stan::model::nil_index_list()), 
                     p_tie, 
                     "assigning variable return_value");
-        current_statement_begin__ = 63;
+        current_statement_begin__ = 98;
         return stan::math::promote_scalar<fun_return_scalar_t__>(return_value);
         }
     } catch (const std::exception& e) {
@@ -191,22 +268,33 @@ calculate_p1_win_and_ties(const int& i,
     }
 }
 struct calculate_p1_win_and_ties_functor__ {
-    template <typename T6__, typename T8__, typename T9__, typename T10__, typename T11__, typename T12__>
-        std::vector<typename boost::math::tools::promote_args<T6__, T8__, T9__, T10__, typename boost::math::tools::promote_args<T11__, T12__>::type>::type>
+    template <typename T3__, typename T5__, typename T6__, typename T8__, typename T11__, typename T12__, typename T15__, typename T16__, typename T19__, typename T20__, typename T22__, typename T23__>
+        std::vector<typename boost::math::tools::promote_args<T3__, T5__, T6__, T8__, typename boost::math::tools::promote_args<T11__, T12__, T15__, T16__, typename boost::math::tools::promote_args<T19__, T20__, T22__, T23__>::type>::type>::type>
     operator()(const int& i,
-                              const int& use_Ordereffect,
-                              const int& use_U,
-                              const int& use_Davidson,
                               const std::vector<int>& player1_indexes,
                               const std::vector<int>& player0_indexes,
-                              const std::vector<T6__>& z_player1,
-                              const std::vector<int>& U_indexes,
-                              const std::vector<std::vector<T8__> >& U,
-                              const std::vector<T9__>& lambda,
-                              const T10__& U_std,
-                              const T11__& gm,
-                              const T12__& nu, std::ostream* pstream__) const {
-        return calculate_p1_win_and_ties(i, use_Ordereffect, use_U, use_Davidson, player1_indexes, player0_indexes, z_player1, U_indexes, U, lambda, U_std, gm, nu, pstream__);
+                              const std::vector<T3__>& lambda,
+                              const int& use_Ordereffect,
+                              const std::vector<T5__>& z_player1,
+                              const T6__& gm,
+                              const int& use_Davidson,
+                              const T8__& nu,
+                              const int& use_U1,
+                              const std::vector<int>& U1_indexes,
+                              const std::vector<std::vector<T11__> >& U1,
+                              const T12__& U1_std,
+                              const int& use_U2,
+                              const std::vector<int>& U2_indexes,
+                              const std::vector<std::vector<T15__> >& U2,
+                              const T16__& U2_std,
+                              const int& use_U3,
+                              const std::vector<int>& U3_indexes,
+                              const std::vector<std::vector<T19__> >& U3,
+                              const T20__& U3_std,
+                              const int& use_SubjectPredictors,
+                              const std::vector<std::vector<T22__> >& S,
+                              const Eigen::Matrix<T23__, Eigen::Dynamic, Eigen::Dynamic>& X_subject, std::ostream* pstream__) const {
+        return calculate_p1_win_and_ties(i, player1_indexes, player0_indexes, lambda, use_Ordereffect, z_player1, gm, use_Davidson, nu, use_U1, U1_indexes, U1, U1_std, use_U2, U2_indexes, U2, U2_std, use_U3, U3_indexes, U3, U3_std, use_SubjectPredictors, S, X_subject, pstream__);
     }
 };
 #include <stan_meta_header.hpp>
@@ -219,13 +307,22 @@ private:
         std::vector<int> player1_indexes;
         int use_Ordereffect;
         std::vector<double> z_player1;
-        int use_U;
-        int N_U;
-        std::vector<int> U_indexes;
+        int use_U1;
+        int N_U1;
+        std::vector<int> U1_indexes;
+        int use_U2;
+        int N_U2;
+        std::vector<int> U2_indexes;
+        int use_U3;
+        int N_U3;
+        std::vector<int> U3_indexes;
         int use_Davidson;
         int use_Generalized;
         int K;
         matrix_d X;
+        int use_SubjectPredictors;
+        int N_SubjectPredictors;
+        matrix_d X_subject;
 public:
     model_btpredict(stan::io::var_context& context__,
         std::ostream* pstream__ = 0)
@@ -256,21 +353,21 @@ public:
         (void) DUMMY_VAR__;  // suppress unused var warning
         try {
             // initialize data block variables from context__
-            current_statement_begin__ = 68;
+            current_statement_begin__ = 103;
             context__.validate_dims("data initialization", "N_newdata", "int", context__.to_vec());
             N_newdata = int(0);
             vals_i__ = context__.vals_i("N_newdata");
             pos__ = 0;
             N_newdata = vals_i__[pos__++];
             check_greater_or_equal(function__, "N_newdata", N_newdata, 1);
-            current_statement_begin__ = 69;
+            current_statement_begin__ = 104;
             context__.validate_dims("data initialization", "N_players", "int", context__.to_vec());
             N_players = int(0);
             vals_i__ = context__.vals_i("N_players");
             pos__ = 0;
             N_players = vals_i__[pos__++];
             check_greater_or_equal(function__, "N_players", N_players, 1);
-            current_statement_begin__ = 70;
+            current_statement_begin__ = 105;
             validate_non_negative_index("player0_indexes", "N_newdata", N_newdata);
             context__.validate_dims("data initialization", "player0_indexes", "int", context__.to_vec(N_newdata));
             player0_indexes = std::vector<int>(N_newdata, int(0));
@@ -284,7 +381,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < player0_indexes_i_0_max__; ++i_0__) {
                 check_greater_or_equal(function__, "player0_indexes[i_0__]", player0_indexes[i_0__], 1);
             }
-            current_statement_begin__ = 71;
+            current_statement_begin__ = 106;
             validate_non_negative_index("player1_indexes", "N_newdata", N_newdata);
             context__.validate_dims("data initialization", "player1_indexes", "int", context__.to_vec(N_newdata));
             player1_indexes = std::vector<int>(N_newdata, int(0));
@@ -298,7 +395,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < player1_indexes_i_0_max__; ++i_0__) {
                 check_greater_or_equal(function__, "player1_indexes[i_0__]", player1_indexes[i_0__], 1);
             }
-            current_statement_begin__ = 74;
+            current_statement_begin__ = 109;
             context__.validate_dims("data initialization", "use_Ordereffect", "int", context__.to_vec());
             use_Ordereffect = int(0);
             vals_i__ = context__.vals_i("use_Ordereffect");
@@ -306,7 +403,7 @@ public:
             use_Ordereffect = vals_i__[pos__++];
             check_greater_or_equal(function__, "use_Ordereffect", use_Ordereffect, 0);
             check_less_or_equal(function__, "use_Ordereffect", use_Ordereffect, 1);
-            current_statement_begin__ = 75;
+            current_statement_begin__ = 110;
             validate_non_negative_index("z_player1", "(use_Ordereffect ? N_newdata : 0 )", (use_Ordereffect ? N_newdata : 0 ));
             context__.validate_dims("data initialization", "z_player1", "double", context__.to_vec((use_Ordereffect ? N_newdata : 0 )));
             z_player1 = std::vector<double>((use_Ordereffect ? N_newdata : 0 ), double(0));
@@ -316,32 +413,82 @@ public:
             for (size_t k_0__ = 0; k_0__ < z_player1_k_0_max__; ++k_0__) {
                 z_player1[k_0__] = vals_r__[pos__++];
             }
-            current_statement_begin__ = 78;
-            context__.validate_dims("data initialization", "use_U", "int", context__.to_vec());
-            use_U = int(0);
-            vals_i__ = context__.vals_i("use_U");
+            current_statement_begin__ = 113;
+            context__.validate_dims("data initialization", "use_U1", "int", context__.to_vec());
+            use_U1 = int(0);
+            vals_i__ = context__.vals_i("use_U1");
             pos__ = 0;
-            use_U = vals_i__[pos__++];
-            check_greater_or_equal(function__, "use_U", use_U, 0);
-            check_less_or_equal(function__, "use_U", use_U, 1);
-            current_statement_begin__ = 79;
-            context__.validate_dims("data initialization", "N_U", "int", context__.to_vec());
-            N_U = int(0);
-            vals_i__ = context__.vals_i("N_U");
+            use_U1 = vals_i__[pos__++];
+            check_greater_or_equal(function__, "use_U1", use_U1, 0);
+            check_less_or_equal(function__, "use_U1", use_U1, 1);
+            current_statement_begin__ = 114;
+            context__.validate_dims("data initialization", "N_U1", "int", context__.to_vec());
+            N_U1 = int(0);
+            vals_i__ = context__.vals_i("N_U1");
             pos__ = 0;
-            N_U = vals_i__[pos__++];
-            check_greater_or_equal(function__, "N_U", N_U, 0);
-            current_statement_begin__ = 80;
-            validate_non_negative_index("U_indexes", "(use_U ? N_newdata : 0 )", (use_U ? N_newdata : 0 ));
-            context__.validate_dims("data initialization", "U_indexes", "int", context__.to_vec((use_U ? N_newdata : 0 )));
-            U_indexes = std::vector<int>((use_U ? N_newdata : 0 ), int(0));
-            vals_i__ = context__.vals_i("U_indexes");
+            N_U1 = vals_i__[pos__++];
+            check_greater_or_equal(function__, "N_U1", N_U1, 0);
+            current_statement_begin__ = 115;
+            validate_non_negative_index("U1_indexes", "(use_U1 ? N_newdata : 0 )", (use_U1 ? N_newdata : 0 ));
+            context__.validate_dims("data initialization", "U1_indexes", "int", context__.to_vec((use_U1 ? N_newdata : 0 )));
+            U1_indexes = std::vector<int>((use_U1 ? N_newdata : 0 ), int(0));
+            vals_i__ = context__.vals_i("U1_indexes");
             pos__ = 0;
-            size_t U_indexes_k_0_max__ = (use_U ? N_newdata : 0 );
-            for (size_t k_0__ = 0; k_0__ < U_indexes_k_0_max__; ++k_0__) {
-                U_indexes[k_0__] = vals_i__[pos__++];
+            size_t U1_indexes_k_0_max__ = (use_U1 ? N_newdata : 0 );
+            for (size_t k_0__ = 0; k_0__ < U1_indexes_k_0_max__; ++k_0__) {
+                U1_indexes[k_0__] = vals_i__[pos__++];
             }
-            current_statement_begin__ = 83;
+            current_statement_begin__ = 117;
+            context__.validate_dims("data initialization", "use_U2", "int", context__.to_vec());
+            use_U2 = int(0);
+            vals_i__ = context__.vals_i("use_U2");
+            pos__ = 0;
+            use_U2 = vals_i__[pos__++];
+            check_greater_or_equal(function__, "use_U2", use_U2, 0);
+            check_less_or_equal(function__, "use_U2", use_U2, 1);
+            current_statement_begin__ = 118;
+            context__.validate_dims("data initialization", "N_U2", "int", context__.to_vec());
+            N_U2 = int(0);
+            vals_i__ = context__.vals_i("N_U2");
+            pos__ = 0;
+            N_U2 = vals_i__[pos__++];
+            check_greater_or_equal(function__, "N_U2", N_U2, 0);
+            current_statement_begin__ = 119;
+            validate_non_negative_index("U2_indexes", "(use_U2 ? N_newdata : 0 )", (use_U2 ? N_newdata : 0 ));
+            context__.validate_dims("data initialization", "U2_indexes", "int", context__.to_vec((use_U2 ? N_newdata : 0 )));
+            U2_indexes = std::vector<int>((use_U2 ? N_newdata : 0 ), int(0));
+            vals_i__ = context__.vals_i("U2_indexes");
+            pos__ = 0;
+            size_t U2_indexes_k_0_max__ = (use_U2 ? N_newdata : 0 );
+            for (size_t k_0__ = 0; k_0__ < U2_indexes_k_0_max__; ++k_0__) {
+                U2_indexes[k_0__] = vals_i__[pos__++];
+            }
+            current_statement_begin__ = 121;
+            context__.validate_dims("data initialization", "use_U3", "int", context__.to_vec());
+            use_U3 = int(0);
+            vals_i__ = context__.vals_i("use_U3");
+            pos__ = 0;
+            use_U3 = vals_i__[pos__++];
+            check_greater_or_equal(function__, "use_U3", use_U3, 0);
+            check_less_or_equal(function__, "use_U3", use_U3, 1);
+            current_statement_begin__ = 122;
+            context__.validate_dims("data initialization", "N_U3", "int", context__.to_vec());
+            N_U3 = int(0);
+            vals_i__ = context__.vals_i("N_U3");
+            pos__ = 0;
+            N_U3 = vals_i__[pos__++];
+            check_greater_or_equal(function__, "N_U3", N_U3, 0);
+            current_statement_begin__ = 123;
+            validate_non_negative_index("U3_indexes", "(use_U3 ? N_newdata : 0 )", (use_U3 ? N_newdata : 0 ));
+            context__.validate_dims("data initialization", "U3_indexes", "int", context__.to_vec((use_U3 ? N_newdata : 0 )));
+            U3_indexes = std::vector<int>((use_U3 ? N_newdata : 0 ), int(0));
+            vals_i__ = context__.vals_i("U3_indexes");
+            pos__ = 0;
+            size_t U3_indexes_k_0_max__ = (use_U3 ? N_newdata : 0 );
+            for (size_t k_0__ = 0; k_0__ < U3_indexes_k_0_max__; ++k_0__) {
+                U3_indexes[k_0__] = vals_i__[pos__++];
+            }
+            current_statement_begin__ = 126;
             context__.validate_dims("data initialization", "use_Davidson", "int", context__.to_vec());
             use_Davidson = int(0);
             vals_i__ = context__.vals_i("use_Davidson");
@@ -349,7 +496,7 @@ public:
             use_Davidson = vals_i__[pos__++];
             check_greater_or_equal(function__, "use_Davidson", use_Davidson, 0);
             check_less_or_equal(function__, "use_Davidson", use_Davidson, 1);
-            current_statement_begin__ = 85;
+            current_statement_begin__ = 128;
             context__.validate_dims("data initialization", "use_Generalized", "int", context__.to_vec());
             use_Generalized = int(0);
             vals_i__ = context__.vals_i("use_Generalized");
@@ -357,14 +504,14 @@ public:
             use_Generalized = vals_i__[pos__++];
             check_greater_or_equal(function__, "use_Generalized", use_Generalized, 0);
             check_less_or_equal(function__, "use_Generalized", use_Generalized, 1);
-            current_statement_begin__ = 86;
+            current_statement_begin__ = 129;
             context__.validate_dims("data initialization", "K", "int", context__.to_vec());
             K = int(0);
             vals_i__ = context__.vals_i("K");
             pos__ = 0;
             K = vals_i__[pos__++];
             check_greater_or_equal(function__, "K", K, 0);
-            current_statement_begin__ = 87;
+            current_statement_begin__ = 130;
             validate_non_negative_index("X", "(use_Generalized ? N_players : 0 )", (use_Generalized ? N_players : 0 ));
             validate_non_negative_index("X", "(use_Generalized ? K : 0 )", (use_Generalized ? K : 0 ));
             context__.validate_dims("data initialization", "X", "matrix_d", context__.to_vec((use_Generalized ? N_players : 0 ),(use_Generalized ? K : 0 )));
@@ -378,28 +525,73 @@ public:
                     X(j_1__, j_2__) = vals_r__[pos__++];
                 }
             }
+            current_statement_begin__ = 134;
+            context__.validate_dims("data initialization", "use_SubjectPredictors", "int", context__.to_vec());
+            use_SubjectPredictors = int(0);
+            vals_i__ = context__.vals_i("use_SubjectPredictors");
+            pos__ = 0;
+            use_SubjectPredictors = vals_i__[pos__++];
+            check_greater_or_equal(function__, "use_SubjectPredictors", use_SubjectPredictors, 0);
+            check_less_or_equal(function__, "use_SubjectPredictors", use_SubjectPredictors, 1);
+            current_statement_begin__ = 135;
+            context__.validate_dims("data initialization", "N_SubjectPredictors", "int", context__.to_vec());
+            N_SubjectPredictors = int(0);
+            vals_i__ = context__.vals_i("N_SubjectPredictors");
+            pos__ = 0;
+            N_SubjectPredictors = vals_i__[pos__++];
+            check_greater_or_equal(function__, "N_SubjectPredictors", N_SubjectPredictors, 0);
+            current_statement_begin__ = 136;
+            validate_non_negative_index("X_subject", "(use_SubjectPredictors ? N_newdata : 0 )", (use_SubjectPredictors ? N_newdata : 0 ));
+            validate_non_negative_index("X_subject", "(use_SubjectPredictors ? N_SubjectPredictors : 0 )", (use_SubjectPredictors ? N_SubjectPredictors : 0 ));
+            context__.validate_dims("data initialization", "X_subject", "matrix_d", context__.to_vec((use_SubjectPredictors ? N_newdata : 0 ),(use_SubjectPredictors ? N_SubjectPredictors : 0 )));
+            X_subject = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>((use_SubjectPredictors ? N_newdata : 0 ), (use_SubjectPredictors ? N_SubjectPredictors : 0 ));
+            vals_r__ = context__.vals_r("X_subject");
+            pos__ = 0;
+            size_t X_subject_j_2_max__ = (use_SubjectPredictors ? N_SubjectPredictors : 0 );
+            size_t X_subject_j_1_max__ = (use_SubjectPredictors ? N_newdata : 0 );
+            for (size_t j_2__ = 0; j_2__ < X_subject_j_2_max__; ++j_2__) {
+                for (size_t j_1__ = 0; j_1__ < X_subject_j_1_max__; ++j_1__) {
+                    X_subject(j_1__, j_2__) = vals_r__[pos__++];
+                }
+            }
             // initialize transformed data variables
             // execute transformed data statements
             // validate transformed data
             // validate, set parameter ranges
             num_params_r__ = 0U;
             param_ranges_i__.clear();
-            current_statement_begin__ = 92;
+            current_statement_begin__ = 142;
             validate_non_negative_index("lambda", "N_players", N_players);
             num_params_r__ += (1 * N_players);
-            current_statement_begin__ = 93;
+            current_statement_begin__ = 143;
             num_params_r__ += 1;
-            current_statement_begin__ = 94;
+            current_statement_begin__ = 144;
             num_params_r__ += 1;
-            current_statement_begin__ = 95;
+            current_statement_begin__ = 145;
             num_params_r__ += 1;
-            current_statement_begin__ = 96;
-            validate_non_negative_index("U", "N_players", N_players);
-            validate_non_negative_index("U", "(use_U ? N_U : 1 )", (use_U ? N_U : 1 ));
-            num_params_r__ += ((1 * N_players) * (use_U ? N_U : 1 ));
-            current_statement_begin__ = 97;
+            current_statement_begin__ = 146;
+            num_params_r__ += 1;
+            current_statement_begin__ = 147;
+            num_params_r__ += 1;
+            current_statement_begin__ = 148;
+            validate_non_negative_index("U1", "N_players", N_players);
+            validate_non_negative_index("U1", "(use_U1 ? N_U1 : 1 )", (use_U1 ? N_U1 : 1 ));
+            num_params_r__ += ((1 * N_players) * (use_U1 ? N_U1 : 1 ));
+            current_statement_begin__ = 149;
+            validate_non_negative_index("U2", "N_players", N_players);
+            validate_non_negative_index("U2", "(use_U2 ? N_U2 : 1 )", (use_U2 ? N_U2 : 1 ));
+            num_params_r__ += ((1 * N_players) * (use_U2 ? N_U2 : 1 ));
+            current_statement_begin__ = 150;
+            validate_non_negative_index("U3", "N_players", N_players);
+            validate_non_negative_index("U3", "(use_U3 ? N_U3 : 1 )", (use_U3 ? N_U3 : 1 ));
+            num_params_r__ += ((1 * N_players) * (use_U3 ? N_U3 : 1 ));
+            current_statement_begin__ = 151;
             validate_non_negative_index("B", "(use_Generalized ? K : 2 )", (use_Generalized ? K : 2 ));
             num_params_r__ += (1 * (use_Generalized ? K : 2 ));
+            current_statement_begin__ = 153;
+            validate_non_negative_index("S", "N_players", N_players);
+            validate_non_negative_index("S", "(use_SubjectPredictors ? N_SubjectPredictors : 1 )", (use_SubjectPredictors ? N_SubjectPredictors : 1 ));
+            num_params_r__ += ((1 * N_players) * (use_SubjectPredictors ? N_SubjectPredictors : 1 ));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
             // Next line prevents compiler griping about no return
@@ -417,7 +609,7 @@ public:
         (void) pos__; // dummy call to supress warning
         std::vector<double> vals_r__;
         std::vector<int> vals_i__;
-        current_statement_begin__ = 92;
+        current_statement_begin__ = 142;
         if (!(context__.contains_r("lambda")))
             stan::lang::rethrow_located(std::runtime_error(std::string("Variable lambda missing")), current_statement_begin__, prog_reader__());
         vals_r__ = context__.vals_r("lambda");
@@ -437,7 +629,7 @@ public:
                 stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable lambda: ") + e.what()), current_statement_begin__, prog_reader__());
             }
         }
-        current_statement_begin__ = 93;
+        current_statement_begin__ = 143;
         if (!(context__.contains_r("gm")))
             stan::lang::rethrow_located(std::runtime_error(std::string("Variable gm missing")), current_statement_begin__, prog_reader__());
         vals_r__ = context__.vals_r("gm");
@@ -450,20 +642,46 @@ public:
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable gm: ") + e.what()), current_statement_begin__, prog_reader__());
         }
-        current_statement_begin__ = 94;
-        if (!(context__.contains_r("U_std")))
-            stan::lang::rethrow_located(std::runtime_error(std::string("Variable U_std missing")), current_statement_begin__, prog_reader__());
-        vals_r__ = context__.vals_r("U_std");
+        current_statement_begin__ = 144;
+        if (!(context__.contains_r("U1_std")))
+            stan::lang::rethrow_located(std::runtime_error(std::string("Variable U1_std missing")), current_statement_begin__, prog_reader__());
+        vals_r__ = context__.vals_r("U1_std");
         pos__ = 0U;
-        context__.validate_dims("parameter initialization", "U_std", "double", context__.to_vec());
-        double U_std(0);
-        U_std = vals_r__[pos__++];
+        context__.validate_dims("parameter initialization", "U1_std", "double", context__.to_vec());
+        double U1_std(0);
+        U1_std = vals_r__[pos__++];
         try {
-            writer__.scalar_lb_unconstrain(0, U_std);
+            writer__.scalar_lb_unconstrain(0, U1_std);
         } catch (const std::exception& e) {
-            stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable U_std: ") + e.what()), current_statement_begin__, prog_reader__());
+            stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable U1_std: ") + e.what()), current_statement_begin__, prog_reader__());
         }
-        current_statement_begin__ = 95;
+        current_statement_begin__ = 145;
+        if (!(context__.contains_r("U2_std")))
+            stan::lang::rethrow_located(std::runtime_error(std::string("Variable U2_std missing")), current_statement_begin__, prog_reader__());
+        vals_r__ = context__.vals_r("U2_std");
+        pos__ = 0U;
+        context__.validate_dims("parameter initialization", "U2_std", "double", context__.to_vec());
+        double U2_std(0);
+        U2_std = vals_r__[pos__++];
+        try {
+            writer__.scalar_lb_unconstrain(0, U2_std);
+        } catch (const std::exception& e) {
+            stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable U2_std: ") + e.what()), current_statement_begin__, prog_reader__());
+        }
+        current_statement_begin__ = 146;
+        if (!(context__.contains_r("U3_std")))
+            stan::lang::rethrow_located(std::runtime_error(std::string("Variable U3_std missing")), current_statement_begin__, prog_reader__());
+        vals_r__ = context__.vals_r("U3_std");
+        pos__ = 0U;
+        context__.validate_dims("parameter initialization", "U3_std", "double", context__.to_vec());
+        double U3_std(0);
+        U3_std = vals_r__[pos__++];
+        try {
+            writer__.scalar_lb_unconstrain(0, U3_std);
+        } catch (const std::exception& e) {
+            stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable U3_std: ") + e.what()), current_statement_begin__, prog_reader__());
+        }
+        current_statement_begin__ = 147;
         if (!(context__.contains_r("nu")))
             stan::lang::rethrow_located(std::runtime_error(std::string("Variable nu missing")), current_statement_begin__, prog_reader__());
         vals_r__ = context__.vals_r("nu");
@@ -476,34 +694,88 @@ public:
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable nu: ") + e.what()), current_statement_begin__, prog_reader__());
         }
-        current_statement_begin__ = 96;
-        if (!(context__.contains_r("U")))
-            stan::lang::rethrow_located(std::runtime_error(std::string("Variable U missing")), current_statement_begin__, prog_reader__());
-        vals_r__ = context__.vals_r("U");
+        current_statement_begin__ = 148;
+        if (!(context__.contains_r("U1")))
+            stan::lang::rethrow_located(std::runtime_error(std::string("Variable U1 missing")), current_statement_begin__, prog_reader__());
+        vals_r__ = context__.vals_r("U1");
         pos__ = 0U;
-        validate_non_negative_index("U", "N_players", N_players);
-        validate_non_negative_index("U", "(use_U ? N_U : 1 )", (use_U ? N_U : 1 ));
-        context__.validate_dims("parameter initialization", "U", "double", context__.to_vec(N_players,(use_U ? N_U : 1 )));
-        std::vector<std::vector<double> > U(N_players, std::vector<double>((use_U ? N_U : 1 ), double(0)));
-        size_t U_k_0_max__ = N_players;
-        size_t U_k_1_max__ = (use_U ? N_U : 1 );
-        for (size_t k_1__ = 0; k_1__ < U_k_1_max__; ++k_1__) {
-            for (size_t k_0__ = 0; k_0__ < U_k_0_max__; ++k_0__) {
-                U[k_0__][k_1__] = vals_r__[pos__++];
+        validate_non_negative_index("U1", "N_players", N_players);
+        validate_non_negative_index("U1", "(use_U1 ? N_U1 : 1 )", (use_U1 ? N_U1 : 1 ));
+        context__.validate_dims("parameter initialization", "U1", "double", context__.to_vec(N_players,(use_U1 ? N_U1 : 1 )));
+        std::vector<std::vector<double> > U1(N_players, std::vector<double>((use_U1 ? N_U1 : 1 ), double(0)));
+        size_t U1_k_0_max__ = N_players;
+        size_t U1_k_1_max__ = (use_U1 ? N_U1 : 1 );
+        for (size_t k_1__ = 0; k_1__ < U1_k_1_max__; ++k_1__) {
+            for (size_t k_0__ = 0; k_0__ < U1_k_0_max__; ++k_0__) {
+                U1[k_0__][k_1__] = vals_r__[pos__++];
             }
         }
-        size_t U_i_0_max__ = N_players;
-        size_t U_i_1_max__ = (use_U ? N_U : 1 );
-        for (size_t i_0__ = 0; i_0__ < U_i_0_max__; ++i_0__) {
-            for (size_t i_1__ = 0; i_1__ < U_i_1_max__; ++i_1__) {
+        size_t U1_i_0_max__ = N_players;
+        size_t U1_i_1_max__ = (use_U1 ? N_U1 : 1 );
+        for (size_t i_0__ = 0; i_0__ < U1_i_0_max__; ++i_0__) {
+            for (size_t i_1__ = 0; i_1__ < U1_i_1_max__; ++i_1__) {
                 try {
-                    writer__.scalar_unconstrain(U[i_0__][i_1__]);
+                    writer__.scalar_unconstrain(U1[i_0__][i_1__]);
                 } catch (const std::exception& e) {
-                    stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable U: ") + e.what()), current_statement_begin__, prog_reader__());
+                    stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable U1: ") + e.what()), current_statement_begin__, prog_reader__());
                 }
             }
         }
-        current_statement_begin__ = 97;
+        current_statement_begin__ = 149;
+        if (!(context__.contains_r("U2")))
+            stan::lang::rethrow_located(std::runtime_error(std::string("Variable U2 missing")), current_statement_begin__, prog_reader__());
+        vals_r__ = context__.vals_r("U2");
+        pos__ = 0U;
+        validate_non_negative_index("U2", "N_players", N_players);
+        validate_non_negative_index("U2", "(use_U2 ? N_U2 : 1 )", (use_U2 ? N_U2 : 1 ));
+        context__.validate_dims("parameter initialization", "U2", "double", context__.to_vec(N_players,(use_U2 ? N_U2 : 1 )));
+        std::vector<std::vector<double> > U2(N_players, std::vector<double>((use_U2 ? N_U2 : 1 ), double(0)));
+        size_t U2_k_0_max__ = N_players;
+        size_t U2_k_1_max__ = (use_U2 ? N_U2 : 1 );
+        for (size_t k_1__ = 0; k_1__ < U2_k_1_max__; ++k_1__) {
+            for (size_t k_0__ = 0; k_0__ < U2_k_0_max__; ++k_0__) {
+                U2[k_0__][k_1__] = vals_r__[pos__++];
+            }
+        }
+        size_t U2_i_0_max__ = N_players;
+        size_t U2_i_1_max__ = (use_U2 ? N_U2 : 1 );
+        for (size_t i_0__ = 0; i_0__ < U2_i_0_max__; ++i_0__) {
+            for (size_t i_1__ = 0; i_1__ < U2_i_1_max__; ++i_1__) {
+                try {
+                    writer__.scalar_unconstrain(U2[i_0__][i_1__]);
+                } catch (const std::exception& e) {
+                    stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable U2: ") + e.what()), current_statement_begin__, prog_reader__());
+                }
+            }
+        }
+        current_statement_begin__ = 150;
+        if (!(context__.contains_r("U3")))
+            stan::lang::rethrow_located(std::runtime_error(std::string("Variable U3 missing")), current_statement_begin__, prog_reader__());
+        vals_r__ = context__.vals_r("U3");
+        pos__ = 0U;
+        validate_non_negative_index("U3", "N_players", N_players);
+        validate_non_negative_index("U3", "(use_U3 ? N_U3 : 1 )", (use_U3 ? N_U3 : 1 ));
+        context__.validate_dims("parameter initialization", "U3", "double", context__.to_vec(N_players,(use_U3 ? N_U3 : 1 )));
+        std::vector<std::vector<double> > U3(N_players, std::vector<double>((use_U3 ? N_U3 : 1 ), double(0)));
+        size_t U3_k_0_max__ = N_players;
+        size_t U3_k_1_max__ = (use_U3 ? N_U3 : 1 );
+        for (size_t k_1__ = 0; k_1__ < U3_k_1_max__; ++k_1__) {
+            for (size_t k_0__ = 0; k_0__ < U3_k_0_max__; ++k_0__) {
+                U3[k_0__][k_1__] = vals_r__[pos__++];
+            }
+        }
+        size_t U3_i_0_max__ = N_players;
+        size_t U3_i_1_max__ = (use_U3 ? N_U3 : 1 );
+        for (size_t i_0__ = 0; i_0__ < U3_i_0_max__; ++i_0__) {
+            for (size_t i_1__ = 0; i_1__ < U3_i_1_max__; ++i_1__) {
+                try {
+                    writer__.scalar_unconstrain(U3[i_0__][i_1__]);
+                } catch (const std::exception& e) {
+                    stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable U3: ") + e.what()), current_statement_begin__, prog_reader__());
+                }
+            }
+        }
+        current_statement_begin__ = 151;
         if (!(context__.contains_r("B")))
             stan::lang::rethrow_located(std::runtime_error(std::string("Variable B missing")), current_statement_begin__, prog_reader__());
         vals_r__ = context__.vals_r("B");
@@ -521,6 +793,33 @@ public:
                 writer__.scalar_unconstrain(B[i_0__]);
             } catch (const std::exception& e) {
                 stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable B: ") + e.what()), current_statement_begin__, prog_reader__());
+            }
+        }
+        current_statement_begin__ = 153;
+        if (!(context__.contains_r("S")))
+            stan::lang::rethrow_located(std::runtime_error(std::string("Variable S missing")), current_statement_begin__, prog_reader__());
+        vals_r__ = context__.vals_r("S");
+        pos__ = 0U;
+        validate_non_negative_index("S", "N_players", N_players);
+        validate_non_negative_index("S", "(use_SubjectPredictors ? N_SubjectPredictors : 1 )", (use_SubjectPredictors ? N_SubjectPredictors : 1 ));
+        context__.validate_dims("parameter initialization", "S", "double", context__.to_vec(N_players,(use_SubjectPredictors ? N_SubjectPredictors : 1 )));
+        std::vector<std::vector<double> > S(N_players, std::vector<double>((use_SubjectPredictors ? N_SubjectPredictors : 1 ), double(0)));
+        size_t S_k_0_max__ = N_players;
+        size_t S_k_1_max__ = (use_SubjectPredictors ? N_SubjectPredictors : 1 );
+        for (size_t k_1__ = 0; k_1__ < S_k_1_max__; ++k_1__) {
+            for (size_t k_0__ = 0; k_0__ < S_k_0_max__; ++k_0__) {
+                S[k_0__][k_1__] = vals_r__[pos__++];
+            }
+        }
+        size_t S_i_0_max__ = N_players;
+        size_t S_i_1_max__ = (use_SubjectPredictors ? N_SubjectPredictors : 1 );
+        for (size_t i_0__ = 0; i_0__ < S_i_0_max__; ++i_0__) {
+            for (size_t i_1__ = 0; i_1__ < S_i_1_max__; ++i_1__) {
+                try {
+                    writer__.scalar_unconstrain(S[i_0__][i_1__]);
+                } catch (const std::exception& e) {
+                    stan::lang::rethrow_located(std::runtime_error(std::string("Error transforming variable S: ") + e.what()), current_statement_begin__, prog_reader__());
+                }
             }
         }
         params_r__ = writer__.data_r();
@@ -548,7 +847,7 @@ public:
         try {
             stan::io::reader<local_scalar_t__> in__(params_r__, params_i__);
             // model parameters
-            current_statement_begin__ = 92;
+            current_statement_begin__ = 142;
             std::vector<local_scalar_t__> lambda;
             size_t lambda_d_0_max__ = N_players;
             lambda.reserve(lambda_d_0_max__);
@@ -558,42 +857,84 @@ public:
                 else
                     lambda.push_back(in__.scalar_constrain());
             }
-            current_statement_begin__ = 93;
+            current_statement_begin__ = 143;
             local_scalar_t__ gm;
             (void) gm;  // dummy to suppress unused var warning
             if (jacobian__)
                 gm = in__.scalar_constrain(lp__);
             else
                 gm = in__.scalar_constrain();
-            current_statement_begin__ = 94;
-            local_scalar_t__ U_std;
-            (void) U_std;  // dummy to suppress unused var warning
+            current_statement_begin__ = 144;
+            local_scalar_t__ U1_std;
+            (void) U1_std;  // dummy to suppress unused var warning
             if (jacobian__)
-                U_std = in__.scalar_lb_constrain(0, lp__);
+                U1_std = in__.scalar_lb_constrain(0, lp__);
             else
-                U_std = in__.scalar_lb_constrain(0);
-            current_statement_begin__ = 95;
+                U1_std = in__.scalar_lb_constrain(0);
+            current_statement_begin__ = 145;
+            local_scalar_t__ U2_std;
+            (void) U2_std;  // dummy to suppress unused var warning
+            if (jacobian__)
+                U2_std = in__.scalar_lb_constrain(0, lp__);
+            else
+                U2_std = in__.scalar_lb_constrain(0);
+            current_statement_begin__ = 146;
+            local_scalar_t__ U3_std;
+            (void) U3_std;  // dummy to suppress unused var warning
+            if (jacobian__)
+                U3_std = in__.scalar_lb_constrain(0, lp__);
+            else
+                U3_std = in__.scalar_lb_constrain(0);
+            current_statement_begin__ = 147;
             local_scalar_t__ nu;
             (void) nu;  // dummy to suppress unused var warning
             if (jacobian__)
                 nu = in__.scalar_constrain(lp__);
             else
                 nu = in__.scalar_constrain();
-            current_statement_begin__ = 96;
-            std::vector<std::vector<local_scalar_t__> > U;
-            size_t U_d_0_max__ = N_players;
-            size_t U_d_1_max__ = (use_U ? N_U : 1 );
-            U.resize(U_d_0_max__);
-            for (size_t d_0__ = 0; d_0__ < U_d_0_max__; ++d_0__) {
-                U[d_0__].reserve(U_d_1_max__);
-                for (size_t d_1__ = 0; d_1__ < U_d_1_max__; ++d_1__) {
+            current_statement_begin__ = 148;
+            std::vector<std::vector<local_scalar_t__> > U1;
+            size_t U1_d_0_max__ = N_players;
+            size_t U1_d_1_max__ = (use_U1 ? N_U1 : 1 );
+            U1.resize(U1_d_0_max__);
+            for (size_t d_0__ = 0; d_0__ < U1_d_0_max__; ++d_0__) {
+                U1[d_0__].reserve(U1_d_1_max__);
+                for (size_t d_1__ = 0; d_1__ < U1_d_1_max__; ++d_1__) {
                     if (jacobian__)
-                        U[d_0__].push_back(in__.scalar_constrain(lp__));
+                        U1[d_0__].push_back(in__.scalar_constrain(lp__));
                     else
-                        U[d_0__].push_back(in__.scalar_constrain());
+                        U1[d_0__].push_back(in__.scalar_constrain());
                 }
             }
-            current_statement_begin__ = 97;
+            current_statement_begin__ = 149;
+            std::vector<std::vector<local_scalar_t__> > U2;
+            size_t U2_d_0_max__ = N_players;
+            size_t U2_d_1_max__ = (use_U2 ? N_U2 : 1 );
+            U2.resize(U2_d_0_max__);
+            for (size_t d_0__ = 0; d_0__ < U2_d_0_max__; ++d_0__) {
+                U2[d_0__].reserve(U2_d_1_max__);
+                for (size_t d_1__ = 0; d_1__ < U2_d_1_max__; ++d_1__) {
+                    if (jacobian__)
+                        U2[d_0__].push_back(in__.scalar_constrain(lp__));
+                    else
+                        U2[d_0__].push_back(in__.scalar_constrain());
+                }
+            }
+            current_statement_begin__ = 150;
+            std::vector<std::vector<local_scalar_t__> > U3;
+            size_t U3_d_0_max__ = N_players;
+            size_t U3_d_1_max__ = (use_U3 ? N_U3 : 1 );
+            U3.resize(U3_d_0_max__);
+            for (size_t d_0__ = 0; d_0__ < U3_d_0_max__; ++d_0__) {
+                U3[d_0__].reserve(U3_d_1_max__);
+                for (size_t d_1__ = 0; d_1__ < U3_d_1_max__; ++d_1__) {
+                    if (jacobian__)
+                        U3[d_0__].push_back(in__.scalar_constrain(lp__));
+                    else
+                        U3[d_0__].push_back(in__.scalar_constrain());
+                }
+            }
+            current_statement_begin__ = 151;
             std::vector<local_scalar_t__> B;
             size_t B_d_0_max__ = (use_Generalized ? K : 2 );
             B.reserve(B_d_0_max__);
@@ -602,6 +943,20 @@ public:
                     B.push_back(in__.scalar_constrain(lp__));
                 else
                     B.push_back(in__.scalar_constrain());
+            }
+            current_statement_begin__ = 153;
+            std::vector<std::vector<local_scalar_t__> > S;
+            size_t S_d_0_max__ = N_players;
+            size_t S_d_1_max__ = (use_SubjectPredictors ? N_SubjectPredictors : 1 );
+            S.resize(S_d_0_max__);
+            for (size_t d_0__ = 0; d_0__ < S_d_0_max__; ++d_0__) {
+                S[d_0__].reserve(S_d_1_max__);
+                for (size_t d_1__ = 0; d_1__ < S_d_1_max__; ++d_1__) {
+                    if (jacobian__)
+                        S[d_0__].push_back(in__.scalar_constrain(lp__));
+                    else
+                        S[d_0__].push_back(in__.scalar_constrain());
+                }
             }
             // model body
         } catch (const std::exception& e) {
@@ -626,10 +981,15 @@ public:
         names__.resize(0);
         names__.push_back("lambda");
         names__.push_back("gm");
-        names__.push_back("U_std");
+        names__.push_back("U1_std");
+        names__.push_back("U2_std");
+        names__.push_back("U3_std");
         names__.push_back("nu");
-        names__.push_back("U");
+        names__.push_back("U1");
+        names__.push_back("U2");
+        names__.push_back("U3");
         names__.push_back("B");
+        names__.push_back("S");
         names__.push_back("y_pred");
         names__.push_back("lambda_call");
     }
@@ -646,11 +1006,27 @@ public:
         dims__.resize(0);
         dimss__.push_back(dims__);
         dims__.resize(0);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
         dims__.push_back(N_players);
-        dims__.push_back((use_U ? N_U : 1 ));
+        dims__.push_back((use_U1 ? N_U1 : 1 ));
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dims__.push_back(N_players);
+        dims__.push_back((use_U2 ? N_U2 : 1 ));
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dims__.push_back(N_players);
+        dims__.push_back((use_U3 ? N_U3 : 1 ));
         dimss__.push_back(dims__);
         dims__.resize(0);
         dims__.push_back((use_Generalized ? K : 2 ));
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dims__.push_back(N_players);
+        dims__.push_back((use_SubjectPredictors ? N_SubjectPredictors : 1 ));
         dimss__.push_back(dims__);
         dims__.resize(0);
         dims__.push_back(N_newdata);
@@ -685,25 +1061,63 @@ public:
         }
         double gm = in__.scalar_constrain();
         vars__.push_back(gm);
-        double U_std = in__.scalar_lb_constrain(0);
-        vars__.push_back(U_std);
+        double U1_std = in__.scalar_lb_constrain(0);
+        vars__.push_back(U1_std);
+        double U2_std = in__.scalar_lb_constrain(0);
+        vars__.push_back(U2_std);
+        double U3_std = in__.scalar_lb_constrain(0);
+        vars__.push_back(U3_std);
         double nu = in__.scalar_constrain();
         vars__.push_back(nu);
-        std::vector<std::vector<double> > U;
-        size_t U_d_0_max__ = N_players;
-        size_t U_d_1_max__ = (use_U ? N_U : 1 );
-        U.resize(U_d_0_max__);
-        for (size_t d_0__ = 0; d_0__ < U_d_0_max__; ++d_0__) {
-            U[d_0__].reserve(U_d_1_max__);
-            for (size_t d_1__ = 0; d_1__ < U_d_1_max__; ++d_1__) {
-                U[d_0__].push_back(in__.scalar_constrain());
+        std::vector<std::vector<double> > U1;
+        size_t U1_d_0_max__ = N_players;
+        size_t U1_d_1_max__ = (use_U1 ? N_U1 : 1 );
+        U1.resize(U1_d_0_max__);
+        for (size_t d_0__ = 0; d_0__ < U1_d_0_max__; ++d_0__) {
+            U1[d_0__].reserve(U1_d_1_max__);
+            for (size_t d_1__ = 0; d_1__ < U1_d_1_max__; ++d_1__) {
+                U1[d_0__].push_back(in__.scalar_constrain());
             }
         }
-        size_t U_k_0_max__ = N_players;
-        size_t U_k_1_max__ = (use_U ? N_U : 1 );
-        for (size_t k_1__ = 0; k_1__ < U_k_1_max__; ++k_1__) {
-            for (size_t k_0__ = 0; k_0__ < U_k_0_max__; ++k_0__) {
-                vars__.push_back(U[k_0__][k_1__]);
+        size_t U1_k_0_max__ = N_players;
+        size_t U1_k_1_max__ = (use_U1 ? N_U1 : 1 );
+        for (size_t k_1__ = 0; k_1__ < U1_k_1_max__; ++k_1__) {
+            for (size_t k_0__ = 0; k_0__ < U1_k_0_max__; ++k_0__) {
+                vars__.push_back(U1[k_0__][k_1__]);
+            }
+        }
+        std::vector<std::vector<double> > U2;
+        size_t U2_d_0_max__ = N_players;
+        size_t U2_d_1_max__ = (use_U2 ? N_U2 : 1 );
+        U2.resize(U2_d_0_max__);
+        for (size_t d_0__ = 0; d_0__ < U2_d_0_max__; ++d_0__) {
+            U2[d_0__].reserve(U2_d_1_max__);
+            for (size_t d_1__ = 0; d_1__ < U2_d_1_max__; ++d_1__) {
+                U2[d_0__].push_back(in__.scalar_constrain());
+            }
+        }
+        size_t U2_k_0_max__ = N_players;
+        size_t U2_k_1_max__ = (use_U2 ? N_U2 : 1 );
+        for (size_t k_1__ = 0; k_1__ < U2_k_1_max__; ++k_1__) {
+            for (size_t k_0__ = 0; k_0__ < U2_k_0_max__; ++k_0__) {
+                vars__.push_back(U2[k_0__][k_1__]);
+            }
+        }
+        std::vector<std::vector<double> > U3;
+        size_t U3_d_0_max__ = N_players;
+        size_t U3_d_1_max__ = (use_U3 ? N_U3 : 1 );
+        U3.resize(U3_d_0_max__);
+        for (size_t d_0__ = 0; d_0__ < U3_d_0_max__; ++d_0__) {
+            U3[d_0__].reserve(U3_d_1_max__);
+            for (size_t d_1__ = 0; d_1__ < U3_d_1_max__; ++d_1__) {
+                U3[d_0__].push_back(in__.scalar_constrain());
+            }
+        }
+        size_t U3_k_0_max__ = N_players;
+        size_t U3_k_1_max__ = (use_U3 ? N_U3 : 1 );
+        for (size_t k_1__ = 0; k_1__ < U3_k_1_max__; ++k_1__) {
+            for (size_t k_0__ = 0; k_0__ < U3_k_0_max__; ++k_0__) {
+                vars__.push_back(U3[k_0__][k_1__]);
             }
         }
         std::vector<double> B;
@@ -716,6 +1130,23 @@ public:
         for (size_t k_0__ = 0; k_0__ < B_k_0_max__; ++k_0__) {
             vars__.push_back(B[k_0__]);
         }
+        std::vector<std::vector<double> > S;
+        size_t S_d_0_max__ = N_players;
+        size_t S_d_1_max__ = (use_SubjectPredictors ? N_SubjectPredictors : 1 );
+        S.resize(S_d_0_max__);
+        for (size_t d_0__ = 0; d_0__ < S_d_0_max__; ++d_0__) {
+            S[d_0__].reserve(S_d_1_max__);
+            for (size_t d_1__ = 0; d_1__ < S_d_1_max__; ++d_1__) {
+                S[d_0__].push_back(in__.scalar_constrain());
+            }
+        }
+        size_t S_k_0_max__ = N_players;
+        size_t S_k_1_max__ = (use_SubjectPredictors ? N_SubjectPredictors : 1 );
+        for (size_t k_1__ = 0; k_1__ < S_k_1_max__; ++k_1__) {
+            for (size_t k_0__ = 0; k_0__ < S_k_0_max__; ++k_0__) {
+                vars__.push_back(S[k_0__][k_1__]);
+            }
+        }
         double lp__ = 0.0;
         (void) lp__;  // dummy to suppress unused var warning
         stan::math::accumulator<double> lp_accum__;
@@ -726,71 +1157,71 @@ public:
             if (!include_gqs__ && !include_tparams__) return;
             if (!include_gqs__) return;
             // declare and define generated quantities
-            current_statement_begin__ = 104;
+            current_statement_begin__ = 159;
             validate_non_negative_index("y_pred", "N_newdata", N_newdata);
             Eigen::Matrix<double, Eigen::Dynamic, 1> y_pred(N_newdata);
             stan::math::initialize(y_pred, DUMMY_VAR__);
             stan::math::fill(y_pred, DUMMY_VAR__);
-            current_statement_begin__ = 105;
+            current_statement_begin__ = 160;
             validate_non_negative_index("lambda_call", "N_players", N_players);
             std::vector<double> lambda_call(N_players, double(0));
             stan::math::initialize(lambda_call, DUMMY_VAR__);
             stan::math::fill(lambda_call, DUMMY_VAR__);
             // generated quantities statements
-            current_statement_begin__ = 108;
+            current_statement_begin__ = 163;
             if (as_bool(use_Generalized)) {
-                current_statement_begin__ = 109;
+                current_statement_begin__ = 164;
                 for (int i = 1; i <= N_players; ++i) {
-                    current_statement_begin__ = 110;
+                    current_statement_begin__ = 165;
                     stan::model::assign(lambda_call, 
                                 stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                                 dot_product(to_vector(B), to_vector(stan::model::rvalue(X, stan::model::cons_list(stan::model::index_uni(i), stan::model::cons_list(stan::model::index_omni(), stan::model::nil_index_list())), "X"))), 
                                 "assigning variable lambda_call");
                 }
             } else {
-                current_statement_begin__ = 113;
+                current_statement_begin__ = 168;
                 stan::math::assign(lambda_call, lambda);
             }
-            current_statement_begin__ = 116;
+            current_statement_begin__ = 171;
             for (int i = 1; i <= N_newdata; ++i) {
                 {
-                current_statement_begin__ = 118;
+                current_statement_begin__ = 173;
                 local_scalar_t__ p1_win(DUMMY_VAR__);
                 (void) p1_win;  // dummy to suppress unused var warning
                 stan::math::initialize(p1_win, DUMMY_VAR__);
                 stan::math::fill(p1_win, DUMMY_VAR__);
-                current_statement_begin__ = 119;
+                current_statement_begin__ = 174;
                 local_scalar_t__ p_tie(DUMMY_VAR__);
                 (void) p_tie;  // dummy to suppress unused var warning
                 stan::math::initialize(p_tie, DUMMY_VAR__);
                 stan::math::fill(p_tie, DUMMY_VAR__);
-                current_statement_begin__ = 120;
+                current_statement_begin__ = 175;
                 validate_non_negative_index("p_win_ties", "2", 2);
                 std::vector<local_scalar_t__  > p_win_ties(2, local_scalar_t__(DUMMY_VAR__));
                 stan::math::initialize(p_win_ties, DUMMY_VAR__);
                 stan::math::fill(p_win_ties, DUMMY_VAR__);
-                current_statement_begin__ = 121;
+                current_statement_begin__ = 176;
                 local_scalar_t__ ties_pred(DUMMY_VAR__);
                 (void) ties_pred;  // dummy to suppress unused var warning
                 stan::math::initialize(ties_pred, DUMMY_VAR__);
                 stan::math::fill(ties_pred, DUMMY_VAR__);
-                current_statement_begin__ = 122;
-                stan::math::assign(p_win_ties, calculate_p1_win_and_ties(i, use_Ordereffect, use_U, use_Davidson, player1_indexes, player0_indexes, z_player1, U_indexes, U, lambda_call, U_std, gm, nu, pstream__));
-                current_statement_begin__ = 127;
+                current_statement_begin__ = 177;
+                stan::math::assign(p_win_ties, calculate_p1_win_and_ties(i, player1_indexes, player0_indexes, lambda, use_Ordereffect, z_player1, gm, use_Davidson, nu, use_U1, U1_indexes, U1, U1_std, use_U2, U2_indexes, U2, U2_std, use_U3, U3_indexes, U3, U3_std, use_SubjectPredictors, S, X_subject, pstream__));
+                current_statement_begin__ = 185;
                 stan::math::assign(p1_win, get_base1(p_win_ties, 1, "p_win_ties", 1));
-                current_statement_begin__ = 128;
+                current_statement_begin__ = 186;
                 stan::math::assign(p_tie, get_base1(p_win_ties, 2, "p_win_ties", 1));
-                current_statement_begin__ = 130;
+                current_statement_begin__ = 188;
                 stan::math::assign(ties_pred, bernoulli_rng(p_tie, base_rng__));
-                current_statement_begin__ = 131;
+                current_statement_begin__ = 189;
                 if (as_bool(logical_eq(ties_pred, 1))) {
-                    current_statement_begin__ = 132;
+                    current_statement_begin__ = 190;
                     stan::model::assign(y_pred, 
                                 stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                                 2, 
                                 "assigning variable y_pred");
                 } else {
-                    current_statement_begin__ = 135;
+                    current_statement_begin__ = 193;
                     stan::model::assign(y_pred, 
                                 stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                                 bernoulli_rng(p1_win, base_rng__), 
@@ -799,12 +1230,12 @@ public:
                 }
             }
             // validate, write generated quantities
-            current_statement_begin__ = 104;
+            current_statement_begin__ = 159;
             size_t y_pred_j_1_max__ = N_newdata;
             for (size_t j_1__ = 0; j_1__ < y_pred_j_1_max__; ++j_1__) {
                 vars__.push_back(y_pred(j_1__));
             }
-            current_statement_begin__ = 105;
+            current_statement_begin__ = 160;
             size_t lambda_call_k_0_max__ = N_players;
             for (size_t k_0__ = 0; k_0__ < lambda_call_k_0_max__; ++k_0__) {
                 vars__.push_back(lambda_call[k_0__]);
@@ -849,17 +1280,41 @@ public:
         param_name_stream__ << "gm";
         param_names__.push_back(param_name_stream__.str());
         param_name_stream__.str(std::string());
-        param_name_stream__ << "U_std";
+        param_name_stream__ << "U1_std";
+        param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "U2_std";
+        param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "U3_std";
         param_names__.push_back(param_name_stream__.str());
         param_name_stream__.str(std::string());
         param_name_stream__ << "nu";
         param_names__.push_back(param_name_stream__.str());
-        size_t U_k_0_max__ = N_players;
-        size_t U_k_1_max__ = (use_U ? N_U : 1 );
-        for (size_t k_1__ = 0; k_1__ < U_k_1_max__; ++k_1__) {
-            for (size_t k_0__ = 0; k_0__ < U_k_0_max__; ++k_0__) {
+        size_t U1_k_0_max__ = N_players;
+        size_t U1_k_1_max__ = (use_U1 ? N_U1 : 1 );
+        for (size_t k_1__ = 0; k_1__ < U1_k_1_max__; ++k_1__) {
+            for (size_t k_0__ = 0; k_0__ < U1_k_0_max__; ++k_0__) {
                 param_name_stream__.str(std::string());
-                param_name_stream__ << "U" << '.' << k_0__ + 1 << '.' << k_1__ + 1;
+                param_name_stream__ << "U1" << '.' << k_0__ + 1 << '.' << k_1__ + 1;
+                param_names__.push_back(param_name_stream__.str());
+            }
+        }
+        size_t U2_k_0_max__ = N_players;
+        size_t U2_k_1_max__ = (use_U2 ? N_U2 : 1 );
+        for (size_t k_1__ = 0; k_1__ < U2_k_1_max__; ++k_1__) {
+            for (size_t k_0__ = 0; k_0__ < U2_k_0_max__; ++k_0__) {
+                param_name_stream__.str(std::string());
+                param_name_stream__ << "U2" << '.' << k_0__ + 1 << '.' << k_1__ + 1;
+                param_names__.push_back(param_name_stream__.str());
+            }
+        }
+        size_t U3_k_0_max__ = N_players;
+        size_t U3_k_1_max__ = (use_U3 ? N_U3 : 1 );
+        for (size_t k_1__ = 0; k_1__ < U3_k_1_max__; ++k_1__) {
+            for (size_t k_0__ = 0; k_0__ < U3_k_0_max__; ++k_0__) {
+                param_name_stream__.str(std::string());
+                param_name_stream__ << "U3" << '.' << k_0__ + 1 << '.' << k_1__ + 1;
                 param_names__.push_back(param_name_stream__.str());
             }
         }
@@ -868,6 +1323,15 @@ public:
             param_name_stream__.str(std::string());
             param_name_stream__ << "B" << '.' << k_0__ + 1;
             param_names__.push_back(param_name_stream__.str());
+        }
+        size_t S_k_0_max__ = N_players;
+        size_t S_k_1_max__ = (use_SubjectPredictors ? N_SubjectPredictors : 1 );
+        for (size_t k_1__ = 0; k_1__ < S_k_1_max__; ++k_1__) {
+            for (size_t k_0__ = 0; k_0__ < S_k_0_max__; ++k_0__) {
+                param_name_stream__.str(std::string());
+                param_name_stream__ << "S" << '.' << k_0__ + 1 << '.' << k_1__ + 1;
+                param_names__.push_back(param_name_stream__.str());
+            }
         }
         if (!include_gqs__ && !include_tparams__) return;
         if (include_tparams__) {
@@ -900,17 +1364,41 @@ public:
         param_name_stream__ << "gm";
         param_names__.push_back(param_name_stream__.str());
         param_name_stream__.str(std::string());
-        param_name_stream__ << "U_std";
+        param_name_stream__ << "U1_std";
+        param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "U2_std";
+        param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "U3_std";
         param_names__.push_back(param_name_stream__.str());
         param_name_stream__.str(std::string());
         param_name_stream__ << "nu";
         param_names__.push_back(param_name_stream__.str());
-        size_t U_k_0_max__ = N_players;
-        size_t U_k_1_max__ = (use_U ? N_U : 1 );
-        for (size_t k_1__ = 0; k_1__ < U_k_1_max__; ++k_1__) {
-            for (size_t k_0__ = 0; k_0__ < U_k_0_max__; ++k_0__) {
+        size_t U1_k_0_max__ = N_players;
+        size_t U1_k_1_max__ = (use_U1 ? N_U1 : 1 );
+        for (size_t k_1__ = 0; k_1__ < U1_k_1_max__; ++k_1__) {
+            for (size_t k_0__ = 0; k_0__ < U1_k_0_max__; ++k_0__) {
                 param_name_stream__.str(std::string());
-                param_name_stream__ << "U" << '.' << k_0__ + 1 << '.' << k_1__ + 1;
+                param_name_stream__ << "U1" << '.' << k_0__ + 1 << '.' << k_1__ + 1;
+                param_names__.push_back(param_name_stream__.str());
+            }
+        }
+        size_t U2_k_0_max__ = N_players;
+        size_t U2_k_1_max__ = (use_U2 ? N_U2 : 1 );
+        for (size_t k_1__ = 0; k_1__ < U2_k_1_max__; ++k_1__) {
+            for (size_t k_0__ = 0; k_0__ < U2_k_0_max__; ++k_0__) {
+                param_name_stream__.str(std::string());
+                param_name_stream__ << "U2" << '.' << k_0__ + 1 << '.' << k_1__ + 1;
+                param_names__.push_back(param_name_stream__.str());
+            }
+        }
+        size_t U3_k_0_max__ = N_players;
+        size_t U3_k_1_max__ = (use_U3 ? N_U3 : 1 );
+        for (size_t k_1__ = 0; k_1__ < U3_k_1_max__; ++k_1__) {
+            for (size_t k_0__ = 0; k_0__ < U3_k_0_max__; ++k_0__) {
+                param_name_stream__.str(std::string());
+                param_name_stream__ << "U3" << '.' << k_0__ + 1 << '.' << k_1__ + 1;
                 param_names__.push_back(param_name_stream__.str());
             }
         }
@@ -919,6 +1407,15 @@ public:
             param_name_stream__.str(std::string());
             param_name_stream__ << "B" << '.' << k_0__ + 1;
             param_names__.push_back(param_name_stream__.str());
+        }
+        size_t S_k_0_max__ = N_players;
+        size_t S_k_1_max__ = (use_SubjectPredictors ? N_SubjectPredictors : 1 );
+        for (size_t k_1__ = 0; k_1__ < S_k_1_max__; ++k_1__) {
+            for (size_t k_0__ = 0; k_0__ < S_k_0_max__; ++k_0__) {
+                param_name_stream__.str(std::string());
+                param_name_stream__ << "S" << '.' << k_0__ + 1 << '.' << k_1__ + 1;
+                param_names__.push_back(param_name_stream__.str());
+            }
         }
         if (!include_gqs__ && !include_tparams__) return;
         if (include_tparams__) {

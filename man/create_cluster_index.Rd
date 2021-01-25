@@ -5,12 +5,14 @@
 \title{Create two columns with the indexes for the names of the players
 Here we create a new lookup table. Should be used when sampling the parameters}
 \usage{
-create_cluster_index(d, cluster)
+create_cluster_index(d, cluster, i)
 }
 \arguments{
 \item{d}{A data frame containing the observations. The other parameters specify the name of the columns}
 
 \item{cluster}{The name of the column of data data contains player0}
+
+\item{i}{number of the cluster (1 or 2)}
 }
 \value{
 A dataframe with the additional columns 'cluster_index'

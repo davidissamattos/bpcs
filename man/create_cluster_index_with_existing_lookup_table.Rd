@@ -8,7 +8,8 @@ Here we use an existing lookup table. Should be used in predicting}
 create_cluster_index_with_existing_lookup_table(
   d,
   cluster,
-  cluster_lookup_table
+  cluster_lookup_table,
+  i
 )
 }
 \arguments{
@@ -17,6 +18,8 @@ create_cluster_index_with_existing_lookup_table(
 \item{cluster}{The name of the column of data data contains player0}
 
 \item{cluster_lookup_table}{a lookup table for the cluster}
+
+\item{i}{index of the cluster in the list (1, 2, 3)}
 }
 \value{
 A dataframe with the additional columns 'player0_index' and 'player1_index' that contains the indexes

@@ -75,7 +75,6 @@ expand_aggregated_data <-
     }
     #add the rowid column
     out[, 'rowid'] <- seq(1:n_row_out)
-    print(out)
     out<-tidyr::drop_na(out)#removing columns that are added with empty values
     return(out)
   }

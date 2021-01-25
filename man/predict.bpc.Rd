@@ -4,7 +4,15 @@
 \alias{predict.bpc}
 \title{Predict results for new data.}
 \usage{
-\method{predict}{bpc}(object, newdata, predictors = NULL, n = 100, return_matrix = F, ...)
+\method{predict}{bpc}(
+  object,
+  newdata,
+  predictors = NULL,
+  n = 100,
+  return_matrix = F,
+  model_type = NULL,
+  ...
+)
 }
 \arguments{
 \item{object}{a bpc object}
@@ -15,8 +23,9 @@
 
 \item{n}{number of time we will iterate and get the posterior. default is 100 so we dont get too many}
 
-\item{return_matrix}{should we return only a matrix with the predictive values. Default F. Use this to combine with predictive posterior plots in bayesplot
-This parameter also ignores the n parameter above since it passes all the predictions from stan}
+\item{return_matrix}{should we return only a matrix with the predictive values. Default F. Use this to combine with predictive posterior plots in bayesplot}
+
+\item{model_type}{when dealing with some models (such as random effects) one might want to make predictions using the estimated parameters with the random effects but without specifying the specific values of random effects to predict. Therefore one can set a subset of the model to make predictions. For example: a model sampled with bt-U can be used to make predictions of the model bt only.}
 
 \item{\dots}{additional parameters for the generic predict function. Not used.}
 }

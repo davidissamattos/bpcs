@@ -10,7 +10,8 @@ get_probabilities_table(
   n = 100,
   format = "latex",
   digits = 3,
-  caption = "Estimated posterior probabilites"
+  caption = "Estimated posterior probabilites",
+  model_type = NULL
 )
 }
 \arguments{
@@ -33,6 +34,8 @@ Possible values are latex, html, p, simple (Pandoc's simple tables), and rst.
 \item{digits}{number of digits in the table}
 
 \item{caption}{a string containing the caption of the table}
+
+\item{model_type}{when dealing with some models (such as random effects) one might want to make predictions using the estimated parameters with the random effects but without specifying the specific values of random effects to predict. Therefore one can set a subset of the model to make predictions. For example: a model sampled with bt-U can be used to make predictions of the model bt only.}
 }
 \value{
 a formatted table

@@ -13,7 +13,7 @@
 #' result_column = 'y',
 #' model_type = 'bt',
 #' solve_ties = 'none')
-#' #' print(m)
+#' print(m)
 #' }
 print.bpc <- function(x, digits = 3, ...) {
   cat("Estimated baseline parameters with HPD intervals:\n")
@@ -26,7 +26,12 @@ print.bpc <- function(x, digits = 3, ...) {
     stop(cond)
     return(NA)
   })
-  print(get_parameters_table(x, format = 'simple', digits = digits, HPDI=T))
+  print(get_parameters_table(
+    x,
+    format = 'simple',
+    digits = digits,
+    HPDI = T
+  ))
   cat('NOTES:\n')
   cat('* A higher lambda indicates a higher team ability\n')
 
@@ -86,57 +91,63 @@ print.bpc <- function(x, digits = 3, ...) {
 #' solve_ties = 'none')
 #' summary(m)
 #' }
-summary.bpc <- function(object, digits = 2, show_probabilities = TRUE, ...) {
+summary.bpc <-
+  function(object,
+           digits = 2,
+           show_probabilities = TRUE,
+           ...) {
+    #Table with the parameter estimates and footnotes
+    print(object, digits = digits)
 
-  #Table with the parameter estimates and footnotes
-  print(object, digits = digits)
+    #Table with the posterior probabilities
+    if (show_probabilities &
+        !stringr::str_detect(object$model_type, '-U') &
+        !stringr::str_detect(object$model_type, '-subjectpredictors'))
+    {
+      cat('\n')
+      cat("Posterior probabilities:\n")
+      cat("These probabilities are calculated from the predictive posterior distribution\n")
+      cat("for all player combinations\n")
 
-  #Table with the posterior probabilities
-  if(show_probabilities)
-  {
-    cat('\n\n')
-    cat("Posterior probabilities:\n")
-    cat("These probabilities are calculated from the predictive posterior distribution\n")
-    cat("for all player combinations\n")
+      #we never show for random effects model
+      prob_table <- tryCatch({
+        get_probabilities_table(object,
+                                format = 'simple',
+                                digits = digits)
+      },
+      error = function(cond) {
+        message("Error when calculating the probabilities")
+        message("Original error message:")
+        stop(cond)
+        return(NA)
+      })
 
-    prob_table <- tryCatch({
-      get_probabilities_table(object,
-                              format = 'simple',
-                              digits = digits)
+      print(prob_table)
+
+      if (stringr::str_detect(object$model_type, '-ordereffect')) {
+        cat('NOTES:\n')
+        cat('* These probabilies assume zero order effect (no home advantage).\n')
+      }
+
+    }
+
+
+    #Table with the ranks
+    cat("\nRank of the players' abilities:\n")
+    cat("The rank is based on the posterior rank distribution of the lambda parameter\n")
+
+    rank_players <- tryCatch({
+      get_rank_of_players_table(object, format = 'simple', digits = digits)
     },
     error = function(cond) {
-      message("Error when calculating the probabilities")
+      message("Error when calculating the rank of the players")
       message("Original error message:")
       stop(cond)
       return(NA)
     })
+    print(rank_players)
 
-    print(prob_table)
-
-    if (stringr::str_detect(object$model_type, 'ordereffect')) {
-      cat('NOTES:\n')
-      cat('* These probabilies assume zero order effect (no home advantage).\n')
-    }
   }
-
-
-  #Table with the ranks
-  cat('\n\n')
-  cat("Rank of the players' abilities:\n")
-  cat("The rank is based on the posterior rank distribution of the lambda parameter\n")
-
-  rank_players <- tryCatch({
-    get_rank_of_players_table(object, format = 'simple', digits = digits)
-  },
-  error = function(cond) {
-    message("Error when calculating the rank of the players")
-    message("Original error message:")
-    stop(cond)
-    return(NA)
-  })
-  print(rank_players)
-
-}
 
 
 #' Predict results for new data.
@@ -149,7 +160,7 @@ summary.bpc <- function(object, digits = 2, show_probabilities = TRUE, ...) {
 #' @param predictors A data frame that contains the players predictors values when using a generalized model. Should be set only if using the generalized models. Only numeric values are accepted. Booleans are accepted but will be cast into integers. The first column should be for the player name, the others will be the predictors.  The column names will be used as name for the predictors
 #' @param n number of time we will iterate and get the posterior. default is 100 so we dont get too many
 #' @param return_matrix should we return only a matrix with the predictive values. Default F. Use this to combine with predictive posterior plots in bayesplot
-#' This parameter also ignores the n parameter above since it passes all the predictions from stan
+#' @param model_type when dealing with some models (such as random effects) one might want to make predictions using the estimated parameters with the random effects but without specifying the specific values of random effects to predict. Therefore one can set a subset of the model to make predictions. For example: a model sampled with bt-U can be used to make predictions of the model bt only.
 #' @param \dots  additional parameters for the generic predict function. Not used.
 #' @return a dataframe or a matrix depending on the return_matrix parameter
 #' @export
@@ -169,9 +180,15 @@ predict.bpc <-
            predictors = NULL,
            n = 100,
            return_matrix = F,
+           model_type = NULL,
            ...) {
+
+    if(is.null(model_type))
+      model_type <- object$model_type
+    else
+      model_type <- model_type
+
     # Get some basic information for all models
-    model_type <- object$model_type
     stanfit <- object$stanfit
     lookup_table <- object$lookup_table
 
@@ -203,28 +220,105 @@ predict.bpc <-
                                    z_player1 = numeric(0)))
     }
 
+    if (stringr::str_detect(model_type, '-subjectpredictors')) {
+      subject_predictors <- object$call_arg$subject_predictor
+      subject_predictors_matrix <- as.matrix(newdata[,subject_predictors])
+      standata <- c(standata,
+                    list(
+                      use_SubjectPredictors = 1,
+                      N_SubjectPredictors = length(subject_predictors),
+                      X_subject = subject_predictors_matrix
+                    ))
+    } else{
+      standata <- c(standata,
+                    list(
+                      use_SubjectPredictors = 0,
+                      N_SubjectPredictors = 0,
+                      X_subject = matrix(NA_real_, ncol = 0, nrow = 0)
+                    ))
+    }
+
+
     # Add random effects or not
     if (stringr::str_detect(model_type, '-U'))
     {
+      #First we create the indexes in the newdata
       cluster_lookup_table <- object$cluster_lookup_table
-      newdata <-
-        create_cluster_index_with_existing_lookup_table(
+      cluster <- object$call_arg$cluster
+      i <- 1
+      for (cl in cluster_lookup_table) {
+        newdata <- create_cluster_index_with_existing_lookup_table(
           d = newdata,
-          cluster = object$call_arg$cluster,
-          cluster_lookup_table = cluster_lookup_table
+          cluster = cluster,
+          cluster_lookup_table = cluster_lookup_table[[i]],
+          i=i
         )
-      standata <- c(standata, list(
-        use_U = 1,
-        N_U = nrow(cluster_lookup_table),
-        U_indexes = as.vector(as.integer(newdata$cluster_index))
-      ))
+        i <- i + 1
+      }
+      # Then we add all the clusters to standata
+      if (length(cluster) == 1)
+        standata <- c(
+          standata,
+          list(
+            use_U1 = 1,
+            N_U1 = nrow(cluster_lookup_table[[1]]),
+            U1_indexes = as.vector(newdata$cluster1_index),
+            use_U2 = 0,
+            N_U2 = 0,
+            U2_indexes = numeric(0),
+            use_U3 = 0,
+            N_U3 = 0,
+            U3_indexes = numeric(0)
+          )
+        )
+      else if (length(cluster) == 2)
+        standata <- c(
+          standata,
+          list(
+            use_U1 = 1,
+            N_U1 = nrow(cluster_lookup_table[[1]]),
+            U1_indexes = as.vector(newdata$cluster1_index),
+            use_U2 = 1,
+            N_U2 = nrow(cluster_lookup_table[[2]]),
+            U2_indexes = as.vector(newdata$cluster2_index),
+            use_U3 = 0,
+            N_U3 = 0,
+            U3_indexes = numeric(0)
+          )
+        )
+      else if (length(cluster) == 3)
+        standata <- c(
+          standata,
+          list(
+            use_U1 = 1,
+            N_U1 = nrow(cluster_lookup_table[[1]]),
+            U1_indexes = as.vector(newdata$cluster1_index),
+            use_U2 = 1,
+            N_U2 = nrow(cluster_lookup_table[[2]]),
+            U2_indexes = as.vector(newdata$cluster2_index),
+            use_U3 = 1,
+            N_U3 = nrow(cluster_lookup_table[[3]]),
+            U3_indexes = as.vector(newdata$cluster3_index)
+          )
+        )
     } else{
-      standata <- c(standata, list(
-        use_U = 0,
-        N_U = 0,
-        U_indexes = numeric(0)
-      ))
+      standata <- c(
+        standata,
+        list(
+          use_U1 = 0,
+          N_U1 = 0,
+          U1_indexes = numeric(0),
+          use_U2 = 0,
+          N_U2 = 0,
+          U2_indexes = numeric(0),
+          use_U3 = 0,
+          N_U3 = 0,
+          U3_indexes = numeric(0)
+        )
+      )
     }
+
+
 
     # Add random effects or not
     if (stringr::str_detect(model_type, '-generalized'))
@@ -300,11 +394,14 @@ predict.bpc <-
 
 
     draws <- as.matrix(stanfit)
+
+
     pred <- rstan::gqs(stanmodels$btpredict,
                        data = standata,
                        draws = draws)
 
     pred_df <- NULL #the return object
+
 
     # Now we compute the predictions
     y_pred <- sample_stanfit(pred, par = 'y_pred', n = n)
@@ -317,11 +414,14 @@ predict.bpc <-
     # for most purposes  we want 1 row for each observation and 1 col for each predictive sample
     # for bayesplot we require a bit different. We need a matrix as return value with 1 col for each observation and n rows for n samples
 
+
     if (return_matrix)
     {
-      return(as.matrix(pred))
-    }
-    else{
+      pred_matrix <- as.matrix(pred)
+      pred_matrix <- pred_matrix[, startsWith(colnames(pred_matrix),'y_pred')]
+      pred_matrix_n <- pred_matrix[sample(nrow(pred_matrix),size=n,replace=F),]
+      return(pred_matrix_n)
+    } else {
       pred_df <- pred_df %>% tibble::remove_rownames()
       return(as.data.frame(pred_df))
     }
@@ -367,15 +467,16 @@ plot.bpc <- function(x,
                      rotate_x_labels = FALSE,
                      APA = TRUE,
                      ...) {
-
-  out <- get_parameters_plot(x,
-                             HPDI=HPDI,
-                             params=params,
-                             title=title,
-                             subtitle=subtitle,
-                             xaxis=xaxis,
-                             yaxis=yaxis,
-                             rotate_x_labels=rotate_x_labels,
-                             APA=APA)
+  out <- get_parameters_plot(
+    x,
+    HPDI = HPDI,
+    params = params,
+    title = title,
+    subtitle = subtitle,
+    xaxis = xaxis,
+    yaxis = yaxis,
+    rotate_x_labels = rotate_x_labels,
+    APA = APA
+  )
   return(out)
 }

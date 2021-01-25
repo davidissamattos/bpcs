@@ -6,7 +6,37 @@ test_that("bpc returns a bpc object the btU model", {
     player0 = 'player0',
     player1 = 'player1',
     result_column = 'y',
-    cluster = 'cluster',
+    cluster = c('cluster'),
+    model_type = 'bt-U',
+    solve_ties = 'random',
+    win_score = 'higher',
+    iter = 2000,
+    warmup = 500,
+    show_chain_messages = F,
+    seed=8484
+  )
+
+  m2 <- bpc(
+    data = test_btU,
+    player0 = 'player0',
+    player1 = 'player1',
+    result_column = 'y',
+    cluster = c('cluster', 'cluster2'),
+    model_type = 'bt-U',
+    solve_ties = 'random',
+    win_score = 'higher',
+    iter = 2000,
+    warmup = 500,
+    show_chain_messages = F,
+    seed=8484
+  )
+
+  m3 <- bpc(
+    data = test_btU,
+    player0 = 'player0',
+    player1 = 'player1',
+    result_column = 'y',
+    cluster = c('cluster', 'cluster2','cluster3'),
     model_type = 'bt-U',
     solve_ties = 'random',
     win_score = 'higher',
@@ -18,4 +48,10 @@ test_that("bpc returns a bpc object the btU model", {
 
   expect_s3_class(m1, 'bpc')
   expect_no_error(summary(m1))
+
+  expect_s3_class(m2, 'bpc')
+  expect_no_error(summary(m3))
+
+  expect_s3_class(m3, 'bpc')
+  expect_no_error(summary(m3))
 })

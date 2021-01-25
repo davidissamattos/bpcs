@@ -11,7 +11,8 @@ replace_parameter_index_with_names(
   par,
   lookup_table,
   cluster_lookup_table = NULL,
-  predictors_lookup_table = NULL
+  predictors_lookup_table = NULL,
+  subject_predictors_lookup_table = NULL
 )
 }
 \arguments{
@@ -26,6 +27,8 @@ replace_parameter_index_with_names(
 \item{cluster_lookup_table}{a lookup table of the predictors}
 
 \item{predictors_lookup_table}{a lookup table for the predictors}
+
+\item{subject_predictors_lookup_table}{a lookup table for the subject predictors}
 }
 \value{
 a data. frame where we change the names in the variable colum to the corresponding parameter_name from the lookup table

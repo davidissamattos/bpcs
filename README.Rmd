@@ -129,7 +129,8 @@ plot(m, rotate_x_labels = T)
 Options to add to the models:
 
 * Order effect (`-ordereffect`). E.g. for home advantage [@davidson1977extending]
-* Generalized models (`-generalized`). When we have contestant specific predictors [@springall1973response]
+* Generalized models (`-generalized`). When we have contestant (players) specific predictors [@springall1973response]
+* Subject predictors  (`-subjectpredictors`). When we have subject specific predictors [@bockenholt2001hierarchical].
 * Intercept random effects (`-U`). For example, to compensate clustering or repeated measures [@bockenholt2001hierarchical]
 
 E.g.:

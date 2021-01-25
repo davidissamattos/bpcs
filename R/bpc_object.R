@@ -11,6 +11,8 @@
 #' @param predictors_df the data frame of the predictors for a generalized model
 #' @param predictors_lookup_table a lookup table for generalized models
 #' @param predictors_matrix a matrix of predictors for generalized models
+#' @param subject_predictors_lookup_table a lookup table for the subject predictors models
+#' @param subject_predictors_matrix a matrix of predictors for the subject predictors matrix
 #' @return a bpc object
 #'
 create_bpc_object <-
@@ -22,7 +24,9 @@ create_bpc_object <-
            cluster_lookup_table = NULL,
            predictors_df = NULL,
            predictors_lookup_table = NULL,
-           predictors_matrix = NULL) {
+           predictors_matrix = NULL,
+           subject_predictors_lookup_table = NULL,
+           subject_predictors_matrix = NULL) {
 
     hpdi <- HPDI_from_stanfit(stanfit)
 
@@ -38,6 +42,8 @@ create_bpc_object <-
       predictors_matrix = predictors_matrix,
       model_type = model_type,
       standata = standata,
+      subject_predictors_lookup_table = subject_predictors_lookup_table,
+      subject_predictors_matrix = subject_predictors_matrix,
       call_arg = call_arg
     )
     class(obj) <- "bpc"

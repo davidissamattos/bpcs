@@ -24,6 +24,6 @@ player1 = 'player1',
 result_column = 'y',
 model_type = 'bt',
 solve_ties = 'none')
-#' print(m)
+print(m)
 }
 }

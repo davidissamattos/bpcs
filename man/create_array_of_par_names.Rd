@@ -4,17 +4,24 @@
 \alias{create_array_of_par_names}
 \title{Create an array with the parameter name and to what player/cluster it refers to in the order stan presents}
 \usage{
-create_array_of_par_names(par, lookup_table, cluster_lookup_table = NULL)
+create_array_of_par_names(
+  par,
+  lookup_table,
+  cluster_lookup_table = NULL,
+  subject_predictors_lookup_table = NULL
+)
 }
 \arguments{
 \item{par}{name of the parameter}
 
 \item{lookup_table}{lookup table of the players}
 
-\item{cluster_lookup_table}{a lookup table of the clusters}
+\item{cluster_lookup_table}{a list of lookup table of the clusters}
+
+\item{subject_predictors_lookup_table}{a subject predictor lookup table}
 }
 \value{
-a data. frame where we change the names in the variable colum to the corresponding parameter_name from the lookup table
+a data. frame where we change the names in the variable column to the corresponding parameter_name from the lookup table
 }
 \description{
 Create an array with the parameter name and to what player/cluster it refers to in the order stan presents

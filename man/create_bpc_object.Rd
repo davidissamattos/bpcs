@@ -15,7 +15,9 @@ create_bpc_object(
   cluster_lookup_table = NULL,
   predictors_df = NULL,
   predictors_lookup_table = NULL,
-  predictors_matrix = NULL
+  predictors_matrix = NULL,
+  subject_predictors_lookup_table = NULL,
+  subject_predictors_matrix = NULL
 )
 }
 \arguments{
@@ -36,6 +38,10 @@ create_bpc_object(
 \item{predictors_lookup_table}{a lookup table for generalized models}
 
 \item{predictors_matrix}{a matrix of predictors for generalized models}
+
+\item{subject_predictors_lookup_table}{a lookup table for the subject predictors models}
+
+\item{subject_predictors_matrix}{a matrix of predictors for the subject predictors matrix}
 }
 \value{
 a bpc object

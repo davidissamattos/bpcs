@@ -2,12 +2,18 @@
 #' @param bpc_object a bpc object
 #' @param newdata default to NULL. If used,  it will calculate the probabilities only for the newdata. Otherwise it will calculate for all combinations
 #' @param n number of samples to draw from the posterior
+#' @param model_type when dealing with some models (such as random effects) one might want to make predictions using the estimated parameters with the random effects but without specifying the specific values of random effects to predict. Therefore one can set a subset of the model to make predictions. For example: a model sampled with bt-U can be used to make predictions of the model bt only.
 #' @return a list with data frame table with the respective probabilities and a matrix with the corresponding posterior
 #' @importFrom rlang .data
-get_probabilities <- function(bpc_object, newdata=NULL, n = 1000) {
+get_probabilities <- function(bpc_object, newdata=NULL, n = 100, model_type=NULL) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
-  model_type <- bpc_object$model_type
+
+  if(is.null(model_type))
+    model_type <- bpc_object$model_type
+  else
+    model_type <- model_type
+
   stanfit <- get_stanfit(bpc_object)
   out <- NULL
   s <- get_sample_posterior(bpc_object, n = n)
@@ -16,6 +22,13 @@ get_probabilities <- function(bpc_object, newdata=NULL, n = 1000) {
   col_names<-NULL
   if(is.null(newdata))
   {
+    if (stringr::str_detect(model_type, '-U')) {
+      stop('To calculate the probabilities for models with random effects you should provide the probabilities you want in the newdata data frame')
+    }
+    if (stringr::str_detect(model_type, '-S')) {
+      stop('To calculate the probabilities for models with subject predictors you should provide the probabilities you want in the newdata data frame')
+    }
+
     # First we get all possible combinations for all models and create a data frame
     comb <-
       gtools::combinations(
@@ -52,26 +65,11 @@ get_probabilities <- function(bpc_object, newdata=NULL, n = 1000) {
       colnames(z) <- bpc_object$call_arg$z_player1
       newdata <- cbind(newdata, z)
     }
-
-
-    #this should be the last model option to be evaluated
-    if (stringr::str_detect(model_type, '-U')) {
-      #Now we will cycle through all clusters and calculate the probability
-      cluster_lookup_table <- bpc_object$cluster_lookup_table
-      ncluster <- nrow(cluster_lookup_table)
-      comb_newdata <- NULL
-      for (i in seq(1:ncluster))
-      {
-        U <- data.frame(rep(cluster_lookup_table$Names[i], l))
-        colnames(U) <- bpc_object$call_arg$cluster
-        comb_newdata <- rbind(comb_newdata, cbind(newdata, U))
-      }
-      newdata <- comb_newdata
-    }
   }
   else{
     col_names<-colnames(newdata)
   }
+
   #Evaluate the predictions
   pred <-
     predict.bpc(
@@ -79,7 +77,8 @@ get_probabilities <- function(bpc_object, newdata=NULL, n = 1000) {
       newdata = newdata,
       n = n,
       predictors = predictors,
-      return_matrix = T
+      return_matrix = T,
+      model_type = model_type
     )
   #table t to return
   t <- NULL
@@ -94,6 +93,8 @@ get_probabilities <- function(bpc_object, newdata=NULL, n = 1000) {
     i_ties_j = apply(y_pred, 2, calculate_prob_from_vector, 2)
   )  %>%
     tibble::remove_rownames()
+  #just t make sure we have the correct names
+  colnames(t) <- c('i', 'j', 'i_beats_j', 'j_beats_i', 'i_ties_j')
 
   #Rearranging the table if we have the clusters
   if (stringr::str_detect(model_type, '-U'))
@@ -116,6 +117,17 @@ get_probabilities <- function(bpc_object, newdata=NULL, n = 1000) {
     t <- t %>% dplyr::relocate(z_name, .after = .data$j)
   }
 
+  #Rearranging the table if we have the subjectpredictors
+  if (stringr::str_detect(model_type, '-subjectpredictors'))
+  {
+    newdata_colnames <- colnames(newdata)
+    s_name <- bpc_object$call_arg$subject_predictors
+    t_names <- colnames(t)
+    t <- cbind(t, newdata[, s_name])
+    colnames(t) <- c(t_names, s_name)
+    t <- t %>% dplyr::relocate(s_name, .after = .data$j)
+  }
+
   # if it is bt (then there are no ties) we remove the ties column
   if (startsWith(model_type, 'bt'))
   {
@@ -135,6 +147,7 @@ get_probabilities <- function(bpc_object, newdata=NULL, n = 1000) {
 #' @param bpc_object a bpc object
 #' @param newdata default to NULL. If used,  it will calculate the probabilities only for the newdata. Otherwise it will calculate for all combinations
 #' @param n number of samples to draw from the posterior
+#' @param model_type when dealing with some models (such as random effects) one might want to make predictions using the estimated parameters with the random effects but without specifying the specific values of random effects to predict. Therefore one can set a subset of the model to make predictions. For example: a model sampled with bt-U can be used to make predictions of the model bt only.
 #' @return a data frame table with the respective probabilities
 #' @importFrom rlang .data
 #' @export
@@ -160,10 +173,10 @@ get_probabilities <- function(bpc_object, newdata=NULL, n = 1000) {
 #' print(prob)
 #'
 #' }
-get_probabilities_df <- function(bpc_object, newdata=NULL, n = 1000) {
+get_probabilities_df <- function(bpc_object, newdata=NULL, n = 100, model_type=NULL) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
-  prob <- get_probabilities(bpc_object = bpc_object, newdata=newdata, n = n)
+  prob <- get_probabilities(bpc_object = bpc_object, newdata=newdata, n = n, model_type=model_type)
   return(prob$Table)
 }
 
@@ -172,6 +185,7 @@ get_probabilities_df <- function(bpc_object, newdata=NULL, n = 1000) {
 #' @param bpc_object a bpc object
 #' @param newdata default to NULL. If used,  it will calculate the probabilities only for the newdata. Otherwise it will calculate for all combinations
 #' @param n number of samples to draw from the posterior
+#' @param model_type when dealing with some models (such as random effects) one might want to make predictions using the estimated parameters with the random effects but without specifying the specific values of random effects to predict. Therefore one can set a subset of the model to make predictions. For example: a model sampled with bt-U can be used to make predictions of the model bt only.
 #' @return a matrix with the corresponding posterior
 #' @importFrom rlang .data
 #' @export
@@ -186,9 +200,9 @@ get_probabilities_df <- function(bpc_object, newdata=NULL, n = 1000) {
 #' prob<-get_probabilities_posterior(m)
 #' print(prob)
 #' }
-get_probabilities_posterior <- function(bpc_object,newdata=NULL, n = 1000) {
+get_probabilities_posterior <- function(bpc_object,newdata=NULL, n = 1000, model_type=NULL) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
-  prob <- get_probabilities(bpc_object = bpc_object, newdata=newdata, n = n)
+  prob <- get_probabilities(bpc_object = bpc_object, newdata=newdata, n = n, model_type=model_type)
   return(prob$Posterior)
 }

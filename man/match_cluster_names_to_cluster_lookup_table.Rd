@@ -4,7 +4,12 @@
 \alias{match_cluster_names_to_cluster_lookup_table}
 \title{Receives a column with cluster names and returns a data frame with the relevant index column based on a given cluster lookup table}
 \usage{
-match_cluster_names_to_cluster_lookup_table(d, cluster, cluster_lookup_table)
+match_cluster_names_to_cluster_lookup_table(
+  d,
+  cluster,
+  cluster_lookup_table,
+  i
+)
 }
 \arguments{
 \item{d}{a data frame}
@@ -12,6 +17,8 @@ match_cluster_names_to_cluster_lookup_table(d, cluster, cluster_lookup_table)
 \item{cluster}{The name of the column of data data contains player0}
 
 \item{cluster_lookup_table}{a lookup table for the cluster}
+
+\item{i}{number of the cluster}
 }
 \value{
 A dataframe with the additional columns 'cluster_index' that contains the indexes

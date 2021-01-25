@@ -13,6 +13,7 @@ bpc(
   result_column = NULL,
   z_player1 = NULL,
   cluster = NULL,
+  subject_predictors = NULL,
   predictors = NULL,
   model_type,
   solve_ties = "random",
@@ -40,11 +41,13 @@ bpc(
 
 \item{z_player1}{A string with the name of the column containing the order effect for player 1. E.g. if player1 has the home advantage this column should have 1 otherwise it should have 0}
 
-\item{cluster}{A string with the name of the column containing the cluster for the observation. To be used with a random effects model. This column should contain strings}
+\item{cluster}{A vector with strings with the names of the column containing the clusters for the observation. To be used with a random effects model. This column should contain strings}
+
+\item{subject_predictors}{A vector with strings with the name of the columns for the subject predictors. Since all S parameters follow the same normal prior centered in 0 we recommend that the predictors, if numeric are normalized, for example the base scale function}
 
 \item{predictors}{A data frame that contains the players predictors values when using a generalized model. Only numeric values are accepted. Booleans are accepted but will be cast into integers. The first column should be for the player name, the others will be the predictors.  The column names will be used as name for the predictors}
 
-\item{model_type}{We first add a base model 'bt' or 'davidson' and then additional options with '-'
+\item{model_type}{We first add a base model 'bt' or 'davidson' and then additional options with '-'. The additional options are '-U', '-generalized', '-ordereffect', '-subjectpredictors'. Below are some examples:
 \itemize{
 \item 'bt' for the Bradley Terry model. Ref: Bradley-Terry 1952,
 \item 'davidson' the Davidson model to handle for ties. Ref: Davidson 1970
@@ -53,6 +56,7 @@ bpc(
 \item 'bt-generalized': for the generalized Bradley Terry model for subject specific predictors. Ref: Springall 1973
 \item 'davidson-generalized' for the generalized Davidson model for subject specific predictors
 \item 'bt-U': for the Bradley-Terry with random effects. Ref: Bockenholt 2001
+\item 'bt-subjectpredictors': for the Bradley-Terry with subject predictors. Ref: Bockenholt 2001
 \item 'davidson-U': For Davidson model with random effects
 \item 'bt-ordereffect-U' for Bradley-Terry with order effects and random effects, use similar syntax for other variations by appending the correct options
 }}
@@ -72,13 +76,16 @@ bpc(
 
 \item{priors}{A list with the parameters for the priors.
 \itemize{
-\item 'prior_lambda_mu' Mean value of the lambda parameter in the all models. For the generalized this is also the prior for the B the parameter for  lambda ~ normal(mu, std)
-\item 'prior_lambda_std' Standard deviation of the lambda parameter in the all models. lambda ~ normal(mu, std)
+\item 'prior_lambda_mu' Mean value of the lambda parameter in the all models. For the generalized this is also the prior for the B the parameter for  lambda ~ normal(mu, std). Default = 0
+\item 'prior_lambda_std' Standard deviation of the lambda parameter in the all models. lambda ~ normal(mu, std). Default = 3.0
 \item 'prior_nu_mu' Mean value of the nu parameter in the Davidson  models. nu ~ normal(mu, std)
 \item 'prior_nu_std' Standard deviation ofnu parameter in the Davidson  models. nu ~ normal(mu, std). Default = 0.3
 \item 'prior_gm_mu' Mean value of the gm in the ordered effect model. gm ~ normal(mu, std). Default = 0
 \item 'prior_gm_std' Standard deviation of the gm parameter in the ordered effect model. gm ~ normal(mu, std). Default =
-\item 'prior_U_std' Standard deviation of the U parameter in the random effects model. U ~ normal(0, std). Default = 3.0
+\item 'prior_U1_std' Standard deviation of the U1 parameter in the random effects model. U ~ normal(0, std). Default = 3.0
+\item 'prior_U2_std' Standard deviation of the U2 parameter in the random effects model. U ~ normal(0, std). Default = 3.0
+\item 'prior_U3_std' Standard deviation of the U3 parameter in the random effects model. U ~ normal(0, std). Default = 3.0
+\item 'prior_S_std' Standard deviation of the subject predictors parameter. S ~ normal(0,S_std). This for all predictors
 }}
 
 \item{chains}{Number of chains passed to Stan sampling. Positive integer, default=4. For more information consult Stan documentation}

@@ -6,9 +6,16 @@
   - Add model for the Bayesian ELO-type rating system
   - Add Glicko and Glicko2 models
   - Add models for cumulative comparisons
-  - Add subjective random effects predictors (Bockenholt 2001)
   - Add possibility to add more than one random effects
 - TODO: Improve test coverage
+
+# bpcs 1.1.0
+
+* Possibility to add up to 3 intercept random effects (hopefully you will never need more than that)
+* Model for subject predictors 
+* Make predictions of submodels with the model_type option
+* Some small bug fixes
+* TODO: Posterior distribution of the parameters 
 
 # bpcs 1.0.1
 

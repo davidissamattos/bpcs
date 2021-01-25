@@ -67,15 +67,20 @@ test_that('replace_parameter_index_with_names works',{
 test_that('create_array_of_par_names works',{
   test_bt<-load_testdata('test_bt')
   test_btU<-load_testdata('test_btU')
+  test_bt_subject<-load_testdata('test_bt_subject')
   lookup_table<-create_index_lookuptable(test_bt, player0 = 'player0',player1 = 'player1')
   result <- c('lambda[A]', 'lambda[B]', 'lambda[C]')
   expect_equal(create_array_of_par_names(par='lambda',lookup_table),result)
 
   lookup_table2<-create_index_lookuptable(test_btU, player0 = 'player0',player1 = 'player1')
   cluster_lookup_table2<-create_index_cluster_lookuptable(test_btU, cluster='cluster')
-  result2 <- c('U[A,c1]', 'U[B,c1]', 'U[C,c1]','U[A,c2]', 'U[B,c2]', 'U[C,c2]','U[A,c3]', 'U[B,c3]', 'U[C,c3]','U[A,c4]', 'U[B,c4]', 'U[C,c4]')
-  expect_equal(create_array_of_par_names(par='U',lookup_table=lookup_table2, cluster_lookup_table = cluster_lookup_table2),result2)
+  result2 <- c('U1[A,c1]', 'U1[B,c1]', 'U1[C,c1]','U1[A,c2]', 'U1[B,c2]', 'U1[C,c2]','U1[A,c3]', 'U1[B,c3]', 'U1[C,c3]','U1[A,c4]', 'U1[B,c4]', 'U1[C,c4]')
+  expect_equal(create_array_of_par_names(par='U1',lookup_table=lookup_table2, cluster_lookup_table = list(cluster_lookup_table2)) ,result2)
 
+  lookup_table3<-create_index_lookuptable(test_bt_subject, player0 = 'player0', player1 = 'player1')
+  subject_predictor_lookuptable<-create_subject_predictor_lookuptable(subject_predictors = c('SPred1', 'SPred2', 'SPred3'))
+  result3 <- c('S[A,SPred1]', 'S[B,SPred1]', 'S[C,SPred1]','S[A,SPred2]', 'S[B,SPred2]', 'S[C,SPred2]','S[A,SPred3]', 'S[B,SPred3]', 'S[C,SPred3]')
+  expect_equal(create_array_of_par_names(par='S',lookup_table=lookup_table3, subject_predictors_lookup_table =subject_predictor_lookuptable) ,result3)
 })
 
 

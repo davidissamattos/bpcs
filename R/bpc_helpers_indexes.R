@@ -1,3 +1,5 @@
+#TODO: fix code for more than 1 cluster
+
 ######## Index and lookup table functions
 
 #' Create a lookup table of names and indexes
@@ -16,7 +18,8 @@ create_index_lookuptable <- function(d, player0, player1) {
     seq(1:length(player_names)) #sequential indexing starting with 1
 
   #Now we have a lookup table to convert the indexes
-  lookup_table <- data.frame(Names = player_names, Index = player_index)
+  lookup_table <-
+    data.frame(Names = player_names, Index = player_index)
   return(as.data.frame(lookup_table))
 }
 
@@ -63,13 +66,14 @@ match_player_names_to_lookup_table <-
 #' @param d a data frame
 #' @param cluster The name of the column of data data contains player0
 #' @param cluster_lookup_table a lookup table for the cluster
+#' @param i number of the cluster
 #' @return A dataframe with the additional columns 'cluster_index' that contains the indexes
 match_cluster_names_to_cluster_lookup_table <-
-  function(d, cluster , cluster_lookup_table)
+  function(d, cluster , cluster_lookup_table, i)
   {
     cluster_index <-
       cluster_lookup_table$Index[match(unlist(d[, cluster]), cluster_lookup_table$Names)]
-    d$cluster_index <- cluster_index
+    d[, paste('cluster', i, '_index', sep = "")] <- cluster_index
     return(d)
   }
 
@@ -100,15 +104,17 @@ create_index <- function(d, player0, player1) {
 #' Here we create a new lookup table. Should be used when sampling the parameters
 #' @param d A data frame containing the observations. The other parameters specify the name of the columns
 #' @param cluster The name of the column of data data contains player0
+#' @param i number of the cluster (1 or 2)
 #' @return A dataframe with the additional columns 'cluster_index'
-create_cluster_index <- function(d, cluster) {
+create_cluster_index <- function(d, cluster, i) {
   d <- as.data.frame(d)
   #Now we have a lookup table to convert the indexes
   cluster_lookup_table <-
     create_index_cluster_lookuptable(d, cluster)
   d <- match_cluster_names_to_cluster_lookup_table(d,
                                                    cluster = cluster,
-                                                   cluster_lookup_table = cluster_lookup_table)
+                                                   cluster_lookup_table = cluster_lookup_table,
+                                                   i = i)
   #We return a data frame with the indexes
   return(as.data.frame(d))
 }
@@ -190,14 +196,33 @@ create_index_with_existing_lookup_table <-
 #' @param d A data frame containing the observations. The other parameters specify the name of the columns
 #' @param cluster The name of the column of data data contains player0
 #' @param cluster_lookup_table a lookup table for the cluster
+#' @param i index of the cluster in the list (1, 2, 3)
 #' @return A dataframe with the additional columns 'player0_index' and 'player1_index' that contains the indexes
 create_cluster_index_with_existing_lookup_table <-
-  function(d, cluster, cluster_lookup_table) {
+  function(d, cluster, cluster_lookup_table, i) {
     d <-
-      match_cluster_names_to_cluster_lookup_table(d, cluster = cluster, cluster_lookup_table = cluster_lookup_table)
+      match_cluster_names_to_cluster_lookup_table(d,
+                                                  cluster = cluster,
+                                                  cluster_lookup_table = cluster_lookup_table,
+                                                  i = i)
     return(d)
   }
 
+
+
+#' Create a lookup table for the subject Predictors
+#'
+#' @param subject_predictors  a vectore containing the names of the subject predictors
+#' @return a dataframe with a lookup table
+create_subject_predictor_lookuptable <-
+  function(subject_predictors) {
+    subject_predictors_index <-
+      seq(1:length(subject_predictors)) #sequential indexing starting with 1
+    #Now we have a lookup table to convert the indexes
+    lookup_table <-
+      data.frame(Names = subject_predictors, Index = subject_predictors_index)
+    return(as.data.frame(lookup_table))
+  }
 
 #' Replace the name of the parameter from index to name using a lookup_table
 #' Receives a data frame and returns a dataframe.
@@ -208,6 +233,7 @@ create_cluster_index_with_existing_lookup_table <-
 #' @param cluster_lookup_table a lookup table of the clusters
 #' @param cluster_lookup_table a lookup table of the predictors
 #' @param predictors_lookup_table  a lookup table for the predictors
+#' @param subject_predictors_lookup_table a lookup table for the subject predictors
 #' @return a data. frame where we change the names in the variable colum to the corresponding parameter_name from the lookup table
 replace_parameter_index_with_names <-
   function(d,
@@ -215,13 +241,15 @@ replace_parameter_index_with_names <-
            par,
            lookup_table,
            cluster_lookup_table = NULL,
-           predictors_lookup_table = NULL) {
+           predictors_lookup_table = NULL,
+           subject_predictors_lookup_table = NULL) {
     d <- as.data.frame(d)
     #If not one of the if else parameters we dont change the name
     if (par == 'lambda') {
       for (i in 1:nrow(lookup_table)) {
         old_name <- paste(par, '[', i, ']', sep = "")
-        new_name <- paste(par, '[', lookup_table$Names[i], ']', sep = "")
+        new_name <-
+          paste(par, '[', lookup_table$Names[i], ']', sep = "")
         for (j in 1:nrow(d)) {
           d[j, column] <-
             gsub(
@@ -234,19 +262,96 @@ replace_parameter_index_with_names <-
       }
     }
 
-    else if (par == 'U')
+    else if (par == 'U1')
     {
       for (i in 1:nrow(lookup_table)) {
-        for (j in 1:nrow(cluster_lookup_table)) {
+        for (j in 1:nrow(cluster_lookup_table[[1]])) {
           old_name <- paste(par, '[', i, ',', j, ']', sep = "")
           new_name <-
             paste(par,
                   '[',
                   lookup_table$Names[i],
                   ',',
-                  cluster_lookup_table$Names[j],
+                  cluster_lookup_table[[1]]$Names[j],
                   ']',
                   sep = "")
+          for (k in 1:nrow(d)) {
+            d[k, column] <-
+              gsub(
+                pattern = old_name,
+                replacement = new_name,
+                x = d[k, column],
+                fixed = T
+              )#string as is
+          }
+        }
+      }
+    }
+    else if (par == 'U2')
+    {
+      for (i in 1:nrow(lookup_table)) {
+        for (j in 1:nrow(cluster_lookup_table[[2]])) {
+          old_name <- paste(par, '[', i, ',', j, ']', sep = "")
+          new_name <-
+            paste(par,
+                  '[',
+                  lookup_table$Names[i],
+                  ',',
+                  cluster_lookup_table[[2]]$Names[j],
+                  ']',
+                  sep = "")
+          for (k in 1:nrow(d)) {
+            d[k, column] <-
+              gsub(
+                pattern = old_name,
+                replacement = new_name,
+                x = d[k, column],
+                fixed = T
+              )#string as is
+          }
+        }
+      }
+    }
+    else if (par == 'U3')
+    {
+      for (i in 1:nrow(lookup_table)) {
+        for (j in 1:nrow(cluster_lookup_table[[3]])) {
+          old_name <- paste(par, '[', i, ',', j, ']', sep = "")
+          new_name <-
+            paste(par,
+                  '[',
+                  lookup_table$Names[i],
+                  ',',
+                  cluster_lookup_table[[3]]$Names[j],
+                  ']',
+                  sep = "")
+          for (k in 1:nrow(d)) {
+            d[k, column] <-
+              gsub(
+                pattern = old_name,
+                replacement = new_name,
+                x = d[k, column],
+                fixed = T
+              )#string as is
+          }
+        }
+      }
+    }
+    else if (par == 'S')
+    {
+      for (i in 1:nrow(lookup_table)) {
+        for (j in 1:nrow(subject_predictors_lookup_table)) {
+          old_name <- paste(par, '[', i, ',', j, ']', sep = "")
+          new_name <-
+            paste(
+              par,
+              '[',
+              lookup_table$Names[i],
+              ',',
+              subject_predictors_lookup_table$Names[j],
+              ']',
+              sep = ""
+            )
           for (k in 1:nrow(d)) {
             d[k, column] <-
               gsub(
@@ -283,10 +388,14 @@ replace_parameter_index_with_names <-
 #' Create an array with the parameter name and to what player/cluster it refers to in the order stan presents
 #' @param par  name of the parameter
 #' @param lookup_table lookup table of the players
-#' @param cluster_lookup_table a lookup table of the clusters
-#' @return a data. frame where we change the names in the variable colum to the corresponding parameter_name from the lookup table
+#' @param cluster_lookup_table a list of lookup table of the clusters
+#' @param subject_predictors_lookup_table a subject predictor lookup table
+#' @return a data. frame where we change the names in the variable column to the corresponding parameter_name from the lookup table
 create_array_of_par_names <-
-  function(par, lookup_table, cluster_lookup_table = NULL) {
+  function(par,
+           lookup_table,
+           cluster_lookup_table = NULL,
+           subject_predictors_lookup_table = NULL) {
     out <- NULL
     if (par == 'lambda') {
       nplayers <- nrow(lookup_table)
@@ -296,20 +405,77 @@ create_array_of_par_names <-
       out <- paste(l, sB, lookup_table$Names, cB, sep = "")
     }
 
-    else if (par == 'U')
+    else if (par == 'U1')
     {
       if (is.null(cluster_lookup_table))
         stop('A cluster lookup table should be provided')
+      cl <- cluster_lookup_table[[1]]
       nplayers <- nrow(lookup_table)
-      nclusters <- nrow(cluster_lookup_table)
+      nclusters <- nrow(cl)
       n <- nplayers * nclusters
-      U <- rep('U', n)
-      cluster_nplayer <- rep(cluster_lookup_table$Names, each = nplayers)
+      print(n)
+      U <- rep('U1', n)
+      cluster_nplayer <- rep(cl$Names, each = nplayers)
       players_nclusters <- rep(lookup_table$Names, times = nplayers)
       sB <- rep('[', n)
       cB <- rep(']', n)
       out <-
         paste(U, sB, players_nclusters, ',', cluster_nplayer, cB, sep = "")
+    }
+    else if (par == 'U2')
+    {
+      if (is.null(cluster_lookup_table))
+        stop('A cluster lookup table should be provided')
+      cl <- cluster_lookup_table[[2]]
+      nplayers <- nrow(lookup_table)
+      nclusters <- nrow(cl)
+      n <- nplayers * nclusters
+      U <- rep('U2', n)
+      cluster_nplayer <- rep(cl$Names, each = nplayers)
+      players_nclusters <- rep(lookup_table$Names, times = nplayers)
+      sB <- rep('[', n)
+      cB <- rep(']', n)
+      out <-
+        paste(U, sB, players_nclusters, ',', cluster_nplayer, cB, sep = "")
+    }
+    else if (par == 'U3')
+    {
+      if (is.null(cluster_lookup_table))
+        stop('A cluster lookup table should be provided')
+      cl <- cluster_lookup_table[[3]]
+      nplayers <- nrow(lookup_table)
+      nclusters <- nrow(cl)
+      n <- nplayers * nclusters
+      U <- rep('U3', n)
+      cluster_nplayer <- rep(cl$Names, each = nplayers)
+      players_nclusters <- rep(lookup_table$Names, times = nplayers)
+      sB <- rep('[', n)
+      cB <- rep(']', n)
+      out <-
+        paste(U, sB, players_nclusters, ',', cluster_nplayer, cB, sep = "")
+    }
+    else if (par == 'S')
+    {
+      if (is.null(subject_predictors_lookup_table))
+        stop('A subject predictors lookup table  should be provided')
+      s <- subject_predictors_lookup_table
+      nplayers <- nrow(lookup_table)
+      ns <- nrow(s)
+      n <- nplayers * ns
+      U <- rep('S', n)
+      subject_predictors_nplayer <- rep(s$Names, each = nplayers)
+      players_nsubjectpredictors <-
+        rep(lookup_table$Names, times = nplayers)
+      sB <- rep('[', n)
+      cB <- rep(']', n)
+      out <-
+        paste(U,
+              sB,
+              players_nsubjectpredictors,
+              ',',
+              subject_predictors_nplayer,
+              cB,
+              sep = "")
     }
     else{
       out <- par

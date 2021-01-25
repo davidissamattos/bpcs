@@ -24,6 +24,7 @@ get_parameters <- function(bpc_object, params=NULL, HPDI = TRUE, n_eff=TRUE, Rha
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
   hpdi <- bpc_object$hpdi
+  nclusters <- length(bpc_object$cluster_lookup_table)
   #the parameters are in order as in the hpdi
   neff_rhat <- get_stanfit_summary(bpc_object) %>%
     dplyr::select(.data$n_eff, .data$Rhat)
@@ -41,7 +42,27 @@ get_parameters <- function(bpc_object, params=NULL, HPDI = TRUE, n_eff=TRUE, Rha
   pars <- get_model_parameters(bpc_object)
   for (i in 1:length(pars)) {
     parameter <- pars[i]
-    if (parameter == 'U' & stringr::str_detect(bpc_object$model_type,'-U')) {
+    if (parameter == 'U1' & stringr::str_detect(bpc_object$model_type,'-U') & nclusters==1) {
+      hpdi <-
+        replace_parameter_index_with_names(
+          hpdi,
+          column = 'Parameter',
+          par = parameter,
+          lookup_table = bpc_object$lookup_table,
+          cluster_lookup_table = bpc_object$cluster_lookup_table
+        )
+    }
+    else if (parameter == 'U2' & stringr::str_detect(bpc_object$model_type,'-U') & nclusters==2) {
+      hpdi <-
+        replace_parameter_index_with_names(
+          hpdi,
+          column = 'Parameter',
+          par = parameter,
+          lookup_table = bpc_object$lookup_table,
+          cluster_lookup_table = bpc_object$cluster_lookup_table
+        )
+    }
+    else if (parameter == 'U3' & stringr::str_detect(bpc_object$model_type,'-U') & nclusters==3) {
       hpdi <-
         replace_parameter_index_with_names(
           hpdi,
@@ -70,20 +91,44 @@ get_parameters <- function(bpc_object, params=NULL, HPDI = TRUE, n_eff=TRUE, Rha
           predictors_lookup_table = bpc_object$predictors_lookup_table
         )
     }
+
+    else if (parameter == 'S' & stringr::str_detect(bpc_object$model_type,'-subjectpredictors')) {
+      hpdi <-
+        replace_parameter_index_with_names(
+          hpdi,
+          column = 'Parameter',
+          par = parameter,
+          lookup_table = bpc_object$lookup_table,
+          subject_predictors_lookup_table = bpc_object$subject_predictors_lookup_table
+        )
+    }
   }
 
   # Now that we have replaced the parameters name let's select only the ones that the model wants
   hpdi <- hpdi %>%
     dplyr::filter(!stringr::str_detect(.data$Parameter, "_param"))
 
+  #FIxing the random effects table
   if(!stringr::str_detect(bpc_object$model_type, "-U"))
     hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "U"))
+  if(nclusters==1){
+    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "U2"))
+    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "U3"))
+  }
+  if(nclusters==2){
+    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "U3"))
+  }
+
+
   if(!stringr::str_detect(bpc_object$model_type, "-ordereffect"))
     hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "gm"))
+  if(!stringr::str_detect(bpc_object$model_type, "-subjectpredictors"))
+    hpdi <- dplyr::filter(hpdi, !startsWith(.data$Parameter, "S"))
   if(!startsWith(bpc_object$model_type, "davidson"))
     hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "nu"))
   if(!stringr::str_detect(bpc_object$model_type, "-generalized"))
     hpdi <- dplyr::filter(hpdi, !startsWith(.data$Parameter, "B"))
+
 
   #Now we need to add the conditions if credible or HPD intervals
   if(HPDI){

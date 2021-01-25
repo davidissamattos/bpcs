@@ -4,7 +4,7 @@
 #' This function utilizes precompiled stan models to sample the posterior distribution of the specified model with the input data.
 #' For more information and larger examples of usage see the vignettes.
 #' @param data A data frame containing the observations. The other parameters specify the name of the columns
-#' @param model_type We first add a base model 'bt' or 'davidson' and then additional options with '-'
+#' @param model_type We first add a base model 'bt' or 'davidson' and then additional options with '-'. The additional options are '-U', '-generalized', '-ordereffect', '-subjectpredictors'. Below are some examples:
 #' * 'bt' for the Bradley Terry model. Ref: Bradley-Terry 1952,
 #' * 'davidson' the Davidson model to handle for ties. Ref: Davidson 1970
 #' * 'bt-ordereffect' for the Bradley-Terry with order effect, for home advantage. Ref: Davidson 1977
@@ -12,6 +12,7 @@
 #' * 'bt-generalized': for the generalized Bradley Terry model for subject specific predictors. Ref: Springall 1973
 #' * 'davidson-generalized' for the generalized Davidson model for subject specific predictors
 #' * 'bt-U': for the Bradley-Terry with random effects. Ref: Bockenholt 2001
+#' * 'bt-subjectpredictors': for the Bradley-Terry with subject predictors. Ref: Bockenholt 2001
 #' * 'davidson-U': For Davidson model with random effects
 #' * 'bt-ordereffect-U' for Bradley-Terry with order effects and random effects, use similar syntax for other variations by appending the correct options
 #' @param player0 A string with name of the column containing the players 0. This column should be of string/character type and not be of factor type.
@@ -20,20 +21,24 @@
 #' @param player1_score A string with name of the column containing the scores of players 1
 #' @param result_column A string with name of the column containing the winners. 0 for player 0, 1 for player 1 and 2 for ties
 #' @param z_player1 A string with the name of the column containing the order effect for player 1. E.g. if player1 has the home advantage this column should have 1 otherwise it should have 0
-#' @param cluster A string with the name of the column containing the cluster for the observation. To be used with a random effects model. This column should contain strings
+#' @param cluster A vector with strings with the names of the column containing the clusters for the observation. To be used with a random effects model. This column should contain strings
 #' @param predictors A data frame that contains the players predictors values when using a generalized model. Only numeric values are accepted. Booleans are accepted but will be cast into integers. The first column should be for the player name, the others will be the predictors.  The column names will be used as name for the predictors
+#' @param subject_predictors A vector with strings with the name of the columns for the subject predictors. Since all S parameters follow the same normal prior centered in 0 we recommend that the predictors, if numeric are normalized, for example the base scale function
 #' @param solve_ties A string for the method of handling ties.
 #' * 'random' for converting ties randomly,
 #' * 'remove' for removing the tie occurrences
 #' * 'none' to ignore ties. This requires a model capable of handling  ties
 #' @param priors A list with the parameters for the priors.
-#' * 'prior_lambda_mu' Mean value of the lambda parameter in the all models. For the generalized this is also the prior for the B the parameter for  lambda ~ normal(mu, std)
-#' * 'prior_lambda_std' Standard deviation of the lambda parameter in the all models. lambda ~ normal(mu, std)
+#' * 'prior_lambda_mu' Mean value of the lambda parameter in the all models. For the generalized this is also the prior for the B the parameter for  lambda ~ normal(mu, std). Default = 0
+#' * 'prior_lambda_std' Standard deviation of the lambda parameter in the all models. lambda ~ normal(mu, std). Default = 3.0
 #' * 'prior_nu_mu' Mean value of the nu parameter in the Davidson  models. nu ~ normal(mu, std)
 #' * 'prior_nu_std' Standard deviation ofnu parameter in the Davidson  models. nu ~ normal(mu, std). Default = 0.3
 #' * 'prior_gm_mu' Mean value of the gm in the ordered effect model. gm ~ normal(mu, std). Default = 0
 #' * 'prior_gm_std' Standard deviation of the gm parameter in the ordered effect model. gm ~ normal(mu, std). Default =
-#' * 'prior_U_std' Standard deviation of the U parameter in the random effects model. U ~ normal(0, std). Default = 3.0
+#' * 'prior_U1_std' Standard deviation of the U1 parameter in the random effects model. U ~ normal(0, std). Default = 3.0
+#' * 'prior_U2_std' Standard deviation of the U2 parameter in the random effects model. U ~ normal(0, std). Default = 3.0
+#' * 'prior_U3_std' Standard deviation of the U3 parameter in the random effects model. U ~ normal(0, std). Default = 3.0
+#' * 'prior_S_std' Standard deviation of the subject predictors parameter. S ~ normal(0,S_std). This for all predictors
 #' @param win_score A string that indicates if which score should win
 #' * 'higher' score is winner
 #' * 'lower' score is winner
@@ -70,6 +75,7 @@ bpc <- function(data,
                 result_column = NULL,
                 z_player1 = NULL,
                 cluster = NULL,
+                subject_predictors=NULL,
                 predictors = NULL,
                 model_type,
                 solve_ties = 'random',
@@ -124,6 +130,7 @@ bpc <- function(data,
     predictors = predictors,
     model_type = model_type,
     solve_ties = solve_ties,
+    subject_predictors=subject_predictors,
     win_score = win_score,
     priors = priors,
     chains = chains,
@@ -152,6 +159,7 @@ bpc <- function(data,
       player0_score,
       player1_score,
       result_column,
+      subject_predictors,
       z_player1)
   d <- tidyr::drop_na(d, tidyselect::any_of(dropna_cols))
 
@@ -196,17 +204,28 @@ bpc <- function(data,
   d <- create_index(d, player0, player1)
   lookup_table <- create_index_lookuptable(d, player0, player1)
 
-
   # Handling clusters if available
   cluster_lookup_table <- NULL
   if (!is.null(cluster))
   {
-    d <- create_cluster_index(d, cluster)
-    cluster_lookup_table <-
-      create_index_cluster_lookuptable(d, cluster)
+    i <- 1
+    cluster_lookup_table <- list()
+    for (cl in cluster) {
+      d <- create_cluster_index(d, cl, i = i)
+      cluster_lookup_table <-
+        c(cluster_lookup_table,
+          list(create_index_cluster_lookuptable(d, cl)))
+      i <- i + 1
+    }
   }
-  else{
-    cluster_lookup_table <- NULL
+
+  # handling subject predictors
+  subject_predictors_matrix <- NULL
+  subject_predictors_lookup_table <- NULL
+  if (!is.null(subject_predictors))
+  {
+    subject_predictors_matrix <- as.matrix(d[,subject_predictors])
+    subject_predictors_lookup_table <- create_subject_predictor_lookuptable(subject_predictors)
   }
 
   #Handling predictors in the generalized model if available
@@ -281,10 +300,25 @@ bpc <- function(data,
   else
     prior_gm_std <- priors$prior_gm_std
   ##U
-  if (is.null(priors$prior_U_std))
-    prior_U_std <- default_std
+  if (is.null(priors$prior_U1_std))
+    prior_U1_std <- default_std
   else
-    prior_U_std <- priors$prior_U_std
+    prior_U1_std <- priors$prior_U1_std
+
+  if (is.null(priors$prior_U2_std))
+    prior_U2_std <- default_std
+  else
+    prior_U2_std <- priors$prior_U2_std
+
+  if (is.null(priors$prior_U3_std))
+    prior_U3_std <- default_std
+  else
+    prior_U3_std <- priors$prior_U3_std
+
+  if (is.null(priors$prior_S_std))
+    prior_S_std <- default_std
+  else
+    prior_S_std <- priors$prior_S_std
 
   #Base standata
   standata <- list(
@@ -298,7 +332,11 @@ bpc <- function(data,
     prior_gm_mu = prior_gm_mu,
     prior_gm_std = prior_gm_std,
     prior_nu_mu = prior_nu_mu,
-    prior_nu_std = prior_nu_std
+    prior_nu_std = prior_nu_std,
+    prior_U1_std = prior_U1_std,
+    prior_U2_std = prior_U2_std,
+    prior_U3_std = prior_U3_std,
+    prior_S_std = prior_S_std
   )
   stanfit <- NULL
 
@@ -312,23 +350,71 @@ bpc <- function(data,
   }
 
   # Add random effects or not
+  #TODO: add clusters below
   if (stringr::str_detect(model_type, '-U')) {
-    standata <- c(standata,
-                  list(
-                    use_U = 1,
-                    N_U = nrow(cluster_lookup_table),
-                    z_player1 = as.vector(d[, z_player1]),
-                    U_indexes = as.vector(d$cluster_index)
-                  ))
-  } else{
-    standata <- c(standata,
-                  list(
-                    use_U = 0,
-                    N_U = 0,
-                    z_player1 = numeric(0),
-                    U_indexes = numeric(0)
-                  ))
-  }
+    if (!is.null(cluster)) {
+      if (length(cluster) == 1){
+        standata <- c(
+          standata,
+          list(
+            use_U1 = 1,
+            N_U1 = nrow(cluster_lookup_table[[1]]),
+            U1_indexes = as.vector(d$cluster1_index),
+            use_U2 = 0,
+            N_U2 = 0,
+            U2_indexes = numeric(0),
+            use_U3 = 0,
+            N_U3 = 0,
+            U3_indexes = numeric(0)
+          )
+        )
+      } else if (length(cluster) == 2){
+        standata <- c(
+          standata,
+          list(
+            use_U1 = 1,
+            N_U1 = nrow(cluster_lookup_table[[1]]),
+            U1_indexes = as.vector(d$cluster1_index),
+            use_U2 = 1,
+            N_U2 = nrow(cluster_lookup_table[[2]]),
+            U2_indexes = as.vector(d$cluster2_index),
+            use_U3 = 0,
+            N_U3 = 0,
+            U3_indexes = numeric(0)
+          )
+        )
+      } else if (length(cluster) == 3){
+        standata <- c(
+          standata,
+          list(
+            use_U1 = 1,
+            N_U1 = nrow(cluster_lookup_table[[1]]),
+            U1_indexes = as.vector(d$cluster1_index),
+            use_U2 = 1,
+            N_U2 = nrow(cluster_lookup_table[[2]]),
+            U2_indexes = as.vector(d$cluster2_index),
+            use_U3 = 1,
+            N_U3 = nrow(cluster_lookup_table[[3]]),
+            U3_indexes = as.vector(d$cluster3_index)
+          )
+        )
+      }
+    }
+  } else
+    standata <- c(
+      standata,
+      list(
+        use_U1 = 0,
+        N_U1 = 0,
+        U1_indexes = numeric(0),
+        use_U2 = 0,
+        N_U2 = 0,
+        U2_indexes = numeric(0),
+        use_U3 = 0,
+        N_U3 = 0,
+        U3_indexes = numeric(0)
+      )
+    )
 
   # Generalized or not
   if (stringr::str_detect(model_type, '-generalized')) {
@@ -343,7 +429,25 @@ bpc <- function(data,
                   list(
                     use_Generalized = 0,
                     K = 0,
-                    X = matrix(NA_real_, ncol = 0,nrow = 0)
+                    X = matrix(NA_real_, ncol = 0, nrow = 0)
+                  ))
+  }
+
+
+  # Generalized or not
+  if (stringr::str_detect(model_type, '-subjectpredictors')) {
+    standata <- c(standata,
+                  list(
+                    use_SubjectPredictors = 1,
+                    N_SubjectPredictors = length(subject_predictors),
+                    X_subject = subject_predictors_matrix
+                  ))
+  } else{
+    standata <- c(standata,
+                  list(
+                    use_SubjectPredictors = 0,
+                    N_SubjectPredictors = 0,
+                    X_subject = matrix(NA_real_, ncol = 0, nrow = 0)
                   ))
   }
 
@@ -386,7 +490,9 @@ bpc <- function(data,
     cluster_lookup_table = cluster_lookup_table,
     predictors_df = predictors_df,
     predictors_lookup_table = predictors_lookup_table,
-    predictors_matrix = predictors_matrix
+    predictors_matrix = predictors_matrix,
+    subject_predictors_lookup_table = subject_predictors_lookup_table,
+    subject_predictors_matrix = subject_predictors_matrix
   )
   return(out)
 

@@ -41,7 +41,8 @@ get_parameters_table <-
       knitr::kable(t,
                    format = format,
                    digits = digits,
-                   caption = caption)
+                   caption = caption,
+                   booktabs = T)
     return(out)
   }
 
@@ -60,6 +61,7 @@ get_parameters_table <-
 #'  Possible values are latex, html, p, simple (Pandoc's simple tables), and rst.
 #' @param digits number of digits in the table
 #' @param caption a string containing the caption of the table
+#' @param model_type when dealing with some models (such as random effects) one might want to make predictions using the estimated parameters with the random effects but without specifying the specific values of random effects to predict. Therefore one can set a subset of the model to make predictions. For example: a model sampled with bt-U can be used to make predictions of the model bt only.
 #' @return a formatted table
 #' @export
 #'
@@ -80,15 +82,17 @@ get_probabilities_table <-
            n=100,
            format = 'latex',
            digits = 3,
-           caption = 'Estimated posterior probabilites') {
+           caption = 'Estimated posterior probabilites',
+           model_type = NULL) {
     if (class(bpc_object) != 'bpc')
       stop('Error! The object is not of bpc class')
-    t <- get_probabilities_df(bpc_object, newdata=newdata, n = n)
+    t <- get_probabilities_df(bpc_object, newdata=newdata, n = n, model_type=model_type)
     out <-
       knitr::kable(t,
                    format = format,
                    digits = digits,
-                   caption = caption)
+                   caption = caption,
+                   booktabs = T)
     return(out)
   }
 
@@ -133,7 +137,8 @@ get_rank_of_players_table <-
       knitr::kable(t,
                    format = format,
                    digits = digits,
-                   caption = caption)
+                   caption = caption,
+                   booktabs = T)
     return(out)
   }
 

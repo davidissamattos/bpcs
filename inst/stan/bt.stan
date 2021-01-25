@@ -17,9 +17,23 @@ data {
   real z_player1[use_Ordereffect ? N_total : 0]; //1 home advantage for player 1. 0 no home advantage.
 
   // U for random effects
-  int <lower=0, upper=1> use_U;
-  int <lower=0> N_U;
-  int U_indexes[use_U ? N_total : 0];
+  int <lower=0, upper=1> use_U1;
+  int <lower=0> N_U1;
+  int U1_indexes[use_U1 ? N_total : 0];
+
+  int <lower=0, upper=1> use_U2;
+  int <lower=0> N_U2;
+  int U2_indexes[use_U2 ? N_total : 0];
+
+  int <lower=0, upper=1> use_U3;
+  int <lower=0> N_U3;
+  int U3_indexes[use_U3 ? N_total : 0];
+
+ //Subject-predictors
+ int <lower=0, upper=1> use_SubjectPredictors;
+ int <lower=0> N_SubjectPredictors;
+ matrix [use_SubjectPredictors ? N_total : 0, use_SubjectPredictors ? N_SubjectPredictors :0] X_subject;//Matrix of subject predictors
+
 
   // Davidson
   int <lower=0, upper=1> use_Davidson;
@@ -38,10 +52,14 @@ data {
   real<lower=0> prior_gm_std;
   real prior_gm_mu;
   // random effects
-  real<lower=0> prior_U_std;
+  real<lower=0> prior_U1_std;
+  real<lower=0> prior_U2_std;
+  real<lower=0> prior_U3_std;
   // davidson draw parameter
   real prior_nu_mu;
   real<lower=0> prior_nu_std;
+  //subject predictors
+  real<lower=0> prior_S_std;
 }
 
 parameters {
@@ -51,9 +69,23 @@ parameters {
   real gm_param[use_Ordereffect ? 1: 0];//Represents the order effect gamma
 
   // U
-  real <lower=0> U_std_param[use_U ? 1: 0];//std for the random effects
+  real <lower=0> U1_std_param[use_U1 ? 1: 0];//std for the random effects
   // Matrix N_players x N_U if use_U is 1 else 0x0
-  real U_param[use_U ? N_players : 0, use_U ? N_U : 0]; //parameters of the random effects for cluster one random effect for each algorithm in each cluster
+  real U1_param[use_U1 ? N_players : 0, use_U1 ? N_U1 : 0]; //parameters of the random effects for cluster one random effect for each algorithm in each cluster
+
+  real <lower=0> U2_std_param[use_U2 ? 1: 0];//std for the random effects
+  // Matrix N_players x N_U if use_U is 1 else 0x0
+  real U2_param[use_U2 ? N_players : 0, use_U2 ? N_U2 : 0]; //parameters of the random effects for cluster one random effect for each algorithm in each cluster
+
+  real <lower=0> U3_std_param[use_U3 ? 1: 0];//std for the random effects
+  // Matrix N_players x N_U if use_U is 1 else 0x0
+  real U3_param[use_U3 ? N_players : 0, use_U3 ? N_U3 : 0]; //parameters of the random effects for cluster one random effect for each algorithm in each cluster
+
+
+  //Subject predictors
+  //We have vector of suuject predictors for every player
+  real S_param[use_SubjectPredictors ? N_players :0, use_SubjectPredictors ? N_SubjectPredictors :0];
+
 
   //Davidson
   real  nu_param[use_Davidson ? 1 : 0]; // the tie parameter.
@@ -66,10 +98,16 @@ transformed parameters{
 
   real lambda[N_players];
   real gm;
-  real <lower=0> U_std;
   real nu;
   real B[use_Generalized ? K : 2]; //due to a bug we need at least a vector of 2
-  real U[N_players, use_U ? N_U : 1];//even if we dont use it we have it here for the gqs to work properly
+  real <lower=0> U1_std;
+  real <lower=0> U2_std;
+  real <lower=0> U3_std;
+  real S[N_players, use_SubjectPredictors ? N_SubjectPredictors : 1];
+  real U1[N_players, use_U1 ? N_U1 : 1];//even if we dont use it we have it here for the gqs to work properly
+  real U2[N_players, use_U2 ? N_U2 : 1];//even if we dont use it we have it here for the gqs to work properly
+  real U3[N_players, use_U3 ? N_U3 : 1];//even if we dont use it we have it here for the gqs to work properly
+
 
   // order effect
   if(use_Ordereffect){
@@ -79,16 +117,40 @@ transformed parameters{
   }
 
   // U
-  if(use_U){
-    U_std = U_std_param[1];
-    U = U_param;
-  }else{
-    U_std = 0;
+  if(use_U1){
+    U1_std = U1_std_param[1];
+    U1 = U1_param;
+  } else{
+    U1_std = 0;
     for (i in 1:N_players)
     {
-        U[i, 1]= 0;
+        U1[i, 1]= 0;
     }
   }
+
+    // U
+  if(use_U2){
+    U2_std = U2_std_param[1];
+    U2 = U2_param;
+  }else{
+    U2_std = 0;
+    for (i in 1:N_players)
+    {
+        U2[i, 1]= 0;
+    }
+  }
+
+  if(use_U3){
+    U3_std = U3_std_param[1];
+    U3 = U3_param;
+  }else{
+    U3_std = 0;
+    for (i in 1:N_players)
+    {
+      U3[i, 1]= 0;
+    }
+  }
+
 
   // Davidson
   if(use_Davidson){
@@ -109,6 +171,15 @@ transformed parameters{
     lambda = lambda_param;
   }
 
+  //Subject Predictors
+  if(use_SubjectPredictors){
+    S = S_param;
+  } else{
+    for (i in 1:N_players)
+    {
+      S[i, 1]= 0;
+    }
+  }
 }
 
 model {
@@ -118,21 +189,54 @@ model {
   if(use_Ordereffect){
     gm_param ~ normal(prior_gm_mu,prior_gm_std);
   }
-  if(use_U){
-    U_std_param ~ normal(0,prior_U_std);//Halfnormal
+
+  if(use_U1){
+    U1_std_param ~ normal(0,prior_U1_std);//Halfnormal
     for (i in 1:N_players)
     {
-      for(j in 1:N_U){
-        U_param[i, j] ~ normal(0, 1);//we dont add U_std here for numerical reasons
+      for(j in 1:N_U1){
+        U1_param[i, j] ~ normal(0, 1);//we dont add U_std here for numerical reasons
       }
     }
   }
+
+    if(use_U2){
+    U2_std_param ~ normal(0,prior_U2_std);//Halfnormal
+    for (i in 1:N_players)
+    {
+      for(j in 1:N_U2){
+        U2_param[i, j] ~ normal(0, 1);//we dont add U_std here for numerical reasons
+      }
+    }
+  }
+
+    if(use_U3){
+    U3_std_param ~ normal(0,prior_U3_std);//Halfnormal
+    for (i in 1:N_players)
+    {
+      for(j in 1:N_U3){
+        U3_param[i, j] ~ normal(0, 1);//we dont add U_std here for numerical reasons
+      }
+    }
+  }
+
   if(use_Davidson){
      nu_param ~ normal(prior_nu_mu,prior_nu_std);
   }
+
   if(use_Generalized){
      B_param ~ normal(prior_lambda_mu, prior_lambda_std);
   }
+
+  if(use_SubjectPredictors){
+    for (i in 1:N_players)
+    {
+      for(j in 1:N_SubjectPredictors){
+        S_param[i, j] ~ normal(0, prior_S_std);
+      }
+    }
+  }
+
 
   //model
   for (i in 1:N_total)
@@ -141,10 +245,13 @@ model {
     real p_tie;
     real p_win_ties[2];
     p_win_ties = calculate_p1_win_and_ties(i,
-                       use_Ordereffect,  use_U, use_Davidson,//data switches
-                       player1_indexes,  player0_indexes, //data vectors
-                       z_player1,  U_indexes,
-                       U, lambda,  U_std,  gm, nu);//parameters
+                      player1_indexes, player0_indexes, lambda,
+                      use_Ordereffect, z_player1, gm,
+                      use_Davidson, nu,
+                      use_U1, U1_indexes, U1, U1_std,
+                      use_U2, U2_indexes,U2, U2_std,
+                      use_U3, U2_indexes,U3, U3_std,
+                      use_SubjectPredictors, S, X_subject);
     p1_win = p_win_ties[1];
     p_tie= p_win_ties[2];
 
@@ -173,10 +280,13 @@ generated quantities{
     real p_tie;
     real p_win_ties[2];
     p_win_ties = calculate_p1_win_and_ties(i,
-                       use_Ordereffect,  use_U, use_Davidson,//data switches
-                       player1_indexes,  player0_indexes, //data vectors
-                       z_player1,  U_indexes,
-                       U, lambda,  U_std,  gm, nu);//parameters
+                      player1_indexes, player0_indexes, lambda,
+                      use_Ordereffect, z_player1, gm,
+                      use_Davidson, nu,
+                      use_U1, U1_indexes, U1, U1_std,
+                      use_U2, U2_indexes,U2, U2_std,
+                      use_U3, U2_indexes,U3, U3_std,
+                      use_SubjectPredictors, S, X_subject);
     p1_win = p_win_ties[1];
     p_tie= p_win_ties[2];
 

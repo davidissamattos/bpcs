@@ -87,6 +87,7 @@ get_sample_posterior <-
     n <- floor(n)
     cluster_lookup_table <- bpc_object$cluster_lookup_table
     lookup_table <- bpc_object$lookup_table
+    subject_predictors_lookup_table <- bpc_object$subject_predictors_lookup_table
 
     stanfit <- get_stanfit(bpc_object)
     posterior <-
@@ -98,7 +99,8 @@ get_sample_posterior <-
     colnames(posterior) <-
       create_array_of_par_names(par,
                                 lookup_table = lookup_table,
-                                cluster_lookup_table = cluster_lookup_table)
+                                cluster_lookup_table = cluster_lookup_table,
+                                subject_predictors_lookup_table=subject_predictors_lookup_table)
     return(as.data.frame(posterior))
   }
 

@@ -4,7 +4,7 @@
 \alias{get_probabilities_df}
 \title{Get the empirical win/draw probabilities based on the ability/strength parameters.}
 \usage{
-get_probabilities_df(bpc_object, newdata = NULL, n = 1000)
+get_probabilities_df(bpc_object, newdata = NULL, n = 100, model_type = NULL)
 }
 \arguments{
 \item{bpc_object}{a bpc object}
@@ -12,6 +12,8 @@ get_probabilities_df(bpc_object, newdata = NULL, n = 1000)
 \item{newdata}{default to NULL. If used,  it will calculate the probabilities only for the newdata. Otherwise it will calculate for all combinations}
 
 \item{n}{number of samples to draw from the posterior}
+
+\item{model_type}{when dealing with some models (such as random effects) one might want to make predictions using the estimated parameters with the random effects but without specifying the specific values of random effects to predict. Therefore one can set a subset of the model to make predictions. For example: a model sampled with bt-U can be used to make predictions of the model bt only.}
 }
 \value{
 a data frame table with the respective probabilities

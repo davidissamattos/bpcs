@@ -1,6 +1,6 @@
 Package: bpcs
 Title: Bayesian Paired Comparison Analysis with Stan
-Version: 1.0.1
+Version: 1.1.0
 Authors@R: c(
     person(given = "David",
            family = "Issa Mattos",
@@ -13,7 +13,7 @@ Authors@R: c(
            email = "erikamsramos@gmail.com",
            comment = c(ORCID = "0000-0001-7393-1410"))
            )
-Description: Models for the analysis of paired comparison data using Stan. The models include Bayesian versions of the Bradley-Terry model, including random effects (1 level), generalized model for predictors, order effect (home advantage) and the  variations for the Davidson (1970) model to handle ties. Additionally, we provide a number of functions to facilitate inference and obtaining results with these models. References: Bradley and Terry (1952) <doi:10.2307/2334029>; Davidson (1970) <doi:10.1080/01621459.1970.10481082>; Carpenter et al. (2017) <doi:10.18637/jss.v076.i01>. 
+Description: Models for the analysis of paired comparison data using Stan. The models include Bayesian versions of the Bradley-Terry model, including random effects, generalized model for predictors, order effect (home advantage) and the  variations for the Davidson (1970) model to handle ties. Additionally, we provide a number of functions to facilitate inference and obtaining results with these models. References: Bradley and Terry (1952) <doi:10.2307/2334029>; Davidson (1970) <doi:10.1080/01621459.1970.10481082>; Carpenter et al. (2017) <doi:10.18637/jss.v076.i01>. 
 URL: https://github.com/davidissamattos/bpcs, https://davidissamattos.github.io/bpcs/
 BugReports: https://github.com/davidissamattos/bpcs/issues
 License: MIT + file LICENSE
