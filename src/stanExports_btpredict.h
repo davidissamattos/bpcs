@@ -1206,7 +1206,7 @@ public:
                 stan::math::initialize(ties_pred, DUMMY_VAR__);
                 stan::math::fill(ties_pred, DUMMY_VAR__);
                 current_statement_begin__ = 177;
-                stan::math::assign(p_win_ties, calculate_p1_win_and_ties(i, player1_indexes, player0_indexes, lambda, use_Ordereffect, z_player1, gm, use_Davidson, nu, use_U1, U1_indexes, U1, U1_std, use_U2, U2_indexes, U2, U2_std, use_U3, U3_indexes, U3, U3_std, use_SubjectPredictors, S, X_subject, pstream__));
+                stan::math::assign(p_win_ties, calculate_p1_win_and_ties(i, player1_indexes, player0_indexes, lambda_call, use_Ordereffect, z_player1, gm, use_Davidson, nu, use_U1, U1_indexes, U1, U1_std, use_U2, U2_indexes, U2, U2_std, use_U3, U3_indexes, U3, U3_std, use_SubjectPredictors, S, X_subject, pstream__));
                 current_statement_begin__ = 185;
                 stan::math::assign(p1_win, get_base1(p_win_ties, 1, "p_win_ties", 1));
                 current_statement_begin__ = 186;
