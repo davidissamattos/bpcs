@@ -86,10 +86,10 @@ get_probabilities <- function(bpc_object, newdata=NULL, n = 100, model_type=NULL
   y_pred <- pred[, startsWith(colnames(pred), "y_pred")]
 
   t <- data.frame(
-    i = newdata[, col_names[1]],
-    j = newdata[, col_names[2]],
-    i_beats_j = apply(y_pred, 2, calculate_prob_from_vector, 0),
-    j_beats_i = apply(y_pred, 2, calculate_prob_from_vector, 1),
+    i = newdata[, col_names[1]],#player1
+    j = newdata[, col_names[2]],#player0
+    i_beats_j = apply(y_pred, 2, calculate_prob_from_vector, 1),#prob of being 1 is i
+    j_beats_i = apply(y_pred, 2, calculate_prob_from_vector, 0),#prob of being 0 is j
     i_ties_j = apply(y_pred, 2, calculate_prob_from_vector, 2)
   )  %>%
     tibble::remove_rownames()
