@@ -16,7 +16,6 @@ reference:
   - predict.bpc
   - plot.bpc
   - get_probabilities_df
-  - get_probabilities_newdata_df
   - get_rank_of_players_df
 - title: "Model checking functions"
   desc: "These are a thin wrapper over other packages functions to facilitate the investigation of the convergence of the MCMC."
@@ -39,7 +38,6 @@ reference:
   - get_sample_posterior
   - get_rank_of_players_posterior
   - get_probabilities_posterior
-  - get_probabilities_newdata_posterior
 - title: "Data Transformation"
   desc: "Functions that provide that transformations."
 - contents:
