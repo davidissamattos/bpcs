@@ -89,7 +89,7 @@ This function expands datasets that have aggregated data into this long format."
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@ This function expands datasets that have aggregated data into this long format."
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -112,16 +112,19 @@ This function expands datasets that have aggregated data into this long format."
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/a_get_started.html">Getting Started with the bpcs package</a>
+      <a href="../articles/a_get_started.html">Getting started</a>
     </li>
     <li>
-      <a href="../articles/b_ties_and_home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
+      <a href="../articles/b_ties_and_home_advantage">Ties and me advantage</a>
     </li>
     <li>
-      <a href="../articles/c_bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+      <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="../articles/d_paper.html">d_paper</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+    </li>
+    <li>
+      <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
@@ -129,7 +132,7 @@ This function expands datasets that have aggregated data into this long format."
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -218,14 +221,7 @@ This function expands datasets that have aggregated data into this long format.<
     <pre class="examples"><div class='input'><span class='co'>#Creating a simple data frame with only one row to illustrate how the function works</span>
 <span class='va'>df1</span> <span class='op'>&lt;-</span> <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>player0</span>, <span class='op'>~</span><span class='va'>player1</span>, <span class='op'>~</span><span class='va'>wins0</span>, <span class='op'>~</span><span class='va'>wins1</span>,<span class='op'>~</span><span class='va'>cluster</span>, <span class='st'>'A'</span>,<span class='st'>'B'</span>,<span class='fl'>4</span>, <span class='fl'>3</span>, <span class='st'>'c1'</span><span class='op'>)</span>
 <span class='va'>df2</span> <span class='op'>&lt;-</span> <span class='fu'>expand_aggregated_data</span><span class='op'>(</span><span class='va'>df1</span>,<span class='st'>'player0'</span>, <span class='st'>'player1'</span>, <span class='st'>'wins0'</span>, <span class='st'>'wins1'</span>, keep<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'cluster'</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   player0 player1 y cluster rowid
-#&gt; 1       A       B 0      c1     1
-#&gt; 2       A       B 0      c1     2
-#&gt; 3       A       B 0      c1     3
-#&gt; 4       A       B 0      c1     4
-#&gt; 5       A       B 1      c1     5
-#&gt; 6       A       B 1      c1     6
-#&gt; 7       A       B 1      c1     7</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>df2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>df2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   player0 player1 y cluster rowid
 #&gt; 1       A       B 0      c1     1
 #&gt; 2       A       B 0      c1     2

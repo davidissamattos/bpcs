@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -93,7 +93,7 @@
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -103,16 +103,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/a_get_started.html">Getting Started with the bpcs package</a>
+      <a href="../articles/a_get_started.html">Getting started</a>
     </li>
     <li>
-      <a href="../articles/b_ties_and_home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
+      <a href="../articles/b_ties_and_home_advantage">Ties and me advantage</a>
     </li>
     <li>
-      <a href="../articles/c_bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+      <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="../articles/d_paper.html">d_paper</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+    </li>
+    <li>
+      <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
@@ -120,7 +123,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -152,7 +155,12 @@
     <p>Create an array with the parameter name and to what player/cluster it refers to in the order stan presents</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_array_of_par_names</span><span class='op'>(</span><span class='va'>par</span>, <span class='va'>lookup_table</span>, cluster_lookup_table <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>create_array_of_par_names</span><span class='op'>(</span>
+  <span class='va'>par</span>,
+  <span class='va'>lookup_table</span>,
+  cluster_lookup_table <span class='op'>=</span> <span class='cn'>NULL</span>,
+  subject_predictors_lookup_table <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -167,13 +175,17 @@
     </tr>
     <tr>
       <th>cluster_lookup_table</th>
-      <td><p>a lookup table of the clusters</p></td>
+      <td><p>a list of lookup table of the clusters</p></td>
+    </tr>
+    <tr>
+      <th>subject_predictors_lookup_table</th>
+      <td><p>a subject predictor lookup table</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a data. frame where we change the names in the variable colum to the corresponding parameter_name from the lookup table</p>
+    <p>a data. frame where we change the names in the variable column to the corresponding parameter_name from the lookup table</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

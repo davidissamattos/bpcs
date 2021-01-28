@@ -82,7 +82,7 @@ For more information and larger examples of usage see the vignettes." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -95,7 +95,7 @@ For more information and larger examples of usage see the vignettes." />
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -105,16 +105,19 @@ For more information and larger examples of usage see the vignettes." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/a_get_started.html">Getting Started with the bpcs package</a>
+      <a href="../articles/a_get_started.html">Getting started</a>
     </li>
     <li>
-      <a href="../articles/b_ties_and_home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
+      <a href="../articles/b_ties_and_home_advantage">Ties and me advantage</a>
     </li>
     <li>
-      <a href="../articles/c_bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+      <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="../articles/d_paper.html">d_paper</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+    </li>
+    <li>
+      <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
@@ -122,7 +125,7 @@ For more information and larger examples of usage see the vignettes." />
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -165,6 +168,7 @@ For more information and larger examples of usage see the vignettes.</p>
   result_column <span class='op'>=</span> <span class='cn'>NULL</span>,
   z_player1 <span class='op'>=</span> <span class='cn'>NULL</span>,
   cluster <span class='op'>=</span> <span class='cn'>NULL</span>,
+  subject_predictors <span class='op'>=</span> <span class='cn'>NULL</span>,
   predictors <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>model_type</span>,
   solve_ties <span class='op'>=</span> <span class='st'>"random"</span>,
@@ -210,7 +214,11 @@ For more information and larger examples of usage see the vignettes.</p>
     </tr>
     <tr>
       <th>cluster</th>
-      <td><p>A string with the name of the column containing the cluster for the observation. To be used with a random effects model. This column should contain strings</p></td>
+      <td><p>A vector with strings with the names of the column containing the clusters for the observation. To be used with a random effects model. This column should contain strings</p></td>
+    </tr>
+    <tr>
+      <th>subject_predictors</th>
+      <td><p>A vector with strings with the name of the columns for the subject predictors. Since all S parameters follow the same normal prior centered in 0 we recommend that the predictors, if numeric are normalized, for example the base scale function</p></td>
     </tr>
     <tr>
       <th>predictors</th>
@@ -218,7 +226,7 @@ For more information and larger examples of usage see the vignettes.</p>
     </tr>
     <tr>
       <th>model_type</th>
-      <td><p>We first add a base model 'bt' or 'davidson' and then additional options with '-'</p><ul>
+      <td><p>We first add a base model 'bt' or 'davidson' and then additional options with '-'. The additional options are '-U', '-generalized', '-ordereffect', '-subjectpredictors'. Below are some examples:</p><ul>
 <li><p>'bt' for the Bradley Terry model. Ref: Bradley-Terry 1952,</p></li>
 <li><p>'davidson' the Davidson model to handle for ties. Ref: Davidson 1970</p></li>
 <li><p>'bt-ordereffect' for the Bradley-Terry with order effect, for home advantage. Ref: Davidson 1977</p></li>
@@ -226,6 +234,7 @@ For more information and larger examples of usage see the vignettes.</p>
 <li><p>'bt-generalized': for the generalized Bradley Terry model for subject specific predictors. Ref: Springall 1973</p></li>
 <li><p>'davidson-generalized' for the generalized Davidson model for subject specific predictors</p></li>
 <li><p>'bt-U': for the Bradley-Terry with random effects. Ref: Bockenholt 2001</p></li>
+<li><p>'bt-subjectpredictors': for the Bradley-Terry with subject predictors. Ref: Bockenholt 2001</p></li>
 <li><p>'davidson-U': For Davidson model with random effects</p></li>
 <li><p>'bt-ordereffect-U' for Bradley-Terry with order effects and random effects, use similar syntax for other variations by appending the correct options</p></li>
 </ul></td>
@@ -248,13 +257,16 @@ For more information and larger examples of usage see the vignettes.</p>
     <tr>
       <th>priors</th>
       <td><p>A list with the parameters for the priors.</p><ul>
-<li><p>'prior_lambda_mu' Mean value of the lambda parameter in the all models. For the generalized this is also the prior for the B the parameter for  lambda ~ normal(mu, std)</p></li>
-<li><p>'prior_lambda_std' Standard deviation of the lambda parameter in the all models. lambda ~ normal(mu, std)</p></li>
+<li><p>'prior_lambda_mu' Mean value of the lambda parameter in the all models. For the generalized this is also the prior for the B the parameter for  lambda ~ normal(mu, std). Default = 0</p></li>
+<li><p>'prior_lambda_std' Standard deviation of the lambda parameter in the all models. lambda ~ normal(mu, std). Default = 3.0</p></li>
 <li><p>'prior_nu_mu' Mean value of the nu parameter in the Davidson  models. nu ~ normal(mu, std)</p></li>
 <li><p>'prior_nu_std' Standard deviation ofnu parameter in the Davidson  models. nu ~ normal(mu, std). Default = 0.3</p></li>
 <li><p>'prior_gm_mu' Mean value of the gm in the ordered effect model. gm ~ normal(mu, std). Default = 0</p></li>
 <li><p>'prior_gm_std' Standard deviation of the gm parameter in the ordered effect model. gm ~ normal(mu, std). Default =</p></li>
-<li><p>'prior_U_std' Standard deviation of the U parameter in the random effects model. U ~ normal(0, std). Default = 3.0</p></li>
+<li><p>'prior_U1_std' Standard deviation of the U1 parameter in the random effects model. U ~ normal(0, std). Default = 3.0</p></li>
+<li><p>'prior_U2_std' Standard deviation of the U2 parameter in the random effects model. U ~ normal(0, std). Default = 3.0</p></li>
+<li><p>'prior_U3_std' Standard deviation of the U3 parameter in the random effects model. U ~ normal(0, std). Default = 3.0</p></li>
+<li><p>'prior_S_std' Standard deviation of the subject predictors parameter. S ~ normal(0,S_std). This for all predictors</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -307,8 +319,8 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 </div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 0.000111 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.11 seconds.
+#&gt; Chain 1: Gradient evaluation took 0.000145 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.45 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -325,15 +337,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.439965 seconds (Warm-up)
-#&gt; Chain 1:                0.41768 seconds (Sampling)
-#&gt; Chain 1:                0.857645 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.585425 seconds (Warm-up)
+#&gt; Chain 1:                0.549024 seconds (Sampling)
+#&gt; Chain 1:                1.13445 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 4.5e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.45 seconds.
+#&gt; Chain 2: Gradient evaluation took 7e-05 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.7 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -350,15 +362,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.442266 seconds (Warm-up)
-#&gt; Chain 2:                0.444792 seconds (Sampling)
-#&gt; Chain 2:                0.887058 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.587367 seconds (Warm-up)
+#&gt; Chain 2:                0.592075 seconds (Sampling)
+#&gt; Chain 2:                1.17944 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 4.3e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.43 seconds.
+#&gt; Chain 3: Gradient evaluation took 5.9e-05 seconds
+#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.59 seconds.
 #&gt; Chain 3: Adjust your expectations accordingly!
 #&gt; Chain 3: 
 #&gt; Chain 3: 
@@ -375,15 +387,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.444349 seconds (Warm-up)
-#&gt; Chain 3:                0.494321 seconds (Sampling)
-#&gt; Chain 3:                0.93867 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.589402 seconds (Warm-up)
+#&gt; Chain 3:                0.645648 seconds (Sampling)
+#&gt; Chain 3:                1.23505 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 4.7e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.47 seconds.
+#&gt; Chain 4: Gradient evaluation took 6e-05 seconds
+#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.6 seconds.
 #&gt; Chain 4: Adjust your expectations accordingly!
 #&gt; Chain 4: 
 #&gt; Chain 4: 
@@ -400,9 +412,9 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.455132 seconds (Warm-up)
-#&gt; Chain 4:                0.432531 seconds (Sampling)
-#&gt; Chain 4:                0.887663 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.556972 seconds (Warm-up)
+#&gt; Chain 4:                0.550803 seconds (Sampling)
+#&gt; Chain 4:                1.10778 seconds (Total)
 #&gt; Chain 4: </div><div class='output co'>#&gt; Estimated baseline parameters with HPD intervals:
 #&gt; 
 #&gt; 

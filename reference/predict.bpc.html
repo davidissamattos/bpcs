@@ -82,7 +82,7 @@ See the vignettes for a larger examples with the usage of this function" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -95,7 +95,7 @@ See the vignettes for a larger examples with the usage of this function" />
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -105,16 +105,19 @@ See the vignettes for a larger examples with the usage of this function" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/a_get_started.html">Getting Started with the bpcs package</a>
+      <a href="../articles/a_get_started.html">Getting started</a>
     </li>
     <li>
-      <a href="../articles/b_ties_and_home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
+      <a href="../articles/b_ties_and_home_advantage">Ties and me advantage</a>
     </li>
     <li>
-      <a href="../articles/c_bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+      <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="../articles/d_paper.html">d_paper</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+    </li>
+    <li>
+      <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
@@ -122,7 +125,7 @@ See the vignettes for a larger examples with the usage of this function" />
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -157,7 +160,15 @@ See the vignettes for a larger examples with the usage of this function</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for bpc</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>newdata</span>, predictors <span class='op'>=</span> <span class='cn'>NULL</span>, n <span class='op'>=</span> <span class='fl'>100</span>, return_matrix <span class='op'>=</span> <span class='cn'>F</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  <span class='va'>newdata</span>,
+  predictors <span class='op'>=</span> <span class='cn'>NULL</span>,
+  n <span class='op'>=</span> <span class='fl'>100</span>,
+  return_matrix <span class='op'>=</span> <span class='cn'>F</span>,
+  model_type <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,8 +191,11 @@ See the vignettes for a larger examples with the usage of this function</p>
     </tr>
     <tr>
       <th>return_matrix</th>
-      <td><p>should we return only a matrix with the predictive values. Default F. Use this to combine with predictive posterior plots in bayesplot
-This parameter also ignores the n parameter above since it passes all the predictions from stan</p></td>
+      <td><p>should we return only a matrix with the predictive values. Default F. Use this to combine with predictive posterior plots in bayesplot</p></td>
+    </tr>
+    <tr>
+      <th>model_type</th>
+      <td><p>when dealing with some models (such as random effects) one might want to make predictions using the estimated parameters with the random effects but without specifying the specific values of random effects to predict. Therefore one can set a subset of the model to make predictions. For example: a model sampled with bt-U can be used to make predictions of the model bt only.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -204,8 +218,8 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 </div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 5.2e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.52 seconds.
+#&gt; Chain 1: Gradient evaluation took 7e-05 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.7 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -222,15 +236,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.43103 seconds (Warm-up)
-#&gt; Chain 1:                0.426074 seconds (Sampling)
-#&gt; Chain 1:                0.857104 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.578418 seconds (Warm-up)
+#&gt; Chain 1:                0.536431 seconds (Sampling)
+#&gt; Chain 1:                1.11485 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 4.6e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.46 seconds.
+#&gt; Chain 2: Gradient evaluation took 6e-05 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.6 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -247,15 +261,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.437096 seconds (Warm-up)
-#&gt; Chain 2:                0.389212 seconds (Sampling)
-#&gt; Chain 2:                0.826308 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.581764 seconds (Warm-up)
+#&gt; Chain 2:                0.593898 seconds (Sampling)
+#&gt; Chain 2:                1.17566 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 4.8e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.48 seconds.
+#&gt; Chain 3: Gradient evaluation took 5.7e-05 seconds
+#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.57 seconds.
 #&gt; Chain 3: Adjust your expectations accordingly!
 #&gt; Chain 3: 
 #&gt; Chain 3: 
@@ -272,15 +286,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.417121 seconds (Warm-up)
-#&gt; Chain 3:                0.444916 seconds (Sampling)
-#&gt; Chain 3:                0.862037 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.587071 seconds (Warm-up)
+#&gt; Chain 3:                0.66283 seconds (Sampling)
+#&gt; Chain 3:                1.2499 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 5.4e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.54 seconds.
+#&gt; Chain 4: Gradient evaluation took 6.9e-05 seconds
+#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.69 seconds.
 #&gt; Chain 4: Adjust your expectations accordingly!
 #&gt; Chain 4: 
 #&gt; Chain 4: 
@@ -297,761 +311,761 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.444345 seconds (Warm-up)
-#&gt; Chain 4:                0.416855 seconds (Sampling)
-#&gt; Chain 4:                0.8612 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.589133 seconds (Warm-up)
+#&gt; Chain 4:                0.535687 seconds (Sampling)
+#&gt; Chain 4:                1.12482 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>m</span>,newdata<span class='op'>=</span><span class='va'>tennis_agresti</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;        player0     player1 y id player0_index player1_index y_pred[1] y_pred[2]
-#&gt; 1        Seles        Graf 0  1             1             2         1         0
-#&gt; 2        Seles        Graf 0  2             1             2         0         1
-#&gt; 3        Seles        Graf 1  3             1             2         0         1
-#&gt; 4        Seles        Graf 1  4             1             2         0         1
+#&gt; 1        Seles        Graf 0  1             1             2         0         1
+#&gt; 2        Seles        Graf 0  2             1             2         1         1
+#&gt; 3        Seles        Graf 1  3             1             2         1         1
+#&gt; 4        Seles        Graf 1  4             1             2         1         1
 #&gt; 5        Seles        Graf 1  5             1             2         0         0
-#&gt; 6        Seles    Sabatini 0  6             1             3         0         1
-#&gt; 7        Seles Navratilova 0  7             1             4         1         1
-#&gt; 8        Seles Navratilova 0  8             1             4         1         0
-#&gt; 9        Seles Navratilova 0  9             1             4         1         0
-#&gt; 10       Seles Navratilova 1 10             1             4         1         0
-#&gt; 11       Seles Navratilova 1 11             1             4         1         1
-#&gt; 12       Seles Navratilova 1 12             1             4         0         0
+#&gt; 6        Seles    Sabatini 0  6             1             3         0         0
+#&gt; 7        Seles Navratilova 0  7             1             4         1         0
+#&gt; 8        Seles Navratilova 0  8             1             4         0         1
+#&gt; 9        Seles Navratilova 0  9             1             4         0         1
+#&gt; 10       Seles Navratilova 1 10             1             4         0         0
+#&gt; 11       Seles Navratilova 1 11             1             4         0         0
+#&gt; 12       Seles Navratilova 1 12             1             4         1         0
 #&gt; 13       Seles     Sanchez 0 13             1             5         0         0
 #&gt; 14       Seles     Sanchez 0 14             1             5         0         0
-#&gt; 15        Graf    Sabatini 0 15             2             3         0         1
+#&gt; 15        Graf    Sabatini 0 15             2             3         0         0
 #&gt; 16        Graf    Sabatini 0 16             2             3         1         0
-#&gt; 17        Graf    Sabatini 0 17             2             3         1         1
+#&gt; 17        Graf    Sabatini 0 17             2             3         0         0
 #&gt; 18        Graf    Sabatini 0 18             2             3         0         0
-#&gt; 19        Graf    Sabatini 0 19             2             3         1         0
+#&gt; 19        Graf    Sabatini 0 19             2             3         0         1
 #&gt; 20        Graf    Sabatini 0 20             2             3         0         0
-#&gt; 21        Graf    Sabatini 1 21             2             3         1         0
-#&gt; 22        Graf    Sabatini 1 22             2             3         1         1
+#&gt; 21        Graf    Sabatini 1 21             2             3         0         1
+#&gt; 22        Graf    Sabatini 1 22             2             3         0         0
 #&gt; 23        Graf    Sabatini 1 23             2             3         0         0
-#&gt; 24        Graf Navratilova 0 24             2             4         1         1
+#&gt; 24        Graf Navratilova 0 24             2             4         0         0
 #&gt; 25        Graf Navratilova 0 25             2             4         0         0
-#&gt; 26        Graf Navratilova 0 26             2             4         1         0
+#&gt; 26        Graf Navratilova 0 26             2             4         0         1
 #&gt; 27        Graf     Sanchez 0 27             2             5         0         0
 #&gt; 28        Graf     Sanchez 0 28             2             5         0         0
 #&gt; 29        Graf     Sanchez 0 29             2             5         0         0
-#&gt; 30        Graf     Sanchez 0 30             2             5         0         0
-#&gt; 31        Graf     Sanchez 0 31             2             5         0         0
-#&gt; 32        Graf     Sanchez 0 32             2             5         0         0
+#&gt; 30        Graf     Sanchez 0 30             2             5         1         0
+#&gt; 31        Graf     Sanchez 0 31             2             5         0         1
+#&gt; 32        Graf     Sanchez 0 32             2             5         1         0
 #&gt; 33        Graf     Sanchez 0 33             2             5         0         0
 #&gt; 34        Graf     Sanchez 1 34             2             5         0         0
 #&gt; 35    Sabatini Navratilova 0 35             3             4         1         0
-#&gt; 36    Sabatini Navratilova 1 36             3             4         0         1
-#&gt; 37    Sabatini Navratilova 1 37             3             4         1         1
+#&gt; 36    Sabatini Navratilova 1 36             3             4         1         1
+#&gt; 37    Sabatini Navratilova 1 37             3             4         1         0
 #&gt; 38    Sabatini     Sanchez 0 38             3             5         0         0
-#&gt; 39    Sabatini     Sanchez 0 39             3             5         0         0
-#&gt; 40    Sabatini     Sanchez 0 40             3             5         0         0
-#&gt; 41    Sabatini     Sanchez 1 41             3             5         0         1
+#&gt; 39    Sabatini     Sanchez 0 39             3             5         1         0
+#&gt; 40    Sabatini     Sanchez 0 40             3             5         1         0
+#&gt; 41    Sabatini     Sanchez 1 41             3             5         1         0
 #&gt; 42    Sabatini     Sanchez 1 42             3             5         0         0
 #&gt; 43 Navratilova     Sanchez 0 43             4             5         0         0
-#&gt; 44 Navratilova     Sanchez 0 44             4             5         0         0
+#&gt; 44 Navratilova     Sanchez 0 44             4             5         0         1
 #&gt; 45 Navratilova     Sanchez 0 45             4             5         1         0
-#&gt; 46 Navratilova     Sanchez 1 46             4             5         1         0
+#&gt; 46 Navratilova     Sanchez 1 46             4             5         0         0
 #&gt;    y_pred[3] y_pred[4] y_pred[5] y_pred[6] y_pred[7] y_pred[8] y_pred[9]
-#&gt; 1          0         0         0         0         1         0         1
-#&gt; 2          1         1         0         1         1         1         1
-#&gt; 3          1         0         1         1         0         1         0
-#&gt; 4          0         0         1         1         1         1         1
-#&gt; 5          1         1         1         0         0         1         1
-#&gt; 6          1         1         0         0         0         0         0
-#&gt; 7          0         0         1         0         0         1         1
-#&gt; 8          1         0         0         0         0         0         1
-#&gt; 9          0         1         0         0         0         0         1
-#&gt; 10         1         1         0         0         0         1         0
-#&gt; 11         0         0         1         1         0         1         1
-#&gt; 12         1         0         0         0         0         1         0
-#&gt; 13         0         1         1         0         0         0         1
-#&gt; 14         0         0         1         0         0         0         0
-#&gt; 15         1         0         0         1         1         0         1
-#&gt; 16         0         1         0         1         0         0         1
-#&gt; 17         0         0         1         0         0         1         0
-#&gt; 18         0         0         0         1         0         0         1
-#&gt; 19         1         0         1         0         0         0         1
-#&gt; 20         0         0         0         0         0         0         1
-#&gt; 21         0         0         0         1         0         1         1
-#&gt; 22         0         0         0         0         0         0         0
-#&gt; 23         1         0         1         1         0         0         0
-#&gt; 24         0         1         0         0         0         0         0
-#&gt; 25         0         0         1         0         0         0         1
-#&gt; 26         0         1         0         1         1         1         0
-#&gt; 27         0         0         0         1         0         0         0
-#&gt; 28         0         0         0         0         0         0         1
-#&gt; 29         0         0         1         0         0         0         0
-#&gt; 30         0         0         0         0         0         0         0
+#&gt; 1          1         0         1         0         1         1         0
+#&gt; 2          1         1         1         0         1         1         0
+#&gt; 3          1         1         1         1         0         0         1
+#&gt; 4          1         1         0         0         1         0         1
+#&gt; 5          1         1         0         1         1         1         1
+#&gt; 6          0         1         1         0         0         0         0
+#&gt; 7          1         0         0         0         0         1         0
+#&gt; 8          1         0         1         0         1         1         0
+#&gt; 9          1         0         0         1         1         1         0
+#&gt; 10         0         0         0         0         0         1         0
+#&gt; 11         1         0         0         0         1         0         1
+#&gt; 12         0         0         0         0         0         1         0
+#&gt; 13         0         0         0         1         0         0         0
+#&gt; 14         1         0         0         0         1         0         0
+#&gt; 15         0         1         0         0         0         1         0
+#&gt; 16         1         0         1         0         1         1         1
+#&gt; 17         1         0         0         1         1         0         0
+#&gt; 18         0         0         0         0         0         0         1
+#&gt; 19         0         1         0         0         0         0         1
+#&gt; 20         0         0         0         1         0         0         0
+#&gt; 21         0         1         1         0         0         0         1
+#&gt; 22         1         1         0         0         0         0         0
+#&gt; 23         0         1         0         0         0         0         1
+#&gt; 24         0         0         1         0         1         1         0
+#&gt; 25         0         0         1         0         1         0         0
+#&gt; 26         0         0         1         0         0         0         0
+#&gt; 27         0         0         1         1         0         0         0
+#&gt; 28         0         0         0         0         0         0         0
+#&gt; 29         0         0         0         0         1         0         0
+#&gt; 30         0         0         0         0         0         0         1
 #&gt; 31         0         0         0         0         0         0         0
-#&gt; 32         0         0         1         0         0         0         0
-#&gt; 33         0         0         0         0         0         0         0
+#&gt; 32         0         1         0         0         0         0         0
+#&gt; 33         0         0         0         0         0         1         0
 #&gt; 34         0         0         0         1         0         0         0
-#&gt; 35         0         0         0         1         1         1         1
-#&gt; 36         1         1         0         0         1         1         1
-#&gt; 37         0         0         0         0         1         1         1
-#&gt; 38         0         0         0         0         1         0         0
-#&gt; 39         0         1         0         1         1         0         1
-#&gt; 40         0         0         1         0         0         1         0
-#&gt; 41         1         0         0         0         1         1         0
-#&gt; 42         0         0         0         0         0         1         0
-#&gt; 43         0         0         0         1         0         0         0
-#&gt; 44         0         0         1         0         1         0         0
-#&gt; 45         1         0         1         1         0         0         0
+#&gt; 35         0         0         1         0         0         1         0
+#&gt; 36         1         0         1         1         1         1         0
+#&gt; 37         1         1         1         1         1         1         0
+#&gt; 38         1         0         0         0         0         1         1
+#&gt; 39         0         0         0         1         0         1         0
+#&gt; 40         1         1         0         1         0         0         1
+#&gt; 41         0         1         1         1         0         0         0
+#&gt; 42         0         0         1         1         0         0         0
+#&gt; 43         0         0         0         0         0         0         0
+#&gt; 44         0         1         0         0         0         1         1
+#&gt; 45         0         1         0         0         0         0         1
 #&gt; 46         0         0         0         0         0         0         0
 #&gt;    y_pred[10] y_pred[11] y_pred[12] y_pred[13] y_pred[14] y_pred[15] y_pred[16]
-#&gt; 1           0          0          0          1          1          1          0
-#&gt; 2           1          0          1          0          1          1          1
-#&gt; 3           1          0          1          1          1          1          0
-#&gt; 4           0          0          0          1          1          1          1
-#&gt; 5           1          1          0          0          1          1          0
-#&gt; 6           0          0          0          1          1          0          0
-#&gt; 7           0          0          0          1          1          1          0
-#&gt; 8           0          0          0          1          0          0          0
-#&gt; 9           0          0          1          0          0          0          0
-#&gt; 10          0          0          0          1          1          0          0
-#&gt; 11          1          1          0          0          0          1          0
-#&gt; 12          1          1          0          0          1          0          0
-#&gt; 13          0          0          0          1          1          1          0
-#&gt; 14          0          0          1          0          0          0          1
-#&gt; 15          0          0          0          0          0          0          1
-#&gt; 16          1          0          1          1          0          0          0
-#&gt; 17          0          0          0          1          0          0          0
+#&gt; 1           1          0          1          1          0          1          0
+#&gt; 2           1          1          1          1          1          0          0
+#&gt; 3           1          1          1          0          1          1          0
+#&gt; 4           1          1          0          1          1          1          0
+#&gt; 5           1          1          1          0          1          0          0
+#&gt; 6           1          0          1          0          0          1          0
+#&gt; 7           1          1          0          0          0          1          1
+#&gt; 8           1          0          0          0          1          0          1
+#&gt; 9           0          0          0          1          0          1          0
+#&gt; 10          1          1          1          1          0          0          0
+#&gt; 11          1          1          0          0          0          0          0
+#&gt; 12          1          1          0          0          0          0          1
+#&gt; 13          1          0          0          0          1          0          0
+#&gt; 14          0          1          0          0          0          1          0
+#&gt; 15          1          0          1          0          1          1          0
+#&gt; 16          0          0          0          0          0          0          0
+#&gt; 17          1          0          0          0          0          0          0
 #&gt; 18          0          0          0          1          0          0          0
-#&gt; 19          0          1          1          0          0          1          0
-#&gt; 20          0          0          1          0          1          0          0
-#&gt; 21          0          0          0          0          0          0          0
-#&gt; 22          0          0          0          0          0          0          1
-#&gt; 23          0          0          0          0          0          0          0
-#&gt; 24          0          1          0          1          0          0          0
-#&gt; 25          1          0          0          1          0          0          1
-#&gt; 26          0          0          0          1          1          0          0
-#&gt; 27          0          0          0          0          1          0          0
-#&gt; 28          0          0          0          0          0          0          1
-#&gt; 29          0          1          0          0          0          0          1
-#&gt; 30          0          0          0          1          0          0          0
-#&gt; 31          0          0          0          0          0          0          1
+#&gt; 19          0          0          0          0          0          0          1
+#&gt; 20          0          0          1          1          0          0          0
+#&gt; 21          0          0          0          0          0          0          1
+#&gt; 22          0          0          0          1          0          0          1
+#&gt; 23          1          0          1          0          0          1          0
+#&gt; 24          0          0          0          0          0          0          0
+#&gt; 25          0          0          0          1          0          0          1
+#&gt; 26          0          0          0          0          0          1          1
+#&gt; 27          0          0          1          0          1          0          0
+#&gt; 28          0          0          0          0          0          0          0
+#&gt; 29          0          0          0          0          0          0          0
+#&gt; 30          0          1          1          0          0          0          0
+#&gt; 31          0          0          1          0          0          0          0
 #&gt; 32          0          0          0          0          0          0          0
-#&gt; 33          0          0          0          1          0          0          1
+#&gt; 33          0          0          0          0          0          0          0
 #&gt; 34          0          0          0          0          0          0          0
-#&gt; 35          1          0          0          0          1          1          0
-#&gt; 36          0          1          1          1          1          1          0
-#&gt; 37          1          1          1          0          1          1          1
-#&gt; 38          0          0          1          0          0          1          1
-#&gt; 39          0          0          1          1          1          1          0
-#&gt; 40          0          0          0          0          0          1          0
-#&gt; 41          0          0          0          0          1          1          1
-#&gt; 42          0          1          1          0          0          0          1
-#&gt; 43          0          0          1          0          0          0          0
-#&gt; 44          0          1          0          1          0          0          0
-#&gt; 45          0          0          1          0          0          1          0
-#&gt; 46          0          0          1          0          0          0          1
+#&gt; 35          1          1          0          1          1          1          1
+#&gt; 36          0          1          1          1          1          0          0
+#&gt; 37          1          1          0          1          0          1          0
+#&gt; 38          0          1          0          0          1          0          0
+#&gt; 39          0          1          0          0          0          1          1
+#&gt; 40          1          1          1          0          0          1          0
+#&gt; 41          0          1          0          0          0          1          0
+#&gt; 42          0          1          1          0          1          0          0
+#&gt; 43          1          1          1          0          1          0          0
+#&gt; 44          0          0          0          1          0          0          0
+#&gt; 45          0          0          0          0          0          1          0
+#&gt; 46          0          0          0          0          0          0          0
 #&gt;    y_pred[17] y_pred[18] y_pred[19] y_pred[20] y_pred[21] y_pred[22] y_pred[23]
-#&gt; 1           0          1          0          0          1          1          0
-#&gt; 2           0          1          1          1          1          1          0
-#&gt; 3           0          1          1          0          1          1          0
-#&gt; 4           1          1          1          0          0          1          0
-#&gt; 5           0          0          1          0          1          1          0
-#&gt; 6           1          1          1          0          1          0          1
-#&gt; 7           1          0          1          0          1          1          0
-#&gt; 8           0          1          1          0          1          0          0
-#&gt; 9           0          0          0          0          1          1          0
-#&gt; 10          0          1          0          1          1          1          1
-#&gt; 11          0          1          1          1          1          1          1
-#&gt; 12          1          1          0          0          1          0          1
-#&gt; 13          0          0          0          1          0          0          0
-#&gt; 14          0          0          0          0          1          1          0
-#&gt; 15          1          0          0          0          0          0          0
-#&gt; 16          1          0          0          0          0          0          0
-#&gt; 17          1          1          1          0          1          1          0
-#&gt; 18          0          0          0          0          1          1          0
-#&gt; 19          0          0          0          0          0          0          0
-#&gt; 20          1          1          1          0          0          0          0
+#&gt; 1           0          0          1          1          1          1          0
+#&gt; 2           0          1          1          0          0          0          1
+#&gt; 3           1          1          1          1          0          1          1
+#&gt; 4           0          1          1          1          0          1          0
+#&gt; 5           1          0          1          0          0          0          1
+#&gt; 6           1          0          0          0          1          0          0
+#&gt; 7           1          1          1          1          1          1          1
+#&gt; 8           1          0          1          1          1          1          0
+#&gt; 9           0          1          0          0          1          0          1
+#&gt; 10          0          1          1          1          1          0          0
+#&gt; 11          1          0          0          1          1          0          1
+#&gt; 12          1          1          0          1          1          0          1
+#&gt; 13          0          0          0          0          0          0          1
+#&gt; 14          0          0          0          1          0          1          0
+#&gt; 15          1          0          1          1          0          1          0
+#&gt; 16          0          0          0          0          0          1          0
+#&gt; 17          0          0          0          0          0          0          1
+#&gt; 18          1          0          0          0          1          1          0
+#&gt; 19          0          0          0          0          0          0          1
+#&gt; 20          0          0          0          0          0          0          0
 #&gt; 21          0          0          1          0          0          0          0
 #&gt; 22          0          0          0          0          0          0          0
-#&gt; 23          0          0          0          1          0          0          0
-#&gt; 24          0          0          0          0          1          0          0
-#&gt; 25          0          0          0          0          1          0          0
-#&gt; 26          0          0          1          0          0          0          1
-#&gt; 27          0          0          0          0          1          0          0
-#&gt; 28          1          0          0          0          0          0          0
-#&gt; 29          1          0          1          1          0          0          0
-#&gt; 30          0          0          0          0          0          0          0
-#&gt; 31          0          0          0          0          1          0          0
-#&gt; 32          0          0          0          0          0          1          0
-#&gt; 33          0          0          1          0          1          0          0
-#&gt; 34          0          0          0          0          0          0          0
-#&gt; 35          0          0          1          1          1          0          1
-#&gt; 36          1          1          1          0          1          0          1
-#&gt; 37          0          1          1          0          0          0          1
-#&gt; 38          1          0          0          0          0          0          0
-#&gt; 39          1          0          0          0          0          1          0
-#&gt; 40          1          0          1          0          0          1          1
-#&gt; 41          0          1          1          1          0          0          0
-#&gt; 42          0          0          0          0          1          1          0
-#&gt; 43          0          0          0          0          0          0          0
-#&gt; 44          1          0          0          0          0          1          1
-#&gt; 45          0          0          0          0          1          0          0
-#&gt; 46          1          0          0          1          0          0          0
-#&gt;    y_pred[24] y_pred[25] y_pred[26] y_pred[27] y_pred[28] y_pred[29] y_pred[30]
-#&gt; 1           1          1          1          1          1          1          1
-#&gt; 2           1          0          1          1          0          0          0
-#&gt; 3           1          0          0          1          1          0          1
-#&gt; 4           1          1          1          0          0          1          0
-#&gt; 5           0          1          1          1          1          1          1
-#&gt; 6           0          1          0          1          0          1          1
-#&gt; 7           1          0          0          0          0          0          0
-#&gt; 8           1          0          0          0          0          0          0
-#&gt; 9           0          1          1          1          0          1          0
-#&gt; 10          0          1          1          0          0          0          0
-#&gt; 11          0          0          0          0          0          1          1
-#&gt; 12          0          1          1          0          1          0          0
-#&gt; 13          0          0          0          0          0          0          0
-#&gt; 14          1          0          1          0          1          0          0
-#&gt; 15          1          0          0          0          0          0          0
-#&gt; 16          0          0          0          0          0          0          0
-#&gt; 17          0          1          1          1          0          0          0
-#&gt; 18          1          0          0          0          0          0          0
-#&gt; 19          0          0          0          0          0          0          0
-#&gt; 20          0          1          0          0          1          0          1
-#&gt; 21          0          0          0          0          0          0          0
-#&gt; 22          1          0          0          0          0          0          1
-#&gt; 23          0          0          1          0          0          0          0
-#&gt; 24          0          0          1          0          0          1          0
-#&gt; 25          1          1          0          0          0          0          1
-#&gt; 26          1          0          0          1          0          1          0
-#&gt; 27          1          0          0          0          0          0          1
-#&gt; 28          0          0          0          1          0          0          0
-#&gt; 29          0          0          0          0          1          0          0
-#&gt; 30          0          0          0          0          0          0          0
-#&gt; 31          0          0          0          0          0          0          0
-#&gt; 32          0          0          0          0          0          0          0
-#&gt; 33          0          0          0          0          0          0          0
-#&gt; 34          0          0          0          0          0          0          0
-#&gt; 35          1          1          1          0          0          0          1
-#&gt; 36          1          1          1          0          0          1          1
-#&gt; 37          1          1          1          0          0          0          0
-#&gt; 38          1          0          0          0          0          0          0
-#&gt; 39          0          0          0          1          1          0          0
-#&gt; 40          1          0          1          0          0          0          1
-#&gt; 41          0          0          0          0          0          1          0
-#&gt; 42          0          1          0          0          0          0          1
-#&gt; 43          1          0          0          1          1          1          0
-#&gt; 44          0          0          0          0          0          1          0
-#&gt; 45          0          0          0          0          1          0          0
-#&gt; 46          1          0          0          0          0          0          0
-#&gt;    y_pred[31] y_pred[32] y_pred[33] y_pred[34] y_pred[35] y_pred[36] y_pred[37]
-#&gt; 1           0          0          1          1          1          0          0
-#&gt; 2           0          1          1          1          0          0          1
-#&gt; 3           0          1          0          1          1          0          0
-#&gt; 4           0          1          0          1          1          1          1
-#&gt; 5           0          1          1          0          1          1          1
-#&gt; 6           0          0          0          1          0          0          1
-#&gt; 7           1          1          1          1          0          1          0
-#&gt; 8           0          0          0          0          0          0          1
-#&gt; 9           0          0          1          0          1          0          1
-#&gt; 10          0          0          0          0          0          1          1
-#&gt; 11          0          1          0          1          0          1          0
-#&gt; 12          0          1          1          1          0          1          1
-#&gt; 13          0          0          0          0          0          0          0
-#&gt; 14          0          0          1          0          0          0          0
-#&gt; 15          1          0          0          0          0          0          0
-#&gt; 16          0          1          0          1          0          1          0
-#&gt; 17          0          1          0          1          0          0          0
-#&gt; 18          0          0          0          0          1          0          0
-#&gt; 19          1          0          0          0          0          0          0
-#&gt; 20          0          0          0          1          0          0          1
-#&gt; 21          1          0          0          1          1          0          0
-#&gt; 22          1          1          0          0          0          0          0
-#&gt; 23          0          0          0          0          0          0          0
-#&gt; 24          1          1          0          0          0          0          0
-#&gt; 25          0          1          1          0          0          0          0
-#&gt; 26          0          0          0          0          1          0          0
-#&gt; 27          0          0          0          0          0          1          0
-#&gt; 28          0          0          0          0          0          1          0
-#&gt; 29          0          0          0          0          0          0          0
-#&gt; 30          0          0          0          0          1          0          1
-#&gt; 31          0          0          0          0          0          0          0
-#&gt; 32          0          0          1          0          0          0          0
-#&gt; 33          0          0          0          0          0          0          0
-#&gt; 34          0          1          1          0          1          0          0
-#&gt; 35          1          1          0          0          1          0          0
-#&gt; 36          1          1          0          0          1          1          0
-#&gt; 37          1          1          0          0          1          1          0
-#&gt; 38          1          0          0          0          1          0          0
-#&gt; 39          0          0          0          0          1          1          0
-#&gt; 40          1          0          0          0          1          1          0
-#&gt; 41          1          1          1          0          0          0          0
-#&gt; 42          1          0          1          0          0          0          0
-#&gt; 43          0          0          0          0          0          0          0
-#&gt; 44          0          0          1          0          0          0          0
-#&gt; 45          0          0          0          0          1          1          0
-#&gt; 46          0          0          0          0          1          0          0
-#&gt;    y_pred[38] y_pred[39] y_pred[40] y_pred[41] y_pred[42] y_pred[43] y_pred[44]
-#&gt; 1           0          0          0          0          1          0          0
-#&gt; 2           0          0          1          1          0          0          1
-#&gt; 3           1          0          0          1          0          1          1
-#&gt; 4           0          0          1          0          1          0          1
-#&gt; 5           0          0          0          1          0          1          1
-#&gt; 6           0          0          1          1          1          1          1
-#&gt; 7           0          0          0          1          0          1          0
-#&gt; 8           0          0          1          0          0          1          0
-#&gt; 9           0          0          1          0          0          0          1
-#&gt; 10          0          0          1          0          1          1          1
-#&gt; 11          1          0          1          0          0          1          1
-#&gt; 12          1          1          0          0          1          0          0
-#&gt; 13          0          0          1          0          0          0          1
-#&gt; 14          0          0          0          0          0          0          1
-#&gt; 15          0          1          0          0          0          0          0
-#&gt; 16          1          0          0          0          0          0          1
-#&gt; 17          1          0          0          0          0          1          1
-#&gt; 18          1          0          0          0          0          1          0
-#&gt; 19          0          0          0          0          0          0          0
-#&gt; 20          0          0          0          0          0          0          0
-#&gt; 21          0          0          0          0          0          0          0
-#&gt; 22          0          0          0          0          0          0          1
-#&gt; 23          1          0          0          0          0          0          0
-#&gt; 24          1          1          0          1          1          0          0
-#&gt; 25          1          0          0          0          1          1          1
-#&gt; 26          1          0          1          0          0          0          0
-#&gt; 27          0          1          1          0          0          0          0
-#&gt; 28          1          0          0          0          1          0          0
-#&gt; 29          0          0          0          0          0          0          0
-#&gt; 30          0          0          0          0          0          0          0
-#&gt; 31          0          0          0          0          0          0          0
-#&gt; 32          0          0          0          0          0          0          1
-#&gt; 33          0          0          0          0          0          0          0
-#&gt; 34          0          0          0          0          0          0          0
-#&gt; 35          1          1          1          1          0          1          1
-#&gt; 36          1          1          1          0          1          1          1
-#&gt; 37          0          0          1          1          0          1          1
-#&gt; 38          1          0          0          0          0          0          1
-#&gt; 39          0          0          1          0          0          0          0
-#&gt; 40          0          0          0          1          0          0          1
-#&gt; 41          0          0          1          0          1          1          1
-#&gt; 42          0          0          1          0          0          0          1
-#&gt; 43          0          0          1          0          0          0          1
-#&gt; 44          0          0          1          0          0          0          0
-#&gt; 45          0          0          1          0          0          0          1
-#&gt; 46          0          0          1          1          0          0          1
-#&gt;    y_pred[45] y_pred[46] y_pred[47] y_pred[48] y_pred[49] y_pred[50] y_pred[51]
-#&gt; 1           1          1          1          1          1          1          1
-#&gt; 2           1          1          0          0          1          0          1
-#&gt; 3           0          1          1          0          1          1          1
-#&gt; 4           0          1          1          0          0          0          1
-#&gt; 5           1          1          1          0          0          1          1
-#&gt; 6           0          1          0          1          1          0          1
-#&gt; 7           1          1          0          1          0          0          0
-#&gt; 8           0          1          1          1          0          1          0
-#&gt; 9           1          1          1          0          1          1          1
-#&gt; 10          1          1          0          0          1          1          0
-#&gt; 11          0          1          0          1          1          0          1
-#&gt; 12          0          1          0          0          1          1          0
-#&gt; 13          0          1          0          0          0          0          0
-#&gt; 14          0          0          0          0          0          0          1
-#&gt; 15          0          0          0          1          1          0          1
-#&gt; 16          1          0          1          0          0          0          0
-#&gt; 17          1          0          1          0          0          0          0
-#&gt; 18          0          0          0          0          0          0          0
-#&gt; 19          0          0          1          0          0          1          1
-#&gt; 20          0          0          0          0          0          0          0
-#&gt; 21          0          0          0          0          0          1          0
-#&gt; 22          0          0          0          1          0          0          1
-#&gt; 23          0          0          0          0          0          0          0
+#&gt; 23          0          0          0          1          0          1          0
 #&gt; 24          1          0          0          1          0          0          0
-#&gt; 25          1          0          0          0          1          1          0
-#&gt; 26          1          0          1          0          0          0          0
-#&gt; 27          0          0          0          0          1          0          0
+#&gt; 25          1          0          0          0          1          0          1
+#&gt; 26          0          0          0          1          1          1          1
+#&gt; 27          0          0          0          1          0          0          0
 #&gt; 28          0          0          0          0          0          0          0
-#&gt; 29          0          0          0          0          0          0          0
-#&gt; 30          0          0          0          0          0          0          0
-#&gt; 31          0          1          0          0          0          0          0
-#&gt; 32          0          0          0          0          0          0          0
-#&gt; 33          0          0          0          0          1          1          0
-#&gt; 34          0          0          0          0          0          1          0
-#&gt; 35          0          1          0          1          1          1          0
-#&gt; 36          0          0          1          1          1          0          0
-#&gt; 37          1          1          1          1          1          0          0
-#&gt; 38          0          0          0          0          0          0          0
-#&gt; 39          0          1          0          1          1          0          1
-#&gt; 40          0          1          0          0          0          0          0
-#&gt; 41          0          1          1          1          0          1          0
-#&gt; 42          0          0          1          0          0          0          0
-#&gt; 43          0          1          0          0          0          0          0
-#&gt; 44          0          0          0          0          0          0          0
-#&gt; 45          0          0          0          0          0          1          0
-#&gt; 46          0          1          0          0          1          1          1
-#&gt;    y_pred[52] y_pred[53] y_pred[54] y_pred[55] y_pred[56] y_pred[57] y_pred[58]
-#&gt; 1           1          1          1          1          0          0          0
-#&gt; 2           0          1          0          1          1          1          0
-#&gt; 3           0          0          0          1          0          1          1
-#&gt; 4           0          0          0          1          0          0          1
-#&gt; 5           0          0          1          1          1          0          1
-#&gt; 6           1          1          0          0          0          0          0
-#&gt; 7           1          1          1          1          1          1          0
-#&gt; 8           0          1          0          1          0          1          0
-#&gt; 9           1          0          0          1          1          1          0
-#&gt; 10          1          0          0          1          0          1          0
-#&gt; 11          1          0          1          0          0          1          0
-#&gt; 12          1          0          0          1          0          0          0
-#&gt; 13          0          1          1          0          0          0          0
-#&gt; 14          0          0          1          1          0          0          0
-#&gt; 15          0          0          0          0          0          0          0
-#&gt; 16          0          0          0          1          0          0          0
-#&gt; 17          0          1          0          1          0          1          0
-#&gt; 18          0          1          1          1          1          0          0
-#&gt; 19          0          0          0          1          0          0          0
-#&gt; 20          0          1          0          1          0          0          0
-#&gt; 21          0          1          0          0          1          0          0
-#&gt; 22          0          1          0          0          0          0          0
-#&gt; 23          0          0          0          0          0          0          0
-#&gt; 24          0          0          0          0          0          1          0
-#&gt; 25          0          0          0          1          0          0          0
-#&gt; 26          0          0          0          0          0          0          0
-#&gt; 27          0          1          0          0          0          0          0
-#&gt; 28          0          0          0          0          0          0          0
-#&gt; 29          1          0          0          0          0          0          0
-#&gt; 30          0          0          0          1          0          0          0
+#&gt; 29          0          0          0          0          0          1          0
+#&gt; 30          0          0          0          0          1          1          0
 #&gt; 31          0          0          0          0          0          0          0
 #&gt; 32          0          0          0          0          0          0          0
-#&gt; 33          0          0          1          0          0          0          0
-#&gt; 34          0          0          0          0          0          0          0
-#&gt; 35          1          1          1          0          1          0          1
-#&gt; 36          0          0          1          0          0          0          1
-#&gt; 37          1          1          0          1          1          0          0
-#&gt; 38          1          0          1          0          0          0          0
-#&gt; 39          0          1          1          0          0          0          0
-#&gt; 40          0          0          0          1          0          1          1
-#&gt; 41          1          0          1          1          1          0          1
-#&gt; 42          0          0          1          0          0          0          0
-#&gt; 43          0          0          0          0          0          0          0
-#&gt; 44          0          0          0          0          0          0          1
-#&gt; 45          0          0          0          1          0          0          0
-#&gt; 46          0          0          1          0          0          0          1
-#&gt;    y_pred[59] y_pred[60] y_pred[61] y_pred[62] y_pred[63] y_pred[64] y_pred[65]
-#&gt; 1           0          0          0          0          0          0          0
-#&gt; 2           1          1          1          1          0          0          1
-#&gt; 3           1          0          1          1          0          1          1
-#&gt; 4           1          0          0          0          1          1          1
-#&gt; 5           1          0          1          1          1          1          0
-#&gt; 6           1          0          1          0          0          0          0
-#&gt; 7           0          0          0          0          1          0          0
-#&gt; 8           0          1          1          0          1          0          1
-#&gt; 9           0          0          0          0          1          0          0
-#&gt; 10          0          1          0          0          1          1          0
-#&gt; 11          0          0          0          0          1          1          0
-#&gt; 12          0          0          1          0          1          0          1
-#&gt; 13          0          0          0          1          0          0          0
-#&gt; 14          0          1          1          0          0          1          0
-#&gt; 15          0          0          0          0          1          0          0
-#&gt; 16          0          1          0          1          0          0          0
-#&gt; 17          0          0          0          0          0          0          0
-#&gt; 18          0          0          0          1          0          1          0
-#&gt; 19          0          1          0          0          0          1          1
-#&gt; 20          0          0          1          0          0          0          0
-#&gt; 21          1          0          0          1          0          0          1
-#&gt; 22          0          0          0          1          0          0          0
-#&gt; 23          0          0          0          1          0          0          0
-#&gt; 24          0          0          0          1          0          0          0
-#&gt; 25          0          0          0          0          0          0          1
-#&gt; 26          0          0          0          0          1          0          0
-#&gt; 27          0          0          0          0          1          1          0
-#&gt; 28          0          0          0          0          1          1          0
-#&gt; 29          0          1          0          0          0          1          0
-#&gt; 30          1          0          0          0          0          0          0
-#&gt; 31          0          0          0          0          0          1          1
-#&gt; 32          0          0          0          0          0          1          0
-#&gt; 33          0          0          0          0          0          1          0
+#&gt; 33          1          1          0          0          0          0          0
 #&gt; 34          1          0          0          0          0          0          0
-#&gt; 35          1          0          1          0          1          0          1
-#&gt; 36          1          0          1          1          1          0          0
-#&gt; 37          1          1          1          1          1          1          1
-#&gt; 38          0          1          0          1          0          0          0
-#&gt; 39          0          1          0          1          0          1          1
-#&gt; 40          1          0          0          1          1          1          1
-#&gt; 41          0          1          0          1          0          0          0
-#&gt; 42          0          1          0          1          0          1          1
-#&gt; 43          0          0          0          1          0          0          0
-#&gt; 44          0          0          0          0          0          1          1
+#&gt; 35          1          1          1          1          1          1          1
+#&gt; 36          1          1          1          0          1          0          1
+#&gt; 37          1          1          1          1          0          1          1
+#&gt; 38          0          0          0          1          1          0          0
+#&gt; 39          0          1          0          1          0          0          0
+#&gt; 40          0          0          0          0          0          1          0
+#&gt; 41          0          1          0          0          0          1          0
+#&gt; 42          0          0          0          1          1          0          0
+#&gt; 43          0          0          0          0          0          0          0
+#&gt; 44          0          0          0          0          0          0          0
 #&gt; 45          0          0          0          1          0          1          0
 #&gt; 46          0          0          0          0          0          1          0
-#&gt;    y_pred[66] y_pred[67] y_pred[68] y_pred[69] y_pred[70] y_pred[71] y_pred[72]
-#&gt; 1           1          0          1          1          0          1          1
-#&gt; 2           1          1          1          1          0          1          1
-#&gt; 3           0          0          1          1          1          1          0
-#&gt; 4           1          0          1          1          1          1          0
-#&gt; 5           1          1          1          1          1          0          0
-#&gt; 6           0          1          0          0          0          0          0
-#&gt; 7           1          0          0          1          0          1          1
-#&gt; 8           0          0          0          0          0          0          0
-#&gt; 9           1          0          0          1          1          0          0
-#&gt; 10          0          0          1          1          0          1          0
-#&gt; 11          0          0          0          1          0          0          0
-#&gt; 12          0          0          0          0          0          1          0
-#&gt; 13          0          0          0          0          0          1          0
-#&gt; 14          1          0          0          1          0          1          1
-#&gt; 15          0          0          0          0          1          0          1
-#&gt; 16          0          1          0          0          1          1          0
-#&gt; 17          0          0          0          1          0          0          0
-#&gt; 18          0          0          0          1          0          0          0
-#&gt; 19          1          0          0          0          1          1          0
-#&gt; 20          0          0          0          0          1          1          0
-#&gt; 21          0          1          0          0          0          1          1
-#&gt; 22          1          0          0          0          0          1          0
-#&gt; 23          1          1          0          0          0          1          0
-#&gt; 24          0          0          0          0          0          0          0
-#&gt; 25          0          0          0          0          0          1          0
-#&gt; 26          0          1          0          0          0          1          0
-#&gt; 27          0          0          1          0          0          0          0
-#&gt; 28          0          0          0          0          0          1          0
-#&gt; 29          0          0          0          0          0          1          0
-#&gt; 30          0          0          0          0          0          1          1
-#&gt; 31          0          0          0          0          0          1          0
-#&gt; 32          0          0          0          1          1          1          0
-#&gt; 33          1          0          0          0          0          0          1
-#&gt; 34          0          0          0          0          0          0          0
-#&gt; 35          1          0          1          0          0          1          1
-#&gt; 36          0          1          0          0          0          1          1
-#&gt; 37          0          1          1          0          0          0          0
-#&gt; 38          0          0          0          0          0          0          0
-#&gt; 39          1          0          0          1          1          0          0
-#&gt; 40          1          0          1          1          1          0          1
-#&gt; 41          1          0          0          0          0          0          1
-#&gt; 42          0          0          0          1          0          1          0
-#&gt; 43          0          1          0          0          0          1          0
-#&gt; 44          1          1          0          1          1          0          1
-#&gt; 45          0          1          1          0          0          0          1
-#&gt; 46          0          0          0          0          1          0          0
-#&gt;    y_pred[73] y_pred[74] y_pred[75] y_pred[76] y_pred[77] y_pred[78] y_pred[79]
-#&gt; 1           1          1          1          0          0          0          0
-#&gt; 2           1          1          0          0          1          1          1
-#&gt; 3           1          1          0          1          1          0          0
-#&gt; 4           1          1          0          0          1          0          1
+#&gt;    y_pred[24] y_pred[25] y_pred[26] y_pred[27] y_pred[28] y_pred[29] y_pred[30]
+#&gt; 1           1          0          1          1          1          0          1
+#&gt; 2           1          1          1          0          1          0          1
+#&gt; 3           0          1          0          0          0          1          1
+#&gt; 4           1          0          0          1          1          1          0
 #&gt; 5           1          1          0          0          1          0          0
-#&gt; 6           1          0          1          0          0          1          0
-#&gt; 7           0          0          0          0          1          0          1
-#&gt; 8           0          0          0          1          1          1          0
-#&gt; 9           0          0          0          0          0          1          1
-#&gt; 10          0          1          1          0          0          1          0
-#&gt; 11          0          0          0          0          0          1          0
-#&gt; 12          0          0          0          1          1          0          1
-#&gt; 13          0          0          0          0          0          0          0
-#&gt; 14          0          0          0          0          0          0          0
-#&gt; 15          1          1          1          1          1          0          0
-#&gt; 16          1          0          0          0          1          1          0
-#&gt; 17          1          0          0          1          0          1          0
-#&gt; 18          1          0          0          0          0          1          0
-#&gt; 19          0          0          0          0          0          0          0
-#&gt; 20          0          0          0          1          1          0          0
-#&gt; 21          0          0          1          0          0          0          1
-#&gt; 22          0          0          0          0          0          0          1
-#&gt; 23          0          0          0          0          0          0          1
-#&gt; 24          0          0          0          1          1          0          0
-#&gt; 25          0          1          0          0          0          0          0
-#&gt; 26          0          1          1          0          1          0          0
-#&gt; 27          0          1          0          0          1          0          0
-#&gt; 28          0          0          0          0          0          1          0
-#&gt; 29          0          0          0          0          0          0          1
-#&gt; 30          0          0          1          0          0          0          1
-#&gt; 31          0          1          0          0          1          0          0
-#&gt; 32          0          0          0          0          0          0          0
-#&gt; 33          0          0          0          0          0          0          1
-#&gt; 34          0          0          0          1          0          0          0
-#&gt; 35          1          0          1          1          0          0          0
-#&gt; 36          0          0          0          0          0          1          0
-#&gt; 37          0          0          1          1          0          1          0
-#&gt; 38          0          0          0          0          0          0          1
-#&gt; 39          0          1          0          0          0          0          1
-#&gt; 40          0          0          0          0          1          0          0
-#&gt; 41          0          0          0          0          0          1          0
-#&gt; 42          0          0          1          0          1          0          1
-#&gt; 43          0          0          1          0          1          0          0
-#&gt; 44          0          0          0          1          1          0          0
-#&gt; 45          0          0          0          0          0          0          0
-#&gt; 46          0          1          0          0          1          0          0
-#&gt;    y_pred[80] y_pred[81] y_pred[82] y_pred[83] y_pred[84] y_pred[85] y_pred[86]
-#&gt; 1           0          1          1          1          0          1          1
-#&gt; 2           0          0          0          1          1          1          0
-#&gt; 3           0          1          0          1          1          1          0
-#&gt; 4           1          1          1          1          1          1          1
-#&gt; 5           0          1          1          1          0          0          1
-#&gt; 6           0          0          0          0          0          0          1
-#&gt; 7           0          1          1          1          1          0          0
-#&gt; 8           1          0          0          1          0          0          0
-#&gt; 9           1          0          0          0          1          1          1
-#&gt; 10          0          0          0          0          0          0          0
-#&gt; 11          1          1          0          1          0          0          1
-#&gt; 12          0          0          1          1          0          0          0
-#&gt; 13          0          0          0          0          1          0          0
-#&gt; 14          0          0          0          1          0          0          0
+#&gt; 6           0          0          0          0          0          0          0
+#&gt; 7           1          0          1          1          1          0          0
+#&gt; 8           0          0          1          0          0          0          0
+#&gt; 9           1          0          1          0          1          0          1
+#&gt; 10          1          0          0          0          0          0          0
+#&gt; 11          1          1          1          1          1          1          1
+#&gt; 12          1          0          1          0          1          0          0
+#&gt; 13          0          0          1          0          0          0          0
+#&gt; 14          1          0          1          0          0          0          0
 #&gt; 15          0          0          0          1          0          1          0
-#&gt; 16          0          0          0          1          0          0          0
-#&gt; 17          1          1          0          0          0          0          0
-#&gt; 18          0          1          0          0          0          0          0
-#&gt; 19          0          1          0          1          0          0          0
-#&gt; 20          0          0          0          0          0          0          0
-#&gt; 21          0          1          0          0          0          1          0
-#&gt; 22          0          0          0          0          0          0          0
-#&gt; 23          0          1          1          0          0          0          0
-#&gt; 24          0          1          0          1          1          1          1
-#&gt; 25          0          0          0          0          0          0          0
-#&gt; 26          0          0          1          0          1          0          1
-#&gt; 27          1          1          0          0          0          1          0
-#&gt; 28          1          0          0          0          0          0          0
-#&gt; 29          0          0          0          0          0          0          0
-#&gt; 30          1          0          0          0          0          0          0
-#&gt; 31          1          0          0          0          0          0          0
-#&gt; 32          0          0          0          0          0          0          0
-#&gt; 33          0          0          0          0          0          0          0
-#&gt; 34          0          0          0          0          1          1          0
-#&gt; 35          0          1          1          1          1          0          0
-#&gt; 36          0          0          1          1          1          1          1
-#&gt; 37          0          1          1          0          1          1          0
-#&gt; 38          0          1          1          0          1          0          0
-#&gt; 39          1          0          1          0          0          1          0
-#&gt; 40          0          0          1          1          0          1          0
-#&gt; 41          1          0          0          0          0          1          1
-#&gt; 42          0          0          0          0          1          1          0
-#&gt; 43          1          0          0          0          0          0          1
-#&gt; 44          0          0          0          0          1          1          1
-#&gt; 45          0          1          0          0          1          0          0
-#&gt; 46          0          1          0          0          1          0          0
-#&gt;    y_pred[87] y_pred[88] y_pred[89] y_pred[90] y_pred[91] y_pred[92] y_pred[93]
-#&gt; 1           0          0          1          1          1          0          1
-#&gt; 2           1          1          1          1          1          1          1
-#&gt; 3           0          1          0          0          1          1          1
-#&gt; 4           1          0          1          0          1          1          1
-#&gt; 5           0          1          1          0          1          1          1
-#&gt; 6           0          0          1          0          0          1          1
-#&gt; 7           1          0          1          1          1          1          1
-#&gt; 8           0          1          1          0          0          0          0
-#&gt; 9           0          0          1          0          1          0          1
-#&gt; 10          0          0          0          1          0          0          0
-#&gt; 11          0          1          1          1          1          0          0
-#&gt; 12          0          1          0          1          1          0          1
-#&gt; 13          0          0          0          0          0          0          1
-#&gt; 14          0          1          0          1          0          1          1
-#&gt; 15          0          0          1          0          0          0          1
-#&gt; 16          1          1          0          1          0          0          0
-#&gt; 17          0          0          0          0          0          1          0
-#&gt; 18          1          0          0          1          0          0          0
+#&gt; 16          0          0          0          0          0          0          1
+#&gt; 17          0          0          1          1          0          0          0
+#&gt; 18          0          0          0          0          0          0          0
 #&gt; 19          0          0          0          0          0          0          0
-#&gt; 20          0          0          0          1          0          1          0
-#&gt; 21          0          0          0          0          1          0          1
-#&gt; 22          0          0          0          0          1          0          0
-#&gt; 23          0          0          0          1          0          0          0
-#&gt; 24          0          0          1          0          0          0          0
-#&gt; 25          0          0          1          1          0          0          1
-#&gt; 26          1          0          0          0          0          0          0
-#&gt; 27          0          0          1          0          0          1          0
-#&gt; 28          0          0          1          0          0          0          0
-#&gt; 29          0          0          1          0          0          0          0
-#&gt; 30          0          0          1          0          0          1          0
+#&gt; 20          0          0          0          0          0          0          0
+#&gt; 21          1          0          1          0          0          1          0
+#&gt; 22          0          1          1          0          0          0          0
+#&gt; 23          0          0          0          0          0          0          0
+#&gt; 24          0          0          1          0          0          1          0
+#&gt; 25          0          0          0          0          0          0          1
+#&gt; 26          0          0          0          0          1          1          0
+#&gt; 27          0          0          0          0          0          0          0
+#&gt; 28          0          0          0          0          0          0          0
+#&gt; 29          0          0          0          0          0          0          0
+#&gt; 30          0          0          0          0          0          1          0
+#&gt; 31          0          0          1          0          0          0          0
+#&gt; 32          0          0          1          0          0          0          0
+#&gt; 33          0          0          0          1          0          0          0
+#&gt; 34          0          0          0          0          0          0          0
+#&gt; 35          1          0          0          1          0          1          0
+#&gt; 36          1          0          0          0          0          0          0
+#&gt; 37          0          0          1          1          1          0          1
+#&gt; 38          1          1          1          1          0          1          0
+#&gt; 39          0          0          0          0          0          0          0
+#&gt; 40          0          1          1          1          0          1          0
+#&gt; 41          0          1          1          0          0          0          0
+#&gt; 42          0          1          1          0          0          0          0
+#&gt; 43          0          0          1          0          1          1          1
+#&gt; 44          0          0          0          0          0          0          0
+#&gt; 45          0          0          1          0          0          1          0
+#&gt; 46          0          0          0          0          0          0          0
+#&gt;    y_pred[31] y_pred[32] y_pred[33] y_pred[34] y_pred[35] y_pred[36] y_pred[37]
+#&gt; 1           0          1          1          1          0          1          0
+#&gt; 2           0          0          1          1          0          1          0
+#&gt; 3           0          1          0          0          0          1          0
+#&gt; 4           0          1          1          1          1          1          1
+#&gt; 5           0          0          1          1          0          1          0
+#&gt; 6           0          0          0          0          0          1          0
+#&gt; 7           0          0          1          0          1          0          1
+#&gt; 8           0          0          1          0          0          1          0
+#&gt; 9           0          0          1          1          0          1          1
+#&gt; 10          0          0          0          0          1          0          0
+#&gt; 11          1          0          0          0          0          0          0
+#&gt; 12          0          0          1          1          0          0          0
+#&gt; 13          1          0          0          1          0          1          0
+#&gt; 14          0          0          0          1          0          1          1
+#&gt; 15          1          0          0          0          0          0          0
+#&gt; 16          0          1          0          0          1          0          0
+#&gt; 17          1          0          0          0          0          0          0
+#&gt; 18          0          1          1          0          0          0          0
+#&gt; 19          0          0          0          0          0          0          1
+#&gt; 20          0          0          0          1          0          0          0
+#&gt; 21          1          1          1          0          0          0          0
+#&gt; 22          0          0          0          1          0          0          1
+#&gt; 23          0          1          0          0          0          0          0
+#&gt; 24          0          1          1          0          0          0          0
+#&gt; 25          0          0          0          0          1          0          1
+#&gt; 26          0          0          1          0          0          0          0
+#&gt; 27          0          1          0          0          0          0          0
+#&gt; 28          0          1          1          1          0          0          0
+#&gt; 29          0          0          1          0          1          0          0
+#&gt; 30          0          0          1          1          0          0          0
+#&gt; 31          0          0          0          1          0          0          0
+#&gt; 32          0          0          0          0          1          0          0
+#&gt; 33          0          0          1          0          0          0          0
+#&gt; 34          0          1          0          0          1          0          0
+#&gt; 35          1          0          1          1          1          0          1
+#&gt; 36          1          1          0          1          0          1          1
+#&gt; 37          0          1          1          1          0          1          0
+#&gt; 38          0          0          0          1          1          1          0
+#&gt; 39          1          0          1          0          1          1          0
+#&gt; 40          1          0          0          0          0          0          1
+#&gt; 41          0          0          1          1          1          0          0
+#&gt; 42          1          1          0          0          1          0          1
+#&gt; 43          0          0          0          1          0          0          0
+#&gt; 44          1          1          1          0          0          0          0
+#&gt; 45          0          0          1          0          0          0          0
+#&gt; 46          1          0          1          1          1          0          0
+#&gt;    y_pred[38] y_pred[39] y_pred[40] y_pred[41] y_pred[42] y_pred[43] y_pred[44]
+#&gt; 1           0          1          1          0          1          1          0
+#&gt; 2           1          1          1          0          0          1          0
+#&gt; 3           0          1          0          1          1          1          1
+#&gt; 4           0          1          1          0          0          0          0
+#&gt; 5           0          0          0          1          1          1          1
+#&gt; 6           0          1          0          0          1          1          0
+#&gt; 7           0          1          0          0          1          1          0
+#&gt; 8           0          1          1          0          1          0          1
+#&gt; 9           0          1          0          0          1          1          0
+#&gt; 10          0          0          1          0          1          1          0
+#&gt; 11          0          0          0          0          1          1          1
+#&gt; 12          0          0          0          0          1          1          0
+#&gt; 13          0          0          0          0          0          1          0
+#&gt; 14          0          0          0          1          0          0          0
+#&gt; 15          0          0          0          0          0          0          0
+#&gt; 16          1          0          0          0          0          0          0
+#&gt; 17          0          0          0          0          0          0          1
+#&gt; 18          1          0          0          0          0          0          0
+#&gt; 19          0          0          0          1          0          0          0
+#&gt; 20          0          0          0          1          0          0          0
+#&gt; 21          0          0          0          0          0          0          0
+#&gt; 22          0          0          0          0          0          0          0
+#&gt; 23          1          0          0          1          0          0          0
+#&gt; 24          0          0          1          1          0          1          1
+#&gt; 25          0          0          1          0          0          1          1
+#&gt; 26          0          0          0          0          0          1          0
+#&gt; 27          0          0          0          0          0          0          0
+#&gt; 28          0          0          0          0          0          0          0
+#&gt; 29          0          0          0          1          0          0          0
+#&gt; 30          0          0          0          0          0          0          0
 #&gt; 31          0          0          0          0          0          0          0
 #&gt; 32          0          0          0          0          0          0          0
-#&gt; 33          0          0          1          0          0          0          0
+#&gt; 33          0          0          0          1          0          0          0
 #&gt; 34          0          0          0          0          0          0          0
-#&gt; 35          0          0          0          0          1          0          0
-#&gt; 36          0          0          0          1          1          0          0
-#&gt; 37          0          0          0          1          1          0          1
-#&gt; 38          0          0          0          1          0          0          1
-#&gt; 39          0          0          0          1          0          0          1
-#&gt; 40          0          1          0          0          0          0          1
-#&gt; 41          0          0          0          0          0          0          1
-#&gt; 42          0          1          0          0          1          1          0
-#&gt; 43          0          0          0          1          0          1          0
-#&gt; 44          0          1          1          0          0          0          0
-#&gt; 45          0          1          0          1          0          0          0
+#&gt; 35          0          1          0          1          1          0          1
+#&gt; 36          0          0          1          0          1          0          1
+#&gt; 37          1          0          1          1          0          1          0
+#&gt; 38          0          0          0          1          0          1          1
+#&gt; 39          0          0          0          1          0          0          0
+#&gt; 40          0          0          0          1          1          0          0
+#&gt; 41          0          0          1          1          0          0          1
+#&gt; 42          1          0          0          1          0          0          1
+#&gt; 43          0          0          1          0          0          0          0
+#&gt; 44          1          0          0          1          0          0          0
+#&gt; 45          0          1          1          1          0          0          0
 #&gt; 46          0          1          0          0          0          0          0
+#&gt;    y_pred[45] y_pred[46] y_pred[47] y_pred[48] y_pred[49] y_pred[50] y_pred[51]
+#&gt; 1           1          1          1          1          1          0          1
+#&gt; 2           0          1          1          1          0          1          1
+#&gt; 3           0          0          0          1          1          1          1
+#&gt; 4           0          1          1          0          1          0          0
+#&gt; 5           0          1          0          1          1          0          1
+#&gt; 6           1          1          0          1          0          0          0
+#&gt; 7           0          0          0          0          0          0          0
+#&gt; 8           1          1          0          0          0          0          1
+#&gt; 9           1          1          0          0          0          0          1
+#&gt; 10          0          0          0          0          0          0          1
+#&gt; 11          0          0          0          0          0          1          0
+#&gt; 12          0          1          1          0          0          0          1
+#&gt; 13          1          0          0          0          0          0          0
+#&gt; 14          0          0          0          0          0          0          1
+#&gt; 15          0          0          0          0          0          0          0
+#&gt; 16          0          1          0          0          1          0          1
+#&gt; 17          0          0          1          0          0          0          0
+#&gt; 18          0          0          0          0          0          1          0
+#&gt; 19          0          0          0          0          0          0          1
+#&gt; 20          1          0          0          0          0          1          0
+#&gt; 21          0          0          0          0          0          0          0
+#&gt; 22          0          0          0          1          0          0          1
+#&gt; 23          0          1          0          1          0          1          0
+#&gt; 24          0          0          0          0          0          1          0
+#&gt; 25          0          0          0          0          0          0          0
+#&gt; 26          0          1          0          0          1          0          0
+#&gt; 27          0          0          0          0          0          1          0
+#&gt; 28          1          0          0          0          0          0          0
+#&gt; 29          1          0          0          0          1          0          0
+#&gt; 30          0          0          0          1          0          1          0
+#&gt; 31          0          0          0          0          1          0          0
+#&gt; 32          1          0          0          0          0          0          0
+#&gt; 33          1          0          0          0          0          0          0
+#&gt; 34          0          0          0          0          0          0          0
+#&gt; 35          0          1          1          0          0          0          0
+#&gt; 36          0          1          0          0          1          1          0
+#&gt; 37          1          1          0          0          0          0          1
+#&gt; 38          0          1          1          1          1          1          0
+#&gt; 39          0          1          1          0          1          0          0
+#&gt; 40          1          1          1          1          0          0          0
+#&gt; 41          1          0          1          0          1          0          1
+#&gt; 42          0          0          0          1          1          1          0
+#&gt; 43          0          1          1          1          0          0          0
+#&gt; 44          1          1          0          1          0          0          0
+#&gt; 45          0          1          0          1          0          1          0
+#&gt; 46          0          0          0          0          1          0          0
+#&gt;    y_pred[52] y_pred[53] y_pred[54] y_pred[55] y_pred[56] y_pred[57] y_pred[58]
+#&gt; 1           1          1          1          1          1          0          1
+#&gt; 2           1          1          0          0          1          1          1
+#&gt; 3           1          1          1          0          0          1          1
+#&gt; 4           1          1          1          0          1          0          0
+#&gt; 5           1          1          0          0          1          1          1
+#&gt; 6           0          0          0          0          1          1          0
+#&gt; 7           0          1          0          0          1          1          1
+#&gt; 8           1          1          0          0          1          1          0
+#&gt; 9           0          0          0          1          1          0          1
+#&gt; 10          1          1          0          1          0          1          1
+#&gt; 11          1          1          0          1          0          1          0
+#&gt; 12          0          0          0          1          1          0          0
+#&gt; 13          0          0          0          1          0          0          0
+#&gt; 14          1          1          0          1          0          0          0
+#&gt; 15          0          0          0          0          1          0          0
+#&gt; 16          0          1          0          0          1          0          0
+#&gt; 17          0          1          0          0          0          0          0
+#&gt; 18          0          0          0          0          0          0          0
+#&gt; 19          0          0          0          0          0          0          0
+#&gt; 20          0          0          1          0          0          0          1
+#&gt; 21          0          0          0          0          0          0          0
+#&gt; 22          0          0          0          0          0          1          1
+#&gt; 23          0          0          0          1          0          1          0
+#&gt; 24          0          0          0          0          1          1          1
+#&gt; 25          1          0          0          1          0          0          0
+#&gt; 26          0          0          1          1          0          1          0
+#&gt; 27          0          0          0          0          0          0          1
+#&gt; 28          0          0          0          0          1          0          0
+#&gt; 29          0          0          0          0          0          0          0
+#&gt; 30          0          0          0          0          0          0          0
+#&gt; 31          1          0          0          0          0          1          0
+#&gt; 32          0          0          0          0          0          0          0
+#&gt; 33          0          0          0          0          0          0          0
+#&gt; 34          0          0          0          1          0          0          0
+#&gt; 35          1          1          0          1          1          1          0
+#&gt; 36          1          0          1          0          0          0          0
+#&gt; 37          0          1          0          0          1          1          0
+#&gt; 38          0          0          0          0          0          0          1
+#&gt; 39          0          0          1          0          0          0          0
+#&gt; 40          0          0          1          0          0          0          1
+#&gt; 41          1          0          1          1          0          0          0
+#&gt; 42          1          0          1          0          0          0          0
+#&gt; 43          0          0          1          1          0          0          0
+#&gt; 44          1          0          1          1          1          0          0
+#&gt; 45          0          1          1          0          0          0          1
+#&gt; 46          0          0          1          0          0          1          0
+#&gt;    y_pred[59] y_pred[60] y_pred[61] y_pred[62] y_pred[63] y_pred[64] y_pred[65]
+#&gt; 1           1          1          0          1          1          1          0
+#&gt; 2           1          1          0          1          0          0          1
+#&gt; 3           1          1          1          1          1          0          0
+#&gt; 4           0          1          0          1          1          0          1
+#&gt; 5           0          0          1          1          1          1          1
+#&gt; 6           0          1          0          0          0          0          0
+#&gt; 7           0          0          1          1          1          0          0
+#&gt; 8           0          1          0          0          0          0          1
+#&gt; 9           1          0          1          0          1          0          1
+#&gt; 10          0          0          1          0          0          0          1
+#&gt; 11          1          1          0          1          0          0          1
+#&gt; 12          0          0          0          1          1          0          0
+#&gt; 13          0          0          0          0          0          0          1
+#&gt; 14          0          0          0          0          0          0          0
+#&gt; 15          0          0          0          0          0          1          0
+#&gt; 16          0          1          1          0          0          1          0
+#&gt; 17          0          0          1          0          0          1          0
+#&gt; 18          0          0          0          0          0          0          0
+#&gt; 19          0          0          0          0          0          0          0
+#&gt; 20          0          0          0          0          0          1          0
+#&gt; 21          1          1          0          1          0          1          0
+#&gt; 22          0          0          0          0          0          0          1
+#&gt; 23          0          0          0          1          0          0          0
+#&gt; 24          0          0          0          0          1          0          1
+#&gt; 25          0          0          1          0          0          1          0
+#&gt; 26          0          0          1          0          0          0          1
+#&gt; 27          0          0          1          1          0          0          0
+#&gt; 28          0          0          0          0          0          0          0
+#&gt; 29          0          0          0          0          1          0          0
+#&gt; 30          0          0          0          0          1          0          0
+#&gt; 31          0          0          0          0          0          0          0
+#&gt; 32          0          0          0          0          0          0          0
+#&gt; 33          0          0          0          0          0          0          0
+#&gt; 34          0          1          0          0          0          0          0
+#&gt; 35          1          1          0          0          0          1          1
+#&gt; 36          1          0          1          1          0          0          0
+#&gt; 37          1          0          1          0          0          0          1
+#&gt; 38          0          1          1          0          1          1          0
+#&gt; 39          0          0          1          0          0          1          0
+#&gt; 40          0          0          1          0          0          0          0
+#&gt; 41          0          0          1          0          1          1          1
+#&gt; 42          0          0          1          0          0          0          1
+#&gt; 43          0          0          0          1          0          1          0
+#&gt; 44          0          0          0          1          0          0          0
+#&gt; 45          0          0          0          0          1          0          0
+#&gt; 46          1          0          1          0          1          0          0
+#&gt;    y_pred[66] y_pred[67] y_pred[68] y_pred[69] y_pred[70] y_pred[71] y_pred[72]
+#&gt; 1           0          1          1          0          1          1          0
+#&gt; 2           1          1          0          1          0          1          0
+#&gt; 3           1          1          1          0          1          1          0
+#&gt; 4           1          1          1          1          1          0          1
+#&gt; 5           0          1          0          0          1          1          0
+#&gt; 6           0          0          1          0          0          0          0
+#&gt; 7           1          1          1          1          0          0          0
+#&gt; 8           0          0          1          0          0          1          1
+#&gt; 9           0          0          0          1          0          1          0
+#&gt; 10          0          0          1          0          0          0          0
+#&gt; 11          0          0          1          1          0          1          0
+#&gt; 12          0          0          0          1          1          0          0
+#&gt; 13          1          0          0          0          0          1          0
+#&gt; 14          0          0          0          0          0          0          0
+#&gt; 15          1          0          0          0          0          0          0
+#&gt; 16          1          1          0          1          1          0          0
+#&gt; 17          1          0          0          1          1          0          0
+#&gt; 18          0          0          0          0          0          0          0
+#&gt; 19          0          0          0          1          1          0          0
+#&gt; 20          0          0          0          0          0          0          0
+#&gt; 21          0          0          1          0          0          0          0
+#&gt; 22          0          0          0          0          0          0          0
+#&gt; 23          0          0          0          1          0          0          1
+#&gt; 24          0          0          1          1          1          0          0
+#&gt; 25          0          0          1          1          0          0          0
+#&gt; 26          0          0          0          0          0          0          1
+#&gt; 27          0          0          0          0          1          0          0
+#&gt; 28          0          0          0          0          0          0          1
+#&gt; 29          0          0          0          0          1          0          0
+#&gt; 30          1          0          0          0          1          0          0
+#&gt; 31          1          0          0          1          0          0          0
+#&gt; 32          1          0          0          0          0          0          0
+#&gt; 33          0          0          0          0          0          0          0
+#&gt; 34          1          1          1          0          1          0          0
+#&gt; 35          0          0          1          1          0          0          1
+#&gt; 36          0          0          1          1          0          1          1
+#&gt; 37          0          0          1          1          1          0          1
+#&gt; 38          1          0          0          0          0          0          0
+#&gt; 39          1          0          0          0          0          0          0
+#&gt; 40          0          0          0          1          0          0          1
+#&gt; 41          1          1          0          0          0          0          0
+#&gt; 42          1          0          0          1          0          0          0
+#&gt; 43          1          0          0          0          0          0          1
+#&gt; 44          1          1          0          0          1          0          1
+#&gt; 45          1          1          0          1          1          0          1
+#&gt; 46          1          1          0          0          1          0          1
+#&gt;    y_pred[73] y_pred[74] y_pred[75] y_pred[76] y_pred[77] y_pred[78] y_pred[79]
+#&gt; 1           1          0          1          1          0          1          0
+#&gt; 2           0          0          1          1          1          1          0
+#&gt; 3           0          1          1          1          1          1          1
+#&gt; 4           1          0          1          0          0          1          0
+#&gt; 5           1          1          1          0          1          0          0
+#&gt; 6           1          0          0          0          0          0          0
+#&gt; 7           0          0          0          1          1          0          1
+#&gt; 8           0          1          0          0          0          1          0
+#&gt; 9           1          0          1          0          1          0          1
+#&gt; 10          0          1          1          0          0          0          0
+#&gt; 11          0          1          0          0          1          0          0
+#&gt; 12          0          1          1          1          1          1          0
+#&gt; 13          0          0          0          0          1          0          1
+#&gt; 14          0          1          0          0          0          0          0
+#&gt; 15          1          1          0          0          0          1          0
+#&gt; 16          0          0          0          0          0          1          0
+#&gt; 17          0          0          0          0          1          0          0
+#&gt; 18          0          0          0          0          0          0          0
+#&gt; 19          0          1          0          0          1          0          0
+#&gt; 20          0          0          0          0          0          0          1
+#&gt; 21          0          0          0          0          0          0          0
+#&gt; 22          0          0          0          0          0          0          0
+#&gt; 23          0          1          0          0          0          0          0
+#&gt; 24          0          0          1          0          0          0          0
+#&gt; 25          1          0          1          1          1          0          0
+#&gt; 26          0          1          0          0          1          1          0
+#&gt; 27          0          0          0          0          0          0          0
+#&gt; 28          0          0          0          0          0          1          0
+#&gt; 29          0          1          0          0          0          0          0
+#&gt; 30          0          0          0          0          0          0          0
+#&gt; 31          0          0          0          0          0          0          0
+#&gt; 32          0          1          0          0          0          0          0
+#&gt; 33          0          0          0          0          0          0          0
+#&gt; 34          0          0          0          0          0          0          1
+#&gt; 35          0          1          1          1          1          1          1
+#&gt; 36          0          0          0          1          1          1          1
+#&gt; 37          0          1          1          1          1          0          1
+#&gt; 38          0          1          0          1          0          1          1
+#&gt; 39          0          1          0          1          0          1          1
+#&gt; 40          0          0          1          1          0          0          0
+#&gt; 41          0          0          1          1          0          1          0
+#&gt; 42          0          1          0          0          0          0          0
+#&gt; 43          0          0          0          1          0          0          0
+#&gt; 44          0          0          0          0          0          1          0
+#&gt; 45          0          0          0          0          0          0          0
+#&gt; 46          0          0          0          0          0          0          0
+#&gt;    y_pred[80] y_pred[81] y_pred[82] y_pred[83] y_pred[84] y_pred[85] y_pred[86]
+#&gt; 1           1          1          0          0          1          0          0
+#&gt; 2           1          1          0          0          1          1          1
+#&gt; 3           0          1          0          1          1          1          0
+#&gt; 4           1          1          0          0          0          1          1
+#&gt; 5           1          1          0          0          1          0          0
+#&gt; 6           1          0          0          0          0          0          0
+#&gt; 7           1          0          0          0          0          1          1
+#&gt; 8           0          0          0          0          0          0          0
+#&gt; 9           0          0          0          0          0          1          0
+#&gt; 10          0          0          0          1          0          0          1
+#&gt; 11          1          0          0          0          0          0          1
+#&gt; 12          0          1          0          1          0          1          0
+#&gt; 13          1          0          0          0          0          0          0
+#&gt; 14          0          0          1          0          0          0          0
+#&gt; 15          0          0          1          0          0          1          1
+#&gt; 16          0          0          0          1          1          0          0
+#&gt; 17          1          0          1          1          0          0          0
+#&gt; 18          1          0          0          0          0          1          0
+#&gt; 19          1          0          1          1          1          0          0
+#&gt; 20          1          0          0          0          1          1          0
+#&gt; 21          0          0          0          1          0          0          0
+#&gt; 22          1          0          0          1          0          0          0
+#&gt; 23          0          0          0          1          0          1          1
+#&gt; 24          0          0          0          1          0          0          0
+#&gt; 25          0          0          1          1          0          0          1
+#&gt; 26          1          0          0          0          0          0          0
+#&gt; 27          1          0          0          0          0          0          0
+#&gt; 28          0          0          0          1          0          0          0
+#&gt; 29          1          0          0          1          0          0          1
+#&gt; 30          0          0          0          0          1          1          0
+#&gt; 31          0          0          0          1          1          1          0
+#&gt; 32          0          0          0          0          1          1          0
+#&gt; 33          0          0          0          0          0          1          0
+#&gt; 34          0          0          0          1          0          0          0
+#&gt; 35          1          1          0          1          0          0          1
+#&gt; 36          0          0          0          0          0          0          0
+#&gt; 37          1          0          1          0          0          1          1
+#&gt; 38          0          1          0          0          1          0          0
+#&gt; 39          0          0          0          0          0          0          1
+#&gt; 40          1          0          0          1          0          1          1
+#&gt; 41          1          1          0          0          1          1          0
+#&gt; 42          0          1          0          0          1          1          0
+#&gt; 43          0          1          0          1          0          1          1
+#&gt; 44          0          0          0          0          1          0          0
+#&gt; 45          0          0          0          1          1          0          0
+#&gt; 46          0          1          0          1          0          0          0
+#&gt;    y_pred[87] y_pred[88] y_pred[89] y_pred[90] y_pred[91] y_pred[92] y_pred[93]
+#&gt; 1           1          1          0          1          0          0          1
+#&gt; 2           1          1          0          0          1          0          1
+#&gt; 3           1          0          1          0          1          0          1
+#&gt; 4           1          0          0          1          1          0          1
+#&gt; 5           1          1          0          0          1          0          0
+#&gt; 6           1          1          0          0          1          0          0
+#&gt; 7           0          0          1          1          0          0          1
+#&gt; 8           0          0          1          0          1          0          0
+#&gt; 9           0          1          1          0          0          0          0
+#&gt; 10          0          0          0          1          0          0          1
+#&gt; 11          0          0          0          1          1          1          0
+#&gt; 12          0          1          0          0          0          1          1
+#&gt; 13          0          1          0          0          1          0          1
+#&gt; 14          0          0          0          0          0          0          0
+#&gt; 15          1          1          0          0          0          1          0
+#&gt; 16          0          0          0          1          1          1          1
+#&gt; 17          0          0          0          0          0          0          0
+#&gt; 18          0          0          0          0          0          0          0
+#&gt; 19          0          0          0          1          0          0          1
+#&gt; 20          0          1          1          0          1          0          1
+#&gt; 21          1          0          0          0          0          0          0
+#&gt; 22          0          1          0          1          0          0          0
+#&gt; 23          0          0          0          0          0          0          1
+#&gt; 24          0          0          1          1          0          0          1
+#&gt; 25          0          0          0          1          0          0          0
+#&gt; 26          0          0          0          1          1          0          0
+#&gt; 27          0          0          0          0          0          1          0
+#&gt; 28          0          0          0          0          0          1          1
+#&gt; 29          1          1          0          1          0          0          0
+#&gt; 30          0          0          0          1          0          0          0
+#&gt; 31          0          0          0          0          0          0          1
+#&gt; 32          1          1          0          0          0          0          1
+#&gt; 33          0          1          0          1          0          0          1
+#&gt; 34          0          0          0          0          0          1          0
+#&gt; 35          1          0          1          1          1          0          0
+#&gt; 36          0          1          1          0          1          1          0
+#&gt; 37          0          1          1          1          0          0          0
+#&gt; 38          0          0          0          1          1          0          0
+#&gt; 39          0          1          0          1          0          0          0
+#&gt; 40          0          0          0          1          0          0          0
+#&gt; 41          0          0          0          1          0          0          0
+#&gt; 42          0          0          0          0          1          1          1
+#&gt; 43          1          0          1          0          1          1          1
+#&gt; 44          0          1          0          0          0          0          1
+#&gt; 45          0          0          0          0          1          0          1
+#&gt; 46          0          0          0          0          0          1          1
 #&gt;    y_pred[94] y_pred[95] y_pred[96] y_pred[97] y_pred[98] y_pred[99]
-#&gt; 1           0          1          0          1          0          1
-#&gt; 2           1          1          1          0          0          1
-#&gt; 3           1          0          0          1          1          1
-#&gt; 4           1          1          1          1          1          1
-#&gt; 5           0          1          0          1          0          1
-#&gt; 6           0          0          1          0          0          1
+#&gt; 1           1          1          0          0          0          1
+#&gt; 2           1          0          1          0          0          1
+#&gt; 3           1          1          1          0          0          0
+#&gt; 4           1          1          1          0          1          1
+#&gt; 5           1          1          1          0          1          0
+#&gt; 6           1          0          1          0          0          0
 #&gt; 7           0          1          0          0          0          0
-#&gt; 8           0          0          0          1          0          1
-#&gt; 9           0          0          1          0          1          1
-#&gt; 10          0          1          0          1          1          0
-#&gt; 11          0          0          0          0          0          1
-#&gt; 12          0          0          1          1          0          1
-#&gt; 13          0          1          0          1          0          1
-#&gt; 14          0          0          0          0          0          0
-#&gt; 15          0          0          1          0          0          0
-#&gt; 16          0          1          1          0          0          0
-#&gt; 17          0          1          0          0          0          0
-#&gt; 18          1          0          0          0          1          0
-#&gt; 19          1          0          0          0          0          1
-#&gt; 20          1          0          0          0          0          0
-#&gt; 21          1          0          0          0          0          1
-#&gt; 22          0          0          1          0          0          0
-#&gt; 23          1          0          0          0          0          1
-#&gt; 24          0          0          1          0          0          0
-#&gt; 25          0          0          0          0          0          0
-#&gt; 26          1          1          0          0          0          0
-#&gt; 27          0          1          0          0          1          0
-#&gt; 28          0          0          0          0          0          1
-#&gt; 29          0          1          0          0          0          0
+#&gt; 8           1          0          1          0          0          1
+#&gt; 9           0          0          1          1          0          0
+#&gt; 10          1          1          0          0          1          1
+#&gt; 11          0          1          1          1          0          0
+#&gt; 12          1          1          0          0          1          1
+#&gt; 13          0          0          0          0          0          1
+#&gt; 14          1          0          0          1          0          0
+#&gt; 15          1          0          1          1          0          0
+#&gt; 16          0          0          0          0          0          0
+#&gt; 17          0          0          1          1          0          0
+#&gt; 18          0          0          0          0          0          0
+#&gt; 19          0          0          0          0          0          0
+#&gt; 20          0          0          0          0          0          0
+#&gt; 21          0          0          0          0          0          0
+#&gt; 22          1          0          0          0          0          0
+#&gt; 23          0          0          1          1          1          0
+#&gt; 24          0          0          0          1          0          1
+#&gt; 25          0          0          0          0          0          1
+#&gt; 26          1          0          0          0          0          1
+#&gt; 27          0          0          0          0          0          0
+#&gt; 28          0          1          0          0          0          0
+#&gt; 29          1          0          0          0          0          0
 #&gt; 30          0          0          0          0          0          0
-#&gt; 31          1          0          0          0          0          0
+#&gt; 31          0          0          0          0          0          0
 #&gt; 32          0          0          0          0          0          0
-#&gt; 33          0          0          0          0          0          1
-#&gt; 34          0          0          0          0          0          0
-#&gt; 35          1          1          1          0          1          0
-#&gt; 36          0          1          1          1          0          1
-#&gt; 37          1          0          0          1          1          0
-#&gt; 38          0          0          0          0          0          0
-#&gt; 39          1          1          0          1          1          1
-#&gt; 40          0          0          0          0          0          0
+#&gt; 33          0          0          0          0          0          0
+#&gt; 34          0          1          0          0          0          0
+#&gt; 35          0          1          1          1          0          1
+#&gt; 36          0          1          1          1          1          1
+#&gt; 37          1          0          1          0          1          0
+#&gt; 38          1          0          1          0          0          0
+#&gt; 39          1          1          0          1          0          0
+#&gt; 40          1          0          0          1          1          0
 #&gt; 41          0          1          0          1          0          0
-#&gt; 42          0          0          0          0          0          0
-#&gt; 43          0          1          0          0          0          1
-#&gt; 44          0          1          0          0          1          1
-#&gt; 45          0          1          0          0          0          0
-#&gt; 46          0          1          0          0          0          0
+#&gt; 42          0          1          0          1          1          0
+#&gt; 43          0          0          1          1          0          1
+#&gt; 44          0          0          0          0          0          0
+#&gt; 45          0          0          0          0          1          1
+#&gt; 46          0          1          1          0          1          1
 #&gt;    y_pred[100]
 #&gt; 1            0
 #&gt; 2            0
-#&gt; 3            1
+#&gt; 3            0
 #&gt; 4            1
 #&gt; 5            1
-#&gt; 6            1
-#&gt; 7            0
+#&gt; 6            0
+#&gt; 7            1
 #&gt; 8            0
-#&gt; 9            0
+#&gt; 9            1
 #&gt; 10           1
 #&gt; 11           0
 #&gt; 12           0
-#&gt; 13           0
+#&gt; 13           1
 #&gt; 14           0
 #&gt; 15           0
 #&gt; 16           0
-#&gt; 17           1
-#&gt; 18           1
-#&gt; 19           0
+#&gt; 17           0
+#&gt; 18           0
+#&gt; 19           1
 #&gt; 20           0
-#&gt; 21           1
+#&gt; 21           0
 #&gt; 22           0
 #&gt; 23           0
-#&gt; 24           1
+#&gt; 24           0
 #&gt; 25           0
-#&gt; 26           1
-#&gt; 27           1
+#&gt; 26           0
+#&gt; 27           0
 #&gt; 28           0
 #&gt; 29           0
-#&gt; 30           0
+#&gt; 30           1
 #&gt; 31           0
 #&gt; 32           0
 #&gt; 33           0
 #&gt; 34           0
 #&gt; 35           1
-#&gt; 36           0
-#&gt; 37           0
+#&gt; 36           1
+#&gt; 37           1
 #&gt; 38           0
 #&gt; 39           0
 #&gt; 40           0
-#&gt; 41           1
-#&gt; 42           1
+#&gt; 41           0
+#&gt; 42           0
 #&gt; 43           0
-#&gt; 44           1
-#&gt; 45           1
+#&gt; 44           0
+#&gt; 45           0
 #&gt; 46           0</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>

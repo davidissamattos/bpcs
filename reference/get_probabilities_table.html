@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -93,7 +93,7 @@
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -103,16 +103,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/a_get_started.html">Getting Started with the bpcs package</a>
+      <a href="../articles/a_get_started.html">Getting started</a>
     </li>
     <li>
-      <a href="../articles/b_ties_and_home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
+      <a href="../articles/b_ties_and_home_advantage">Ties and me advantage</a>
     </li>
     <li>
-      <a href="../articles/c_bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+      <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="../articles/d_paper.html">d_paper</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+    </li>
+    <li>
+      <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
@@ -120,7 +123,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -158,7 +161,8 @@
   n <span class='op'>=</span> <span class='fl'>100</span>,
   format <span class='op'>=</span> <span class='st'>"latex"</span>,
   digits <span class='op'>=</span> <span class='fl'>3</span>,
-  caption <span class='op'>=</span> <span class='st'>"Estimated posterior probabilites"</span>
+  caption <span class='op'>=</span> <span class='st'>"Estimated posterior probabilites"</span>,
+  model_type <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -195,6 +199,10 @@ Possible values are latex, html, p, simple (Pandoc's simple tables), and rst.</p
       <th>caption</th>
       <td><p>a string containing the caption of the table</p></td>
     </tr>
+    <tr>
+      <th>model_type</th>
+      <td><p>when dealing with some models (such as random effects) one might want to make predictions using the estimated parameters with the random effects but without specifying the specific values of random effects to predict. Therefore one can set a subset of the model to make predictions. For example: a model sampled with bt-U can be used to make predictions of the model bt only.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -212,8 +220,8 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 </div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 5.3e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.53 seconds.
+#&gt; Chain 1: Gradient evaluation took 7.2e-05 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.72 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -230,15 +238,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.459334 seconds (Warm-up)
-#&gt; Chain 1:                0.450279 seconds (Sampling)
-#&gt; Chain 1:                0.909613 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.561316 seconds (Warm-up)
+#&gt; Chain 1:                0.504007 seconds (Sampling)
+#&gt; Chain 1:                1.06532 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 4.4e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.44 seconds.
+#&gt; Chain 2: Gradient evaluation took 6.2e-05 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.62 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -255,15 +263,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.428054 seconds (Warm-up)
-#&gt; Chain 2:                0.474838 seconds (Sampling)
-#&gt; Chain 2:                0.902892 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.603865 seconds (Warm-up)
+#&gt; Chain 2:                0.575877 seconds (Sampling)
+#&gt; Chain 2:                1.17974 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 4.4e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.44 seconds.
+#&gt; Chain 3: Gradient evaluation took 6.3e-05 seconds
+#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.63 seconds.
 #&gt; Chain 3: Adjust your expectations accordingly!
 #&gt; Chain 3: 
 #&gt; Chain 3: 
@@ -280,15 +288,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.425982 seconds (Warm-up)
-#&gt; Chain 3:                0.418861 seconds (Sampling)
-#&gt; Chain 3:                0.844843 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.571015 seconds (Warm-up)
+#&gt; Chain 3:                0.587022 seconds (Sampling)
+#&gt; Chain 3:                1.15804 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 4.5e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.45 seconds.
+#&gt; Chain 4: Gradient evaluation took 6.3e-05 seconds
+#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.63 seconds.
 #&gt; Chain 4: Adjust your expectations accordingly!
 #&gt; Chain 4: 
 #&gt; Chain 4: 
@@ -305,39 +313,31 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.429506 seconds (Warm-up)
-#&gt; Chain 4:                0.483532 seconds (Sampling)
-#&gt; Chain 4:                0.913038 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.567335 seconds (Warm-up)
+#&gt; Chain 4:                0.568243 seconds (Sampling)
+#&gt; Chain 4:                1.13558 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='va'>t</span><span class='op'>&lt;-</span><span class='fu'>get_probabilities_table</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; \begin{table}
 #&gt; 
-#&gt; \caption{\label{tab:}Estimated posterior probabilites}
+#&gt; \caption{Estimated posterior probabilites}
 #&gt; \centering
-#&gt; \begin{tabular}[t]{l|l|r|r}
-#&gt; \hline
+#&gt; \begin{tabular}[t]{llrr}
+#&gt; \toprule
 #&gt; i &amp; j &amp; i\_beats\_j &amp; j\_beats\_i\\
-#&gt; \hline
-#&gt; Graf &amp; Navratilova &amp; 0.302 &amp; 0.698\\
-#&gt; \hline
-#&gt; Graf &amp; Sabatini &amp; 0.232 &amp; 0.768\\
-#&gt; \hline
-#&gt; Graf &amp; Sanchez &amp; 0.130 &amp; 0.870\\
-#&gt; \hline
-#&gt; Graf &amp; Seles &amp; 0.397 &amp; 0.603\\
-#&gt; \hline
-#&gt; Navratilova &amp; Sabatini &amp; 0.439 &amp; 0.561\\
-#&gt; \hline
-#&gt; Navratilova &amp; Sanchez &amp; 0.270 &amp; 0.730\\
-#&gt; \hline
-#&gt; Navratilova &amp; Seles &amp; 0.592 &amp; 0.408\\
-#&gt; \hline
-#&gt; Sabatini &amp; Sanchez &amp; 0.328 &amp; 0.671\\
-#&gt; \hline
-#&gt; Sabatini &amp; Seles &amp; 0.677 &amp; 0.323\\
-#&gt; \hline
-#&gt; Sanchez &amp; Seles &amp; 0.799 &amp; 0.200\\
-#&gt; \hline
+#&gt; \midrule
+#&gt; Graf &amp; Navratilova &amp; 0.70 &amp; 0.30\\
+#&gt; Graf &amp; Sabatini &amp; 0.79 &amp; 0.21\\
+#&gt; Graf &amp; Sanchez &amp; 0.81 &amp; 0.19\\
+#&gt; Graf &amp; Seles &amp; 0.55 &amp; 0.45\\
+#&gt; Navratilova &amp; Sabatini &amp; 0.52 &amp; 0.48\\
+#&gt; \addlinespace
+#&gt; Navratilova &amp; Sanchez &amp; 0.76 &amp; 0.24\\
+#&gt; Navratilova &amp; Seles &amp; 0.45 &amp; 0.55\\
+#&gt; Sabatini &amp; Sanchez &amp; 0.71 &amp; 0.29\\
+#&gt; Sabatini &amp; Seles &amp; 0.39 &amp; 0.61\\
+#&gt; Sanchez &amp; Seles &amp; 0.17 &amp; 0.83\\
+#&gt; \bottomrule
 #&gt; \end{tabular}
 #&gt; \end{table}</div><div class='input'><span class='co'># }</span>
 </div></pre>

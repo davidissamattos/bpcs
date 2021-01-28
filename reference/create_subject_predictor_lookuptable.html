@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get the empirical win/draw probabilities based on the ability/strength parameters. — get_probabilities • bpcs</title>
+<title>Create a lookup table for the subject Predictors — create_subject_predictor_lookuptable • bpcs</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Get the empirical win/draw probabilities based on the ability/strength parameters. — get_probabilities" />
-<meta property="og:description" content="Get the empirical win/draw probabilities based on the ability/strength parameters." />
+<meta property="og:title" content="Create a lookup table for the subject Predictors — create_subject_predictor_lookuptable" />
+<meta property="og:description" content="Create a lookup table for the subject Predictors" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -146,41 +146,29 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get the empirical win/draw probabilities based on the ability/strength parameters.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_get_probabilities.R'><code>R/bpc_get_probabilities.R</code></a></small>
-    <div class="hidden name"><code>get_probabilities.Rd</code></div>
+    <h1>Create a lookup table for the subject Predictors</h1>
+    <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_helpers_indexes.R'><code>R/bpc_helpers_indexes.R</code></a></small>
+    <div class="hidden name"><code>create_subject_predictor_lookuptable.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Get the empirical win/draw probabilities based on the ability/strength parameters.</p>
+    <p>Create a lookup table for the subject Predictors</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_probabilities</span><span class='op'>(</span><span class='va'>bpc_object</span>, newdata <span class='op'>=</span> <span class='cn'>NULL</span>, n <span class='op'>=</span> <span class='fl'>100</span>, model_type <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>create_subject_predictor_lookuptable</span><span class='op'>(</span><span class='va'>subject_predictors</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>bpc_object</th>
-      <td><p>a bpc object</p></td>
-    </tr>
-    <tr>
-      <th>newdata</th>
-      <td><p>default to NULL. If used,  it will calculate the probabilities only for the newdata. Otherwise it will calculate for all combinations</p></td>
-    </tr>
-    <tr>
-      <th>n</th>
-      <td><p>number of samples to draw from the posterior</p></td>
-    </tr>
-    <tr>
-      <th>model_type</th>
-      <td><p>when dealing with some models (such as random effects) one might want to make predictions using the estimated parameters with the random effects but without specifying the specific values of random effects to predict. Therefore one can set a subset of the model to make predictions. For example: a model sampled with bt-U can be used to make predictions of the model bt only.</p></td>
+      <th>subject_predictors</th>
+      <td><p>a vectore containing the names of the subject predictors</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list with data frame table with the respective probabilities and a matrix with the corresponding posterior</p>
+    <p>a dataframe with a lookup table</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

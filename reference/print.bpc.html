@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -93,7 +93,7 @@
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -103,16 +103,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/a_get_started.html">Getting Started with the bpcs package</a>
+      <a href="../articles/a_get_started.html">Getting started</a>
     </li>
     <li>
-      <a href="../articles/b_ties_and_home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
+      <a href="../articles/b_ties_and_home_advantage">Ties and me advantage</a>
     </li>
     <li>
-      <a href="../articles/c_bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+      <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="../articles/d_paper.html">d_paper</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+    </li>
+    <li>
+      <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
@@ -120,7 +123,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -184,8 +187,8 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 </div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 5.2e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.52 seconds.
+#&gt; Chain 1: Gradient evaluation took 7e-05 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.7 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -202,15 +205,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.445833 seconds (Warm-up)
-#&gt; Chain 1:                0.474547 seconds (Sampling)
-#&gt; Chain 1:                0.92038 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.567696 seconds (Warm-up)
+#&gt; Chain 1:                0.625549 seconds (Sampling)
+#&gt; Chain 1:                1.19325 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 4.4e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.44 seconds.
+#&gt; Chain 2: Gradient evaluation took 5.8e-05 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.58 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -227,15 +230,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.428861 seconds (Warm-up)
-#&gt; Chain 2:                0.462001 seconds (Sampling)
-#&gt; Chain 2:                0.890862 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.571052 seconds (Warm-up)
+#&gt; Chain 2:                0.629895 seconds (Sampling)
+#&gt; Chain 2:                1.20095 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 4.6e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.46 seconds.
+#&gt; Chain 3: Gradient evaluation took 6e-05 seconds
+#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.6 seconds.
 #&gt; Chain 3: Adjust your expectations accordingly!
 #&gt; Chain 3: 
 #&gt; Chain 3: 
@@ -252,15 +255,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.431757 seconds (Warm-up)
-#&gt; Chain 3:                0.445777 seconds (Sampling)
-#&gt; Chain 3:                0.877534 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.539873 seconds (Warm-up)
+#&gt; Chain 3:                0.576788 seconds (Sampling)
+#&gt; Chain 3:                1.11666 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 4.4e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.44 seconds.
+#&gt; Chain 4: Gradient evaluation took 5.9e-05 seconds
+#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.59 seconds.
 #&gt; Chain 4: Adjust your expectations accordingly!
 #&gt; Chain 4: 
 #&gt; Chain 4: 
@@ -277,11 +280,24 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.428198 seconds (Warm-up)
-#&gt; Chain 4:                0.436843 seconds (Sampling)
-#&gt; Chain 4:                0.865041 seconds (Total)
-#&gt; Chain 4: </div><div class='input'><span class='co'>#' print(m)</span>
-<span class='co'># }</span>
+#&gt; Chain 4:  Elapsed Time: 0.576225 seconds (Warm-up)
+#&gt; Chain 4:                0.62634 seconds (Sampling)
+#&gt; Chain 4:                1.20256 seconds (Total)
+#&gt; Chain 4: </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Estimated baseline parameters with HPD intervals:
+#&gt; 
+#&gt; 
+#&gt; Table: Parameters estimates
+#&gt; 
+#&gt; Parameter                Mean   HPD_lower   HPD_higher
+#&gt; --------------------  -------  ----------  -----------
+#&gt; lambda[Seles]           0.557      -2.097        3.195
+#&gt; lambda[Graf]            0.978      -1.560        3.639
+#&gt; lambda[Sabatini]       -0.301      -2.896        2.326
+#&gt; lambda[Navratilova]     0.076      -2.470        2.764
+#&gt; lambda[Sanchez]        -1.087      -3.638        1.693
+#&gt; NOTES:
+#&gt; * A higher lambda indicates a higher team ability</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

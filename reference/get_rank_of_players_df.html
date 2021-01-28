@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -93,7 +93,7 @@
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -103,16 +103,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/a_get_started.html">Getting Started with the bpcs package</a>
+      <a href="../articles/a_get_started.html">Getting started</a>
     </li>
     <li>
-      <a href="../articles/b_ties_and_home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
+      <a href="../articles/b_ties_and_home_advantage">Ties and me advantage</a>
     </li>
     <li>
-      <a href="../articles/c_bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+      <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="../articles/d_paper.html">d_paper</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+    </li>
+    <li>
+      <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
@@ -120,7 +123,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -182,8 +185,8 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 </div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 5.3e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.53 seconds.
+#&gt; Chain 1: Gradient evaluation took 7e-05 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.7 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -200,15 +203,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.455192 seconds (Warm-up)
-#&gt; Chain 1:                0.488184 seconds (Sampling)
-#&gt; Chain 1:                0.943376 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.56495 seconds (Warm-up)
+#&gt; Chain 1:                0.607777 seconds (Sampling)
+#&gt; Chain 1:                1.17273 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 4.6e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.46 seconds.
+#&gt; Chain 2: Gradient evaluation took 6e-05 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.6 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -225,15 +228,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.452632 seconds (Warm-up)
-#&gt; Chain 2:                0.467584 seconds (Sampling)
-#&gt; Chain 2:                0.920216 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.551442 seconds (Warm-up)
+#&gt; Chain 2:                0.51387 seconds (Sampling)
+#&gt; Chain 2:                1.06531 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 4.6e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.46 seconds.
+#&gt; Chain 3: Gradient evaluation took 5.8e-05 seconds
+#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.58 seconds.
 #&gt; Chain 3: Adjust your expectations accordingly!
 #&gt; Chain 3: 
 #&gt; Chain 3: 
@@ -250,15 +253,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.448845 seconds (Warm-up)
-#&gt; Chain 3:                0.393496 seconds (Sampling)
-#&gt; Chain 3:                0.842341 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.579428 seconds (Warm-up)
+#&gt; Chain 3:                0.528196 seconds (Sampling)
+#&gt; Chain 3:                1.10762 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 6e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.6 seconds.
+#&gt; Chain 4: Gradient evaluation took 5.9e-05 seconds
+#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.59 seconds.
 #&gt; Chain 4: Adjust your expectations accordingly!
 #&gt; Chain 4: 
 #&gt; Chain 4: 
@@ -275,19 +278,19 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.455742 seconds (Warm-up)
-#&gt; Chain 4:                0.46602 seconds (Sampling)
-#&gt; Chain 4:                0.921762 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.57595 seconds (Warm-up)
+#&gt; Chain 4:                0.61547 seconds (Sampling)
+#&gt; Chain 4:                1.19142 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='va'>rank_m</span><span class='op'>&lt;-</span><span class='fu'>get_rank_of_players_df</span><span class='op'>(</span><span class='va'>m</span>,n<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>rank_m</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 4</span><span>
 #&gt;   Parameter           MedianRank MeanRank StdRank
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> lambda[Graf]                 1     1.39   0.709
-#&gt; </span><span style='color: #555555;'>2</span><span> lambda[Seles]                2     2.13   0.849
-#&gt; </span><span style='color: #555555;'>3</span><span> lambda[Navratilova]          3     3.03   1.00 
-#&gt; </span><span style='color: #555555;'>4</span><span> lambda[Sabatini]             4     3.7    0.810
-#&gt; </span><span style='color: #555555;'>5</span><span> lambda[Sanchez]              5     4.75   0.5  </div><div class='input'><span class='co'># }</span>
+#&gt; </span><span style='color: #555555;'>1</span><span> lambda[Graf]                 1     1.35   0.592
+#&gt; </span><span style='color: #555555;'>2</span><span> lambda[Seles]                2     2.17   0.853
+#&gt; </span><span style='color: #555555;'>3</span><span> lambda[Navratilova]          3     3.01   0.927
+#&gt; </span><span style='color: #555555;'>4</span><span> lambda[Sabatini]             4     3.66   0.879
+#&gt; </span><span style='color: #555555;'>5</span><span> lambda[Sanchez]              5     4.81   0.443</div><div class='input'><span class='co'># }</span>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

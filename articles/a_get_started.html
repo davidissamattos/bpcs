@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -51,7 +51,7 @@
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -61,16 +61,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/a_get_started.html">Getting Started with the bpcs package</a>
+      <a href="../articles/a_get_started.html">Getting started</a>
     </li>
     <li>
-      <a href="../articles/b_ties_and_home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
+      <a href="../articles/b_ties_and_home_advantage">Ties and me advantage</a>
     </li>
     <li>
-      <a href="../articles/c_bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+      <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="../articles/d_paper.html">d_paper</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+    </li>
+    <li>
+      <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
@@ -78,7 +81,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -114,11 +117,11 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/davidissamattos/bpcs">bpcs</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/bayesplot">bayesplot</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/bayesplot/">bayesplot</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span></code></pre></div>
 <div id="getting-started" class="section level1">
 <h1 class="hasAnchor">
@@ -828,8 +831,8 @@ Sanchez
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).</span>
 <span class="co">#&gt; Chain 1: </span>
-<span class="co">#&gt; Chain 1: Gradient evaluation took 0.000103 seconds</span>
-<span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.03 seconds.</span>
+<span class="co">#&gt; Chain 1: Gradient evaluation took 0.000138 seconds</span>
+<span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.38 seconds.</span>
 <span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 1: </span>
 <span class="co">#&gt; Chain 1: </span>
@@ -846,15 +849,15 @@ Sanchez
 <span class="co">#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 1: </span>
-<span class="co">#&gt; Chain 1:  Elapsed Time: 0.392002 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 1:                0.432056 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 1:                0.824058 seconds (Total)</span>
+<span class="co">#&gt; Chain 1:  Elapsed Time: 0.590016 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 1:                0.604528 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 1:                1.19454 seconds (Total)</span>
 <span class="co">#&gt; Chain 1: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).</span>
 <span class="co">#&gt; Chain 2: </span>
-<span class="co">#&gt; Chain 2: Gradient evaluation took 4.1e-05 seconds</span>
-<span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.41 seconds.</span>
+<span class="co">#&gt; Chain 2: Gradient evaluation took 6.2e-05 seconds</span>
+<span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.62 seconds.</span>
 <span class="co">#&gt; Chain 2: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 2: </span>
 <span class="co">#&gt; Chain 2: </span>
@@ -871,15 +874,15 @@ Sanchez
 <span class="co">#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 2: </span>
-<span class="co">#&gt; Chain 2:  Elapsed Time: 0.386283 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 2:                0.372151 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 2:                0.758434 seconds (Total)</span>
+<span class="co">#&gt; Chain 2:  Elapsed Time: 0.58598 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 2:                0.570402 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 2:                1.15638 seconds (Total)</span>
 <span class="co">#&gt; Chain 2: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).</span>
 <span class="co">#&gt; Chain 3: </span>
-<span class="co">#&gt; Chain 3: Gradient evaluation took 3.9e-05 seconds</span>
-<span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.39 seconds.</span>
+<span class="co">#&gt; Chain 3: Gradient evaluation took 6.9e-05 seconds</span>
+<span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.69 seconds.</span>
 <span class="co">#&gt; Chain 3: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 3: </span>
 <span class="co">#&gt; Chain 3: </span>
@@ -896,15 +899,15 @@ Sanchez
 <span class="co">#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 3: </span>
-<span class="co">#&gt; Chain 3:  Elapsed Time: 0.391269 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 3:                0.341988 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 3:                0.733257 seconds (Total)</span>
+<span class="co">#&gt; Chain 3:  Elapsed Time: 0.618259 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 3:                0.673357 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 3:                1.29162 seconds (Total)</span>
 <span class="co">#&gt; Chain 3: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).</span>
 <span class="co">#&gt; Chain 4: </span>
-<span class="co">#&gt; Chain 4: Gradient evaluation took 4e-05 seconds</span>
-<span class="co">#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.4 seconds.</span>
+<span class="co">#&gt; Chain 4: Gradient evaluation took 6.2e-05 seconds</span>
+<span class="co">#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.62 seconds.</span>
 <span class="co">#&gt; Chain 4: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 4: </span>
 <span class="co">#&gt; Chain 4: </span>
@@ -921,9 +924,9 @@ Sanchez
 <span class="co">#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 4: </span>
-<span class="co">#&gt; Chain 4:  Elapsed Time: 0.373935 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 4:                0.392833 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 4:                0.766768 seconds (Total)</span>
+<span class="co">#&gt; Chain 4:  Elapsed Time: 0.59116 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 4:                0.591099 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 4:                1.18226 seconds (Total)</span>
 <span class="co">#&gt; Chain 4:</span></code></pre></div>
 <div id="diagnostics" class="section level2">
 <h2 class="hasAnchor">
@@ -1000,18 +1003,18 @@ Sanchez
 <p>Verifying the Rhat and neff using the functions from <code>rstan</code></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">rstan</span><span class="fu">::</span><span class="fu">summary</span><span class="op">(</span><span class="va">stanfit</span> ,pars<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'lambda'</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">summary</span>
-<span class="co">#&gt;                  mean    se_mean       sd      2.5%         25%          50%</span>
-<span class="co">#&gt; lambda[1]  0.49917675 0.06101414 1.442905 -2.329466 -0.46175916  0.463545476</span>
-<span class="co">#&gt; lambda[2]  0.92519013 0.06029426 1.416018 -1.835890 -0.05537182  0.909904307</span>
-<span class="co">#&gt; lambda[3] -0.35323971 0.06103733 1.421018 -3.035739 -1.33772422 -0.392723671</span>
-<span class="co">#&gt; lambda[4]  0.02346743 0.06099180 1.428114 -2.733775 -0.93696690  0.001815246</span>
-<span class="co">#&gt; lambda[5] -1.15055689 0.05973547 1.432776 -3.821074 -2.16107648 -1.149541782</span>
+<span class="co">#&gt;                  mean    se_mean       sd      2.5%         25%         50%</span>
+<span class="co">#&gt; lambda[1]  0.53824915 0.04996378 1.389220 -2.154431 -0.40896385  0.56703037</span>
+<span class="co">#&gt; lambda[2]  0.94945853 0.04829845 1.365375 -1.796190  0.04636253  0.96561648</span>
+<span class="co">#&gt; lambda[3] -0.32725797 0.04855893 1.373760 -3.111374 -1.23703181 -0.31713813</span>
+<span class="co">#&gt; lambda[4]  0.04283752 0.04833820 1.370960 -2.744614 -0.89468398  0.05721595</span>
+<span class="co">#&gt; lambda[5] -1.11196299 0.04917930 1.382364 -3.908837 -2.03021066 -1.07897885</span>
 <span class="co">#&gt;                  75%    97.5%    n_eff     Rhat</span>
-<span class="co">#&gt; lambda[1]  1.4351332 3.415848 559.2609 1.010563</span>
-<span class="co">#&gt; lambda[2]  1.8730706 3.767280 551.5508 1.009803</span>
-<span class="co">#&gt; lambda[3]  0.5924867 2.458594 542.0111 1.010520</span>
-<span class="co">#&gt; lambda[4]  0.9546216 2.841033 548.2551 1.009937</span>
-<span class="co">#&gt; lambda[5] -0.2081921 1.691774 575.2967 1.009828</span></code></pre></div>
+<span class="co">#&gt; lambda[1]  1.5062407 3.240077 773.0926 1.007266</span>
+<span class="co">#&gt; lambda[2]  1.8723320 3.542380 799.1674 1.006494</span>
+<span class="co">#&gt; lambda[3]  0.6297768 2.249540 800.3565 1.006955</span>
+<span class="co">#&gt; lambda[4]  0.9681568 2.636910 804.3933 1.006944</span>
+<span class="co">#&gt; lambda[5] -0.1846671 1.532191 790.0968 1.005927</span></code></pre></div>
 </div>
 <div id="predictive-posterior" class="section level2">
 <h2 class="hasAnchor">
@@ -1041,14 +1044,13 @@ Sanchez
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter               Mean   HPD_lower   HPD_higher</span>
 <span class="co">#&gt; --------------------  ------  ----------  -----------</span>
-<span class="co">#&gt; lambda[Seles]           0.50       -2.35         3.38</span>
-<span class="co">#&gt; lambda[Graf]            0.93       -1.90         3.68</span>
-<span class="co">#&gt; lambda[Sabatini]       -0.35       -2.98         2.49</span>
-<span class="co">#&gt; lambda[Navratilova]     0.02       -2.75         2.82</span>
-<span class="co">#&gt; lambda[Sanchez]        -1.15       -3.86         1.64</span>
+<span class="co">#&gt; lambda[Seles]           0.54       -2.19         3.19</span>
+<span class="co">#&gt; lambda[Graf]            0.95       -1.81         3.52</span>
+<span class="co">#&gt; lambda[Sabatini]       -0.33       -3.15         2.21</span>
+<span class="co">#&gt; lambda[Navratilova]     0.04       -2.64         2.71</span>
+<span class="co">#&gt; lambda[Sanchez]        -1.11       -3.88         1.54</span>
 <span class="co">#&gt; NOTES:</span>
 <span class="co">#&gt; * A higher lambda indicates a higher team ability</span>
-<span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior probabilities:</span>
 <span class="co">#&gt; These probabilities are calculated from the predictive posterior distribution</span>
@@ -1059,17 +1061,16 @@ Sanchez
 <span class="co">#&gt; </span>
 <span class="co">#&gt; i             j              i_beats_j   j_beats_i</span>
 <span class="co">#&gt; ------------  ------------  ----------  ----------</span>
-<span class="co">#&gt; Graf          Navratilova         0.30        0.70</span>
-<span class="co">#&gt; Graf          Sabatini            0.24        0.76</span>
-<span class="co">#&gt; Graf          Sanchez             0.13        0.87</span>
-<span class="co">#&gt; Graf          Seles               0.41        0.59</span>
-<span class="co">#&gt; Navratilova   Sabatini            0.41        0.59</span>
-<span class="co">#&gt; Navratilova   Sanchez             0.27        0.73</span>
-<span class="co">#&gt; Navratilova   Seles               0.60        0.40</span>
-<span class="co">#&gt; Sabatini      Sanchez             0.33        0.67</span>
-<span class="co">#&gt; Sabatini      Seles               0.68        0.32</span>
-<span class="co">#&gt; Sanchez       Seles               0.82        0.18</span>
-<span class="co">#&gt; </span>
+<span class="co">#&gt; Graf          Navratilova         0.68        0.32</span>
+<span class="co">#&gt; Graf          Sabatini            0.79        0.21</span>
+<span class="co">#&gt; Graf          Sanchez             0.90        0.10</span>
+<span class="co">#&gt; Graf          Seles               0.50        0.50</span>
+<span class="co">#&gt; Navratilova   Sabatini            0.64        0.36</span>
+<span class="co">#&gt; Navratilova   Sanchez             0.74        0.26</span>
+<span class="co">#&gt; Navratilova   Seles               0.40        0.60</span>
+<span class="co">#&gt; Sabatini      Sanchez             0.65        0.35</span>
+<span class="co">#&gt; Sabatini      Seles               0.32        0.68</span>
+<span class="co">#&gt; Sanchez       Seles               0.13        0.87</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Rank of the players' abilities:</span>
 <span class="co">#&gt; The rank is based on the posterior rank distribution of the lambda parameter</span>
@@ -1079,11 +1080,11 @@ Sanchez
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter              MedianRank   MeanRank   StdRank</span>
 <span class="co">#&gt; --------------------  -----------  ---------  --------</span>
-<span class="co">#&gt; lambda[Graf]                    1       1.44      0.66</span>
-<span class="co">#&gt; lambda[Seles]                   2       2.08      0.92</span>
-<span class="co">#&gt; lambda[Navratilova]             3       3.00      0.91</span>
-<span class="co">#&gt; lambda[Sabatini]                4       3.69      0.82</span>
-<span class="co">#&gt; lambda[Sanchez]                 5       4.79      0.51</span></code></pre></div>
+<span class="co">#&gt; lambda[Graf]                    1       1.38      0.63</span>
+<span class="co">#&gt; lambda[Seles]                   2       2.09      0.85</span>
+<span class="co">#&gt; lambda[Navratilova]             3       3.04      0.91</span>
+<span class="co">#&gt; lambda[Sabatini]                4       3.68      0.81</span>
+<span class="co">#&gt; lambda[Sanchez]                 5       4.80      0.48</span></code></pre></div>
 <p>If we want to create nicer tables and export them to latex/html we can leverage this with the <code>kable</code> function and the <code>kableExtra</code> package. Note that for extensive customization (and examples) we refer to the packages documentation.</p>
 <p>Parameter table with HPD intervals</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -1113,13 +1114,13 @@ HPD_higher
 lambda[Seles]
 </td>
 <td style="text-align:right;">
-0.499
+0.538
 </td>
 <td style="text-align:right;">
--2.349
+-2.189
 </td>
 <td style="text-align:right;">
-3.378
+3.191
 </td>
 </tr>
 <tr>
@@ -1127,13 +1128,13 @@ lambda[Seles]
 lambda[Graf]
 </td>
 <td style="text-align:right;">
-0.925
+0.949
 </td>
 <td style="text-align:right;">
--1.897
+-1.813
 </td>
 <td style="text-align:right;">
-3.676
+3.519
 </td>
 </tr>
 <tr>
@@ -1141,13 +1142,13 @@ lambda[Graf]
 lambda[Sabatini]
 </td>
 <td style="text-align:right;">
--0.353
+-0.327
 </td>
 <td style="text-align:right;">
--2.981
+-3.154
 </td>
 <td style="text-align:right;">
-2.486
+2.206
 </td>
 </tr>
 <tr>
@@ -1155,13 +1156,13 @@ lambda[Sabatini]
 lambda[Navratilova]
 </td>
 <td style="text-align:right;">
-0.023
+0.043
 </td>
 <td style="text-align:right;">
--2.753
+-2.636
 </td>
 <td style="text-align:right;">
-2.816
+2.713
 </td>
 </tr>
 <tr>
@@ -1169,13 +1170,13 @@ lambda[Navratilova]
 lambda[Sanchez]
 </td>
 <td style="text-align:right;">
--1.151
+-1.112
 </td>
 <td style="text-align:right;">
--3.858
+-3.876
 </td>
 <td style="text-align:right;">
-1.640
+1.539
 </td>
 </tr>
 </tbody>
@@ -1214,10 +1215,10 @@ Graf
 Navratilova
 </td>
 <td style="text-align:right;">
-0.314
+0.70
 </td>
 <td style="text-align:right;">
-0.686
+0.30
 </td>
 </tr>
 <tr>
@@ -1228,10 +1229,10 @@ Graf
 Sabatini
 </td>
 <td style="text-align:right;">
-0.232
+0.73
 </td>
 <td style="text-align:right;">
-0.768
+0.27
 </td>
 </tr>
 <tr>
@@ -1242,10 +1243,10 @@ Graf
 Sanchez
 </td>
 <td style="text-align:right;">
-0.127
+0.86
 </td>
 <td style="text-align:right;">
-0.873
+0.14
 </td>
 </tr>
 <tr>
@@ -1256,10 +1257,10 @@ Graf
 Seles
 </td>
 <td style="text-align:right;">
-0.399
+0.56
 </td>
 <td style="text-align:right;">
-0.601
+0.44
 </td>
 </tr>
 <tr>
@@ -1270,10 +1271,10 @@ Navratilova
 Sabatini
 </td>
 <td style="text-align:right;">
-0.420
+0.67
 </td>
 <td style="text-align:right;">
-0.580
+0.33
 </td>
 </tr>
 <tr>
@@ -1284,10 +1285,10 @@ Navratilova
 Sanchez
 </td>
 <td style="text-align:right;">
-0.255
+0.71
 </td>
 <td style="text-align:right;">
-0.745
+0.29
 </td>
 </tr>
 <tr>
@@ -1298,10 +1299,10 @@ Navratilova
 Seles
 </td>
 <td style="text-align:right;">
-0.608
+0.38
 </td>
 <td style="text-align:right;">
-0.392
+0.62
 </td>
 </tr>
 <tr>
@@ -1312,10 +1313,10 @@ Sabatini
 Sanchez
 </td>
 <td style="text-align:right;">
-0.326
+0.71
 </td>
 <td style="text-align:right;">
-0.674
+0.29
 </td>
 </tr>
 <tr>
@@ -1326,10 +1327,10 @@ Sabatini
 Seles
 </td>
 <td style="text-align:right;">
-0.675
+0.35
 </td>
 <td style="text-align:right;">
-0.325
+0.65
 </td>
 </tr>
 <tr>
@@ -1340,10 +1341,10 @@ Sanchez
 Seles
 </td>
 <td style="text-align:right;">
-0.808
+0.18
 </td>
 <td style="text-align:right;">
-0.192
+0.82
 </td>
 </tr>
 </tbody>
@@ -1380,10 +1381,10 @@ lambda[Graf]
 1
 </td>
 <td style="text-align:right;">
-1.408
+1.358
 </td>
 <td style="text-align:right;">
-0.634
+0.612
 </td>
 </tr>
 <tr>
@@ -1394,10 +1395,10 @@ lambda[Seles]
 2
 </td>
 <td style="text-align:right;">
-2.125
+2.129
 </td>
 <td style="text-align:right;">
-0.950
+0.859
 </td>
 </tr>
 <tr>
@@ -1408,10 +1409,10 @@ lambda[Navratilova]
 3
 </td>
 <td style="text-align:right;">
-3.009
+3.035
 </td>
 <td style="text-align:right;">
-0.908
+0.906
 </td>
 </tr>
 <tr>
@@ -1422,10 +1423,10 @@ lambda[Sabatini]
 4
 </td>
 <td style="text-align:right;">
-3.677
+3.665
 </td>
 <td style="text-align:right;">
-0.835
+0.829
 </td>
 </tr>
 <tr>
@@ -1436,10 +1437,10 @@ lambda[Sanchez]
 5
 </td>
 <td style="text-align:right;">
-4.781
+4.813
 </td>
 <td style="text-align:right;">
-0.497
+0.445
 </td>
 </tr>
 </tbody>
@@ -1482,7 +1483,7 @@ Seles
 Graf
 </td>
 <td style="text-align:right;">
-0.59
+0.58
 </td>
 </tr>
 <tr>
@@ -1493,7 +1494,7 @@ Seles
 Sabatini
 </td>
 <td style="text-align:right;">
-0.31
+0.34
 </td>
 </tr>
 <tr>
@@ -1504,7 +1505,7 @@ Seles
 Navratilova
 </td>
 <td style="text-align:right;">
-0.40
+0.33
 </td>
 </tr>
 <tr>
@@ -1515,7 +1516,7 @@ Seles
 Sanchez
 </td>
 <td style="text-align:right;">
-0.16
+0.15
 </td>
 </tr>
 </tbody>

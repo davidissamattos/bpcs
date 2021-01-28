@@ -86,7 +86,7 @@ Table 3: Contains the ranking of the players' abilities based on the posterior d
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@ Table 3: Contains the ranking of the players' abilities based on the posterior d
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -109,16 +109,19 @@ Table 3: Contains the ranking of the players' abilities based on the posterior d
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/a_get_started.html">Getting Started with the bpcs package</a>
+      <a href="../articles/a_get_started.html">Getting started</a>
     </li>
     <li>
-      <a href="../articles/b_ties_and_home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
+      <a href="../articles/b_ties_and_home_advantage">Ties and me advantage</a>
     </li>
     <li>
-      <a href="../articles/c_bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+      <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="../articles/d_paper.html">d_paper</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+    </li>
+    <li>
+      <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
@@ -126,7 +129,7 @@ Table 3: Contains the ranking of the players' abilities based on the posterior d
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -200,8 +203,8 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 </div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 5.1e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.51 seconds.
+#&gt; Chain 1: Gradient evaluation took 7e-05 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.7 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -218,15 +221,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.43573 seconds (Warm-up)
-#&gt; Chain 1:                0.442635 seconds (Sampling)
-#&gt; Chain 1:                0.878365 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.555243 seconds (Warm-up)
+#&gt; Chain 1:                0.60449 seconds (Sampling)
+#&gt; Chain 1:                1.15973 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 4.4e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.44 seconds.
+#&gt; Chain 2: Gradient evaluation took 5.9e-05 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.59 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -243,15 +246,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.457155 seconds (Warm-up)
-#&gt; Chain 2:                0.445024 seconds (Sampling)
-#&gt; Chain 2:                0.902179 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.581664 seconds (Warm-up)
+#&gt; Chain 2:                0.62109 seconds (Sampling)
+#&gt; Chain 2:                1.20275 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 4.7e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.47 seconds.
+#&gt; Chain 3: Gradient evaluation took 5.9e-05 seconds
+#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.59 seconds.
 #&gt; Chain 3: Adjust your expectations accordingly!
 #&gt; Chain 3: 
 #&gt; Chain 3: 
@@ -268,15 +271,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.449185 seconds (Warm-up)
-#&gt; Chain 3:                0.430409 seconds (Sampling)
-#&gt; Chain 3:                0.879594 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.571686 seconds (Warm-up)
+#&gt; Chain 3:                0.536831 seconds (Sampling)
+#&gt; Chain 3:                1.10852 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 4.5e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.45 seconds.
+#&gt; Chain 4: Gradient evaluation took 5.9e-05 seconds
+#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.59 seconds.
 #&gt; Chain 4: Adjust your expectations accordingly!
 #&gt; Chain 4: 
 #&gt; Chain 4: 
@@ -293,9 +296,9 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.457651 seconds (Warm-up)
-#&gt; Chain 4:                0.422072 seconds (Sampling)
-#&gt; Chain 4:                0.879723 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.560052 seconds (Warm-up)
+#&gt; Chain 4:                0.620979 seconds (Sampling)
+#&gt; Chain 4:                1.18103 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Estimated baseline parameters with HPD intervals:
 #&gt; 
@@ -304,14 +307,13 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; 
 #&gt; Parameter               Mean   HPD_lower   HPD_higher
 #&gt; --------------------  ------  ----------  -----------
-#&gt; lambda[Seles]           0.47       -2.32         3.50
-#&gt; lambda[Graf]            0.88       -2.11         3.68
-#&gt; lambda[Sabatini]       -0.39       -3.41         2.43
-#&gt; lambda[Navratilova]     0.00       -2.87         2.80
-#&gt; lambda[Sanchez]        -1.17       -4.25         1.57
+#&gt; lambda[Seles]           0.41       -2.39         3.20
+#&gt; lambda[Graf]            0.84       -1.67         3.76
+#&gt; lambda[Sabatini]       -0.43       -3.05         2.39
+#&gt; lambda[Navratilova]    -0.06       -2.73         2.71
+#&gt; lambda[Sanchez]        -1.21       -4.01         1.45
 #&gt; NOTES:
 #&gt; * A higher lambda indicates a higher team ability
-#&gt; 
 #&gt; 
 #&gt; Posterior probabilities:
 #&gt; These probabilities are calculated from the predictive posterior distribution
@@ -322,17 +324,16 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; 
 #&gt; i             j              i_beats_j   j_beats_i
 #&gt; ------------  ------------  ----------  ----------
-#&gt; Graf          Navratilova         0.31        0.69
-#&gt; Graf          Sabatini            0.24        0.76
-#&gt; Graf          Sanchez             0.13        0.87
-#&gt; Graf          Seles               0.41        0.59
-#&gt; Navratilova   Sabatini            0.41        0.59
-#&gt; Navratilova   Sanchez             0.25        0.75
-#&gt; Navratilova   Seles               0.60        0.40
-#&gt; Sabatini      Sanchez             0.33        0.67
-#&gt; Sabatini      Seles               0.68        0.32
-#&gt; Sanchez       Seles               0.80        0.20
-#&gt; 
+#&gt; Graf          Navratilova         0.63        0.37
+#&gt; Graf          Sabatini            0.79        0.21
+#&gt; Graf          Sanchez             0.82        0.18
+#&gt; Graf          Seles               0.64        0.36
+#&gt; Navratilova   Sabatini            0.47        0.53
+#&gt; Navratilova   Sanchez             0.78        0.22
+#&gt; Navratilova   Seles               0.39        0.61
+#&gt; Sabatini      Sanchez             0.70        0.30
+#&gt; Sabatini      Seles               0.32        0.68
+#&gt; Sanchez       Seles               0.27        0.73
 #&gt; 
 #&gt; Rank of the players' abilities:
 #&gt; The rank is based on the posterior rank distribution of the lambda parameter
@@ -342,11 +343,11 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; 
 #&gt; Parameter              MedianRank   MeanRank   StdRank
 #&gt; --------------------  -----------  ---------  --------
-#&gt; lambda[Graf]                    1       1.34      0.58
-#&gt; lambda[Seles]                   2       2.11      0.88
-#&gt; lambda[Navratilova]             3       3.04      0.83
-#&gt; lambda[Sabatini]                4       3.73      0.83
-#&gt; lambda[Sanchez]                 5       4.78      0.53</div><div class='input'><span class='co'># }</span>
+#&gt; lambda[Graf]                    1       1.39      0.62
+#&gt; lambda[Seles]                   2       2.13      0.92
+#&gt; lambda[Navratilova]             3       3.01      0.89
+#&gt; lambda[Sabatini]                4       3.64      0.79
+#&gt; lambda[Sanchez]                 5       4.83      0.49</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

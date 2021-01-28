@@ -81,7 +81,7 @@ This excludes the log_lik paramter" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -94,7 +94,7 @@ This excludes the log_lik paramter" />
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -104,16 +104,19 @@ This excludes the log_lik paramter" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/a_get_started.html">Getting Started with the bpcs package</a>
+      <a href="../articles/a_get_started.html">Getting started</a>
     </li>
     <li>
-      <a href="../articles/b_ties_and_home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
+      <a href="../articles/b_ties_and_home_advantage">Ties and me advantage</a>
     </li>
     <li>
-      <a href="../articles/c_bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+      <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="../articles/d_paper.html">d_paper</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+    </li>
+    <li>
+      <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
@@ -121,7 +124,7 @@ This excludes the log_lik paramter" />
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -180,8 +183,8 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 </div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 5.1e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.51 seconds.
+#&gt; Chain 1: Gradient evaluation took 7e-05 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.7 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -198,15 +201,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.413332 seconds (Warm-up)
-#&gt; Chain 1:                0.40345 seconds (Sampling)
-#&gt; Chain 1:                0.816782 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.587107 seconds (Warm-up)
+#&gt; Chain 1:                0.619023 seconds (Sampling)
+#&gt; Chain 1:                1.20613 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 4.4e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.44 seconds.
+#&gt; Chain 2: Gradient evaluation took 6e-05 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.6 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -223,15 +226,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.45253 seconds (Warm-up)
-#&gt; Chain 2:                0.452311 seconds (Sampling)
-#&gt; Chain 2:                0.904841 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.573262 seconds (Warm-up)
+#&gt; Chain 2:                0.549796 seconds (Sampling)
+#&gt; Chain 2:                1.12306 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 4.5e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.45 seconds.
+#&gt; Chain 3: Gradient evaluation took 5.9e-05 seconds
+#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.59 seconds.
 #&gt; Chain 3: Adjust your expectations accordingly!
 #&gt; Chain 3: 
 #&gt; Chain 3: 
@@ -248,15 +251,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.43709 seconds (Warm-up)
-#&gt; Chain 3:                0.497875 seconds (Sampling)
-#&gt; Chain 3:                0.934965 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.580721 seconds (Warm-up)
+#&gt; Chain 3:                0.585143 seconds (Sampling)
+#&gt; Chain 3:                1.16586 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 4.4e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.44 seconds.
+#&gt; Chain 4: Gradient evaluation took 5.7e-05 seconds
+#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.57 seconds.
 #&gt; Chain 4: Adjust your expectations accordingly!
 #&gt; Chain 4: 
 #&gt; Chain 4: 
@@ -273,43 +276,62 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.438814 seconds (Warm-up)
-#&gt; Chain 4:                0.42148 seconds (Sampling)
-#&gt; Chain 4:                0.860294 seconds (Total)
-#&gt; Chain 4: </div><div class='input'><span class='va'>s</span> <span class='op'>&lt;-</span> <span class='fu'>get_stanfit_summary</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+#&gt; Chain 4:  Elapsed Time: 0.594201 seconds (Warm-up)
+#&gt; Chain 4:                0.599098 seconds (Sampling)
+#&gt; Chain 4:                1.1933 seconds (Total)
+#&gt; Chain 4: </div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='input'><span class='va'>s</span> <span class='op'>&lt;-</span> <span class='fu'>get_stanfit_summary</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>s</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;          Parameter        mean    se_mean       sd      2.5%         25%
-#&gt; 1  lambda_param[1]  0.49190075 0.06584384 1.466866 -2.366287 -0.49297226
-#&gt; 2  lambda_param[2]  0.92513564 0.06569247 1.436875 -1.841440 -0.04272316
-#&gt; 3  lambda_param[3] -0.36040995 0.06455815 1.453312 -3.185289 -1.33593251
-#&gt; 4  lambda_param[4]  0.01615506 0.06575449 1.442824 -2.854019 -0.94833208
-#&gt; 5  lambda_param[5] -1.14768436 0.06481527 1.447516 -3.943182 -2.11854317
-#&gt; 6        lambda[1]  0.49190075 0.06584384 1.466866 -2.366287 -0.49297226
-#&gt; 7        lambda[2]  0.92513564 0.06569247 1.436875 -1.841440 -0.04272316
-#&gt; 8        lambda[3] -0.36040995 0.06455815 1.453312 -3.185289 -1.33593251
-#&gt; 9        lambda[4]  0.01615506 0.06575449 1.442824 -2.854019 -0.94833208
-#&gt; 10       lambda[5] -1.14768436 0.06481527 1.447516 -3.943182 -2.11854317
+#&gt; 1  lambda_param[1]  0.42139212 0.06875923 1.449677 -2.507923 -0.53349602
+#&gt; 2  lambda_param[2]  0.85874669 0.06956294 1.409651 -1.954686 -0.05660934
+#&gt; 3  lambda_param[3] -0.41702225 0.06920432 1.425483 -3.265631 -1.36896676
+#&gt; 4  lambda_param[4] -0.03707412 0.06727246 1.437096 -2.879548 -1.00600939
+#&gt; 5  lambda_param[5] -1.19721049 0.06868723 1.427954 -4.000366 -2.16552413
+#&gt; 6        lambda[1]  0.42139212 0.06875923 1.449677 -2.507923 -0.53349602
+#&gt; 7        lambda[2]  0.85874669 0.06956294 1.409651 -1.954686 -0.05660934
+#&gt; 8        lambda[3] -0.41702225 0.06920432 1.425483 -3.265631 -1.36896676
+#&gt; 9        lambda[4] -0.03707412 0.06727246 1.437096 -2.879548 -1.00600939
+#&gt; 10       lambda[5] -1.19721049 0.06868723 1.427954 -4.000366 -2.16552413
 #&gt; 11              gm  0.00000000        NaN 0.000000  0.000000  0.00000000
-#&gt; 12           U_std  0.00000000        NaN 0.000000  0.000000  0.00000000
-#&gt; 13              nu  0.00000000        NaN 0.000000  0.000000  0.00000000
-#&gt; 14            B[1]  0.00000000        NaN 0.000000  0.000000  0.00000000
-#&gt; 15            B[2]  0.00000000        NaN 0.000000  0.000000  0.00000000
-#&gt; 16          U[1,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
-#&gt; 17          U[2,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
-#&gt; 18          U[3,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
-#&gt; 19          U[4,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
-#&gt; 20          U[5,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 12              nu  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 13            B[1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 14            B[2]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 15          U1_std  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 16          U2_std  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 17          U3_std  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 18          S[1,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 19          S[2,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 20          S[3,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 21          S[4,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 22          S[5,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 23         U1[1,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 24         U1[2,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 25         U1[3,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 26         U1[4,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 27         U1[5,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 28         U2[1,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 29         U2[2,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 30         U2[3,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 31         U2[4,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 32         U2[5,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 33         U3[1,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 34         U3[2,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 35         U3[3,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 36         U3[4,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
+#&gt; 37         U3[5,1]  0.00000000        NaN 0.000000  0.000000  0.00000000
 #&gt;            50%        75%    97.5%    n_eff     Rhat
-#&gt; 1   0.46703261  1.4609051 3.464499 496.3072 1.007291
-#&gt; 2   0.91087827  1.8754772 3.783483 478.4173 1.008090
-#&gt; 3  -0.38079706  0.6192809 2.465597 506.7753 1.007527
-#&gt; 4  -0.02182563  0.9728277 2.896546 481.4771 1.006692
-#&gt; 5  -1.17231202 -0.1720603 1.764553 498.7604 1.008290
-#&gt; 6   0.46703261  1.4609051 3.464499 496.3072 1.007291
-#&gt; 7   0.91087827  1.8754772 3.783483 478.4173 1.008090
-#&gt; 8  -0.38079706  0.6192809 2.465597 506.7753 1.007527
-#&gt; 9  -0.02182563  0.9728277 2.896546 481.4771 1.006692
-#&gt; 10 -1.17231202 -0.1720603 1.764553 498.7604 1.008290
+#&gt; 1   0.43802835  1.4317158 3.209484 444.5092 1.012613
+#&gt; 2   0.87219208  1.8190977 3.517699 410.6460 1.013473
+#&gt; 3  -0.40877670  0.5670628 2.299090 424.2847 1.012354
+#&gt; 4  -0.01951915  0.9692795 2.666812 456.3486 1.013471
+#&gt; 5  -1.17101101 -0.1892750 1.524710 432.1916 1.013586
+#&gt; 6   0.43802835  1.4317158 3.209484 444.5092 1.012613
+#&gt; 7   0.87219208  1.8190977 3.517699 410.6460 1.013473
+#&gt; 8  -0.40877670  0.5670628 2.299090 424.2847 1.012354
+#&gt; 9  -0.01951915  0.9692795 2.666812 456.3486 1.013471
+#&gt; 10 -1.17101101 -0.1892750 1.524710 432.1916 1.013586
 #&gt; 11  0.00000000  0.0000000 0.000000      NaN      NaN
 #&gt; 12  0.00000000  0.0000000 0.000000      NaN      NaN
 #&gt; 13  0.00000000  0.0000000 0.000000      NaN      NaN
@@ -319,7 +341,24 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; 17  0.00000000  0.0000000 0.000000      NaN      NaN
 #&gt; 18  0.00000000  0.0000000 0.000000      NaN      NaN
 #&gt; 19  0.00000000  0.0000000 0.000000      NaN      NaN
-#&gt; 20  0.00000000  0.0000000 0.000000      NaN      NaN</div><div class='input'><span class='co'># }</span>
+#&gt; 20  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 21  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 22  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 23  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 24  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 25  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 26  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 27  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 28  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 29  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 30  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 31  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 32  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 33  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 34  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 35  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 36  0.00000000  0.0000000 0.000000      NaN      NaN
+#&gt; 37  0.00000000  0.0000000 0.000000      NaN      NaN</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -93,7 +93,7 @@
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -103,16 +103,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/a_get_started.html">Getting Started with the bpcs package</a>
+      <a href="../articles/a_get_started.html">Getting started</a>
     </li>
     <li>
-      <a href="../articles/b_ties_and_home_advantage.html">Home advantage in the Bradley-Terry and in the Davidson model</a>
+      <a href="../articles/b_ties_and_home_advantage">Ties and me advantage</a>
     </li>
     <li>
-      <a href="../articles/c_bt_random_effects.html">Random effects in the Bradley-Terry model</a>
+      <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="../articles/d_paper.html">d_paper</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+    </li>
+    <li>
+      <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
     </li>
     <li>
       <a href="../articles/e_contributing.html">Contributing guide</a>
@@ -120,7 +123,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -152,7 +155,7 @@
     <p>Get the empirical win/draw probabilities based on the ability/strength parameters.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_probabilities_df</span><span class='op'>(</span><span class='va'>bpc_object</span>, newdata <span class='op'>=</span> <span class='cn'>NULL</span>, n <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_probabilities_df</span><span class='op'>(</span><span class='va'>bpc_object</span>, newdata <span class='op'>=</span> <span class='cn'>NULL</span>, n <span class='op'>=</span> <span class='fl'>100</span>, model_type <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,6 +171,10 @@
     <tr>
       <th>n</th>
       <td><p>number of samples to draw from the posterior</p></td>
+    </tr>
+    <tr>
+      <th>model_type</th>
+      <td><p>when dealing with some models (such as random effects) one might want to make predictions using the estimated parameters with the random effects but without specifying the specific values of random effects to predict. Therefore one can set a subset of the model to make predictions. For example: a model sampled with bt-U can be used to make predictions of the model bt only.</p></td>
     </tr>
     </table>
 
@@ -186,8 +193,8 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 </div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 4.9e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.49 seconds.
+#&gt; Chain 1: Gradient evaluation took 7e-05 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.7 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -204,15 +211,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.43878 seconds (Warm-up)
-#&gt; Chain 1:                0.475983 seconds (Sampling)
-#&gt; Chain 1:                0.914763 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.572034 seconds (Warm-up)
+#&gt; Chain 1:                0.61608 seconds (Sampling)
+#&gt; Chain 1:                1.18811 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 4.4e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.44 seconds.
+#&gt; Chain 2: Gradient evaluation took 6e-05 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.6 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -229,15 +236,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.44556 seconds (Warm-up)
-#&gt; Chain 2:                0.490958 seconds (Sampling)
-#&gt; Chain 2:                0.936518 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.572127 seconds (Warm-up)
+#&gt; Chain 2:                0.631496 seconds (Sampling)
+#&gt; Chain 2:                1.20362 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 4.5e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.45 seconds.
+#&gt; Chain 3: Gradient evaluation took 6e-05 seconds
+#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.6 seconds.
 #&gt; Chain 3: Adjust your expectations accordingly!
 #&gt; Chain 3: 
 #&gt; Chain 3: 
@@ -254,15 +261,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.447269 seconds (Warm-up)
-#&gt; Chain 3:                0.399479 seconds (Sampling)
-#&gt; Chain 3:                0.846748 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.582874 seconds (Warm-up)
+#&gt; Chain 3:                0.517624 seconds (Sampling)
+#&gt; Chain 3:                1.1005 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 4.5e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.45 seconds.
+#&gt; Chain 4: Gradient evaluation took 6.2e-05 seconds
+#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.62 seconds.
 #&gt; Chain 4: Adjust your expectations accordingly!
 #&gt; Chain 4: 
 #&gt; Chain 4: 
@@ -279,22 +286,22 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.436769 seconds (Warm-up)
-#&gt; Chain 4:                0.514851 seconds (Sampling)
-#&gt; Chain 4:                0.95162 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.569267 seconds (Warm-up)
+#&gt; Chain 4:                0.627375 seconds (Sampling)
+#&gt; Chain 4:                1.19664 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='va'>prob</span><span class='op'>&lt;-</span><span class='fu'>get_probabilities_df</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>prob</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;              i           j i_beats_j j_beats_i
-#&gt; 1         Graf Navratilova   0.30975   0.69025
-#&gt; 2         Graf    Sabatini   0.23050   0.76950
-#&gt; 3         Graf     Sanchez   0.12700   0.87300
-#&gt; 4         Graf       Seles   0.41800   0.58200
-#&gt; 5  Navratilova    Sabatini   0.41200   0.58800
-#&gt; 6  Navratilova     Sanchez   0.26325   0.73675
-#&gt; 7  Navratilova       Seles   0.60175   0.39825
-#&gt; 8     Sabatini     Sanchez   0.32975   0.67025
-#&gt; 9     Sabatini       Seles   0.69075   0.30925
-#&gt; 10     Sanchez       Seles   0.82075   0.17925</div><div class='input'>
+#&gt; 1         Graf Navratilova      0.72      0.28
+#&gt; 2         Graf    Sabatini      0.70      0.30
+#&gt; 3         Graf     Sanchez      0.88      0.12
+#&gt; 4         Graf       Seles      0.63      0.37
+#&gt; 5  Navratilova    Sabatini      0.63      0.37
+#&gt; 6  Navratilova     Sanchez      0.79      0.21
+#&gt; 7  Navratilova       Seles      0.36      0.64
+#&gt; 8     Sabatini     Sanchez      0.66      0.34
+#&gt; 9     Sabatini       Seles      0.31      0.69
+#&gt; 10     Sanchez       Seles      0.18      0.82</div><div class='input'>
 <span class='co'># Now we can try just specifying a few data combinations of probabilities</span>
 <span class='va'>m2</span><span class='op'>&lt;-</span><span class='fu'><a href='bpc.html'>bpc</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,
 player0 <span class='op'>=</span> <span class='st'>'player0'</span>,
@@ -305,8 +312,8 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 </div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 5.3e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.53 seconds.
+#&gt; Chain 1: Gradient evaluation took 7.1e-05 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.71 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -323,15 +330,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.462413 seconds (Warm-up)
-#&gt; Chain 1:                0.525138 seconds (Sampling)
-#&gt; Chain 1:                0.987551 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.584944 seconds (Warm-up)
+#&gt; Chain 1:                0.626464 seconds (Sampling)
+#&gt; Chain 1:                1.21141 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 4.7e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.47 seconds.
+#&gt; Chain 2: Gradient evaluation took 6e-05 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.6 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -348,15 +355,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.460205 seconds (Warm-up)
-#&gt; Chain 2:                0.523905 seconds (Sampling)
-#&gt; Chain 2:                0.98411 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.574331 seconds (Warm-up)
+#&gt; Chain 2:                0.612288 seconds (Sampling)
+#&gt; Chain 2:                1.18662 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 4.8e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.48 seconds.
+#&gt; Chain 3: Gradient evaluation took 6.1e-05 seconds
+#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.61 seconds.
 #&gt; Chain 3: Adjust your expectations accordingly!
 #&gt; Chain 3: 
 #&gt; Chain 3: 
@@ -373,15 +380,15 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.482014 seconds (Warm-up)
-#&gt; Chain 3:                0.48287 seconds (Sampling)
-#&gt; Chain 3:                0.964884 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.579661 seconds (Warm-up)
+#&gt; Chain 3:                0.600708 seconds (Sampling)
+#&gt; Chain 3:                1.18037 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 4.9e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.49 seconds.
+#&gt; Chain 4: Gradient evaluation took 6.3e-05 seconds
+#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.63 seconds.
 #&gt; Chain 4: Adjust your expectations accordingly!
 #&gt; Chain 4: 
 #&gt; Chain 4: 
@@ -398,14 +405,14 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.474534 seconds (Warm-up)
-#&gt; Chain 4:                0.476786 seconds (Sampling)
-#&gt; Chain 4:                0.95132 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.576149 seconds (Warm-up)
+#&gt; Chain 4:                0.659879 seconds (Sampling)
+#&gt; Chain 4:                1.23603 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='va'>prob</span><span class='op'>&lt;-</span><span class='fu'>get_probabilities_df</span><span class='op'>(</span><span class='va'>m2</span>, newdata<span class='op'>=</span><span class='va'>tennis_agresti</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>15</span><span class='op'>)</span>,<span class='op'>]</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>prob</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;       i        j i_beats_j j_beats_i
-#&gt; 1 Seles     Graf   0.40975   0.59025
-#&gt; 2  Graf Sabatini   0.75900   0.24100</div><div class='input'>
+#&gt; 1 Seles     Graf      0.58      0.42
+#&gt; 2  Graf Sabatini      0.20      0.80</div><div class='input'>
 <span class='co'># }</span>
 </div></pre>
   </div>
