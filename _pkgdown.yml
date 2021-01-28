@@ -6,6 +6,29 @@ template:
   params:
     bootswatch: flatly
 
+navbar:
+  title: "bpcs"
+  left:
+    - icon: fa-home fa-lg
+      href: index.html
+    - text: "Functions"
+      href: reference/index.html
+    - text: "Articles"
+      menu:
+        - text: "Getting started"
+          href: articles/a_get_started.html
+        - text: "Ties and me advantage"
+          href: articles/b_ties_and_home_advantage
+        - text: "Random effects"
+          href: articles/c_bt_random_effects
+        - text: "Paper - An overview of the models"
+          href: https://arxiv.org/pdf/2101.11227.pdf
+        - text: "Online appendix for the paper"
+          href: https://davidissamattos.github.io/bpcs-online-appendix/
+        - text: "Contributing guide"
+          href: articles/e_contributing.html
+    - text: "News"
+      href: news/index.html
 reference:
 - title: "Basic usage functions"
   desc: "Basic functions that are used in the R console for model fitting and simple investigations."

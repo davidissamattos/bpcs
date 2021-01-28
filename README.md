@@ -8,7 +8,7 @@
 [![License:
 MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://cran.r-project.org/web/licenses/MIT)
 [![](https://img.shields.io/github/last-commit/davidissamattos/bpcs.svg)](https://github.com/davidissamattos/bpcs/commits/master)
-[![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![](https://img.shields.io/github/languages/code-size/davidissamattos/bpcs.svg)](https://github.com/davidissamattos/bpcs)
 [![](https://img.shields.io/badge/devel%20version-1.1.0-blue.svg)](https://github.com/davidissamattos/bpcs)
 [![](https://www.r-pkg.org/badges/version/bpcs?color=blue)](https://cran.r-project.org/package=bpcs)
@@ -19,8 +19,8 @@ status](https://github.com/davidissamattos/bpcs/workflows/R-CMD-check/badge.svg)
 <!-- badges: end -->
 
 The `bpcs` package performs Bayesian estimation of Paired Comparison
-models utilizing Stan, such as variations of the Bradley-Terry
-\[@bradley1952rank\] and the Davidson models \[@davidson1970extending\].
+models utilizing Stan, such as variations of the Bradley-Terry (Bradley
+and Terry 1952) and the Davidson models (Davidson 1970).
 
 Package documentation and vignette articles can be found at:
 <https://davidissamattos.github.io/bpcs/>
@@ -28,7 +28,7 @@ Package documentation and vignette articles can be found at:
 ## Installation
 
 For the `bpcs` package to work, we rely upon the Stan software and the
-`rstan` package \[@rstan\].
+`rstan` package (Stan Development Team 2020).
 
 -   For general installation of Stan and RStan see:
     <https://github.com/stan-dev/rstan>
@@ -64,9 +64,8 @@ frame that contains:
     containing the result of the match (0 if player0 won, 1 if player1
     won, 2 if it was a tie)
 
-We will utilize the tennis dataset available
-\[@agresti2003categorical\]. The dataset can be seen below and is
-available as `data(tennis_agresti)`:
+We will utilize the tennis dataset available (Agresti 2003). The dataset
+can be seen below and is available as `data(tennis_agresti)`:
 
 ``` r
 dplyr::sample_n(tennis_agresti,10) %>% 
@@ -93,6 +92,34 @@ id
 <tbody>
 <tr>
 <td style="text-align:left;">
+Sabatini
+</td>
+<td style="text-align:left;">
+Navratilova
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+37
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:left;">
+Sabatini
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 Seles
 </td>
 <td style="text-align:left;">
@@ -116,7 +143,7 @@ Sanchez
 0
 </td>
 <td style="text-align:right;">
-29
+28
 </td>
 </tr>
 <tr>
@@ -124,55 +151,13 @@ Sanchez
 Sabatini
 </td>
 <td style="text-align:left;">
-Navratilova
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-35
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:left;">
 Sanchez
 </td>
 <td style="text-align:right;">
-0
+1
 </td>
 <td style="text-align:right;">
-32
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:left;">
-Sanchez
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-27
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:left;">
-Navratilova
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-25
+42
 </td>
 </tr>
 <tr>
@@ -183,24 +168,24 @@ Graf
 Sabatini
 </td>
 <td style="text-align:right;">
-1
+0
 </td>
 <td style="text-align:right;">
-23
+17
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Seles
+Navratilova
 </td>
 <td style="text-align:left;">
-Navratilova
+Sanchez
 </td>
 <td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-11
+46
 </td>
 </tr>
 <tr>
@@ -208,27 +193,41 @@ Navratilova
 Graf
 </td>
 <td style="text-align:left;">
-Navratilova
+Sabatini
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-24
+15
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Seles
+Graf
 </td>
 <td style="text-align:left;">
-Navratilova
+Sanchez
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+34
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:left;">
+Sabatini
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-8
+20
 </td>
 </tr>
 </tbody>
@@ -254,8 +253,8 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 0.000154 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.54 seconds.
+#> Chain 1: Gradient evaluation took 0.000124 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.24 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -272,15 +271,15 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.452533 seconds (Warm-up)
-#> Chain 1:                0.469408 seconds (Sampling)
-#> Chain 1:                0.921941 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.445326 seconds (Warm-up)
+#> Chain 1:                0.462403 seconds (Sampling)
+#> Chain 1:                0.907729 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 5.6e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.56 seconds.
+#> Chain 2: Gradient evaluation took 7.7e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.77 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -297,15 +296,15 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.453904 seconds (Warm-up)
-#> Chain 2:                0.475452 seconds (Sampling)
-#> Chain 2:                0.929356 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.443406 seconds (Warm-up)
+#> Chain 2:                0.440081 seconds (Sampling)
+#> Chain 2:                0.883487 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 5.7e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.57 seconds.
+#> Chain 3: Gradient evaluation took 5.5e-05 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.55 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -322,15 +321,15 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.45918 seconds (Warm-up)
-#> Chain 3:                0.43048 seconds (Sampling)
-#> Chain 3:                0.88966 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.424284 seconds (Warm-up)
+#> Chain 3:                0.406588 seconds (Sampling)
+#> Chain 3:                0.830872 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 5.8e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.58 seconds.
+#> Chain 4: Gradient evaluation took 6.3e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.63 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -347,9 +346,9 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.4485 seconds (Warm-up)
-#> Chain 4:                0.488752 seconds (Sampling)
-#> Chain 4:                0.937252 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.470536 seconds (Warm-up)
+#> Chain 4:                0.4785 seconds (Sampling)
+#> Chain 4:                0.949036 seconds (Total)
 #> Chain 4:
 ```
 
@@ -374,11 +373,11 @@ summary(m)
 #> 
 #> Parameter               Mean   HPD_lower   HPD_higher
 #> --------------------  ------  ----------  -----------
-#> lambda[Seles]           0.50       -2.58         3.16
-#> lambda[Graf]            0.92       -1.88         3.72
-#> lambda[Sabatini]       -0.36       -3.23         2.29
-#> lambda[Navratilova]     0.03       -2.71         2.89
-#> lambda[Sanchez]        -1.14       -4.00         1.68
+#> lambda[Seles]           0.49       -2.35         3.45
+#> lambda[Graf]            0.92       -1.80         3.85
+#> lambda[Sabatini]       -0.35       -3.27         2.53
+#> lambda[Navratilova]     0.02       -2.78         3.06
+#> lambda[Sanchez]        -1.13       -3.90         1.95
 #> NOTES:
 #> * A higher lambda indicates a higher team ability
 #> 
@@ -391,16 +390,16 @@ summary(m)
 #> 
 #> i             j              i_beats_j   j_beats_i
 #> ------------  ------------  ----------  ----------
-#> Graf          Navratilova         0.68        0.32
-#> Graf          Sabatini            0.76        0.24
-#> Graf          Sanchez             0.87        0.13
-#> Graf          Seles               0.61        0.39
-#> Navratilova   Sabatini            0.60        0.40
-#> Navratilova   Sanchez             0.74        0.26
-#> Navratilova   Seles               0.34        0.66
+#> Graf          Navratilova         0.69        0.31
+#> Graf          Sabatini            0.77        0.23
+#> Graf          Sanchez             0.84        0.16
+#> Graf          Seles               0.60        0.40
+#> Navratilova   Sabatini            0.54        0.46
+#> Navratilova   Sanchez             0.72        0.28
+#> Navratilova   Seles               0.33        0.67
 #> Sabatini      Sanchez             0.66        0.34
-#> Sabatini      Seles               0.28        0.72
-#> Sanchez       Seles               0.24        0.76
+#> Sabatini      Seles               0.38        0.62
+#> Sanchez       Seles               0.15        0.85
 #> 
 #> Rank of the players' abilities:
 #> The rank is based on the posterior rank distribution of the lambda parameter
@@ -410,11 +409,11 @@ summary(m)
 #> 
 #> Parameter              MedianRank   MeanRank   StdRank
 #> --------------------  -----------  ---------  --------
-#> lambda[Graf]                    1       1.37      0.64
-#> lambda[Seles]                   2       2.13      0.88
-#> lambda[Navratilova]             3       3.03      0.93
-#> lambda[Sabatini]                4       3.66      0.81
-#> lambda[Sanchez]                 5       4.80      0.46
+#> lambda[Graf]                    1       1.38      0.62
+#> lambda[Seles]                   2       2.14      0.93
+#> lambda[Navratilova]             3       3.03      0.89
+#> lambda[Sabatini]                4       3.66      0.83
+#> lambda[Sanchez]                 5       4.79      0.51
 ```
 
 ``` r
@@ -451,20 +450,19 @@ plot(m, rotate_x_labels = T)
 
 ## Models available
 
--   Bradley-Terry (`bt`) \[@bradley1952rank\]
--   Davidson model (`davidson`) for handling ties
-    \[@davidson1970extending\]
+-   Bradley-Terry (`bt`) (Bradley and Terry 1952)
+-   Davidson model (`davidson`) for handling ties (Davidson 1970)
 
 Options to add to the models:
 
--   Order effect (`-ordereffect`). E.g. for home advantage
-    \[@davidson1977extending\]
+-   Order effect (`-ordereffect`). E.g. for home advantage (Davidson and
+    Beaver 1977)
 -   Generalized models (`-generalized`). When we have contestant
-    (players) specific predictors \[@springall1973response\]
+    (players) specific predictors (Springall 1973)
 -   Subject predictors (`-subjectpredictors`). When we have subject
-    specific predictors \[@bockenholt2001hierarchical\].
+    specific predictors (Böckenholt 2001).
 -   Intercept random effects (`-U`). For example, to compensate
-    clustering or repeated measures \[@bockenholt2001hierarchical\]
+    clustering or repeated measures (Böckenholt 2001)
 
 E.g.:
 
@@ -511,7 +509,10 @@ Below we list all our vignettes with a short description:
     with random effects.
 
 <!-- * [Generalized Bradley-Terry model](): This vignette investigate the Bradley-Terry model when we have players specific characteristics. (TODO) -->
-<!-- * [Paper](): This paper/vignette describes the theory and related work behind the presented models. TODO -->
+
+-   Paper: This paper describes the theory and related work behind the
+    presented models along with 3 reanalyses in behavioral sciences.
+    Arxiv:2101.11227
 
 # Contributing and bugs
 
@@ -531,3 +532,60 @@ If you find bugs, please report it in
     [hexSticker](https://github.com/GuangchuangYu/hexSticker) package
 
 # References
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+
+<div id="ref-agresti2003categorical" class="csl-entry">
+
+Agresti, Alan. 2003. *Categorical Data Analysis*. Vol. 482. John Wiley &
+Sons.
+
+</div>
+
+<div id="ref-bockenholt2001hierarchical" class="csl-entry">
+
+Böckenholt, Ulf. 2001. “Hierarchical Modeling of Paired Comparison
+Data.” *Psychological Methods* 6 (1): 49.
+
+</div>
+
+<div id="ref-bradley1952rank" class="csl-entry">
+
+Bradley, Ralph Allan, and Milton E Terry. 1952. “Rank Analysis of
+Incomplete Block Designs: I. The Method of Paired Comparisons.”
+*Biometrika* 39 (3/4): 324–45.
+
+</div>
+
+<div id="ref-davidson1970extending" class="csl-entry">
+
+Davidson, Roger R. 1970. “On Extending the Bradley-Terry Model to
+Accommodate Ties in Paired Comparison Experiments.” *Journal of the
+American Statistical Association* 65 (329): 317–28.
+
+</div>
+
+<div id="ref-davidson1977extending" class="csl-entry">
+
+Davidson, Roger R, and Robert J Beaver. 1977. “On Extending the
+Bradley-Terry Model to Incorporate Within-Pair Order Effects.”
+*Biometrics*, 693–702.
+
+</div>
+
+<div id="ref-springall1973response" class="csl-entry">
+
+Springall, A. 1973. “Response Surface Fitting Using a Generalization of
+the Bradley-Terry Paired Comparison Model.” *Journal of the Royal
+Statistical Society: Series C (Applied Statistics)* 22 (1): 59–68.
+
+</div>
+
+<div id="ref-rstan" class="csl-entry">
+
+Stan Development Team. 2020. “RStan: The R Interface to Stan.”
+<https://mc-stan.org/>.
+
+</div>
+
+</div>

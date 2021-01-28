@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-In this vignette, we will go over an example of analyzing optimization algorithms based on benchmark functions. A extended analysis of this example including the experimental conditions for the data collection is discussed in (TODO: ADD REF).
+In this vignette, we will go over an example of analyzing optimization algorithms based on benchmark functions. A extended analysis of this example including the experimental conditions for the data collection is discussed in ["Statistical Models for the Analysis of Optimization Algorithms with Benchmark Functions"](https://arxiv.org/abs/2010.03783)
 
 In the development of optimization algorithms it is common to use benchmark functions/problems to show:
 
@@ -175,7 +175,7 @@ m <-
     result_column = 'y',
     cluster = 'Benchmark',
     model_type = 'bt-U',
-    priors = list(prior_U_std = 10.0)
+    priors = list(prior_U1_std = 10.0)
   )
 ```
 
@@ -204,7 +204,7 @@ bayesplot::mcmc_trace(
     "lambda[4]",
     "lambda[5]",
     "lambda[6]",
-    "U_std"
+    "U1_std"
   ),
   n_warmup = 1000
 )
@@ -241,10 +241,6 @@ get_parameters_table(m, format = 'html')
 ```
 
 ```{r}
-get_probabilities_table(m, format='html')
-```
-
-```{r}
 get_rank_of_players_table(m, format='html')
 ```
 
@@ -258,4 +254,4 @@ plot(m,rotate_x_labels = T)
 We can see that the Differential Evolution Performs better than the others. While the PSO and the CMA-ES algorithm have relatively similar abilities.
 
 
-From the high value of the $U_{std}$ we can see that the choice of benchmarks greatly have a large variance and a big influence in the results and that some algorithms have a better performance in some benchmarks than others. E.g. the Trefethen function is a difficult problem to solve and the U estimate there seems to reduce the ability of the best algorithms while increasing the ability of the worst ones, acting as a regularizing parameter there.
+From the high value of the $U1_{std}$ we can see that the choice of benchmarks greatly have a large variance and a big influence in the results and that some algorithms have a better performance in some benchmarks than others. E.g. the Trefethen function is a difficult problem to solve and the U estimate there seems to reduce the ability of the best algorithms while increasing the ability of the worst ones, acting as a regularizing parameter there.

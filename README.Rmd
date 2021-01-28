@@ -22,17 +22,24 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
-`r badge_license('MIT', color='yellow')` `r badge_last_commit("davidissamattos/bpcs")` `r badge_lifecycle("stable")` `r badge_code_size("davidissamattos/bpcs")` `r badge_devel("davidissamattos/bpcs", "blue")` `r badger::badge_cran_release('bpcs', color="blue")` `r badge_codecov("davidissamattos/bpcs")` [![R build status](https://github.com/davidissamattos/bpcs/workflows/R-CMD-check/badge.svg)](https://github.com/davidissamattos/bpcs/actions)
+`r badge_license('MIT', color='yellow')` 
+`r badge_last_commit("davidissamattos/bpcs")` 
+[![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+`r badge_code_size("davidissamattos/bpcs")` 
+`r badge_devel("davidissamattos/bpcs", "blue")` 
+`r badger::badge_cran_release('bpcs', color="blue")` 
+`r badge_codecov("davidissamattos/bpcs")`
+[![R build status](https://github.com/davidissamattos/bpcs/workflows/R-CMD-check/badge.svg)](https://github.com/davidissamattos/bpcs/actions)
 
 <!-- badges: end -->
 
-The `bpcs` package performs Bayesian estimation of Paired Comparison models utilizing Stan, such as variations of the Bradley-Terry [\@bradley1952rank] and the Davidson models [\@davidson1970extending].
+The `bpcs` package performs Bayesian estimation of Paired Comparison models utilizing Stan, such as variations of the Bradley-Terry [@bradley1952rank] and the Davidson models [@davidson1970extending].
 
 Package documentation and vignette articles can be found at: <https://davidissamattos.github.io/bpcs/>
 
 ## Installation
 
-For the `bpcs` package to work, we rely upon the Stan software and the `rstan` package [\@rstan].
+For the `bpcs` package to work, we rely upon the Stan software and the `rstan` package [@rstan].
 
 -   For general installation of Stan and RStan see: <https://github.com/stan-dev/rstan>
 
@@ -61,7 +68,7 @@ The main function of the package is the `bpc` function. For the simple Bradley-T
 -   Two columns containing the name of the contestants in the paired comparison
 -   Two columns containing the score of each player OR one column containing the result of the match (0 if player0 won, 1 if player1 won, 2 if it was a tie)
 
-We will utilize the tennis dataset available [\@agresti2003categorical]. The dataset can be seen below and is available as `data(tennis_agresti)`:
+We will utilize the tennis dataset available [@agresti2003categorical]. The dataset can be seen below and is available as `data(tennis_agresti)`:
 
 ```{r}
 dplyr::sample_n(tennis_agresti,10) %>% 
@@ -115,15 +122,15 @@ plot(m, rotate_x_labels = T)
 
 ## Models available
 
--   Bradley-Terry (`bt`) [\@bradley1952rank]
--   Davidson model (`davidson`) for handling ties [\@davidson1970extending]
+-   Bradley-Terry (`bt`) [@bradley1952rank]
+-   Davidson model (`davidson`) for handling ties [@davidson1970extending]
 
 Options to add to the models:
 
--   Order effect (`-ordereffect`). E.g. for home advantage [\@davidson1977extending]
--   Generalized models (`-generalized`). When we have contestant (players) specific predictors [\@springall1973response]
--   Subject predictors (`-subjectpredictors`). When we have subject specific predictors [\@bockenholt2001hierarchical].
--   Intercept random effects (`-U`). For example, to compensate clustering or repeated measures [\@bockenholt2001hierarchical]
+-   Order effect (`-ordereffect`). E.g. for home advantage [@davidson1977extending]
+-   Generalized models (`-generalized`). When we have contestant (players) specific predictors [@springall1973response]
+-   Subject predictors (`-subjectpredictors`). When we have subject specific predictors [@bockenholt2001hierarchical].
+-   Intercept random effects (`-U`). For example, to compensate clustering or repeated measures [@bockenholt2001hierarchical]
 
 E.g.:
 
@@ -151,7 +158,7 @@ Below we list all our vignettes with a short description:
 
 <!-- * [Generalized Bradley-Terry model](): This vignette investigate the Bradley-Terry model when we have players specific characteristics. (TODO) -->
 
-<!-- * [Paper](): This paper/vignette describes the theory and related work behind the presented models. TODO -->
+- Paper: This paper describes the theory and related work behind the presented models along with 3 reanalyses in behavioral sciences. Arxiv:2101.11227
 
 # Contributing and bugs
 

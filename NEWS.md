@@ -8,14 +8,16 @@
   - Add models for cumulative comparisons
   - Add possibility to add more than one random effects
 - TODO: Improve test coverage
+* TODO: Get posterior distribution of the parameters without accessing the stanfit object
+* TODO: integration with bayesplot to get some of the nice plots that we see there
 
 # bpcs 1.1.0
 
 * Possibility to add up to 3 intercept random effects (hopefully you will never need more than that)
-* Model for subject predictors 
-* Make predictions of submodels with the model_type option
+* Model for subject predictors (see example on the paper)
+* Make predictions of submodels with the model_type option (see example on the paper)
 * Some small bug fixes
-* TODO: Posterior distribution of the parameters 
+
 
 # bpcs 1.0.1
 
