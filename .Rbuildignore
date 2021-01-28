@@ -18,3 +18,4 @@
 ^vignettes/d_paper\.Rmd$
 ^vignettes/e_contributing\.Rmd$
 ^tarversions$
+^.Rhistory$
