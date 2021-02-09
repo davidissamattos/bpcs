@@ -39,17 +39,19 @@ Package documentation and vignette articles can be found at: <https://davidissam
 
 ## Installation
 
-For the `bpcs` package to work, we rely upon the Stan software and the `rstan` package [@rstan].
+From version 1.2, we rely upon the Stan software and the `cmdstanr` package [@cmdstanr].
 
--   For general installation of Stan and RStan see: <https://github.com/stan-dev/rstan>
+You need to have a suitable toolchain and install cmdstan and cmdstanr. The easiest way is to follow the instruction presented in the `cmdstanr` package. See <https://github.com/stan-dev/cmdstanr>
 
-To install the latest stable version from CRAN
 
-```{r eval=FALSE, echo=T}
-install.packages('bpcs')
-```
 
-To install the development version of the bpcs package, install directly from the Github repository.
+<!-- To install the latest stable version from CRAN -->
+
+<!-- ```{r eval=FALSE, echo=T} -->
+<!-- install.packages('bpcs') -->
+<!-- ``` -->
+
+After installing and configuring `cmdstanr` properly, you can install the development version of the bpcs package directly from the Github repository.
 
 ```{r eval=FALSE, echo=T}
 remotes::install_github('davidissamattos/bpcs')
