@@ -1,8 +1,101 @@
-// Bradley-Terry model
+// Bradley-Terry and Davidson model
 // Author: David Issa Mattos
+// This model is part of the bpcs package
+// Feel free to use it and adapt it but include the citation:
+//
+// Mattos, D. I., & Ramos, É. M. S. (2021). Bayesian Paired-Comparison with the bpcs Package. arXiv preprint arXiv:2101.11227
+//
 
 functions{
-#include /include/bt_calculate_p1_win_and_ties.stan
+real[] calculate_p1_win_and_ties(int i,
+                      int[] player1_indexes, int[] player0_indexes, real[] lambda,
+                      int use_Ordereffect, real[] z_player1, real gm,
+                      int use_Davidson, real nu,
+                      int use_U1, int[] U1_indexes, real[,] U1, real U1_std,
+                      int use_U2, int[] U2_indexes, real[,] U2, real U2_std,
+                      int use_U3, int[] U3_indexes, real[,] U3, real U3_std,
+                      int use_SubjectPredictors, real[,] S ,matrix X_subject)
+{
+
+    //Probabilities
+    real p1_win;
+    real p_tie;
+    real p1;
+    real p0;
+    real lambda1;
+    real lambda0;
+    real return_value[2];
+
+    //Transformed varaibles for the conditional uses
+    real z;
+    real U01;//cluster1
+    real U11;//cluster1
+    real U02;//cluster2
+    real U12;//cluster2
+    real U03;//cluster3
+    real U13;//cluster3
+    real tie;
+    real geom_term;
+    real S0;
+    real S1;
+
+
+    if(use_Ordereffect){
+      z = z_player1[i];
+    }else{
+      z = 0;
+    }
+
+    if(use_U1){
+      U01 = U1[player0_indexes[i], U1_indexes[i]];
+      U11 = U1[player1_indexes[i], U1_indexes[i]];
+    }else{
+      U01 = 0;
+      U11 = 0;
+    }
+
+    if(use_U2){
+      U02 = U2[player0_indexes[i], U2_indexes[i]];
+      U12 = U2[player1_indexes[i], U2_indexes[i]];
+    }else{
+      U02 = 0;
+      U12 = 0;
+    }
+
+     if(use_U3){
+      U03 = U3[player0_indexes[i], U3_indexes[i]];
+      U13 = U3[player1_indexes[i], U3_indexes[i]];
+    }else{
+      U03 = 0;
+      U13 = 0;
+    }
+
+
+    if(use_SubjectPredictors){
+      S1 =  dot_product(to_vector(S[player1_indexes[i],]),to_vector(X_subject[i,]));
+      S0 =  dot_product(to_vector(S[player0_indexes[i],]),to_vector(X_subject[i,]));
+    }else{
+      S0 = 0;
+      S1 = 0;
+    }
+
+    lambda1 = lambda[player1_indexes[i]] + U1_std*U11 + U2_std*U12 + U3_std*U13 + S1;
+    lambda0 = lambda[player0_indexes[i]] + U1_std*U01 + U2_std*U02 + U3_std*U03 + gm*z + S0;
+
+    geom_term = use_Davidson*exp(nu+0.5*(lambda[player1_indexes[i]]+lambda[player0_indexes[i]]));
+    p1 = exp(lambda1);
+    p0 = exp(lambda0);
+
+    p1_win =  p1/(p0+p1+geom_term);
+    p_tie = geom_term/(p0+p1+geom_term);
+
+    return_value[1] = p1_win;
+    return_value[2]= p_tie;
+
+    return return_value;
+}
+
+
 }
 
 data {
@@ -60,35 +153,32 @@ data {
   real<lower=0> prior_nu_std;
   //subject predictors
   real<lower=0> prior_S_std;
+
+  int <lower=0, upper=1> calc_log_lik;
 }
 
 parameters {
   real lambda_param[N_players]; //Latent variable that represents the strength
+  //Davidson
 
   // Order effect
   real gm_param[use_Ordereffect ? 1: 0];//Represents the order effect gamma
 
+  real nu_param[use_Davidson ? 1 : 0]; // the tie parameter.
   // U
   real <lower=0> U1_std_param[use_U1 ? 1: 0];//std for the random effects
   // Matrix N_players x N_U if use_U is 1 else 0x0
   real U1_param[use_U1 ? N_players : 0, use_U1 ? N_U1 : 0]; //parameters of the random effects for cluster one random effect for each algorithm in each cluster
-
   real <lower=0> U2_std_param[use_U2 ? 1: 0];//std for the random effects
   // Matrix N_players x N_U if use_U is 1 else 0x0
   real U2_param[use_U2 ? N_players : 0, use_U2 ? N_U2 : 0]; //parameters of the random effects for cluster one random effect for each algorithm in each cluster
-
   real <lower=0> U3_std_param[use_U3 ? 1: 0];//std for the random effects
   // Matrix N_players x N_U if use_U is 1 else 0x0
   real U3_param[use_U3 ? N_players : 0, use_U3 ? N_U3 : 0]; //parameters of the random effects for cluster one random effect for each algorithm in each cluster
 
-
   //Subject predictors
   //We have vector of suuject predictors for every player
   real S_param[use_SubjectPredictors ? N_players :0, use_SubjectPredictors ? N_SubjectPredictors :0];
-
-
-  //Davidson
-  real  nu_param[use_Davidson ? 1 : 0]; // the tie parameter.
 
   //Generalized
   real B_param[use_Generalized ? K :0]; // variable for all the predictors and players
@@ -99,15 +189,26 @@ transformed parameters{
   real lambda[N_players];
   real gm;
   real nu;
-  real B[use_Generalized ? K : 2]; //due to a bug we need at least a vector of 2
+
+
   real <lower=0> U1_std;
-  real <lower=0> U2_std;
-  real <lower=0> U3_std;
-  real S[N_players, use_SubjectPredictors ? N_SubjectPredictors : 1];
   real U1[N_players, use_U1 ? N_U1 : 1];//even if we dont use it we have it here for the gqs to work properly
+
+  real <lower=0> U2_std;
   real U2[N_players, use_U2 ? N_U2 : 1];//even if we dont use it we have it here for the gqs to work properly
+
+  real <lower=0> U3_std;
   real U3[N_players, use_U3 ? N_U3 : 1];//even if we dont use it we have it here for the gqs to work properly
 
+  real S[N_players, use_SubjectPredictors ? N_SubjectPredictors : 1];
+  real B[use_Generalized ? K : 1]; //due to a bug we need at least a vector of 2
+
+      // Davidson
+  if(use_Davidson){
+    nu = nu_param[1];
+  }else{
+    nu = 0;
+  }
 
   // order effect
   if(use_Ordereffect){
@@ -151,12 +252,14 @@ transformed parameters{
     }
   }
 
-
-  // Davidson
-  if(use_Davidson){
-    nu = nu_param[1];
-  }else{
-    nu = 0;
+  //Subject Predictors
+  if(use_SubjectPredictors){
+    S = S_param;
+  } else{
+    for (i in 1:N_players)
+    {
+      S[i, 1]= 0;
+    }
   }
 
   //Generalized
@@ -167,19 +270,10 @@ transformed parameters{
     }
   } else{
     B[1] = 0;
-    B[2] = 0;
     lambda = lambda_param;
   }
 
-  //Subject Predictors
-  if(use_SubjectPredictors){
-    S = S_param;
-  } else{
-    for (i in 1:N_players)
-    {
-      S[i, 1]= 0;
-    }
-  }
+
 }
 
 model {
@@ -271,11 +365,11 @@ model {
 
 
 generated quantities{
-  //variable definitions
-  vector[N_total] log_lik;//Log likelihood
+vector[calc_log_lik ? N_total: 0] log_lik;//Log likelihood
 
-   for (i in 1:N_total)
-  {
+  if(calc_log_lik){
+    for (i in 1:N_total)
+    {
     real p1_win;
     real p_tie;
     real p_win_ties[2];
@@ -299,4 +393,8 @@ generated quantities{
       log_lik[i] = bernoulli_lpmf(y[i] | p1_win);
     }
   }
+}
+
+
+
 }
