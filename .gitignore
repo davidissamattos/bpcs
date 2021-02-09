@@ -17,3 +17,4 @@ Meta
 /data-raw/data-to-try/*
 tarversions
 .DS_Store
+/inst/stan/bt
