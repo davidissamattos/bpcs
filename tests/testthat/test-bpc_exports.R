@@ -1,17 +1,3 @@
-test_that("get_stanfit works", {
-  skip_on_cran()
-  test_bt<-load_testdata("test_bt")
-  m<-bpc(data=test_bt,
-         player0 = 'player0',
-         player1 = 'player1',
-         result_column = 'y',
-         model_type='bt',
-         solve_ties='random',
-         win_score = 'higher',
-         show_chain_messages=F)
-  expect_true(is(get_stanfit(m), 'stanfit'))
-})
-
 test_that("get_sample_posterior works", {
   skip_on_cran()
   test_bt<-load_testdata("test_bt")

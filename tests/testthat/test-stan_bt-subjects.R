@@ -16,6 +16,7 @@ test_that("bpc returns a bpc object the bt model", {
     seed = 8484
   )
   expect_s3_class(m1, 'bpc')
+  expect_no_error(posterior_predictive(m1))
   expect_no_error(summary(m1))
 
 })

@@ -16,11 +16,6 @@ library(knitr)
 library(dplyr)
 library(ggplot2)
 library(kableExtra)
-library(rstan)
-#Stan should use parallel cores
-# options(mc.cores = parallel::detectCores()) #use multiple cores
-options(mc.cores = 2) #CRAN works only with max 2 cores
-rstan::rstan_options(auto_write = TRUE)
 ```
 
 # Introduction
@@ -71,7 +66,7 @@ m1 <- bpc(
 
 Looking at the Rhat and the n_eff:
 ```{r}
-print(m1)
+get_parameters_df(m1, n_eff = T, Rhat = T)
 ```
 
 Both look fine for all teams.
@@ -79,9 +74,9 @@ Both look fine for all teams.
 Looking at the traceplots for the first 4 teams only (we can look at the others or launch the shinystan app)
 
 ```{r}
-stanfit<-get_stanfit(m1)
-posterior<-rstan::extract(stanfit,inc_warmup=T,permuted=F)
-bayesplot::mcmc_trace(posterior,pars = c("lambda[1]","lambda[2]","lambda[3]","lambda[4]"), n_warmup=1000)
+fit <- get_fit(m1)
+posterior_draws <- posterior::as_draws_matrix(fit$draws())
+bayesplot::mcmc_trace(posterior_draws,pars = c("lambda[1]","lambda[2]","lambda[3]","lambda[4]"), n_warmup=1000)
 ```
 
 They sound ok so there is no reason why we should not trust our data
