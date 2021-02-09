@@ -26,28 +26,46 @@ HPD_higher_from_column <- function(column, credMass = 0.95) {
 }
 
 
-#' Calculate HPDI for all parameters from a stanfit object
+#' Summary for all parameters from a stanfit object
 #' Here we use the coda package
 #' @references Martyn Plummer, Nicky Best, Kate Cowles and Karen Vines (2006). CODA: Convergence Diagnosis and Output Analysis for MCMC, R News, vol 6, 7-11
-#' @param stanfit a stanfit object retrived from a bpc object
+#' @param fit a cmdstanr fit object retrieved from a bpc object
+#' @param pars the model parameters
+#' @param credMass Credibility mass for the interval
 #' @return a data frame with the HPDI calculated from the coda package
 #' @importFrom rlang .data
-HPDI_from_stanfit <- function(stanfit)
+#' @importFrom stats quantile
+summary_from_fit <- function(fit, pars, credMass=0.95)
 {
-  hpdi <- coda::HPDinterval(coda::as.mcmc(as.data.frame(stanfit)))
-  summary_stan <- rstan::summary(stanfit)
-  mean_estimate <- as.data.frame(summary_stan$summary)$mean
-  df <- tibble::rownames_to_column(as.data.frame(hpdi), "Parameter")
-  df_hpdi <- dplyr::mutate(df, Mean = mean_estimate)
-  df_hpdi <-
-    dplyr::rename(df_hpdi,
-                  HPD_lower = .data$lower,
-                  HPD_higher = .data$upper)
-  df_hpdi <-
-    dplyr::select(df_hpdi,
-                  .data$Parameter,
-                  .data$Mean,
-                  .data$HPD_lower,
-                  .data$HPD_higher)
-  return(as.data.frame(df_hpdi))
+
+  draws <-  posterior::as_draws_matrix(fit$draws(pars))
+  diagnostics <- posterior::as_draws_matrix(fit$summary(pars))
+
+  draws_df <- as.data.frame(draws)
+  diagnostics_df <- as.data.frame(diagnostics) %>%
+    dplyr::select(.data$rhat, .data$ess_bulk) %>%
+    dplyr::rename('Rhat'='rhat', 'n_eff'='ess_bulk')
+
+  mean_estimate <- as.data.frame(t(apply(draws_df, 2, mean)))
+  median_estimate <- as.data.frame(t(apply(draws_df, 2, median)))
+  hpdi_higher <- as.data.frame(t(apply(draws_df, 2, HPD_higher_from_column, credMass)))
+  hpdi_lower <- as.data.frame(t(apply(draws_df, 2, HPD_lower_from_column, credMass)))
+  q_lower <- as.data.frame(t(apply(draws_df, 2, quantile, (1-credMass)/2)))
+  q_higher <- as.data.frame(t(apply(draws_df, 2, quantile, credMass+(1-credMass)/2)))
+
+
+  fit_summary <- t(rbind(mean_estimate,
+                       median_estimate,
+                       hpdi_lower,
+                       hpdi_higher,
+                       q_lower,
+                       q_higher))
+
+  colnames(fit_summary) <- c("Mean", "Median", "HPD_lower", "HPD_higher", "q_lower", "q_higher")
+
+
+  fit_summary <- tibble::rownames_to_column(as.data.frame(fit_summary), "Parameter")
+  fit_summary <- cbind(fit_summary, diagnostics_df)
+
+  return(as.data.frame(fit_summary))
 }

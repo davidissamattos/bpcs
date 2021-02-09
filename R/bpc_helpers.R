@@ -75,18 +75,14 @@ compute_ties <- function(d, result_column) {
 }
 
 
-########### Stanfit related fucntions
-
-#' Return all the name of parameters in a model from a bpc_object.
+#' Return all the name of the used parameters in a model from a bpc_object.
 #' Here we exclude the log_lik and the lp__ since they are not parameters of the model
 #' @param bpc_object a bpc object
 #' @return a vector with the name of the parameters
 get_model_parameters <- function(bpc_object) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
-  stanfit <- get_stanfit(bpc_object)
-  pars_all <- stanfit@model_pars
-  pars <- subset(pars_all,!(pars_all %in% c('log_lik', 'lp__')))
+  pars <- bpc_object$used_pars
   return(pars)
 }
 
