@@ -7,7 +7,7 @@ To create we need to receive some defined parameters (the arguments from the bpc
 object generated from the rstan sampling procedure}
 \usage{
 create_bpc_object(
-  stanfit,
+  fit,
   lookup_table,
   model_type,
   standata,
@@ -17,11 +17,12 @@ create_bpc_object(
   predictors_lookup_table = NULL,
   predictors_matrix = NULL,
   subject_predictors_lookup_table = NULL,
-  subject_predictors_matrix = NULL
+  subject_predictors_matrix = NULL,
+  used_pars = "lambda"
 )
 }
 \arguments{
-\item{stanfit}{Stanfit object returned by rstan::sampling}
+\item{fit}{A fit object from cmdstanr}
 
 \item{lookup_table}{lookup_table dataframe. Two columns one Index the other Names where each each index will match a string in the names}
 
@@ -42,6 +43,8 @@ create_bpc_object(
 \item{subject_predictors_lookup_table}{a lookup table for the subject predictors models}
 
 \item{subject_predictors_matrix}{a matrix of predictors for the subject predictors matrix}
+
+\item{used_pars}{an array with all the parameters set for the model}
 }
 \value{
 a bpc object

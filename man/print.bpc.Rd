@@ -4,10 +4,12 @@
 \alias{print.bpc}
 \title{Print method for the bpc object.}
 \usage{
-\method{print}{bpc}(x, digits = 3, ...)
+\method{print}{bpc}(x, credMass = 0.95, digits = 3, ...)
 }
 \arguments{
 \item{x}{a bpc object}
+
+\item{credMass}{the probability mass for the credible interval}
 
 \item{digits}{number of decimal digits in the table}
 

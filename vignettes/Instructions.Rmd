@@ -1,0 +1,11 @@
+---
+title: "Instructions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Instructions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+Instructions for installation, use, and a paper with descriptions of the statistical models are available at the documentation website: https://davidissamattos.github.io/bpcs/index.html

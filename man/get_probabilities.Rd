@@ -4,7 +4,7 @@
 \alias{get_probabilities}
 \title{Get the empirical win/draw probabilities based on the ability/strength parameters.}
 \usage{
-get_probabilities(bpc_object, newdata = NULL, n = 100, model_type = NULL)
+get_probabilities(bpc_object, newdata = NULL, n = 1000, model_type = NULL)
 }
 \arguments{
 \item{bpc_object}{a bpc object}
