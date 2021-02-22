@@ -10,7 +10,7 @@ MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://cran.r-projec
 [![](https://img.shields.io/github/last-commit/davidissamattos/bpcs.svg)](https://github.com/davidissamattos/bpcs/commits/master)
 [![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![](https://img.shields.io/github/languages/code-size/davidissamattos/bpcs.svg)](https://github.com/davidissamattos/bpcs)
-[![](https://img.shields.io/badge/devel%20version-1.1.0-blue.svg)](https://github.com/davidissamattos/bpcs)
+[![](https://img.shields.io/badge/devel%20version-1.2.0-blue.svg)](https://github.com/davidissamattos/bpcs)
 [![](https://www.r-pkg.org/badges/version/bpcs?color=blue)](https://cran.r-project.org/package=bpcs)
 [![](https://codecov.io/gh/davidissamattos/bpcs/branch/master/graph/badge.svg)](https://codecov.io/gh/davidissamattos/bpcs)
 [![R build
@@ -27,20 +27,21 @@ Package documentation and vignette articles can be found at:
 
 ## Installation
 
-For the `bpcs` package to work, we rely upon the Stan software and the
-`rstan` package (Stan Development Team 2020).
+From version 1.2, we rely upon the Stan software and the `cmdstanr`
+package (Gabry and Češnovar 2020).
 
--   For general installation of Stan and RStan see:
-    <https://github.com/stan-dev/rstan>
+You need to have a suitable toolchain and install cmdstan and cmdstanr.
+The easiest way is to follow the instruction presented in the `cmdstanr`
+package. See <https://github.com/stan-dev/cmdstanr>
 
-To install the latest stable version from CRAN
+<!-- To install the latest stable version from CRAN -->
+<!-- ```{r eval=FALSE, echo=T} -->
+<!-- install.packages('bpcs') -->
+<!-- ``` -->
 
-``` r
-install.packages('bpcs')
-```
-
-To install the development version of the bpcs package, install directly
-from the Github repository.
+After installing and configuring `cmdstanr` properly, you can install
+the development version of the bpcs package directly from the Github
+repository.
 
 ``` r
 remotes::install_github('davidissamattos/bpcs')
@@ -50,6 +51,8 @@ After installing, we load the package with:
 
 ``` r
 library(bpcs)
+#> This is the version 1.2.0 of the bpcs package. 
+#> The bpcs package requires an installation of cmdstan and an appropriated toolchain.
 ```
 
 ## Minimal example
@@ -92,44 +95,16 @@ id
 <tbody>
 <tr>
 <td style="text-align:left;">
-Sabatini
-</td>
-<td style="text-align:left;">
-Navratilova
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-37
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 Graf
 </td>
 <td style="text-align:left;">
 Sabatini
 </td>
 <td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-19
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Seles
-</td>
-<td style="text-align:left;">
-Navratilova
-</td>
-<td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-10
+22
 </td>
 </tr>
 <tr>
@@ -148,6 +123,90 @@ Sanchez
 </tr>
 <tr>
 <td style="text-align:left;">
+Seles
+</td>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:left;">
+Sanchez
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+31
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:left;">
+Navratilova
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:left;">
+Sanchez
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Seles
+</td>
+<td style="text-align:left;">
+Sabatini
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Seles
+</td>
+<td style="text-align:left;">
+Sanchez
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 Sabatini
 </td>
 <td style="text-align:left;">
@@ -157,21 +216,7 @@ Sanchez
 1
 </td>
 <td style="text-align:right;">
-42
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:left;">
-Sabatini
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-17
+41
 </td>
 </tr>
 <tr>
@@ -182,52 +227,10 @@ Navratilova
 Sanchez
 </td>
 <td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-46
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:left;">
-Sabatini
-</td>
-<td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-15
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:left;">
-Sanchez
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-34
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:left;">
-Sabatini
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-20
+44
 </td>
 </tr>
 </tbody>
@@ -250,106 +253,85 @@ m<-bpc(data = tennis_agresti, #datafrane
        model_type = 'bt', #bt = Simple Bradley Terry model
        solve_ties = 'none' #there are no ties in the dataset so we can choose none here
        )
+#> Compiling Stan program...
+#> Running MCMC with 4 parallel chains...
 #> 
-#> SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
-#> Chain 1: 
-#> Chain 1: Gradient evaluation took 0.000124 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.24 seconds.
-#> Chain 1: Adjust your expectations accordingly!
-#> Chain 1: 
-#> Chain 1: 
-#> Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-#> Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#> Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#> Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#> Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#> Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#> Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#> Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#> Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#> Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-#> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.445326 seconds (Warm-up)
-#> Chain 1:                0.462403 seconds (Sampling)
-#> Chain 1:                0.907729 seconds (Total)
-#> Chain 1: 
+#> Chain 3 Iteration:    1 / 3000 [  0%]  (Warmup) 
+#> Chain 4 Iteration:    1 / 3000 [  0%]  (Warmup) 
+#> Chain 4 Iteration:  200 / 3000 [  6%]  (Warmup) 
+#> Chain 1 Iteration:    1 / 3000 [  0%]  (Warmup) 
+#> Chain 1 Iteration:  200 / 3000 [  6%]  (Warmup) 
+#> Chain 2 Iteration:    1 / 3000 [  0%]  (Warmup) 
+#> Chain 2 Iteration:  200 / 3000 [  6%]  (Warmup) 
+#> Chain 3 Iteration:  200 / 3000 [  6%]  (Warmup) 
+#> Chain 1 Iteration:  400 / 3000 [ 13%]  (Warmup) 
+#> Chain 2 Iteration:  400 / 3000 [ 13%]  (Warmup) 
+#> Chain 4 Iteration:  400 / 3000 [ 13%]  (Warmup) 
+#> Chain 3 Iteration:  400 / 3000 [ 13%]  (Warmup) 
+#> Chain 1 Iteration:  600 / 3000 [ 20%]  (Warmup) 
+#> Chain 4 Iteration:  600 / 3000 [ 20%]  (Warmup) 
+#> Chain 2 Iteration:  600 / 3000 [ 20%]  (Warmup) 
+#> Chain 3 Iteration:  600 / 3000 [ 20%]  (Warmup) 
+#> Chain 4 Iteration:  800 / 3000 [ 26%]  (Warmup) 
+#> Chain 1 Iteration:  800 / 3000 [ 26%]  (Warmup) 
+#> Chain 2 Iteration:  800 / 3000 [ 26%]  (Warmup) 
+#> Chain 3 Iteration:  800 / 3000 [ 26%]  (Warmup) 
+#> Chain 4 Iteration: 1000 / 3000 [ 33%]  (Warmup) 
+#> Chain 4 Iteration: 1001 / 3000 [ 33%]  (Sampling) 
+#> Chain 1 Iteration: 1000 / 3000 [ 33%]  (Warmup) 
+#> Chain 1 Iteration: 1001 / 3000 [ 33%]  (Sampling) 
+#> Chain 2 Iteration: 1000 / 3000 [ 33%]  (Warmup) 
+#> Chain 2 Iteration: 1001 / 3000 [ 33%]  (Sampling) 
+#> Chain 3 Iteration: 1000 / 3000 [ 33%]  (Warmup) 
+#> Chain 3 Iteration: 1001 / 3000 [ 33%]  (Sampling) 
+#> Chain 1 Iteration: 1200 / 3000 [ 40%]  (Sampling) 
+#> Chain 4 Iteration: 1200 / 3000 [ 40%]  (Sampling) 
+#> Chain 2 Iteration: 1200 / 3000 [ 40%]  (Sampling) 
+#> Chain 3 Iteration: 1200 / 3000 [ 40%]  (Sampling) 
+#> Chain 1 Iteration: 1400 / 3000 [ 46%]  (Sampling) 
+#> Chain 2 Iteration: 1400 / 3000 [ 46%]  (Sampling) 
+#> Chain 3 Iteration: 1400 / 3000 [ 46%]  (Sampling) 
+#> Chain 4 Iteration: 1400 / 3000 [ 46%]  (Sampling) 
+#> Chain 1 Iteration: 1600 / 3000 [ 53%]  (Sampling) 
+#> Chain 2 Iteration: 1600 / 3000 [ 53%]  (Sampling) 
+#> Chain 3 Iteration: 1600 / 3000 [ 53%]  (Sampling) 
+#> Chain 4 Iteration: 1600 / 3000 [ 53%]  (Sampling) 
+#> Chain 1 Iteration: 1800 / 3000 [ 60%]  (Sampling) 
+#> Chain 2 Iteration: 1800 / 3000 [ 60%]  (Sampling) 
+#> Chain 4 Iteration: 1800 / 3000 [ 60%]  (Sampling) 
+#> Chain 3 Iteration: 1800 / 3000 [ 60%]  (Sampling) 
+#> Chain 1 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
+#> Chain 2 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
+#> Chain 3 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
+#> Chain 4 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
+#> Chain 1 Iteration: 2200 / 3000 [ 73%]  (Sampling) 
+#> Chain 2 Iteration: 2200 / 3000 [ 73%]  (Sampling) 
+#> Chain 1 Iteration: 2400 / 3000 [ 80%]  (Sampling) 
+#> Chain 3 Iteration: 2200 / 3000 [ 73%]  (Sampling) 
+#> Chain 4 Iteration: 2200 / 3000 [ 73%]  (Sampling) 
+#> Chain 2 Iteration: 2400 / 3000 [ 80%]  (Sampling) 
+#> Chain 1 Iteration: 2600 / 3000 [ 86%]  (Sampling) 
+#> Chain 3 Iteration: 2400 / 3000 [ 80%]  (Sampling) 
+#> Chain 2 Iteration: 2600 / 3000 [ 86%]  (Sampling) 
+#> Chain 4 Iteration: 2400 / 3000 [ 80%]  (Sampling) 
+#> Chain 1 Iteration: 2800 / 3000 [ 93%]  (Sampling) 
+#> Chain 3 Iteration: 2600 / 3000 [ 86%]  (Sampling) 
+#> Chain 2 Iteration: 2800 / 3000 [ 93%]  (Sampling) 
+#> Chain 4 Iteration: 2600 / 3000 [ 86%]  (Sampling) 
+#> Chain 1 Iteration: 3000 / 3000 [100%]  (Sampling) 
+#> Chain 3 Iteration: 2800 / 3000 [ 93%]  (Sampling) 
+#> Chain 1 finished in 5.3 seconds.
+#> Chain 2 Iteration: 3000 / 3000 [100%]  (Sampling) 
+#> Chain 4 Iteration: 2800 / 3000 [ 93%]  (Sampling) 
+#> Chain 2 finished in 5.4 seconds.
+#> Chain 3 Iteration: 3000 / 3000 [100%]  (Sampling) 
+#> Chain 3 finished in 5.5 seconds.
+#> Chain 4 Iteration: 3000 / 3000 [100%]  (Sampling) 
+#> Chain 4 finished in 5.6 seconds.
 #> 
-#> SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
-#> Chain 2: 
-#> Chain 2: Gradient evaluation took 7.7e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.77 seconds.
-#> Chain 2: Adjust your expectations accordingly!
-#> Chain 2: 
-#> Chain 2: 
-#> Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-#> Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#> Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#> Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#> Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#> Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#> Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#> Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#> Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#> Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-#> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.443406 seconds (Warm-up)
-#> Chain 2:                0.440081 seconds (Sampling)
-#> Chain 2:                0.883487 seconds (Total)
-#> Chain 2: 
-#> 
-#> SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
-#> Chain 3: 
-#> Chain 3: Gradient evaluation took 5.5e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.55 seconds.
-#> Chain 3: Adjust your expectations accordingly!
-#> Chain 3: 
-#> Chain 3: 
-#> Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-#> Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#> Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#> Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#> Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#> Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#> Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#> Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#> Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#> Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-#> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.424284 seconds (Warm-up)
-#> Chain 3:                0.406588 seconds (Sampling)
-#> Chain 3:                0.830872 seconds (Total)
-#> Chain 3: 
-#> 
-#> SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
-#> Chain 4: 
-#> Chain 4: Gradient evaluation took 6.3e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.63 seconds.
-#> Chain 4: Adjust your expectations accordingly!
-#> Chain 4: 
-#> Chain 4: 
-#> Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-#> Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#> Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#> Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#> Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#> Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#> Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#> Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#> Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#> Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-#> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.470536 seconds (Warm-up)
-#> Chain 4:                0.4785 seconds (Sampling)
-#> Chain 4:                0.949036 seconds (Total)
-#> Chain 4:
+#> All 4 chains finished successfully.
+#> Mean chain execution time: 5.5 seconds.
+#> Total execution time: 6.2 seconds.
 ```
 
 If `rstan` is available and correctly working this function should
@@ -366,18 +348,17 @@ get three tables:
 
 ``` r
 summary(m)
-#> Estimated baseline parameters with HPD intervals:
-#> 
+#> Estimated baseline parameters with 95% HPD intervals:
 #> 
 #> Table: Parameters estimates
 #> 
-#> Parameter               Mean   HPD_lower   HPD_higher
-#> --------------------  ------  ----------  -----------
-#> lambda[Seles]           0.49       -2.35         3.45
-#> lambda[Graf]            0.92       -1.80         3.85
-#> lambda[Sabatini]       -0.35       -3.27         2.53
-#> lambda[Navratilova]     0.02       -2.78         3.06
-#> lambda[Sanchez]        -1.13       -3.90         1.95
+#> Parameter               Mean   Median   HPD_lower   HPD_higher
+#> --------------------  ------  -------  ----------  -----------
+#> lambda[Seles]           0.60     0.59       -2.15         3.42
+#> lambda[Graf]            1.03     1.04       -1.67         3.83
+#> lambda[Sabatini]       -0.26    -0.26       -3.11         2.48
+#> lambda[Navratilova]     0.12     0.12       -2.60         2.93
+#> lambda[Sanchez]        -1.04    -1.03       -3.90         1.73
 #> NOTES:
 #> * A higher lambda indicates a higher team ability
 #> 
@@ -390,37 +371,36 @@ summary(m)
 #> 
 #> i             j              i_beats_j   j_beats_i
 #> ------------  ------------  ----------  ----------
-#> Graf          Navratilova         0.69        0.31
-#> Graf          Sabatini            0.77        0.23
-#> Graf          Sanchez             0.84        0.16
-#> Graf          Seles               0.60        0.40
-#> Navratilova   Sabatini            0.54        0.46
-#> Navratilova   Sanchez             0.72        0.28
-#> Navratilova   Seles               0.33        0.67
-#> Sabatini      Sanchez             0.66        0.34
-#> Sabatini      Seles               0.38        0.62
-#> Sanchez       Seles               0.15        0.85
+#> Graf          Navratilova         0.63        0.37
+#> Graf          Sabatini            0.79        0.21
+#> Graf          Sanchez             0.92        0.08
+#> Graf          Seles               0.56        0.44
+#> Navratilova   Sabatini            0.62        0.38
+#> Navratilova   Sanchez             0.85        0.15
+#> Navratilova   Seles               0.42        0.58
+#> Sabatini      Sanchez             0.61        0.39
+#> Sabatini      Seles               0.33        0.67
+#> Sanchez       Seles               0.16        0.84
 #> 
 #> Rank of the players' abilities:
 #> The rank is based on the posterior rank distribution of the lambda parameter
-#> 
 #> 
 #> Table: Estimated posterior ranks
 #> 
 #> Parameter              MedianRank   MeanRank   StdRank
 #> --------------------  -----------  ---------  --------
-#> lambda[Graf]                    1       1.38      0.62
-#> lambda[Seles]                   2       2.14      0.93
-#> lambda[Navratilova]             3       3.03      0.89
-#> lambda[Sabatini]                4       3.66      0.83
-#> lambda[Sanchez]                 5       4.79      0.51
+#> lambda[Graf]                    1       1.36      0.59
+#> lambda[Seles]                   2       2.14      0.90
+#> lambda[Navratilova]             3       2.99      0.90
+#> lambda[Sabatini]                4       3.73      0.82
+#> lambda[Sanchez]                 5       4.78      0.50
 ```
 
 ``` r
 plot(m, rotate_x_labels = T)
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 # Features of the bpcs package
 
@@ -433,19 +413,22 @@ plot(m, rotate_x_labels = T)
 -   Accepts a column with the results of the contest or the scores for
     each player.
 -   Customize a normal prior distribution for every parameter.
--   Compute HDP interval for every parameter with the `get_parameters`
-    function
+-   Compute HDP interval for every parameter with the
+    `get_parameters_df` function
 -   Compute rank of the players with the `get_rank_of_players_df`
     function.
 -   Compute all the probability combinations for one player beating the
     other with the `get_probabilities_df` function.
 -   Convert aggregated tables of results into long format (one contest
     per row) with the `expand_aggregated_data.`
--   Obtain the posterior distribution for every parameter of the model
-    with the `get_sample_posterior` function.
+-   Obtain the posterior distribution for a single parameter of the
+    model with the `get_sample_posterior` function or for all parameters
+    with `get_parameters_posterior`.
 -   Easy predictions using the `predict` function.
--   We do not reinforce any table or plotting library! Results are
-    returned as data frames for easier plotting and creating tables
+-   Although we have some publication-ready functions that use `ggplot`
+    and `kable`, we do not reinforce any table or plotting library. All
+    results can be obtained as data frames for easier plotting and
+    creating tables. Just use the functions that end with `_df`
 -   We reinforce the need to manually specify the model to be used.
 
 ## Models available
@@ -459,8 +442,8 @@ Options to add to the models:
     Beaver 1977)
 -   Generalized models (`-generalized`). When we have contestant
     (players) specific predictors (Springall 1973)
--   Subject predictors (`-subjectpredictors`). When we have subject
-    specific predictors (Böckenholt 2001).
+-   Subject predictors (`-subjectpredictors`). When we have
+    subject-specific predictors (Böckenholt 2001).
 -   Intercept random effects (`-U`). For example, to compensate
     clustering or repeated measures (Böckenholt 2001)
 
@@ -510,9 +493,14 @@ Below we list all our vignettes with a short description:
 
 <!-- * [Generalized Bradley-Terry model](): This vignette investigate the Bradley-Terry model when we have players specific characteristics. (TODO) -->
 
--   Paper: This paper describes the theory and related work behind the
-    presented models along with 3 reanalyses in behavioral sciences.
-    Arxiv:2101.11227
+-   Paper *“Bayesian Paired-Comparison with the bpcs package”*
+    (Arxiv:2101.11227).
+    -   This paper describes the theory and related work behind the
+        presented models along with 3 reanalyses in behavioral sciences.
+        Including random effects, order effect, a subject specific
+        predictors
+    -   The reanalyses code can be found at:
+        <https://davidissamattos.github.io/bpcs-online-appendix/>
 
 # Contributing and bugs
 
@@ -573,18 +561,18 @@ Bradley-Terry Model to Incorporate Within-Pair Order Effects.”
 
 </div>
 
+<div id="ref-cmdstanr" class="csl-entry">
+
+Gabry, Jonah, and Rok Češnovar. 2020. *Cmdstanr: R Interface to
+’CmdStan’*.
+
+</div>
+
 <div id="ref-springall1973response" class="csl-entry">
 
 Springall, A. 1973. “Response Surface Fitting Using a Generalization of
 the Bradley-Terry Paired Comparison Model.” *Journal of the Royal
 Statistical Society: Series C (Applied Statistics)* 22 (1): 59–68.
-
-</div>
-
-<div id="ref-rstan" class="csl-entry">
-
-Stan Development Team. 2020. “RStan: The R Interface to Stan.”
-<https://mc-stan.org/>.
 
 </div>
 

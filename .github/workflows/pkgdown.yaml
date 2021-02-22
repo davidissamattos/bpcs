@@ -12,9 +12,31 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v2
+            - uses: actions/checkout@v2
+
+      - name: Set path for RTools 4.0
+        if: runner.os == 'Windows'
+        run: echo "C:/rtools40/usr/bin;C:/rtools40/mingw64/bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+
+      - name: Install mingw32-make and check toolchain path
+        if: runner.os == 'Windows'
+        run: |
+          pacman -Syu mingw-w64-x86_64-make --noconfirm
+          g++ --version
+          Get-Command g++ | Select-Object -ExpandProperty Definition
+          mingw32-make --version
+          Get-Command mingw32-make | Select-Object -ExpandProperty Definition
+        shell: powershell
+
+      - name: Install MPI
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install -y openmpi-bin
+
 
       - uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: ${{ matrix.config.r }}
 
       - uses: r-lib/actions/setup-pandoc@v1
 
@@ -26,19 +48,29 @@ jobs:
         shell: Rscript {0}
 
       - name: Cache R packages
+        if: runner.os != 'Windows'
         uses: actions/cache@v2
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
+      - name: Install system dependencies
+        if: runner.os == 'Linux'
+        run: |
+          while read -r cmd
+          do
+            eval sudo $cmd
+          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
+
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
-          install.packages("pkgdown", type = "binary")
+          remotes::install_cran("rcmdcheck")
           install.packages("posterior", repos = c("https://mc-stan.org/r-packages/", getOption("repos")), type="source")
           install.packages("cmdstanr", repos = c("https://mc-stan.org/r-packages/", getOption("repos")), type="source")
           install.packages("curl")
+          cmdstanr::check_cmdstan_toolchain(fix = TRUE)
           cmdstanr::install_cmdstan(cores = 2, overwrite = TRUE)
         shell: Rscript {0}
 

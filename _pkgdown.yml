@@ -21,7 +21,7 @@ navbar:
           href: articles/b_ties_and_home_advantage
         - text: "Random effects"
           href: articles/c_bt_random_effects
-        - text: "Paper - An overview of the models"
+        - text: "Paper: Bayesian Paired-Comparison with the bpcs package"
           href: https://arxiv.org/pdf/2101.11227.pdf
         - text: "Online appendix for the paper"
           href: https://davidissamattos.github.io/bpcs-online-appendix/

@@ -18,42 +18,28 @@ If you have a strong need for a model that is not covered in this package (and d
 ## Short guide/suggestions
 
 TODO
-<!-- The points below are mostly reminders for me but hopefully it can help others -->
+The points below are mostly reminders for me but hopefully it can help others
 
-<!-- * Use the `devtools` package to create R files, test files, vignettes etc -->
-<!-- * In the R folder: -->
-<!--   - `bpc.R`: this contains a single function (rather large) that is the main function call of the package. Each new model should be added here in the if else section with the appropriated data list for stan. Don't forget to add the relevant documentation in roxygen2 -->
-<!--   - `bpc_exports.R`: these are helper functions to handle the `bpc` object and are exposed to the user. Only add here functions that receive a bpc object and that the users will have an interest.  -->
-<!--   - `bpc_get_probabilities.R` Get probabilities related functions -->
-<!--   - `bpc_get_rank_of_players.R` Get rank related functions -->
-<!--   - `bpc_get_parameters.R` Get parameters related functions -->
-<!--   - `bpc_publciation.R` Functions for publication ready tables and plots -->
-<!--   - `bpc_helpers_X.R` additional functions to facilitate and support either the bpc function or the exports functions. None of these functions should be exported, although all of them should be documented. We divided these helpers in several files. the indexes are related to creating and checking names and indexes in lookup tables, the hpd to HPDI related functions, the checks to check correct specification of the data frame columns -->
-<!--   - `bpc_s3.R` all functions here are the custom implementation of the generic base functions from R, such as `summary`, `print`, `predict` -->
-<!--   - `data-docs.R` documentation for the data. -->
-<!--   - `bpc_object.R` declaration and creation of the bpc class. -->
-<!-- * To add new models: -->
-<!--   1. Add the stan file with the model in inst/stan. -->
-<!--     - Note that we add two stan files for each model, one that will estimate the parameters and one that will make predictions -->
-<!--     - The goal is to keep the number of models small. If the models are related to an existing one add that functionality to the existing models. -->
-<!--     - More models -> longer installation time -->
-<!--   3. add the appropriated hooks in the `bpc` function in `bpc.R` so we can call the model -->
-<!--   4. add the appropriated hooks in the `predict` function in `bpc_s3.R`. -->
-<!--   5. add the appropriated hooks for the `get_probabilities` function in `bpc_get_probabilities.R`  to generate the appropriated probability table that is called in the `summary` function. -->
-<!--   6. add the relevant tests to each of the modifications (to be improved with time, since we have very few tests now) -->
-<!-- * Problems with `rstantools` and compiling the models. For me at least, the combination of `RStudio`+ `rstantools` + `roxygen2` + `devtools` + `Rcpp`+ `devtools` gives an assorted amount of stochastic errors can usually be solved with a combination of the actions below. For me it is still trial and error to fix the error but it usually works with these actions: -->
-<!--   1. `pkgbuild::clean_dll()` to clean the source files. This will force recompile -->
-<!--   2. `devtools::document()`. This will update the package and recompile the models -->
-<!--   3. Restart the r session -->
-<!--   4. Run`devtools::load_all()` again -->
-
+* Use the `devtools` package to create R files, test files, vignettes etc
+* In the R folder:
+  - `bpc.R`: this contains a single function (rather large) that is the main function call of the package. We currently have only a single Stan model with lots of optional parameters. These are configured in the main bpc function
+  - `bpc_exports.R`: these are helper functions to handle the `bpc` object and are exposed to the user. Only add here functions that receive a bpc object and that the users will have an interest.
+  - `bpc_get_probabilities.R` Get probabilities related functions
+  - `bpc_get_rank_of_players.R` Get rank related functions
+  - `bpc_get_parameters.R` Get parameters related functions
+  - `bpc_publciation.R` Functions for publication ready tables and plots
+  - `bpc_helpers_X.R` additional functions to facilitate and support either the bpc function or the exports functions. None of these functions should be exported, although all of them should be documented. We divided these helpers in several files. the indexes are related to creating and checking names and indexes in lookup tables, the hpd to HPDI related functions, the checks to check correct specification of the data frame columns
+  - `bpc_s3.R` all functions here are the custom implementation of the generic base functions from R, such as `summary`, `print`, `predict` and `plot`
+    - Generated quantities is implemented in the `predict` function and in the file `bpc_btpredict.R`
+  - `data-docs.R` documentation for the data.
+  - `bpc_object.R` declaration and creation of the bpc class.
 
 <!-- After adding the models and tests run `devtools::test()` and then `devtools::check()`. If everything is fine we can add the code and run R CMD check on the different platforms with Github actions -->
 
 
 ## Github actions
 
-Currently we rely on few Github actions from r-lib
+Currently we rely on few Github actions from r-lib with some modifications to install `cmdstanr` and `cmdstan.` Basic code comes from the `cmdstanr` actions.
 
 * R-CMD-check standard. This checks in windows latest, macOS latest, ubuntu latest and ubuntu devel
 * pkgdown. The pkg site is build automatically

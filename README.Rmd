@@ -113,13 +113,13 @@ plot(m, rotate_x_labels = T)
 -   Bayesian computation of different variations of the Davidson model to handle ties in the contest (including with home advantage, random effects and the generalized model).
 -   Accepts a column with the results of the contest or the scores for each player.
 -   Customize a normal prior distribution for every parameter.
--   Compute HDP interval for every parameter with the `get_parameters` function
+-   Compute HDP interval for every parameter with the `get_parameters_df` function
 -   Compute rank of the players with the `get_rank_of_players_df` function.
 -   Compute all the probability combinations for one player beating the other with the `get_probabilities_df` function.
 -   Convert aggregated tables of results into long format (one contest per row) with the `expand_aggregated_data.`
--   Obtain the posterior distribution for every parameter of the model with the `get_sample_posterior` function.
+-   Obtain the posterior distribution for a single parameter of the model with the `get_sample_posterior` function or for all parameters with `get_parameters_posterior`.
 -   Easy predictions using the `predict` function.
--   We do not reinforce any table or plotting library! Results are returned as data frames for easier plotting and creating tables
+-   Although we have some publication-ready functions that use `ggplot` and `kable`, we do not reinforce any table or plotting library. All results can be obtained as data frames for easier plotting and creating tables. Just use the functions that end with `_df`
 -   We reinforce the need to manually specify the model to be used.
 
 ## Models available
@@ -131,7 +131,7 @@ Options to add to the models:
 
 -   Order effect (`-ordereffect`). E.g. for home advantage [@davidson1977extending]
 -   Generalized models (`-generalized`). When we have contestant (players) specific predictors [@springall1973response]
--   Subject predictors (`-subjectpredictors`). When we have subject specific predictors [@bockenholt2001hierarchical].
+-   Subject predictors (`-subjectpredictors`). When we have subject-specific predictors [@bockenholt2001hierarchical].
 -   Intercept random effects (`-U`). For example, to compensate clustering or repeated measures [@bockenholt2001hierarchical]
 
 E.g.:
@@ -160,7 +160,9 @@ Below we list all our vignettes with a short description:
 
 <!-- * [Generalized Bradley-Terry model](): This vignette investigate the Bradley-Terry model when we have players specific characteristics. (TODO) -->
 
-- Paper: This paper describes the theory and related work behind the presented models along with 3 reanalyses in behavioral sciences. Arxiv:2101.11227
+- Paper *"Bayesian Paired-Comparison with the bpcs package"* (Arxiv:2101.11227). 
+  - This paper describes the theory and related work behind the presented models along with 3 reanalyses in behavioral sciences. Including random effects, order effect, a subject specific predictors 
+  - The reanalyses code can be found at: https://davidissamattos.github.io/bpcs-online-appendix/ 
 
 # Contributing and bugs
 
