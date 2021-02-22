@@ -11,7 +11,6 @@
 #' @param keep an array of strings with the name of columns we want to keep in the new data frame (and repeat in every expanded row)
 #' @return a data frame with the expanded dataset. It will have the columns player1, player0, y, the keep columns, and a rowid column (to make each row unique)
 #' @export
-#'
 #' @examples
 #' #Creating a simple data frame with only one row to illustrate how the function works
 #' df1 <- tibble::tribble(~player0, ~player1, ~wins0, ~wins1,~cluster, 'A','B',4, 3, 'c1')

@@ -13,9 +13,12 @@
 ^cran-comments.md$
 ^revdep$
 ^LICENSE\.md$
+^vignettes/a_get_started\.Rmd$
 ^vignettes/b_ties_and_home_advantage\.Rmd$
 ^vignettes/c_bt_random_effects\.Rmd$
 ^vignettes/d_paper\.Rmd$
 ^vignettes/e_contributing\.Rmd$
 ^tarversions$
 ^.Rhistory$
+^inst/stan/bt$
+

@@ -41,11 +41,7 @@ library(ggplot2)
 library(kableExtra)
 library(knitr)
 library(gtools)
-library(rstan)
-#Stan should use parallel cores
-# options(mc.cores = parallel::detectCores()) #use multiple cores
-options(mc.cores = 2) #CRAN works only with max 2 cores
-rstan::rstan_options(auto_write = TRUE)
+library(bayesplot)
 ```
 
 
@@ -183,8 +179,7 @@ m <-
 
 First let's look at the MCMC convergence with the traceplots and look at the Rhat and neff
 ```{r}
-stanfit<-get_stanfit(m)
-summary(m)
+get_parameters_df(m, n_eff = T, Rhat = T)
 ```
 
 
@@ -193,10 +188,10 @@ All seems ok! Let's look now at the traceplots
 Traceplots of the chains with the bayesplot library
 
 ```{r}
-library(bayesplot)
-posterior <- rstan::extract(stanfit, inc_warmup = T, permuted = F)
+fit <- get_fit(m1)
+posterior_draws <- posterior::as_draws_matrix(fit$draws())
 bayesplot::mcmc_trace(
-  posterior,
+  posterior_draws,
   pars = c(
     "lambda[1]",
     "lambda[2]",

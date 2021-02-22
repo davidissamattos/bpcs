@@ -9,7 +9,7 @@
   newdata,
   predictors = NULL,
   n = 100,
-  return_matrix = F,
+  return_matrix = T,
   model_type = NULL,
   ...
 )

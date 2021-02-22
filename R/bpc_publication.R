@@ -2,6 +2,7 @@
 #'
 #' @param bpc_object a bpc object
 #' @param params a vector with the parameters to be in the table. If NULL them all will be present
+#' @param credMass the probability mass for the credible interval
 #' @param format A character string. same formats utilized in the knitr::kable function
 #' * 'latex': output in latex format
 #' * 'simple': appropriated for the console
@@ -29,6 +30,7 @@
 get_parameters_table <-
   function(bpc_object,
            params=NULL,
+           credMass = 0.95,
            format = 'latex',
            digits = 3,
            caption = 'Parameters estimates',
@@ -36,7 +38,7 @@ get_parameters_table <-
            n_eff = F) {
     if (class(bpc_object) != 'bpc')
       stop('Error! The object is not of bpc class')
-    t <- get_parameters(bpc_object, params=params, HPDI = HPDI,n_eff = n_eff)
+    t <- get_parameters(bpc_object, credMass=credMass, params=params, HPDI = HPDI,n_eff = n_eff)
     out <-
       knitr::kable(t,
                    format = format,
@@ -180,15 +182,14 @@ get_parameters_plot <-
            rotate_x_labels = FALSE,
            APA=TRUE) {
     df <- get_parameters(bpc_object,
+                         params = params,
                          HPDI = HPDI,
                          n_eff = F,
                          Rhat = F)
 
 
-    colnames(df) <- c('Parameter', 'Mean', 'Lower', 'Higher')
-
+    colnames(df) <- c('Parameter', 'Mean', 'Median', 'Lower', 'Higher')
     df <- df %>%
-      dplyr::filter(stringr::str_detect(.data$Parameter, paste(params, collapse = "|"))) %>%
       dplyr::arrange(.data$Mean)
 
     param_order <- as.array(df$Parameter)

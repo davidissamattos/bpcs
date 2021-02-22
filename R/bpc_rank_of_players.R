@@ -10,6 +10,7 @@ get_rank_of_players <- function(bpc_object, n = 1000) {
     stop('Error! The object is not of bpc class')
   s <- get_sample_posterior(bpc_object, par = 'lambda', n = n)
   s <- dplyr::mutate(s, rown = dplyr::row_number())
+
   wide_s <-
     tidyr::pivot_longer(
       s,
@@ -39,7 +40,7 @@ get_rank_of_players <- function(bpc_object, n = 1000) {
     dplyr::select(-.data$rown) %>%
     as.matrix()
 
-  out <- list(Table = rank_df,
+  out <- list(Table = as.data.frame(rank_df),
               Posterior = post)
 
   return(out)

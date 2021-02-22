@@ -7,6 +7,7 @@
 get_parameters_table(
   bpc_object,
   params = NULL,
+  credMass = 0.95,
   format = "latex",
   digits = 3,
   caption = "Parameters estimates",
@@ -18,6 +19,8 @@ get_parameters_table(
 \item{bpc_object}{a bpc object}
 
 \item{params}{a vector with the parameters to be in the table. If NULL them all will be present}
+
+\item{credMass}{the probability mass for the credible interval}
 
 \item{format}{A character string. same formats utilized in the knitr::kable function
 \itemize{

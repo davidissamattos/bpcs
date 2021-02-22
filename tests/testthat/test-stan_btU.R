@@ -50,8 +50,16 @@ test_that("bpc returns a bpc object the btU model", {
   expect_no_error(summary(m1))
 
   expect_s3_class(m2, 'bpc')
-  expect_no_error(summary(m3))
+  expect_no_error(summary(m2))
 
   expect_s3_class(m3, 'bpc')
   expect_no_error(summary(m3))
+
+  expect_no_error(posterior_predictive(m1))
+  expect_no_error(posterior_predictive(m2))
+  expect_no_error(posterior_predictive(m3))
+
+  expect_no_error(get_probabilities_df(m1, model_type = 'bt'))
+  expect_no_error(get_probabilities_df(m2, model_type = 'bt'))
+  expect_no_error(get_probabilities_df(m3, model_type = 'bt'))
 })

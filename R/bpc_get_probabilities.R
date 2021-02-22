@@ -5,7 +5,7 @@
 #' @param model_type when dealing with some models (such as random effects) one might want to make predictions using the estimated parameters with the random effects but without specifying the specific values of random effects to predict. Therefore one can set a subset of the model to make predictions. For example: a model sampled with bt-U can be used to make predictions of the model bt only.
 #' @return a list with data frame table with the respective probabilities and a matrix with the corresponding posterior
 #' @importFrom rlang .data
-get_probabilities <- function(bpc_object, newdata=NULL, n = 100, model_type=NULL) {
+get_probabilities <- function(bpc_object, newdata=NULL, n = 1000, model_type=NULL) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
 
@@ -14,7 +14,6 @@ get_probabilities <- function(bpc_object, newdata=NULL, n = 100, model_type=NULL
   else
     model_type <- model_type
 
-  stanfit <- get_stanfit(bpc_object)
   out <- NULL
   s <- get_sample_posterior(bpc_object, n = n)
   lookup <- bpc_object$lookup_table

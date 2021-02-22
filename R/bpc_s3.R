@@ -2,6 +2,7 @@
 #'
 #' This S3 functions only prints the mean and the HDPI values of all the parameters in the model
 #' @param x a bpc object
+#' @param credMass the probability mass for the credible interval
 #' @param \dots  additional parameters for the generic print function. Not used
 #' @param digits number of decimal digits in the table
 #' @export
@@ -15,10 +16,51 @@
 #' solve_ties = 'none')
 #' print(m)
 #' }
-print.bpc <- function(x, digits = 3, ...) {
-  cat("Estimated baseline parameters with HPD intervals:\n")
-  hpdi <- tryCatch({
-    get_parameters(x)
+print.bpc <- function(x, credMass=0.95, digits = 3, ...) {
+  mess <- paste("Estimated baseline parameters with ", credMass*100,"% HPD intervals:", sep = "")
+  cat(mess)
+  tryCatch({
+    print(get_parameters_table(
+      x,
+      credMass = credMass,
+      format = 'simple',
+      digits = digits,
+      HPDI = T
+    ))
+    cat('NOTES:\n')
+    cat('* A higher lambda indicates a higher team ability\n')
+
+    if (stringr::str_detect(x$model_type, 'davidson')) {
+      cat(
+        '* Large positive values of the nu parameter indicates a high probability of tie regardless of the abilities of theplayers.\n'
+      )
+      cat(
+        '* Large negative values of the nu parameter indicates a low probability of tie regardless of the abilities of the players.\n'
+      )
+      cat(
+        '* Values of nu close to zero indicate that the probability of tie is more dependable on abilities of the players. If nu=0 the model reduces to the Bradley-Terry model.\n'
+      )
+    }
+    if (stringr::str_detect(x$model_type, 'ordereffect')) {
+      cat(
+        '* Large positive values of the gm parameter indicate that player 1 has a disadvantage. E.g. in a home effect scenario positive values indicate a home disadvantage.\n'
+      )
+      cat(
+        '* Large negative values of the gm parameter indicate that player 1 has an advantage. E.g. in a home effect scenario negative values indicate a home advantage.\n'
+      )
+      cat(
+        '* Values of gm close to zero indicate that the order effect does not influence the contest. E.g. in a home effect it indicates that player 1 does not have a home advantage nor disadvantage.\n'
+      )
+    }
+    if (stringr::str_detect(x$model_type, 'U')) {
+      cat(
+        '* The U_std indicates the standard deviation of the normal distribution where the parameters U[player, cluster] are drawn from. Higher values of U_std indicates a higher effect of the cluster in the team abitilies.\n'
+      )
+      cat(
+        '* The U[player, cluster] represents the effect of a particular cluster in a particular team ability.\n'
+      )
+
+    }
   },
   error = function(cond) {
     message("Error when calculating the HPDI parameters")
@@ -26,48 +68,6 @@ print.bpc <- function(x, digits = 3, ...) {
     stop(cond)
     return(NA)
   })
-  print(get_parameters_table(
-    x,
-    format = 'simple',
-    digits = digits,
-    HPDI = T
-  ))
-  cat('NOTES:\n')
-  cat('* A higher lambda indicates a higher team ability\n')
-
-  if (stringr::str_detect(x$model_type, 'davidson')) {
-    cat(
-      '* Large positive values of the nu parameter indicates a high probability of tie regardless of the abilities of theplayers.\n'
-    )
-    cat(
-      '* Large negative values of the nu parameter indicates a low probability of tie regardless of the abilities of the players.\n'
-    )
-    cat(
-      '* Values of nu close to zero indicate that the probability of tie is more dependable on abilities of the players. If nu=0 the model reduces to the Bradley-Terry model.\n'
-    )
-  }
-  if (stringr::str_detect(x$model_type, 'ordereffect')) {
-    cat(
-      '* Large positive values of the gm parameter indicate that player 1 has a disadvantage. E.g. in a home effect scenario positive values indicate a home disadvantage.\n'
-    )
-    cat(
-      '* Large negative values of the gm parameter indicate that player 1 has an advantage. E.g. in a home effect scenario negative values indicate a home advantage.\n'
-    )
-    cat(
-      '* Values of gm close to zero indicate that the order effect does not influence the contest. E.g. in a home effect it indicates that player 1 does not have a home advantage nor disadvantage.\n'
-    )
-  }
-  if (stringr::str_detect(x$model_type, 'U')) {
-    cat(
-      '* The U_std indicates the standard deviation of the normal distribution where the parameters U[player, cluster] are drawn from. Higher values of U_std indicates a higher effect of the cluster in the team abitilies.\n'
-    )
-    cat(
-      '* The U[player, cluster] represents the effect of a particular cluster in a particular team ability.\n'
-    )
-
-  }
-
-
 }
 
 #' Summary of the model bpc model.
@@ -134,7 +134,7 @@ summary.bpc <-
 
     #Table with the ranks
     cat("\nRank of the players' abilities:\n")
-    cat("The rank is based on the posterior rank distribution of the lambda parameter\n")
+    cat("The rank is based on the posterior rank distribution of the lambda parameter")
 
     rank_players <- tryCatch({
       get_rank_of_players_table(object, format = 'simple', digits = digits)
@@ -179,17 +179,17 @@ predict.bpc <-
            newdata,
            predictors = NULL,
            n = 100,
-           return_matrix = F,
+           return_matrix = T,
            model_type = NULL,
            ...) {
-
-    if(is.null(model_type))
+    if (is.null(model_type))
       model_type <- object$model_type
     else
       model_type <- model_type
 
     # Get some basic information for all models
-    stanfit <- object$stanfit
+    fit <- object$fit
+    #standata <- object$standata #we take the list from sampling as the starting point and we modify it
     lookup_table <- object$lookup_table
 
     #Prepare the newdata for prediction
@@ -246,10 +246,10 @@ predict.bpc <-
       cluster_lookup_table <- object$cluster_lookup_table
       cluster <- object$call_arg$cluster
       i <- 1
-      for (cl in cluster_lookup_table) {
+      for (cl in cluster) {
         newdata <- create_cluster_index_with_existing_lookup_table(
           d = newdata,
-          cluster = cluster,
+          cluster = cl,
           cluster_lookup_table = cluster_lookup_table[[i]],
           i=i
         )
@@ -341,13 +341,6 @@ predict.bpc <-
           lookup_table =
             lookup_table
         )
-      new_predictors_lookup_table <-
-        create_predictors_lookup_table(predictors_columns)
-
-      if (!dplyr::all_equal(new_predictors_lookup_table, predictors_lookup_table))
-        stop(
-          'The predictor data frame is specified differently than the predictors data frame used to generate the model. We found different predictors or predictors in different order. The columns should be in the same order and contain only the predictors and the players name'
-        )
 
       if (!check_numeric_predictor_matrix(predictors_matrix))
         stop(
@@ -375,40 +368,13 @@ predict.bpc <-
       standata <- c(standata, list(use_Davidson = 0))
     }
 
+    draws <-  posterior::as_draws_matrix(fit$draws())
+    #downsampling
+    draws<- draws[sample(nrow(draws), size = n, replace = F), ]
+    pred_matrix <- btpredict(standata=standata,
+                      draws=draws)
+    pred_df <- cbind(newdata, as.data.frame(t(pred_matrix)))
 
-    #This is a weird fix do to a possible bugs in rstan
-    #rstan does not return parameters with zero dimension
-    #gqs requires all parameters including those with zero dimensions
-    # I am keeping this here just in case for the future
-
-    #create a stanfit object with the predictions
-    # draws <- as.matrix(stanfit)
-    # nrows_draws <- nrow(draws)
-    # pars_draws <- colnames(draws)
-    # #lambda is always there so we don't need to worry about it
-    # all_pars <- c('gm_param','U_std_param','U','nu_param')
-    # not_in_draws <- setdiff(all_pars, pars_draws)#which of the allpars are not in pars_draws
-    # for(i in 1:length(not_in_draws)){ #adding fake sample to the stanfit matrix
-    #   draws<-cbind(not_in_draws[i]=rep(0,nrows_draws))
-    # }
-
-
-    draws <- as.matrix(stanfit)
-
-
-    pred <- rstan::gqs(stanmodels$btpredict,
-                       data = standata,
-                       draws = draws)
-
-    pred_df <- NULL #the return object
-
-
-    # Now we compute the predictions
-    y_pred <- sample_stanfit(pred, par = 'y_pred', n = n)
-    y_pred_df <- as.data.frame(y_pred) %>% t()
-    colnames(y_pred_df) <-
-      paste(rep('y_pred[', n), seq(1, n), ']', sep = "")
-    pred_df <- cbind(newdata, y_pred_df)
 
     # After we get the posterior of the y_pred parameter we resample it
     # for most purposes  we want 1 row for each observation and 1 col for each predictive sample
@@ -417,10 +383,7 @@ predict.bpc <-
 
     if (return_matrix)
     {
-      pred_matrix <- as.matrix(pred)
-      pred_matrix <- pred_matrix[, startsWith(colnames(pred_matrix),'y_pred')]
-      pred_matrix_n <- pred_matrix[sample(nrow(pred_matrix),size=n,replace=F),]
-      return(pred_matrix_n)
+      return(pred_matrix)
     } else {
       pred_df <- pred_df %>% tibble::remove_rownames()
       return(as.data.frame(pred_df))

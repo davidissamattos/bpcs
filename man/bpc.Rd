@@ -20,10 +20,12 @@ bpc(
   win_score = "higher",
   priors = NULL,
   chains = 4,
+  parallel_chains = 4,
   iter = 2000,
   warmup = 1000,
   show_chain_messages = TRUE,
-  seed = NA
+  seed = NULL,
+  log_lik = T
 )
 }
 \arguments{
@@ -90,6 +92,8 @@ bpc(
 
 \item{chains}{Number of chains passed to Stan sampling. Positive integer, default=4. For more information consult Stan documentation}
 
+\item{parallel_chains}{Number of parallel chains}
+
 \item{iter}{Number of iterations passed to Stan sampling. Positive integer, default =2000. For more information consult Stan documentation}
 
 \item{warmup}{Number of iteration for the warmup passed to Stan sampling. Positive integer, default 1000.  For more information consult Stan documentation}
@@ -97,6 +101,8 @@ bpc(
 \item{show_chain_messages}{Hide chain messages from Stan}
 
 \item{seed}{a random seed for Stan}
+
+\item{log_lik}{boolean. Calculate Log-likelihood for loo and waic?}
 }
 \value{
 An object of the class bpc. This object should be used in conjunction with the several auxiliary functions from the package

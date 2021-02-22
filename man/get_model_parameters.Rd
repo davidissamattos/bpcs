@@ -2,7 +2,7 @@
 % Please edit documentation in R/bpc_helpers.R
 \name{get_model_parameters}
 \alias{get_model_parameters}
-\title{Return all the name of parameters in a model from a bpc_object.
+\title{Return all the name of the used parameters in a model from a bpc_object.
 Here we exclude the log_lik and the lp__ since they are not parameters of the model}
 \usage{
 get_model_parameters(bpc_object)
@@ -14,6 +14,6 @@ get_model_parameters(bpc_object)
 a vector with the name of the parameters
 }
 \description{
-Return all the name of parameters in a model from a bpc_object.
+Return all the name of the used parameters in a model from a bpc_object.
 Here we exclude the log_lik and the lp__ since they are not parameters of the model
 }

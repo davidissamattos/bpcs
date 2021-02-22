@@ -43,10 +43,12 @@
 #' * 'higher' score is winner
 #' * 'lower' score is winner
 #' @param chains Number of chains passed to Stan sampling. Positive integer, default=4. For more information consult Stan documentation
+#' @param parallel_chains Number of parallel chains
 #' @param iter Number of iterations passed to Stan sampling. Positive integer, default =2000. For more information consult Stan documentation
 #' @param warmup Number of iteration for the warmup passed to Stan sampling. Positive integer, default 1000.  For more information consult Stan documentation
 #' @param show_chain_messages Hide chain messages from Stan
 #' @param seed a random seed for Stan
+#' @param log_lik boolean. Calculate Log-likelihood for loo and waic?
 #' @return An object of the class bpc. This object should be used in conjunction with the several auxiliary functions from the package
 #' @export
 #' @references
@@ -75,17 +77,19 @@ bpc <- function(data,
                 result_column = NULL,
                 z_player1 = NULL,
                 cluster = NULL,
-                subject_predictors=NULL,
+                subject_predictors = NULL,
                 predictors = NULL,
                 model_type,
                 solve_ties = 'random',
                 win_score = 'higher',
                 priors = NULL,
                 chains = 4,
+                parallel_chains = 4,
                 iter = 2000,
                 warmup = 1000,
                 show_chain_messages = TRUE,
-                seed = NA) {
+                seed = NULL,
+                log_lik=T) {
   if ((is.null(player0_score) |
        is.null(player1_score)) & is.null(result_column))
     stop(
@@ -130,7 +134,7 @@ bpc <- function(data,
     predictors = predictors,
     model_type = model_type,
     solve_ties = solve_ties,
-    subject_predictors=subject_predictors,
+    subject_predictors = subject_predictors,
     win_score = win_score,
     priors = priors,
     chains = chains,
@@ -147,6 +151,11 @@ bpc <- function(data,
     refresh <- floor(iter / 10)
   }
 
+  #Show chain messages
+  if (!is.null(seed)) {
+    set.seed(seed)
+  }
+
 
   #Handling the data and preparing it for the models
 
@@ -154,13 +163,15 @@ bpc <- function(data,
 
   ##How to handle NA: at the moment we remove NA from the data frame
   dropna_cols <-
-    c(player0,
+    c(
+      player0,
       player1,
       player0_score,
       player1_score,
       result_column,
       subject_predictors,
-      z_player1)
+      z_player1
+    )
   d <- tidyr::drop_na(d, tidyselect::any_of(dropna_cols))
 
 
@@ -224,8 +235,9 @@ bpc <- function(data,
   subject_predictors_lookup_table <- NULL
   if (!is.null(subject_predictors))
   {
-    subject_predictors_matrix <- as.matrix(d[,subject_predictors])
-    subject_predictors_lookup_table <- create_subject_predictor_lookuptable(subject_predictors)
+    subject_predictors_matrix <- as.matrix(d[, subject_predictors])
+    subject_predictors_lookup_table <-
+      create_subject_predictor_lookuptable(subject_predictors)
   }
 
   #Handling predictors in the generalized model if available
@@ -271,6 +283,17 @@ bpc <- function(data,
   # Setting the priors
   default_std <- 3.0
   default_mu <- 0.0
+
+  prior_lambda_std<-NULL
+  prior_lambda_mu<-NULL
+  prior_nu_std<-NULL
+  prior_nu_mu<-NULL
+  prior_gm_mu<-NULL
+  prior_gm_std<-NULL
+  prior_U1_std<-NULL
+  prior_U2_std<-NULL
+  prior_U3_std<-NULL
+  prior_S_std<-NULL
 
   ##Lambda
   if (is.null(priors$prior_lambda_std))
@@ -320,6 +343,13 @@ bpc <- function(data,
   else
     prior_S_std <- priors$prior_S_std
 
+  calc_log_lik<-NULL
+  if (log_lik)
+    calc_log_lik <- 1
+  else
+    calc_log_lik <- 0
+  calc_log_lik
+
   #Base standata
   standata <- list(
     y = as.vector(d$y),
@@ -336,14 +366,20 @@ bpc <- function(data,
     prior_U1_std = prior_U1_std,
     prior_U2_std = prior_U2_std,
     prior_U3_std = prior_U3_std,
-    prior_S_std = prior_S_std
+    prior_S_std = prior_S_std,
+    calc_log_lik = calc_log_lik
   )
   stanfit <- NULL
+  fit <- NULL
+
+  #Creating a list with the used parameters
+  used_pars <- c('lambda')
 
   # Add order effect or not
   if (stringr::str_detect(model_type, '-ordereffect')) {
     standata <- c(standata, list(use_Ordereffect = 1,
                                  z_player1 = as.vector(d[, z_player1])))
+    used_pars <- c(used_pars, 'gm')
   } else{
     standata <- c(standata, list(use_Ordereffect = 0,
                                  z_player1 = numeric(0)))
@@ -353,7 +389,7 @@ bpc <- function(data,
   #TODO: add clusters below
   if (stringr::str_detect(model_type, '-U')) {
     if (!is.null(cluster)) {
-      if (length(cluster) == 1){
+      if (length(cluster) == 1) {
         standata <- c(
           standata,
           list(
@@ -368,7 +404,9 @@ bpc <- function(data,
             U3_indexes = numeric(0)
           )
         )
-      } else if (length(cluster) == 2){
+        used_pars <- c(used_pars, 'U1', 'U1_std')
+
+      } else if (length(cluster) == 2) {
         standata <- c(
           standata,
           list(
@@ -383,7 +421,8 @@ bpc <- function(data,
             U3_indexes = numeric(0)
           )
         )
-      } else if (length(cluster) == 3){
+        used_pars <- c(used_pars, 'U1', 'U1_std', 'U2', 'U2_std')
+      } else if (length(cluster) == 3) {
         standata <- c(
           standata,
           list(
@@ -398,6 +437,7 @@ bpc <- function(data,
             U3_indexes = as.vector(d$cluster3_index)
           )
         )
+        used_pars <- c(used_pars, 'U1', 'U1_std', 'U2', 'U2_std', 'U3', 'U3_std')
       }
     }
   } else
@@ -424,6 +464,7 @@ bpc <- function(data,
                     K = nrow(predictors_lookup_table),
                     X = predictors_matrix
                   ))
+    used_pars <- c(used_pars, 'B')
   } else{
     standata <- c(standata,
                   list(
@@ -436,25 +477,31 @@ bpc <- function(data,
 
   # Generalized or not
   if (stringr::str_detect(model_type, '-subjectpredictors')) {
-    standata <- c(standata,
-                  list(
-                    use_SubjectPredictors = 1,
-                    N_SubjectPredictors = length(subject_predictors),
-                    X_subject = subject_predictors_matrix
-                  ))
+    standata <- c(
+      standata,
+      list(
+        use_SubjectPredictors = 1,
+        N_SubjectPredictors = length(subject_predictors),
+        X_subject = subject_predictors_matrix
+      )
+    )
+    used_pars <- c(used_pars, 'S')
   } else{
-    standata <- c(standata,
-                  list(
-                    use_SubjectPredictors = 0,
-                    N_SubjectPredictors = 0,
-                    X_subject = matrix(NA_real_, ncol = 0, nrow = 0)
-                  ))
+    standata <- c(
+      standata,
+      list(
+        use_SubjectPredictors = 0,
+        N_SubjectPredictors = 0,
+        X_subject = matrix(NA_real_, ncol = 0, nrow = 0)
+      )
+    )
   }
 
   # Davidson or not
   if (startsWith(model_type, 'davidson')) {
     standata <- c(standata,
                   list(use_Davidson = 1))
+    used_pars <- c(used_pars, 'nu')
   } else{
     standata <- c(standata,
                   list(use_Davidson = 0))
@@ -465,16 +512,27 @@ bpc <- function(data,
   # Now we do the sampling in Stan
   if (startsWith(model_type, 'bt') |
       startsWith(model_type, 'davidson')) {
-    stanfit <-
-      rstan::sampling(
-        stanmodels$bt,
-        data = standata,
-        chains = chains,
-        iter = iter,
-        warmup = warmup,
-        refresh = refresh,
-        seed = seed
-      )
+    model_file <-
+      system.file("stan",
+                  "bt.stan",
+                  package = "bpcs",
+                  mustWork = TRUE)
+    model <- cmdstanr::cmdstan_model(model_file)
+    fit <- model$sample(
+      data = standata,
+      chains = chains,
+      iter = iter,
+      iter_warmup = warmup,
+      parallel_chains = parallel_chains,
+      refresh = refresh,
+      seed = seed,
+      show_messages = show_chain_messages
+    )
+    #cmdstanr requires us to read the files to save them into the fitted model
+    #More in https://mc-stan.org/cmdstanr/articles/cmdstanr-internals.html#saving-fitted-model-objects
+    draws<-fit$draws()
+    diagnostics<-fit$sampler_diagnostics()
+
   } else
     stop("Invalid model type")
 
@@ -482,7 +540,7 @@ bpc <- function(data,
   #Defining a bpc object
 
   out <- create_bpc_object(
-    stanfit,
+    fit,
     lookup_table,
     model_type,
     standata,
@@ -492,7 +550,8 @@ bpc <- function(data,
     predictors_lookup_table = predictors_lookup_table,
     predictors_matrix = predictors_matrix,
     subject_predictors_lookup_table = subject_predictors_lookup_table,
-    subject_predictors_matrix = subject_predictors_matrix
+    subject_predictors_matrix = subject_predictors_matrix,
+    used_pars=used_pars
   )
   return(out)
 
