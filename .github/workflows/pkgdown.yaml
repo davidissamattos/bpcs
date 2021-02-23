@@ -12,7 +12,7 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
-            - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Set path for RTools 4.0
         if: runner.os == 'Windows'

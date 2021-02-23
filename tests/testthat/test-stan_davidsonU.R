@@ -15,6 +15,7 @@ test_that("bpc returns a bpc object the davidsonU model", {
     show_chain_messages = F,
     seed=8484
   )
+  # Sys.sleep(5)
   m2 <- bpc(
     data = test_davidsonU,
     player0 = 'player0',
@@ -29,6 +30,7 @@ test_that("bpc returns a bpc object the davidsonU model", {
     show_chain_messages = F,
     seed=8484
   )
+  # Sys.sleep(5)
   m3 <- bpc(
     data = test_davidsonU,
     player0 = 'player0',
@@ -43,7 +45,7 @@ test_that("bpc returns a bpc object the davidsonU model", {
     show_chain_messages = F,
     seed=8484
   )
-
+  # Sys.sleep(5)
   expect_s3_class(m1, 'bpc')
   expect_no_error(summary(m1))
 

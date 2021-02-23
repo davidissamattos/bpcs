@@ -91,7 +91,7 @@ m<-bpc(data = tennis_agresti, #datafrane
        )
 ```
 
-If `rstan` is available and correctly working this function should sample the posterior distribution and create a `bpc` object.
+If `cmdstanr` is available and correctly working this function should sample the posterior distribution and create a `bpc` object.
 
 To see a summary of the results we can run the summary function. Here we get three tables:
 

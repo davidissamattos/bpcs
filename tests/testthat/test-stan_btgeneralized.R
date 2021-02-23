@@ -16,7 +16,7 @@ test_that("bpc returns a bpc object the btgeneralized model", {
     seed = 8484
   )
 
-
+  # Sys.sleep(5)
   expect_s3_class(m1, 'bpc')
   expect_no_error(summary(m1))
   expect_no_error(posterior_predictive(m1))

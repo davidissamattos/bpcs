@@ -530,8 +530,9 @@ bpc <- function(data,
     )
     #cmdstanr requires us to read the files to save them into the fitted model
     #More in https://mc-stan.org/cmdstanr/articles/cmdstanr-internals.html#saving-fitted-model-objects
-    draws<-fit$draws()
+    #At first it seems to work best if the sampler diagnostics is called first
     diagnostics<-fit$sampler_diagnostics()
+    draws<-fit$draws()
 
   } else
     stop("Invalid model type")

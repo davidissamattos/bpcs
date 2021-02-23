@@ -15,7 +15,7 @@ test_that("bpc returns a bpc object the davidsonordereffect model", {
     show_chain_messages = F,
     seed = 8484
   )
-
+  # Sys.sleep(5)
   expect_s3_class(m1, 'bpc')
   expect_no_error(summary(m1))
 })

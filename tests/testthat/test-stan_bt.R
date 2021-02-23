@@ -14,7 +14,7 @@ test_that("bpc returns a bpc object the bt model", {
     show_chain_messages = F,
     seed = 8484
   )
-
+  # Sys.sleep(5)
   test_btscores <- load_testdata('test_btscores')
   m2 <- bpc(
     data = test_btscores,
@@ -30,7 +30,7 @@ test_that("bpc returns a bpc object the bt model", {
     show_chain_messages = F,
     seed = 8484
   )
-
+  # Sys.sleep(5)
 
   expect_s3_class(m1, 'bpc')
   expect_s3_class(m2, 'bpc')
