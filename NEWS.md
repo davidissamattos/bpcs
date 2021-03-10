@@ -1,6 +1,5 @@
 # Roadmap
 
-* TODO: remove dependency from CODA. Currently we have two packages to calculate HDPI. THe goal is to use only the HDInterval package from Kruschke. THis is will also allow to specify the probMass
 * TODO: New models being analyzed:
   - Add new models for modeling time effects (newer contests have higher impact on the ability than older contests)
   - Add model for the Bayesian ELO-type rating system
@@ -13,7 +12,7 @@
 
 # bpcs 1.2.0
 
-* Moving to cmstanr instead of rstan. 
+* Moving to cmdstanr instead of rstan. 
   - This will allow us to fix some bugs and tweaks that were not optimal.
   - Now we can have faster installations and let cmdstan compile the models.
   - There will be some additional time to compile the models for the first time but that is only the first time we use it
