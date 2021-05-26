@@ -288,3 +288,25 @@ load_bpc_model <- function(file_name_with_path){
   else
     return(bpc_object)
 }
+
+
+#' Run cmdstan diagnostics for convergence and print the results in the screen
+#' Thin wrapper over cmdstanr cmdstan_diagnose() function
+#' @param bpc_object a bpc objecte
+#' @export
+#' @examples
+#' \donttest{
+#' m<-bpc(data = tennis_agresti,
+#' player0 = 'player0',
+#' player1 = 'player1',
+#' result_column = 'y',
+#' model_type = 'bt',
+#' solve_ties = 'none')
+#' check_convergence_diagnostics(m)
+#' }
+check_convergence_diagnostics <- function(bpc_object){
+  if (class(bpc_object) != 'bpc')
+    stop('Error! The object is not of bpc class')
+  bpc_object$fit$cmdstan_diagnose()
+}
+

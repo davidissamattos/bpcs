@@ -36,4 +36,5 @@ test_that("bpc returns a bpc object the bt model", {
   expect_s3_class(m2, 'bpc')
   expect_no_error(summary(m1))
   expect_no_error(summary(m2))
+  expect_no_error(check_convergence_diagnostics(m1))
 })
