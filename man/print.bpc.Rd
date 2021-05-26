@@ -4,14 +4,18 @@
 \alias{print.bpc}
 \title{Print method for the bpc object.}
 \usage{
-\method{print}{bpc}(x, credMass = 0.95, digits = 3, ...)
+\method{print}{bpc}(x, credMass = 0.95, HPDI = T, digits = 3, diagnostics = TRUE, ...)
 }
 \arguments{
 \item{x}{a bpc object}
 
 \item{credMass}{the probability mass for the credible interval}
 
+\item{HPDI}{True if show HPDI interval, False to show the credible (quantile) intervals}
+
 \item{digits}{number of decimal digits in the table}
+
+\item{diagnostics}{show diagnostics}
 
 \item{\dots}{additional parameters for the generic print function. Not used}
 }

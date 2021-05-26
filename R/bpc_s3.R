@@ -3,8 +3,10 @@
 #' This S3 functions only prints the mean and the HDPI values of all the parameters in the model
 #' @param x a bpc object
 #' @param credMass the probability mass for the credible interval
-#' @param \dots  additional parameters for the generic print function. Not used
+#' @param HPDI True if show HPDI interval, False to show the credible (quantile) intervals
 #' @param digits number of decimal digits in the table
+#' @param diagnostics show diagnostics
+#' @param \dots  additional parameters for the generic print function. Not used
 #' @export
 #' @examples
 #' \donttest{
@@ -16,7 +18,7 @@
 #' solve_ties = 'none')
 #' print(m)
 #' }
-print.bpc <- function(x, credMass=0.95, digits = 3, ...) {
+print.bpc <- function(x, credMass=0.95,  HPDI = T, digits = 3, diagnostics=TRUE, ...) {
   mess <- paste("Estimated baseline parameters with ", credMass*100,"% HPD intervals:", sep = "")
   cat(mess)
   tryCatch({
@@ -59,7 +61,10 @@ print.bpc <- function(x, credMass=0.95, digits = 3, ...) {
       cat(
         '* The U[player, cluster] represents the effect of a particular cluster in a particular team ability.\n'
       )
-
+ if(diagnostics){
+   cat('Basic diagnostics information: \n')
+   check_convergence_diagnostics(x)
+ }
     }
   },
   error = function(cond) {
@@ -77,6 +82,8 @@ print.bpc <- function(x, credMass=0.95, digits = 3, ...) {
 #' * Table 3: Contains the ranking of the players' abilities based on the posterior distribution of the ranks
 #' @param object bpc object
 #' @param digits number of decimal digits in the table
+#' @param credMass the probability mass for the credible interval
+#' @param HPDI True if show HPDI interval, False to show the credible (quantile) intervals
 #' @param show_probabilities should the tables of probabilities (Table 2) be displayed or not. Default to T but it is recommended to turn to F if either it has a large number of players (15+) or a large number of players and cluster, the table grows combinatorially.
 #' @param \dots  additional parameters for the generic summary function. Not used.
 #' @export
@@ -94,10 +101,12 @@ print.bpc <- function(x, credMass=0.95, digits = 3, ...) {
 summary.bpc <-
   function(object,
            digits = 2,
+           credMass = 0.95,
+           HPDI = TRUE,
            show_probabilities = TRUE,
            ...) {
     #Table with the parameter estimates and footnotes
-    print(object, digits = digits)
+    print.bpc(object, digits = digits, credMass = credMass, HPDI = HPDI, diagnostics=FALSE)
 
     #Table with the posterior probabilities
     if (show_probabilities &
