@@ -22,6 +22,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![R build status](https://github.com/davidissamattos/bpcs/workflows/R-CMD-check/badge.svg)](https://github.com/davidissamattos/bpcs/actions)
+[![codecov](https://codecov.io/gh/davidissamattos/bpcs/branch/master/graph/badge.svg?token=6RTC7768CL)](https://codecov.io/gh/davidissamattos/bpcs)
 <!-- badges: end -->
 
 

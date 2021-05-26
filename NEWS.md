@@ -10,6 +10,11 @@
 * TODO: Get posterior distribution of the parameters without accessing the stanfit object
 * TODO: integration with bayesplot to get some of the nice plots that we see there
 
+# bpcs 1.2.0.900
+
+* Ability to add credibility mass and choose HDPI or credible intervals in print and in summary
+* New function `check_convergence_diagnostics` for HMC diagnostics. This is printed as default in `print` but not in `summary`
+
 # bpcs 1.2.0
 
 * Moving to cmdstanr instead of rstan. 

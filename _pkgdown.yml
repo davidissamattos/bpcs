@@ -43,6 +43,7 @@ reference:
 - title: "Model checking functions"
   desc: "These are a thin wrapper over other packages functions to facilitate the investigation of the convergence of the MCMC."
 - contents:
+  - check_convergence_diagnostics
   - launch_shinystan
   - get_waic
   - get_loo
