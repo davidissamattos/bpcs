@@ -6,7 +6,6 @@
 #' @name bpcs-package
 #' @import methods
 #' @importFrom ggplot2 ggplot
-#' @importFrom badger badge_license
 #' @importFrom magrittr "%>%"
 #'
 #' @references
