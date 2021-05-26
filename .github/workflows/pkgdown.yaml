@@ -1,4 +1,4 @@
-name: Packagedown
+name: pkgdown
 
 'on':
   push:
@@ -74,7 +74,7 @@ jobs:
           remotes::install_cran("rcmdcheck")
           install.packages("posterior", repos = c("https://mc-stan.org/r-packages/", getOption("repos")), type="source")
           install.packages("cmdstanr", repos = c("https://mc-stan.org/r-packages/", getOption("repos")), type="source")
-          install.packages("curl")
+          install.packages(c("curl", "covr", "kableExtra", "shinystan", "rstan","pkgdown"))
         shell: Rscript {0}
 
       - name: Cache cmdstan
