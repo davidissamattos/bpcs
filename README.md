@@ -1,21 +1,13 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# bpcs - A package for Bayesian Paired Comparison analysis with Stan <img src="man/figures/logo.png" align="right" width="120"/>
+# bpcs - A package for Bayesian Paired Comparison analysis with Stan (v.1.2.900) <img src="man/figures/logo.png" align="right" width="120"/>
 
 <!-- badges: start -->
 
-[![License:
-MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://cran.r-project.org/web/licenses/MIT)
-[![](https://img.shields.io/github/last-commit/davidissamattos/bpcs.svg)](https://github.com/davidissamattos/bpcs/commits/master)
 [![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-[![](https://img.shields.io/github/languages/code-size/davidissamattos/bpcs.svg)](https://github.com/davidissamattos/bpcs)
-[![](https://img.shields.io/badge/devel%20version-1.2.0.900-blue.svg)](https://github.com/davidissamattos/bpcs)
-<!-- [![](https://www.r-pkg.org/badges/version/bpcs?color=blue)](https://cran.r-project.org/package=bpcs)  -->
-[![](https://codecov.io/gh/davidissamattos/bpcs/branch/master/graph/badge.svg)](https://codecov.io/gh/davidissamattos/bpcs)
 [![R build
 status](https://github.com/davidissamattos/bpcs/workflows/R-CMD-check/badge.svg)](https://github.com/davidissamattos/bpcs/actions)
-
 <!-- badges: end -->
 
 The `bpcs` package performs Bayesian estimation of Paired Comparison
@@ -98,13 +90,111 @@ id
 Seles
 </td>
 <td style="text-align:left;">
+Sanchez
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+13
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:left;">
+Sabatini
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:left;">
+Sabatini
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:left;">
 Navratilova
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Seles
+</td>
+<td style="text-align:left;">
+Sanchez
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:left;">
+Sanchez
 </td>
 <td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-10
+34
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sabatini
+</td>
+<td style="text-align:left;">
+Navratilova
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+35
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:left;">
+Sanchez
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+28
 </td>
 </tr>
 <tr>
@@ -129,108 +219,10 @@ Graf
 Sabatini
 </td>
 <td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-23
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Seles
-</td>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:left;">
-Sanchez
-</td>
-<td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-28
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Sabatini
-</td>
-<td style="text-align:left;">
-Navratilova
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-35
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Seles
-</td>
-<td style="text-align:left;">
-Sabatini
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:left;">
-Sanchez
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-30
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:left;">
-Sanchez
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-33
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Seles
-</td>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
+15
 </td>
 </tr>
 </tbody>
@@ -258,79 +250,79 @@ m<-bpc(data = tennis_agresti, #datafrane
 #> Chain 3 Iteration:    1 / 3000 [  0%]  (Warmup) 
 #> Chain 4 Iteration:    1 / 3000 [  0%]  (Warmup) 
 #> Chain 1 Iteration:    1 / 3000 [  0%]  (Warmup) 
+#> Chain 1 Iteration:  200 / 3000 [  6%]  (Warmup) 
 #> Chain 2 Iteration:    1 / 3000 [  0%]  (Warmup) 
 #> Chain 2 Iteration:  200 / 3000 [  6%]  (Warmup) 
 #> Chain 3 Iteration:  200 / 3000 [  6%]  (Warmup) 
 #> Chain 4 Iteration:  200 / 3000 [  6%]  (Warmup) 
-#> Chain 1 Iteration:  200 / 3000 [  6%]  (Warmup) 
+#> Chain 1 Iteration:  400 / 3000 [ 13%]  (Warmup) 
 #> Chain 2 Iteration:  400 / 3000 [ 13%]  (Warmup) 
 #> Chain 3 Iteration:  400 / 3000 [ 13%]  (Warmup) 
 #> Chain 4 Iteration:  400 / 3000 [ 13%]  (Warmup) 
-#> Chain 1 Iteration:  400 / 3000 [ 13%]  (Warmup) 
-#> Chain 3 Iteration:  600 / 3000 [ 20%]  (Warmup) 
-#> Chain 4 Iteration:  600 / 3000 [ 20%]  (Warmup) 
 #> Chain 1 Iteration:  600 / 3000 [ 20%]  (Warmup) 
 #> Chain 2 Iteration:  600 / 3000 [ 20%]  (Warmup) 
-#> Chain 3 Iteration:  800 / 3000 [ 26%]  (Warmup) 
-#> Chain 4 Iteration:  800 / 3000 [ 26%]  (Warmup) 
+#> Chain 3 Iteration:  600 / 3000 [ 20%]  (Warmup) 
+#> Chain 4 Iteration:  600 / 3000 [ 20%]  (Warmup) 
 #> Chain 1 Iteration:  800 / 3000 [ 26%]  (Warmup) 
+#> Chain 4 Iteration:  800 / 3000 [ 26%]  (Warmup) 
 #> Chain 2 Iteration:  800 / 3000 [ 26%]  (Warmup) 
-#> Chain 3 Iteration: 1000 / 3000 [ 33%]  (Warmup) 
-#> Chain 3 Iteration: 1001 / 3000 [ 33%]  (Sampling) 
-#> Chain 4 Iteration: 1000 / 3000 [ 33%]  (Warmup) 
-#> Chain 4 Iteration: 1001 / 3000 [ 33%]  (Sampling) 
+#> Chain 3 Iteration:  800 / 3000 [ 26%]  (Warmup) 
 #> Chain 1 Iteration: 1000 / 3000 [ 33%]  (Warmup) 
 #> Chain 1 Iteration: 1001 / 3000 [ 33%]  (Sampling) 
+#> Chain 3 Iteration: 1000 / 3000 [ 33%]  (Warmup) 
+#> Chain 3 Iteration: 1001 / 3000 [ 33%]  (Sampling) 
 #> Chain 2 Iteration: 1000 / 3000 [ 33%]  (Warmup) 
 #> Chain 2 Iteration: 1001 / 3000 [ 33%]  (Sampling) 
-#> Chain 3 Iteration: 1200 / 3000 [ 40%]  (Sampling) 
-#> Chain 4 Iteration: 1200 / 3000 [ 40%]  (Sampling) 
+#> Chain 4 Iteration: 1000 / 3000 [ 33%]  (Warmup) 
+#> Chain 4 Iteration: 1001 / 3000 [ 33%]  (Sampling) 
 #> Chain 1 Iteration: 1200 / 3000 [ 40%]  (Sampling) 
+#> Chain 4 Iteration: 1200 / 3000 [ 40%]  (Sampling) 
 #> Chain 2 Iteration: 1200 / 3000 [ 40%]  (Sampling) 
-#> Chain 3 Iteration: 1400 / 3000 [ 46%]  (Sampling) 
+#> Chain 3 Iteration: 1200 / 3000 [ 40%]  (Sampling) 
 #> Chain 1 Iteration: 1400 / 3000 [ 46%]  (Sampling) 
-#> Chain 2 Iteration: 1400 / 3000 [ 46%]  (Sampling) 
 #> Chain 4 Iteration: 1400 / 3000 [ 46%]  (Sampling) 
-#> Chain 3 Iteration: 1600 / 3000 [ 53%]  (Sampling) 
+#> Chain 2 Iteration: 1400 / 3000 [ 46%]  (Sampling) 
+#> Chain 3 Iteration: 1400 / 3000 [ 46%]  (Sampling) 
 #> Chain 1 Iteration: 1600 / 3000 [ 53%]  (Sampling) 
-#> Chain 2 Iteration: 1600 / 3000 [ 53%]  (Sampling) 
 #> Chain 4 Iteration: 1600 / 3000 [ 53%]  (Sampling) 
-#> Chain 3 Iteration: 1800 / 3000 [ 60%]  (Sampling) 
+#> Chain 2 Iteration: 1600 / 3000 [ 53%]  (Sampling) 
+#> Chain 3 Iteration: 1600 / 3000 [ 53%]  (Sampling) 
 #> Chain 1 Iteration: 1800 / 3000 [ 60%]  (Sampling) 
-#> Chain 4 Iteration: 1800 / 3000 [ 60%]  (Sampling) 
 #> Chain 2 Iteration: 1800 / 3000 [ 60%]  (Sampling) 
-#> Chain 3 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
+#> Chain 4 Iteration: 1800 / 3000 [ 60%]  (Sampling) 
+#> Chain 3 Iteration: 1800 / 3000 [ 60%]  (Sampling) 
 #> Chain 1 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
-#> Chain 2 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
 #> Chain 4 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
-#> Chain 3 Iteration: 2200 / 3000 [ 73%]  (Sampling) 
+#> Chain 2 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
 #> Chain 1 Iteration: 2200 / 3000 [ 73%]  (Sampling) 
+#> Chain 3 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
 #> Chain 4 Iteration: 2200 / 3000 [ 73%]  (Sampling) 
 #> Chain 2 Iteration: 2200 / 3000 [ 73%]  (Sampling) 
-#> Chain 3 Iteration: 2400 / 3000 [ 80%]  (Sampling) 
+#> Chain 3 Iteration: 2200 / 3000 [ 73%]  (Sampling) 
 #> Chain 1 Iteration: 2400 / 3000 [ 80%]  (Sampling) 
 #> Chain 4 Iteration: 2400 / 3000 [ 80%]  (Sampling) 
-#> Chain 2 Iteration: 2400 / 3000 [ 80%]  (Sampling) 
-#> Chain 3 Iteration: 2600 / 3000 [ 86%]  (Sampling) 
 #> Chain 1 Iteration: 2600 / 3000 [ 86%]  (Sampling) 
+#> Chain 2 Iteration: 2400 / 3000 [ 80%]  (Sampling) 
+#> Chain 3 Iteration: 2400 / 3000 [ 80%]  (Sampling) 
 #> Chain 4 Iteration: 2600 / 3000 [ 86%]  (Sampling) 
 #> Chain 2 Iteration: 2600 / 3000 [ 86%]  (Sampling) 
-#> Chain 3 Iteration: 2800 / 3000 [ 93%]  (Sampling) 
 #> Chain 1 Iteration: 2800 / 3000 [ 93%]  (Sampling) 
+#> Chain 3 Iteration: 2600 / 3000 [ 86%]  (Sampling) 
 #> Chain 4 Iteration: 2800 / 3000 [ 93%]  (Sampling) 
 #> Chain 2 Iteration: 2800 / 3000 [ 93%]  (Sampling) 
-#> Chain 3 Iteration: 3000 / 3000 [100%]  (Sampling) 
-#> Chain 3 finished in 5.0 seconds.
+#> Chain 4 Iteration: 3000 / 3000 [100%]  (Sampling) 
+#> Chain 4 finished in 3.9 seconds.
 #> Chain 1 Iteration: 3000 / 3000 [100%]  (Sampling) 
 #> Chain 2 Iteration: 3000 / 3000 [100%]  (Sampling) 
-#> Chain 4 Iteration: 3000 / 3000 [100%]  (Sampling) 
-#> Chain 1 finished in 5.1 seconds.
-#> Chain 2 finished in 5.2 seconds.
-#> Chain 4 finished in 5.2 seconds.
+#> Chain 3 Iteration: 2800 / 3000 [ 93%]  (Sampling) 
+#> Chain 1 finished in 3.9 seconds.
+#> Chain 2 finished in 4.0 seconds.
+#> Chain 3 Iteration: 3000 / 3000 [100%]  (Sampling) 
+#> Chain 3 finished in 4.0 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 5.1 seconds.
-#> Total execution time: 5.7 seconds.
+#> Mean chain execution time: 4.0 seconds.
+#> Total execution time: 4.5 seconds.
 ```
 
 If `cmdstanr` is available and correctly working this function should
@@ -353,11 +345,11 @@ summary(m)
 #> 
 #> Parameter               Mean   Median   HPD_lower   HPD_higher
 #> --------------------  ------  -------  ----------  -----------
-#> lambda[Seles]           0.49     0.49       -2.29         3.15
-#> lambda[Graf]            0.92     0.92       -1.69         3.65
-#> lambda[Sabatini]       -0.36    -0.34       -3.10         2.28
-#> lambda[Navratilova]     0.02     0.03       -2.58         2.80
-#> lambda[Sanchez]        -1.15    -1.12       -3.83         1.58
+#> lambda[Seles]           0.51     0.51       -2.29         3.25
+#> lambda[Graf]            0.94     0.94       -1.98         3.50
+#> lambda[Sabatini]       -0.34    -0.34       -3.14         2.35
+#> lambda[Navratilova]     0.04     0.04       -2.70         2.79
+#> lambda[Sanchez]        -1.12    -1.11       -3.80         1.75
 #> NOTES:
 #> * A higher lambda indicates a higher team ability
 #> 
@@ -370,16 +362,16 @@ summary(m)
 #> 
 #> i             j              i_beats_j   j_beats_i
 #> ------------  ------------  ----------  ----------
-#> Graf          Navratilova         0.69        0.31
-#> Graf          Sabatini            0.77        0.23
-#> Graf          Sanchez             0.90        0.10
-#> Graf          Seles               0.60        0.40
-#> Navratilova   Sabatini            0.59        0.41
-#> Navratilova   Sanchez             0.63        0.37
-#> Navratilova   Seles               0.41        0.59
-#> Sabatini      Sanchez             0.68        0.32
-#> Sabatini      Seles               0.32        0.68
-#> Sanchez       Seles               0.18        0.82
+#> Graf          Navratilova         0.67        0.33
+#> Graf          Sabatini            0.79        0.21
+#> Graf          Sanchez             0.83        0.17
+#> Graf          Seles               0.53        0.47
+#> Navratilova   Sabatini            0.64        0.36
+#> Navratilova   Sanchez             0.76        0.24
+#> Navratilova   Seles               0.47        0.53
+#> Sabatini      Sanchez             0.69        0.31
+#> Sabatini      Seles               0.29        0.71
+#> Sanchez       Seles               0.13        0.87
 #> 
 #> Rank of the players' abilities:
 #> The rank is based on the posterior rank distribution of the lambda parameter
@@ -388,11 +380,11 @@ summary(m)
 #> 
 #> Parameter              MedianRank   MeanRank   StdRank
 #> --------------------  -----------  ---------  --------
-#> lambda[Graf]                    1       1.38      0.62
-#> lambda[Seles]                   2       2.14      0.89
-#> lambda[Navratilova]             3       3.00      0.93
-#> lambda[Sabatini]                4       3.73      0.83
-#> lambda[Sanchez]                 5       4.75      0.56
+#> lambda[Graf]                    1       1.35      0.62
+#> lambda[Seles]                   2       2.14      0.88
+#> lambda[Navratilova]             3       3.00      0.91
+#> lambda[Sabatini]                4       3.70      0.78
+#> lambda[Sanchez]                 5       4.80      0.50
 ```
 
 ``` r

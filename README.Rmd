@@ -9,7 +9,6 @@ bibliography: ./vignettes/bibliography.bib
 library(dplyr)
 library(knitr)
 library(kableExtra)
-library(badger)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -18,20 +17,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-# bpcs - A package for Bayesian Paired Comparison analysis with Stan <img src="man/figures/logo.png" align="right" width="120"/>
+# bpcs - A package for Bayesian Paired Comparison analysis with Stan (v.1.2.900) <img src="man/figures/logo.png" align="right" width="120"/>
 
 <!-- badges: start -->
-
-`r badge_license('MIT', color='yellow')` 
-`r badge_last_commit("davidissamattos/bpcs")` 
 [![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-`r badge_code_size("davidissamattos/bpcs")` 
-`r badge_devel("davidissamattos/bpcs", "blue")` 
-<!-- `r badger::badge_cran_release('bpcs', color="blue")`  -->
-`r badge_codecov("davidissamattos/bpcs")`
 [![R build status](https://github.com/davidissamattos/bpcs/workflows/R-CMD-check/badge.svg)](https://github.com/davidissamattos/bpcs/actions)
-
 <!-- badges: end -->
+
 
 The `bpcs` package performs Bayesian estimation of Paired Comparison models utilizing Stan, such as variations of the Bradley-Terry [@bradley1952rank] and the Davidson models [@davidson1970extending].
 
