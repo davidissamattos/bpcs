@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 [![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 `r badge_code_size("davidissamattos/bpcs")` 
 `r badge_devel("davidissamattos/bpcs", "blue")` 
-`r badger::badge_cran_release('bpcs', color="blue")` 
+<!-- `r badger::badge_cran_release('bpcs', color="blue")`  -->
 `r badge_codecov("davidissamattos/bpcs")`
 [![R build status](https://github.com/davidissamattos/bpcs/workflows/R-CMD-check/badge.svg)](https://github.com/davidissamattos/bpcs/actions)
 
