@@ -39,7 +39,6 @@ real[] calculate_p1_win_and_ties(int i,
     real S0;
     real S1;
 
-
     if(use_Ordereffect){
       z = z_player1[i];
     }else{
@@ -81,6 +80,8 @@ real[] calculate_p1_win_and_ties(int i,
 
     lambda1 = lambda[player1_indexes[i]] + U1_std*U11 + U2_std*U12 + U3_std*U13 + S1;
     lambda0 = lambda[player0_indexes[i]] + U1_std*U01 + U2_std*U02 + U3_std*U03 + gm*z + S0;
+
+
 
     geom_term = use_Davidson*exp(nu+0.5*(lambda[player1_indexes[i]]+lambda[player0_indexes[i]]));
     p1 = exp(lambda1);
@@ -158,12 +159,11 @@ data {
 }
 
 parameters {
-  real lambda_param[N_players]; //Latent variable that represents the strength
-  //Davidson
+  real lambda_param [N_players]; //Latent variable that represents the strength
 
   // Order effect
   real gm_param[use_Ordereffect ? 1: 0];//Represents the order effect gamma
-
+    //Davidson
   real nu_param[use_Davidson ? 1 : 0]; // the tie parameter.
   // U
   real <lower=0> U1_std_param[use_U1 ? 1: 0];//std for the random effects
@@ -229,7 +229,7 @@ transformed parameters{
     }
   }
 
-    // U
+  // U
   if(use_U2){
     U2_std = U2_std_param[1];
     U2 = U2_param;
@@ -277,14 +277,10 @@ transformed parameters{
 }
 
 model {
-  //priors
-  lambda_param ~ normal(prior_lambda_mu,prior_lambda_std);
+    lambda_param ~ normal(prior_lambda_mu,prior_lambda_std);
 
-  if(use_Ordereffect){
     gm_param ~ normal(prior_gm_mu,prior_gm_std);
-  }
 
-  if(use_U1){
     U1_std_param ~ normal(0,prior_U1_std);//Halfnormal
     for (i in 1:N_players)
     {
@@ -292,9 +288,7 @@ model {
         U1_param[i, j] ~ normal(0, 1);//we dont add U_std here for numerical reasons
       }
     }
-  }
 
-    if(use_U2){
     U2_std_param ~ normal(0,prior_U2_std);//Halfnormal
     for (i in 1:N_players)
     {
@@ -302,9 +296,7 @@ model {
         U2_param[i, j] ~ normal(0, 1);//we dont add U_std here for numerical reasons
       }
     }
-  }
 
-    if(use_U3){
     U3_std_param ~ normal(0,prior_U3_std);//Halfnormal
     for (i in 1:N_players)
     {
@@ -312,24 +304,16 @@ model {
         U3_param[i, j] ~ normal(0, 1);//we dont add U_std here for numerical reasons
       }
     }
-  }
-
-  if(use_Davidson){
      nu_param ~ normal(prior_nu_mu,prior_nu_std);
-  }
 
-  if(use_Generalized){
      B_param ~ normal(prior_lambda_mu, prior_lambda_std);
-  }
 
-  if(use_SubjectPredictors){
     for (i in 1:N_players)
     {
       for(j in 1:N_SubjectPredictors){
         S_param[i, j] ~ normal(0, prior_S_std);
       }
     }
-  }
 
 
   //model
@@ -338,6 +322,8 @@ model {
     real p1_win;
     real p_tie;
     real p_win_ties[2];
+
+
     p_win_ties = calculate_p1_win_and_ties(i,
                       player1_indexes, player0_indexes, lambda,
                       use_Ordereffect, z_player1, gm,
@@ -354,8 +340,6 @@ model {
        target += bernoulli_lpmf(1 | p_tie);
     }
     else{
-      //Probability of not being a tie
-      // target += bernoulli_lpmf(0 | p_tie);
       target += bernoulli_lpmf(y[i] | p1_win);
     }
 
@@ -373,6 +357,7 @@ vector[calc_log_lik ? N_total: 0] log_lik;//Log likelihood
     real p1_win;
     real p_tie;
     real p_win_ties[2];
+
     p_win_ties = calculate_p1_win_and_ties(i,
                       player1_indexes, player0_indexes, lambda,
                       use_Ordereffect, z_player1, gm,

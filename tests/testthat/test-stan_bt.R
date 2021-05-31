@@ -1,6 +1,7 @@
 test_that("bpc returns a bpc object the bt model", {
   skip_on_cran()
   test_bt <- load_testdata('test_bt')
+
   m1 <- bpc(
     data = test_bt,
     player0 = 'player0',
@@ -37,4 +38,19 @@ test_that("bpc returns a bpc object the bt model", {
   expect_no_error(summary(m1))
   expect_no_error(summary(m2))
   expect_no_error(check_convergence_diagnostics(m1))
+
+#
+#   d_moisture<-readRDS('~/dmoisture.RDS')
+#   d_moisture <-dplyr::sample_n(d_moisture, size=1000)
+#   m_moisture <-
+#     bpc(
+#       d_moisture,
+#       player0 = 'player0',
+#       player1 = 'player1',
+#       result_column = 'y',
+#       model_type = 'bt',
+#       iter = 3000
+#     )
+
+
 })
