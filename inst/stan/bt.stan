@@ -279,41 +279,60 @@ transformed parameters{
 model {
     lambda_param ~ normal(prior_lambda_mu,prior_lambda_std);
 
-    gm_param ~ normal(prior_gm_mu,prior_gm_std);
+    if(use_Ordereffect){
+      gm_param ~ normal(prior_gm_mu,prior_gm_std);
+    }
 
+
+    if(use_U1){
     U1_std_param ~ normal(0,prior_U1_std);//Halfnormal
+    // U1_std_param ~ exponential(1);
     for (i in 1:N_players)
     {
       for(j in 1:N_U1){
         U1_param[i, j] ~ normal(0, 1);//we dont add U_std here for numerical reasons
       }
     }
+  }
 
+    if(use_U2){
     U2_std_param ~ normal(0,prior_U2_std);//Halfnormal
+    // U2_std_param ~ exponential(1);
     for (i in 1:N_players)
     {
       for(j in 1:N_U2){
         U2_param[i, j] ~ normal(0, 1);//we dont add U_std here for numerical reasons
       }
     }
+  }
 
+    if(use_U3){
     U3_std_param ~ normal(0,prior_U3_std);//Halfnormal
+    // U3_std_param ~ exponential(1);
     for (i in 1:N_players)
     {
       for(j in 1:N_U3){
         U3_param[i, j] ~ normal(0, 1);//we dont add U_std here for numerical reasons
       }
     }
+  }
+
+  if(use_Davidson){
      nu_param ~ normal(prior_nu_mu,prior_nu_std);
+  }
 
+  if(use_Generalized){
      B_param ~ normal(prior_lambda_mu, prior_lambda_std);
+  }
 
+  if(use_SubjectPredictors){
     for (i in 1:N_players)
     {
       for(j in 1:N_SubjectPredictors){
         S_param[i, j] ~ normal(0, prior_S_std);
       }
     }
+  }
 
 
   //model

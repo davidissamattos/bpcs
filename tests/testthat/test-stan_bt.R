@@ -39,18 +39,18 @@ test_that("bpc returns a bpc object the bt model", {
   expect_no_error(summary(m2))
   expect_no_error(check_convergence_diagnostics(m1))
 
-#
-#   d_moisture<-readRDS('~/dmoisture.RDS')
-#   d_moisture <-dplyr::sample_n(d_moisture, size=1000)
-#   m_moisture <-
-#     bpc(
-#       d_moisture,
-#       player0 = 'player0',
-#       player1 = 'player1',
-#       result_column = 'y',
-#       model_type = 'bt',
-#       iter = 3000
-#     )
+
+  # d_moisture<-readRDS('~/dmoisture.RDS')
+  # d_moisture <-dplyr::sample_n(d_moisture, size=1000)
+  # m_moisture <-
+  #   bpc(
+  #     d_moisture,
+  #     player0 = 'player0',
+  #     player1 = 'player1',
+  #     result_column = 'y',
+  #     model_type = 'bt',
+  #     iter = 3000
+  #   )
 
 
 })
