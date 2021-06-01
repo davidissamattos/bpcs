@@ -258,9 +258,17 @@ save_bpc_model <- function(bpc_object, filename, path=NULL){
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
   tryCatch({
-    dir <- getwd()
+    dir <- NULL
     if(is.null(path))
+    {
         dir <- bpc$get_output_dir()
+    }
+    else
+    {
+      dir.create(path, showWarnings = FALSE)
+      dir <- path
+    }
+
     saveRDS(bpc_object, file=file.path(dir,paste(filename,'.RDS',sep = "")))
   },
   error = function(cond) {
