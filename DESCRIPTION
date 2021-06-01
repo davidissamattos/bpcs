@@ -50,7 +50,6 @@ Suggests:
     rmarkdown,
     testthat,
     covr,
-    pkgdown,
     bayesplot,
     kableExtra,
     shinystan,
