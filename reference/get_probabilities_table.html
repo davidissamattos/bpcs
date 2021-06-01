@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0.900</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@
       <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper: Bayesian Paired-Comparison with the bpcs package</a>
     </li>
     <li>
       <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
@@ -217,106 +217,16 @@ player1 <span class='op'>=</span> <span class='st'>'player1'</span>,
 result_column <span class='op'>=</span> <span class='st'>'y'</span>,
 model_type <span class='op'>=</span> <span class='st'>'bt'</span>,
 solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
-#&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 7.7e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.77 seconds.
-#&gt; Chain 1: Adjust your expectations accordingly!
-#&gt; Chain 1: 
-#&gt; Chain 1: 
-#&gt; Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.666174 seconds (Warm-up)
-#&gt; Chain 1:                0.573827 seconds (Sampling)
-#&gt; Chain 1:                1.24 seconds (Total)
-#&gt; Chain 1: 
+</div><div class='output co'>#&gt; Running MCMC with 4 parallel chains...
 #&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
-#&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 6.8e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.68 seconds.
-#&gt; Chain 2: Adjust your expectations accordingly!
-#&gt; Chain 2: 
-#&gt; Chain 2: 
-#&gt; Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.684195 seconds (Warm-up)
-#&gt; Chain 2:                0.68026 seconds (Sampling)
-#&gt; Chain 2:                1.36445 seconds (Total)
-#&gt; Chain 2: 
+#&gt; Chain 1 finished in 1.8 seconds.
+#&gt; Chain 2 finished in 1.8 seconds.
+#&gt; Chain 3 finished in 1.8 seconds.
+#&gt; Chain 4 finished in 1.9 seconds.
 #&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
-#&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 6.8e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.68 seconds.
-#&gt; Chain 3: Adjust your expectations accordingly!
-#&gt; Chain 3: 
-#&gt; Chain 3: 
-#&gt; Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.662853 seconds (Warm-up)
-#&gt; Chain 3:                0.711478 seconds (Sampling)
-#&gt; Chain 3:                1.37433 seconds (Total)
-#&gt; Chain 3: 
-#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
-#&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 6.8e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.68 seconds.
-#&gt; Chain 4: Adjust your expectations accordingly!
-#&gt; Chain 4: 
-#&gt; Chain 4: 
-#&gt; Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.646338 seconds (Warm-up)
-#&gt; Chain 4:                0.653905 seconds (Sampling)
-#&gt; Chain 4:                1.30024 seconds (Total)
-#&gt; Chain 4: </div><div class='input'><span class='va'>t</span><span class='op'>&lt;-</span><span class='fu'>get_probabilities_table</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+#&gt; All 4 chains finished successfully.
+#&gt; Mean chain execution time: 1.9 seconds.
+#&gt; Total execution time: 2.1 seconds.</div><div class='input'><span class='va'>t</span><span class='op'>&lt;-</span><span class='fu'>get_probabilities_table</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; \begin{table}
 #&gt; 
@@ -326,17 +236,17 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; \toprule
 #&gt; i &amp; j &amp; i\_beats\_j &amp; j\_beats\_i\\
 #&gt; \midrule
-#&gt; Graf &amp; Navratilova &amp; 0.70 &amp; 0.30\\
-#&gt; Graf &amp; Sabatini &amp; 0.79 &amp; 0.21\\
-#&gt; Graf &amp; Sanchez &amp; 0.81 &amp; 0.19\\
-#&gt; Graf &amp; Seles &amp; 0.55 &amp; 0.45\\
-#&gt; Navratilova &amp; Sabatini &amp; 0.52 &amp; 0.48\\
+#&gt; Graf &amp; Navratilova &amp; 0.77 &amp; 0.23\\
+#&gt; Graf &amp; Sabatini &amp; 0.80 &amp; 0.20\\
+#&gt; Graf &amp; Sanchez &amp; 0.84 &amp; 0.16\\
+#&gt; Graf &amp; Seles &amp; 0.54 &amp; 0.46\\
+#&gt; Navratilova &amp; Sabatini &amp; 0.54 &amp; 0.46\\
 #&gt; \addlinespace
-#&gt; Navratilova &amp; Sanchez &amp; 0.76 &amp; 0.24\\
-#&gt; Navratilova &amp; Seles &amp; 0.45 &amp; 0.55\\
-#&gt; Sabatini &amp; Sanchez &amp; 0.71 &amp; 0.29\\
-#&gt; Sabatini &amp; Seles &amp; 0.39 &amp; 0.61\\
-#&gt; Sanchez &amp; Seles &amp; 0.17 &amp; 0.83\\
+#&gt; Navratilova &amp; Sanchez &amp; 0.77 &amp; 0.23\\
+#&gt; Navratilova &amp; Seles &amp; 0.31 &amp; 0.69\\
+#&gt; Sabatini &amp; Sanchez &amp; 0.72 &amp; 0.28\\
+#&gt; Sabatini &amp; Seles &amp; 0.29 &amp; 0.71\\
+#&gt; Sanchez &amp; Seles &amp; 0.24 &amp; 0.76\\
 #&gt; \bottomrule
 #&gt; \end{tabular}
 #&gt; \end{table}</div><div class='input'><span class='co'># }</span>

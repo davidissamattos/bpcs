@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0.900</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@
       <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper: Bayesian Paired-Comparison with the bpcs package</a>
     </li>
     <li>
       <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
@@ -182,309 +182,118 @@ player1 <span class='op'>=</span> <span class='st'>'player1'</span>,
 result_column <span class='op'>=</span> <span class='st'>'y'</span>,
 model_type <span class='op'>=</span> <span class='st'>'bt'</span>,
 solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
-#&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 7.4e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.74 seconds.
-#&gt; Chain 1: Adjust your expectations accordingly!
-#&gt; Chain 1: 
-#&gt; Chain 1: 
-#&gt; Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.623349 seconds (Warm-up)
-#&gt; Chain 1:                0.643808 seconds (Sampling)
-#&gt; Chain 1:                1.26716 seconds (Total)
-#&gt; Chain 1: 
+</div><div class='output co'>#&gt; Running MCMC with 4 parallel chains...
 #&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
-#&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 7.4e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.74 seconds.
-#&gt; Chain 2: Adjust your expectations accordingly!
-#&gt; Chain 2: 
-#&gt; Chain 2: 
-#&gt; Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.63309 seconds (Warm-up)
-#&gt; Chain 2:                0.661319 seconds (Sampling)
-#&gt; Chain 2:                1.29441 seconds (Total)
-#&gt; Chain 2: 
+#&gt; Chain 1 finished in 1.8 seconds.
+#&gt; Chain 4 finished in 1.7 seconds.
+#&gt; Chain 2 finished in 1.9 seconds.
+#&gt; Chain 3 finished in 1.9 seconds.
 #&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
-#&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 6.8e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.68 seconds.
-#&gt; Chain 3: Adjust your expectations accordingly!
-#&gt; Chain 3: 
-#&gt; Chain 3: 
-#&gt; Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.644996 seconds (Warm-up)
-#&gt; Chain 3:                0.638576 seconds (Sampling)
-#&gt; Chain 3:                1.28357 seconds (Total)
-#&gt; Chain 3: 
-#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
-#&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 9.8e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.98 seconds.
-#&gt; Chain 4: Adjust your expectations accordingly!
-#&gt; Chain 4: 
-#&gt; Chain 4: 
-#&gt; Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.654334 seconds (Warm-up)
-#&gt; Chain 4:                0.685216 seconds (Sampling)
-#&gt; Chain 4:                1.33955 seconds (Total)
-#&gt; Chain 4: </div><div class='input'><span class='va'>rank_m</span><span class='op'>&lt;-</span><span class='fu'>get_rank_of_players_posterior</span><span class='op'>(</span><span class='va'>m</span>,n<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span>
+#&gt; All 4 chains finished successfully.
+#&gt; Mean chain execution time: 1.8 seconds.
+#&gt; Total execution time: 2.1 seconds.</div><div class='input'><span class='va'>rank_m</span><span class='op'>&lt;-</span><span class='fu'>get_rank_of_players_posterior</span><span class='op'>(</span><span class='va'>m</span>,n<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>rank_m</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;        lambda[Seles] lambda[Graf] lambda[Sabatini] lambda[Navratilova]
-#&gt;   [1,]             3            1                4                   2
-#&gt;   [2,]             2            3                4                   1
-#&gt;   [3,]             2            1                4                   3
-#&gt;   [4,]             3            1                5                   2
-#&gt;   [5,]             2            1                3                   4
-#&gt;   [6,]             1            2                4                   3
-#&gt;   [7,]             2            1                4                   3
-#&gt;   [8,]             2            1                4                   3
-#&gt;   [9,]             2            1                4                   3
-#&gt;  [10,]             1            2                4                   3
-#&gt;  [11,]             3            1                5                   2
-#&gt;  [12,]             1            2                4                   3
-#&gt;  [13,]             1            2                4                   3
-#&gt;  [14,]             1            2                3                   4
-#&gt;  [15,]             2            1                3                   4
-#&gt;  [16,]             2            1                4                   3
-#&gt;  [17,]             2            1                4                   3
-#&gt;  [18,]             2            1                3                   4
-#&gt;  [19,]             4            1                3                   2
-#&gt;  [20,]             2            1                4                   3
-#&gt;  [21,]             2            1                5                   3
-#&gt;  [22,]             3            2                5                   1
-#&gt;  [23,]             4            1                2                   3
-#&gt;  [24,]             2            1                3                   4
-#&gt;  [25,]             4            1                2                   3
-#&gt;  [26,]             2            1                4                   3
-#&gt;  [27,]             2            1                4                   3
-#&gt;  [28,]             2            1                3                   5
-#&gt;  [29,]             1            2                3                   4
-#&gt;  [30,]             1            2                4                   3
-#&gt;  [31,]             2            1                4                   3
-#&gt;  [32,]             3            2                5                   1
-#&gt;  [33,]             2            1                3                   4
-#&gt;  [34,]             2            3                4                   1
-#&gt;  [35,]             2            1                4                   3
-#&gt;  [36,]             3            1                4                   2
-#&gt;  [37,]             3            2                4                   1
-#&gt;  [38,]             4            1                3                   2
-#&gt;  [39,]             2            1                5                   3
-#&gt;  [40,]             2            1                4                   3
-#&gt;  [41,]             1            2                4                   3
-#&gt;  [42,]             2            1                4                   3
-#&gt;  [43,]             2            1                3                   4
-#&gt;  [44,]             1            2                4                   3
-#&gt;  [45,]             2            1                4                   3
-#&gt;  [46,]             1            2                3                   4
-#&gt;  [47,]             2            1                4                   3
-#&gt;  [48,]             2            3                4                   1
-#&gt;  [49,]             4            1                2                   3
-#&gt;  [50,]             4            2                1                   3
-#&gt;  [51,]             5            1                3                   4
-#&gt;  [52,]             1            3                5                   2
-#&gt;  [53,]             1            2                4                   3
-#&gt;  [54,]             1            2                4                   3
-#&gt;  [55,]             2            1                4                   3
-#&gt;  [56,]             2            1                3                   4
-#&gt;  [57,]             3            1                4                   2
-#&gt;  [58,]             3            1                4                   2
-#&gt;  [59,]             1            2                4                   3
-#&gt;  [60,]             1            2                4                   3
-#&gt;  [61,]             2            1                3                   4
-#&gt;  [62,]             2            1                5                   3
-#&gt;  [63,]             3            1                4                   2
-#&gt;  [64,]             3            1                2                   4
-#&gt;  [65,]             3            1                4                   2
-#&gt;  [66,]             3            1                4                   2
-#&gt;  [67,]             1            3                5                   2
-#&gt;  [68,]             2            1                4                   3
-#&gt;  [69,]             1            2                4                   3
-#&gt;  [70,]             2            1                4                   3
-#&gt;  [71,]             1            2                4                   3
-#&gt;  [72,]             2            1                4                   3
-#&gt;  [73,]             2            1                3                   5
-#&gt;  [74,]             1            2                5                   4
-#&gt;  [75,]             2            1                3                   4
-#&gt;  [76,]             1            2                4                   3
-#&gt;  [77,]             2            1                4                   3
-#&gt;  [78,]             2            1                3                   4
-#&gt;  [79,]             3            1                5                   2
-#&gt;  [80,]             2            1                4                   3
-#&gt;  [81,]             2            1                4                   3
-#&gt;  [82,]             2            1                4                   3
-#&gt;  [83,]             2            1                5                   3
-#&gt;  [84,]             3            1                4                   2
-#&gt;  [85,]             2            1                5                   4
-#&gt;  [86,]             1            2                4                   3
-#&gt;  [87,]             2            1                4                   3
-#&gt;  [88,]             3            1                4                   2
-#&gt;  [89,]             2            1                4                   3
-#&gt;  [90,]             2            1                4                   3
-#&gt;  [91,]             2            1                4                   3
-#&gt;  [92,]             3            1                4                   2
-#&gt;  [93,]             3            1                4                   2
-#&gt;  [94,]             2            1                3                   4
-#&gt;  [95,]             1            2                4                   3
-#&gt;  [96,]             2            1                3                   4
-#&gt;  [97,]             2            1                3                   4
-#&gt;  [98,]             3            1                4                   2
-#&gt;  [99,]             3            1                4                   2
-#&gt; [100,]             1            2                5                   4
-#&gt;        lambda[Sanchez]
-#&gt;   [1,]               5
-#&gt;   [2,]               5
-#&gt;   [3,]               5
-#&gt;   [4,]               4
-#&gt;   [5,]               5
-#&gt;   [6,]               5
-#&gt;   [7,]               5
-#&gt;   [8,]               5
-#&gt;   [9,]               5
-#&gt;  [10,]               5
-#&gt;  [11,]               4
-#&gt;  [12,]               5
-#&gt;  [13,]               5
-#&gt;  [14,]               5
-#&gt;  [15,]               5
-#&gt;  [16,]               5
-#&gt;  [17,]               5
-#&gt;  [18,]               5
-#&gt;  [19,]               5
-#&gt;  [20,]               5
-#&gt;  [21,]               4
-#&gt;  [22,]               4
-#&gt;  [23,]               5
-#&gt;  [24,]               5
-#&gt;  [25,]               5
-#&gt;  [26,]               5
-#&gt;  [27,]               5
-#&gt;  [28,]               4
-#&gt;  [29,]               5
-#&gt;  [30,]               5
-#&gt;  [31,]               5
-#&gt;  [32,]               4
-#&gt;  [33,]               5
-#&gt;  [34,]               5
-#&gt;  [35,]               5
-#&gt;  [36,]               5
-#&gt;  [37,]               5
-#&gt;  [38,]               5
-#&gt;  [39,]               4
-#&gt;  [40,]               5
-#&gt;  [41,]               5
-#&gt;  [42,]               5
-#&gt;  [43,]               5
-#&gt;  [44,]               5
-#&gt;  [45,]               5
-#&gt;  [46,]               5
-#&gt;  [47,]               5
-#&gt;  [48,]               5
-#&gt;  [49,]               5
-#&gt;  [50,]               5
-#&gt;  [51,]               2
-#&gt;  [52,]               4
-#&gt;  [53,]               5
-#&gt;  [54,]               5
-#&gt;  [55,]               5
-#&gt;  [56,]               5
-#&gt;  [57,]               5
-#&gt;  [58,]               5
-#&gt;  [59,]               5
-#&gt;  [60,]               5
-#&gt;  [61,]               5
-#&gt;  [62,]               4
-#&gt;  [63,]               5
-#&gt;  [64,]               5
-#&gt;  [65,]               5
-#&gt;  [66,]               5
-#&gt;  [67,]               4
-#&gt;  [68,]               5
-#&gt;  [69,]               5
-#&gt;  [70,]               5
-#&gt;  [71,]               5
-#&gt;  [72,]               5
-#&gt;  [73,]               4
-#&gt;  [74,]               3
-#&gt;  [75,]               5
-#&gt;  [76,]               5
-#&gt;  [77,]               5
-#&gt;  [78,]               5
-#&gt;  [79,]               4
-#&gt;  [80,]               5
-#&gt;  [81,]               5
-#&gt;  [82,]               5
-#&gt;  [83,]               4
-#&gt;  [84,]               5
-#&gt;  [85,]               3
-#&gt;  [86,]               5
-#&gt;  [87,]               5
-#&gt;  [88,]               5
-#&gt;  [89,]               5
-#&gt;  [90,]               5
-#&gt;  [91,]               5
-#&gt;  [92,]               5
-#&gt;  [93,]               5
-#&gt;  [94,]               5
-#&gt;  [95,]               5
-#&gt;  [96,]               5
-#&gt;  [97,]               5
-#&gt;  [98,]               5
-#&gt;  [99,]               5
-#&gt; [100,]               3</div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt;        Seles Graf Sabatini Navratilova Sanchez
+#&gt;   [1,]     4    1        2           3       5
+#&gt;   [2,]     2    1        3           4       5
+#&gt;   [3,]     1    2        5           3       4
+#&gt;   [4,]     1    2        4           3       5
+#&gt;   [5,]     2    1        5           3       4
+#&gt;   [6,]     4    1        3           2       5
+#&gt;   [7,]     4    1        3           2       5
+#&gt;   [8,]     1    2        4           3       5
+#&gt;   [9,]     3    1        4           2       5
+#&gt;  [10,]     1    2        4           3       5
+#&gt;  [11,]     2    1        4           3       5
+#&gt;  [12,]     4    1        2           3       5
+#&gt;  [13,]     1    2        4           3       5
+#&gt;  [14,]     2    1        4           3       5
+#&gt;  [15,]     3    1        2           4       5
+#&gt;  [16,]     1    2        4           3       5
+#&gt;  [17,]     3    1        4           2       5
+#&gt;  [18,]     1    3        4           2       5
+#&gt;  [19,]     3    1        4           2       5
+#&gt;  [20,]     1    2        5           3       4
+#&gt;  [21,]     1    2        4           3       5
+#&gt;  [22,]     1    2        5           4       3
+#&gt;  [23,]     1    3        5           2       4
+#&gt;  [24,]     1    2        4           3       5
+#&gt;  [25,]     1    2        4           3       5
+#&gt;  [26,]     2    1        3           4       5
+#&gt;  [27,]     2    1        3           4       5
+#&gt;  [28,]     2    1        4           3       5
+#&gt;  [29,]     1    2        5           3       4
+#&gt;  [30,]     1    2        5           3       4
+#&gt;  [31,]     2    1        4           3       5
+#&gt;  [32,]     2    1        4           3       5
+#&gt;  [33,]     1    2        4           3       5
+#&gt;  [34,]     3    1        4           2       5
+#&gt;  [35,]     1    2        3           4       5
+#&gt;  [36,]     2    1        3           5       4
+#&gt;  [37,]     1    2        4           3       5
+#&gt;  [38,]     1    3        4           2       5
+#&gt;  [39,]     1    2        5           3       4
+#&gt;  [40,]     3    1        4           2       5
+#&gt;  [41,]     1    2        5           3       4
+#&gt;  [42,]     1    2        4           3       5
+#&gt;  [43,]     4    1        3           2       5
+#&gt;  [44,]     2    1        3           4       5
+#&gt;  [45,]     1    2        4           3       5
+#&gt;  [46,]     3    1        2           4       5
+#&gt;  [47,]     3    1        5           2       4
+#&gt;  [48,]     1    2        4           3       5
+#&gt;  [49,]     2    1        5           3       4
+#&gt;  [50,]     2    1        4           3       5
+#&gt;  [51,]     3    1        2           4       5
+#&gt;  [52,]     4    1        3           2       5
+#&gt;  [53,]     2    1        4           3       5
+#&gt;  [54,]     3    1        2           4       5
+#&gt;  [55,]     2    1        4           3       5
+#&gt;  [56,]     1    2        4           3       5
+#&gt;  [57,]     2    1        4           3       5
+#&gt;  [58,]     1    2        4           3       5
+#&gt;  [59,]     1    2        3           4       5
+#&gt;  [60,]     2    1        4           3       5
+#&gt;  [61,]     3    1        4           2       5
+#&gt;  [62,]     2    1        4           3       5
+#&gt;  [63,]     1    2        5           3       4
+#&gt;  [64,]     2    1        3           4       5
+#&gt;  [65,]     1    2        4           3       5
+#&gt;  [66,]     2    1        4           3       5
+#&gt;  [67,]     3    1        4           2       5
+#&gt;  [68,]     5    1        2           4       3
+#&gt;  [69,]     2    1        5           3       4
+#&gt;  [70,]     2    1        3           4       5
+#&gt;  [71,]     1    2        4           3       5
+#&gt;  [72,]     2    1        3           4       5
+#&gt;  [73,]     1    2        3           4       5
+#&gt;  [74,]     3    1        4           2       5
+#&gt;  [75,]     1    2        4           3       5
+#&gt;  [76,]     2    1        5           3       4
+#&gt;  [77,]     2    1        4           3       5
+#&gt;  [78,]     2    1        3           4       5
+#&gt;  [79,]     1    2        4           3       5
+#&gt;  [80,]     1    2        3           4       5
+#&gt;  [81,]     2    1        4           3       5
+#&gt;  [82,]     3    1        4           2       5
+#&gt;  [83,]     1    2        4           3       5
+#&gt;  [84,]     2    1        4           3       5
+#&gt;  [85,]     2    1        4           3       5
+#&gt;  [86,]     3    1        4           2       5
+#&gt;  [87,]     2    1        3           4       5
+#&gt;  [88,]     2    1        3           5       4
+#&gt;  [89,]     2    1        4           3       5
+#&gt;  [90,]     1    2        4           3       5
+#&gt;  [91,]     2    1        4           3       5
+#&gt;  [92,]     3    2        4           1       5
+#&gt;  [93,]     3    1        2           4       5
+#&gt;  [94,]     3    1        4           2       5
+#&gt;  [95,]     2    1        5           4       3
+#&gt;  [96,]     1    2        4           3       5
+#&gt;  [97,]     1    2        4           3       5
+#&gt;  [98,]     2    1        3           4       5
+#&gt;  [99,]     2    1        4           3       5
+#&gt; [100,]     2    1        3           4       5</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

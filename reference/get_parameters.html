@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Return the mean and the HPDI of the parameters of the model — get_parameters • bpcs</title>
+<title>Return the mean and the HPDI/credible intervals of the parameters of the model — get_parameters • bpcs</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Return the mean and the HPDI of the parameters of the model — get_parameters" />
+<meta property="og:title" content="Return the mean and the HPDI/credible intervals of the parameters of the model — get_parameters" />
 <meta property="og:description" content="Return a data frame with the mean and with high and low 95% hpd interval or credible interval for all parameters of the model" />
 <meta property="og:image" content="/logo.png" />
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0.900</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@
       <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper: Bayesian Paired-Comparison with the bpcs package</a>
     </li>
     <li>
       <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
@@ -146,7 +146,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Return the mean and the HPDI of the parameters of the model</h1>
+    <h1>Return the mean and the HPDI/credible intervals of the parameters of the model</h1>
     <small class="dont-index">Source: <a href='https://github.com/davidissamattos/bpcs/blob/master/R/bpc_get_parameters.R'><code>R/bpc_get_parameters.R</code></a></small>
     <div class="hidden name"><code>get_parameters.Rd</code></div>
     </div>
@@ -159,8 +159,10 @@
   <span class='va'>bpc_object</span>,
   params <span class='op'>=</span> <span class='cn'>NULL</span>,
   HPDI <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  n_eff <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  Rhat <span class='op'>=</span> <span class='cn'>FALSE</span>
+  credMass <span class='op'>=</span> <span class='fl'>0.95</span>,
+  n_eff <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  Rhat <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  keep_par_name <span class='op'>=</span> <span class='cn'>T</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -179,12 +181,20 @@
       <td><p>should return the HPDI or the credible intervals. Default is returning the HPDI</p></td>
     </tr>
     <tr>
+      <th>credMass</th>
+      <td><p>probability mass for the summary stats</p></td>
+    </tr>
+    <tr>
       <th>n_eff</th>
       <td><p>Should include the number of effective samples in the df</p></td>
     </tr>
     <tr>
       <th>Rhat</th>
       <td><p>Should include the Rhat in the df</p></td>
+    </tr>
+    <tr>
+      <th>keep_par_name</th>
+      <td><p>keep the parameter name e.g. lambdaGraff instead of Graff. Default to T. Only valid for lambda, so we can have better ranks</p></td>
     </tr>
     </table>
 
@@ -200,113 +210,23 @@ player1 <span class='op'>=</span> <span class='st'>'player1'</span>,
 result_column <span class='op'>=</span> <span class='st'>'y'</span>,
 model_type <span class='op'>=</span> <span class='st'>'bt'</span>,
 solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
-#&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 7.3e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.73 seconds.
-#&gt; Chain 1: Adjust your expectations accordingly!
-#&gt; Chain 1: 
-#&gt; Chain 1: 
-#&gt; Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.615202 seconds (Warm-up)
-#&gt; Chain 1:                0.64656 seconds (Sampling)
-#&gt; Chain 1:                1.26176 seconds (Total)
-#&gt; Chain 1: 
+</div><div class='output co'>#&gt; Running MCMC with 4 parallel chains...
 #&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
-#&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 8e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.8 seconds.
-#&gt; Chain 2: Adjust your expectations accordingly!
-#&gt; Chain 2: 
-#&gt; Chain 2: 
-#&gt; Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.617049 seconds (Warm-up)
-#&gt; Chain 2:                0.647453 seconds (Sampling)
-#&gt; Chain 2:                1.2645 seconds (Total)
-#&gt; Chain 2: 
+#&gt; Chain 1 finished in 1.7 seconds.
+#&gt; Chain 2 finished in 1.8 seconds.
+#&gt; Chain 3 finished in 1.8 seconds.
+#&gt; Chain 4 finished in 1.7 seconds.
 #&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
-#&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 6.3e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.63 seconds.
-#&gt; Chain 3: Adjust your expectations accordingly!
-#&gt; Chain 3: 
-#&gt; Chain 3: 
-#&gt; Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.621686 seconds (Warm-up)
-#&gt; Chain 3:                0.664784 seconds (Sampling)
-#&gt; Chain 3:                1.28647 seconds (Total)
-#&gt; Chain 3: 
-#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
-#&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 6.8e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.68 seconds.
-#&gt; Chain 4: Adjust your expectations accordingly!
-#&gt; Chain 4: 
-#&gt; Chain 4: 
-#&gt; Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.627001 seconds (Warm-up)
-#&gt; Chain 4:                0.685643 seconds (Sampling)
-#&gt; Chain 4:                1.31264 seconds (Total)
-#&gt; Chain 4: </div><div class='input'><span class='va'>hpdi</span><span class='op'>&lt;-</span><span class='fu'>get_parameters</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+#&gt; All 4 chains finished successfully.
+#&gt; Mean chain execution time: 1.7 seconds.
+#&gt; Total execution time: 2.0 seconds.</div><div class='input'><span class='va'>hpdi</span><span class='op'>&lt;-</span><span class='fu'>get_parameters</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>hpdi</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;             Parameter        Mean HPD_lower HPD_higher    n_eff
-#&gt; 1       lambda[Seles]  0.57689787 -2.356301   3.347619 609.9115
-#&gt; 2        lambda[Graf]  1.00406210 -1.696106   3.892769 610.7139
-#&gt; 3    lambda[Sabatini] -0.27501155 -2.962751   2.629084 628.8169
-#&gt; 4 lambda[Navratilova]  0.09737322 -2.602450   3.095403 608.3148
-#&gt; 5     lambda[Sanchez] -1.05796666 -3.885637   1.768583 626.1370</div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt;             Parameter        Mean      Median HPD_lower HPD_higher
+#&gt; 1       lambda[Seles]  0.53113772  0.53787600  -2.23749    3.45011
+#&gt; 2        lambda[Graf]  0.96596751  0.99222650  -1.78792    3.79984
+#&gt; 3    lambda[Sabatini] -0.31953289 -0.31105600  -3.11668    2.55273
+#&gt; 4 lambda[Navratilova]  0.05819253  0.07323585  -2.67701    2.95873
+#&gt; 5     lambda[Sanchez] -1.10597649 -1.07783500  -4.07317    1.74432</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

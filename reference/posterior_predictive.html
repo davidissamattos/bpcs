@@ -83,7 +83,7 @@ Helps to check the fitness of the model. Use it in conjunction with the shinysta
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0.900</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@ Helps to check the fitness of the model. Use it in conjunction with the shinysta
       <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper: Bayesian Paired-Comparison with the bpcs package</a>
     </li>
     <li>
       <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
@@ -187,925 +187,827 @@ player1 <span class='op'>=</span> <span class='st'>'player1'</span>,
 result_column <span class='op'>=</span> <span class='st'>'y'</span>,
 model_type <span class='op'>=</span> <span class='st'>'bt'</span>,
 solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 1).
-#&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 7.4e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.74 seconds.
-#&gt; Chain 1: Adjust your expectations accordingly!
-#&gt; Chain 1: 
-#&gt; Chain 1: 
-#&gt; Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.645196 seconds (Warm-up)
-#&gt; Chain 1:                0.67808 seconds (Sampling)
-#&gt; Chain 1:                1.32328 seconds (Total)
-#&gt; Chain 1: 
+</div><div class='output co'>#&gt; Running MCMC with 4 parallel chains...
 #&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 2).
-#&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 6.5e-05 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.65 seconds.
-#&gt; Chain 2: Adjust your expectations accordingly!
-#&gt; Chain 2: 
-#&gt; Chain 2: 
-#&gt; Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.636303 seconds (Warm-up)
-#&gt; Chain 2:                0.706569 seconds (Sampling)
-#&gt; Chain 2:                1.34287 seconds (Total)
-#&gt; Chain 2: 
+#&gt; Chain 1 finished in 1.8 seconds.
+#&gt; Chain 2 finished in 1.8 seconds.
+#&gt; Chain 4 finished in 1.8 seconds.
+#&gt; Chain 3 finished in 1.9 seconds.
 #&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 3).
-#&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 7e-05 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.7 seconds.
-#&gt; Chain 3: Adjust your expectations accordingly!
-#&gt; Chain 3: 
-#&gt; Chain 3: 
-#&gt; Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.633668 seconds (Warm-up)
-#&gt; Chain 3:                0.606152 seconds (Sampling)
-#&gt; Chain 3:                1.23982 seconds (Total)
-#&gt; Chain 3: 
-#&gt; 
-#&gt; SAMPLING FOR MODEL 'bt' NOW (CHAIN 4).
-#&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 6.4e-05 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.64 seconds.
-#&gt; Chain 4: Adjust your expectations accordingly!
-#&gt; Chain 4: 
-#&gt; Chain 4: 
-#&gt; Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-#&gt; Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#&gt; Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#&gt; Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#&gt; Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#&gt; Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#&gt; Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#&gt; Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#&gt; Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#&gt; Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-#&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.630944 seconds (Warm-up)
-#&gt; Chain 4:                0.578209 seconds (Sampling)
-#&gt; Chain 4:                1.20915 seconds (Total)
-#&gt; Chain 4: </div><div class='input'><span class='va'>pp</span><span class='op'>&lt;-</span><span class='fu'>posterior_predictive</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+#&gt; All 4 chains finished successfully.
+#&gt; Mean chain execution time: 1.8 seconds.
+#&gt; Total execution time: 2.2 seconds.</div><div class='input'><span class='va'>pp</span><span class='op'>&lt;-</span><span class='fu'>posterior_predictive</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>pp</span><span class='op'>$</span><span class='va'>y</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;  [1] 0 0 1 1 1 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 1 0 1 1 0
 #&gt; [39] 0 0 1 1 0 0 0 1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>pp</span><span class='op'>$</span><span class='va'>y_pred</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;           parameters
-#&gt; iterations y_pred[1] y_pred[2] y_pred[3] y_pred[4] y_pred[5] y_pred[6]
-#&gt;       [1,]         0         0         1         1         1         1
-#&gt;       [2,]         1         1         1         0         0         0
-#&gt;       [3,]         0         1         0         1         0         1
-#&gt;       [4,]         1         0         1         1         0         0
-#&gt;       [5,]         0         1         0         1         1         0
-#&gt;       [6,]         0         0         0         1         1         0
-#&gt;       [7,]         1         0         1         1         1         0
-#&gt;       [8,]         0         1         1         1         0         0
-#&gt;       [9,]         1         0         0         0         1         0
-#&gt;      [10,]         0         1         1         1         1         1
-#&gt;      [11,]         1         0         1         1         0         1
-#&gt;      [12,]         0         1         0         0         0         0
-#&gt;      [13,]         1         1         1         0         1         0
-#&gt;      [14,]         1         0         1         1         0         0
-#&gt;      [15,]         0         0         0         0         0         1
-#&gt;      [16,]         0         0         1         1         0         0
-#&gt;      [17,]         0         1         1         1         1         0
-#&gt;      [18,]         1         1         1         1         1         0
-#&gt;      [19,]         1         1         1         1         0         1
-#&gt;      [20,]         0         0         0         1         1         0
-#&gt;      [21,]         1         0         0         0         0         0
-#&gt;      [22,]         1         0         0         0         0         1
-#&gt;      [23,]         0         0         1         1         1         0
-#&gt;      [24,]         1         1         1         1         1         1
-#&gt;      [25,]         1         0         0         1         0         0
-#&gt;      [26,]         0         1         1         1         1         0
-#&gt;      [27,]         0         0         0         0         1         0
-#&gt;      [28,]         0         1         0         0         1         1
-#&gt;      [29,]         1         0         0         1         1         0
-#&gt;      [30,]         1         1         0         1         1         0
-#&gt;      [31,]         1         1         1         1         1         1
-#&gt;      [32,]         1         1         0         0         1         0
-#&gt;      [33,]         1         0         1         0         0         0
-#&gt;      [34,]         1         1         1         1         1         1
-#&gt;      [35,]         1         0         0         1         1         1
-#&gt;      [36,]         0         0         1         1         0         0
-#&gt;      [37,]         0         0         0         0         0         1
-#&gt;      [38,]         0         0         1         1         1         0
-#&gt;      [39,]         1         0         0         1         1         0
-#&gt;      [40,]         1         1         0         0         0         0
-#&gt;      [41,]         0         0         0         0         0         0
-#&gt;      [42,]         1         1         0         1         1         1
-#&gt;      [43,]         1         1         1         1         1         1
-#&gt;      [44,]         1         1         0         1         1         1
-#&gt;      [45,]         1         1         1         0         1         0
-#&gt;      [46,]         0         1         0         1         1         1
-#&gt;      [47,]         0         1         0         0         0         0
-#&gt;      [48,]         1         1         1         1         0         0
-#&gt;      [49,]         1         1         1         1         0         0
-#&gt;      [50,]         1         0         0         1         0         0
-#&gt;      [51,]         1         1         1         1         0         0
-#&gt;      [52,]         0         1         0         1         0         1
-#&gt;      [53,]         1         1         0         0         1         0
-#&gt;      [54,]         1         1         0         1         1         1
-#&gt;      [55,]         1         1         0         1         0         0
-#&gt;      [56,]         1         1         1         0         0         0
-#&gt;      [57,]         1         0         0         1         1         1
-#&gt;      [58,]         1         0         1         1         0         0
-#&gt;      [59,]         1         1         1         0         1         0
-#&gt;      [60,]         1         1         0         1         1         0
-#&gt;      [61,]         0         1         1         0         0         0
-#&gt;      [62,]         1         0         0         0         1         0
-#&gt;      [63,]         1         1         1         0         0         1
-#&gt;      [64,]         1         1         1         1         1         0
-#&gt;      [65,]         0         0         1         1         1         0
-#&gt;      [66,]         1         0         0         1         1         0
-#&gt;      [67,]         1         1         0         0         1         1
-#&gt;      [68,]         1         1         0         1         0         0
-#&gt;      [69,]         0         0         1         1         0         0
-#&gt;      [70,]         1         1         1         0         0         0
-#&gt;      [71,]         1         1         1         1         1         0
-#&gt;      [72,]         0         0         0         0         1         0
-#&gt;      [73,]         1         1         1         1         0         0
-#&gt;      [74,]         0         1         1         1         1         0
-#&gt;      [75,]         0         0         0         0         0         0
-#&gt;      [76,]         1         1         1         1         1         1
-#&gt;      [77,]         1         1         1         0         1         0
-#&gt;      [78,]         1         1         1         1         1         1
-#&gt;      [79,]         0         0         1         0         1         0
-#&gt;      [80,]         0         0         1         1         0         1
-#&gt;      [81,]         0         1         1         0         1         1
-#&gt;      [82,]         1         0         1         0         0         1
-#&gt;      [83,]         0         1         1         0         0         0
-#&gt;      [84,]         0         0         1         1         0         1
-#&gt;      [85,]         0         0         1         0         1         0
-#&gt;      [86,]         1         1         1         1         1         1
-#&gt;      [87,]         0         0         1         0         0         0
-#&gt;      [88,]         1         0         0         0         1         0
-#&gt;      [89,]         1         0         1         0         0         1
-#&gt;      [90,]         1         0         1         1         1         0
-#&gt;      [91,]         1         1         0         0         0         0
-#&gt;      [92,]         1         0         0         1         1         0
-#&gt;      [93,]         1         1         1         1         0         0
-#&gt;      [94,]         1         1         0         1         1         0
-#&gt;      [95,]         1         1         1         1         1         0
-#&gt;      [96,]         0         1         1         1         1         1
-#&gt;      [97,]         1         1         1         0         0         0
-#&gt;      [98,]         0         1         1         1         1         0
-#&gt;      [99,]         1         0         1         0         1         0
-#&gt;     [100,]         0         1         0         1         1         0
-#&gt;           parameters
-#&gt; iterations y_pred[7] y_pred[8] y_pred[9] y_pred[10] y_pred[11] y_pred[12]
-#&gt;       [1,]         1         0         0          0          0          0
-#&gt;       [2,]         1         0         0          0          1          0
-#&gt;       [3,]         0         0         1          0          0          0
-#&gt;       [4,]         0         0         0          1          1          0
-#&gt;       [5,]         0         0         1          1          1          1
-#&gt;       [6,]         0         0         1          0          0          1
-#&gt;       [7,]         0         0         0          0          0          0
-#&gt;       [8,]         1         0         0          0          0          0
-#&gt;       [9,]         0         0         0          0          0          0
-#&gt;      [10,]         0         0         0          0          0          0
-#&gt;      [11,]         0         0         0          1          1          0
-#&gt;      [12,]         0         1         1          0          0          1
-#&gt;      [13,]         1         0         0          0          1          1
-#&gt;      [14,]         0         1         1          0          1          1
-#&gt;      [15,]         0         1         0          0          1          0
-#&gt;      [16,]         0         0         1          0          0          0
-#&gt;      [17,]         0         1         1          1          1          0
-#&gt;      [18,]         0         1         1          1          0          1
-#&gt;      [19,]         1         1         1          1          1          1
-#&gt;      [20,]         1         0         0          1          0          0
-#&gt;      [21,]         0         1         1          1          0          1
-#&gt;      [22,]         1         1         0          0          1          0
-#&gt;      [23,]         0         1         0          0          0          0
-#&gt;      [24,]         1         0         0          0          0          0
-#&gt;      [25,]         1         1         0          1          1          1
-#&gt;      [26,]         1         0         0          0          0          0
-#&gt;      [27,]         0         1         0          0          0          1
-#&gt;      [28,]         1         0         0          1          0          0
-#&gt;      [29,]         1         0         1          0          0          0
-#&gt;      [30,]         1         0         0          0          0          0
-#&gt;      [31,]         1         0         0          0          1          0
-#&gt;      [32,]         1         0         0          0          1          1
-#&gt;      [33,]         0         0         0          0          0          1
-#&gt;      [34,]         0         1         1          0          1          0
-#&gt;      [35,]         0         0         1          0          1          1
-#&gt;      [36,]         0         1         1          1          1          0
-#&gt;      [37,]         1         0         1          0          0          0
-#&gt;      [38,]         0         0         1          1          0          0
-#&gt;      [39,]         0         0         0          0          0          0
-#&gt;      [40,]         0         0         0          0          1          0
-#&gt;      [41,]         1         0         0          0          1          0
-#&gt;      [42,]         0         1         0          0          0          0
-#&gt;      [43,]         1         1         0          0          1          1
-#&gt;      [44,]         0         0         0          0          1          0
-#&gt;      [45,]         1         1         0          1          1          0
-#&gt;      [46,]         1         0         1          0          1          1
-#&gt;      [47,]         1         0         0          1          0          0
-#&gt;      [48,]         0         0         0          0          0          1
-#&gt;      [49,]         0         0         0          0          0          0
-#&gt;      [50,]         1         0         0          0          0          1
-#&gt;      [51,]         0         0         0          0          1          0
-#&gt;      [52,]         0         1         1          1          0          1
-#&gt;      [53,]         0         0         1          1          0          0
-#&gt;      [54,]         1         1         0          1          1          1
-#&gt;      [55,]         0         1         1          1          1          1
-#&gt;      [56,]         0         1         1          0          0          0
-#&gt;      [57,]         0         0         0          0          0          0
-#&gt;      [58,]         1         0         1          1          1          0
-#&gt;      [59,]         0         0         0          0          0          1
-#&gt;      [60,]         0         0         0          1          0          0
-#&gt;      [61,]         0         1         0          0          0          0
-#&gt;      [62,]         1         1         1          0          0          0
-#&gt;      [63,]         0         0         1          0          0          1
-#&gt;      [64,]         0         0         1          0          0          0
-#&gt;      [65,]         0         1         0          0          0          0
-#&gt;      [66,]         1         0         1          0          0          0
-#&gt;      [67,]         0         0         0          0          0          0
-#&gt;      [68,]         0         0         0          0          0          0
-#&gt;      [69,]         1         0         0          0          1          0
-#&gt;      [70,]         0         0         1          0          0          0
-#&gt;      [71,]         0         1         1          0          0          0
-#&gt;      [72,]         0         0         0          0          0          0
-#&gt;      [73,]         0         0         0          0          1          1
-#&gt;      [74,]         1         1         0          0          1          0
-#&gt;      [75,]         0         1         1          1          0          0
-#&gt;      [76,]         1         0         1          0          0          1
-#&gt;      [77,]         0         0         1          0          0          0
-#&gt;      [78,]         0         1         0          0          0          0
-#&gt;      [79,]         0         1         0          0          1          0
-#&gt;      [80,]         0         0         0          0          0          1
-#&gt;      [81,]         1         1         1          0          1          1
-#&gt;      [82,]         0         0         0          1          1          0
-#&gt;      [83,]         1         0         1          1          1          0
-#&gt;      [84,]         1         1         1          1          1          0
-#&gt;      [85,]         0         0         0          0          0          1
-#&gt;      [86,]         0         0         0          0          1          1
-#&gt;      [87,]         0         0         0          0          0          0
-#&gt;      [88,]         0         0         1          0          0          0
-#&gt;      [89,]         0         0         0          1          0          1
-#&gt;      [90,]         1         1         0          0          0          0
-#&gt;      [91,]         0         1         1          0          0          0
-#&gt;      [92,]         0         0         0          0          0          1
-#&gt;      [93,]         0         1         1          1          1          0
-#&gt;      [94,]         0         0         0          1          0          1
-#&gt;      [95,]         0         0         0          0          0          0
-#&gt;      [96,]         1         1         1          0          1          1
-#&gt;      [97,]         0         0         0          1          1          1
-#&gt;      [98,]         1         0         1          0          0          0
-#&gt;      [99,]         0         0         1          0          1          1
-#&gt;     [100,]         0         1         1          0          0          0
-#&gt;           parameters
-#&gt; iterations y_pred[13] y_pred[14] y_pred[15] y_pred[16] y_pred[17] y_pred[18]
-#&gt;       [1,]          1          0          0          0          0          0
-#&gt;       [2,]          0          0          0          1          0          1
-#&gt;       [3,]          1          0          0          0          0          0
-#&gt;       [4,]          0          0          0          1          0          0
-#&gt;       [5,]          0          1          1          0          0          0
-#&gt;       [6,]          0          1          0          0          0          0
-#&gt;       [7,]          1          0          1          0          0          0
-#&gt;       [8,]          0          0          0          1          0          0
-#&gt;       [9,]          0          1          0          1          0          0
-#&gt;      [10,]          0          0          0          0          0          0
-#&gt;      [11,]          0          0          0          0          1          0
-#&gt;      [12,]          0          0          1          1          1          0
-#&gt;      [13,]          0          1          0          0          0          0
-#&gt;      [14,]          0          1          0          0          0          1
-#&gt;      [15,]          0          0          0          0          0          1
-#&gt;      [16,]          0          0          1          0          0          0
-#&gt;      [17,]          0          0          0          0          0          0
-#&gt;      [18,]          0          0          0          0          0          0
-#&gt;      [19,]          1          0          0          0          1          0
-#&gt;      [20,]          0          0          0          0          0          0
-#&gt;      [21,]          0          1          0          0          0          0
-#&gt;      [22,]          0          1          0          0          0          0
-#&gt;      [23,]          0          0          0          0          0          1
-#&gt;      [24,]          0          0          0          0          0          0
-#&gt;      [25,]          0          1          0          1          1          1
-#&gt;      [26,]          0          0          0          1          0          0
-#&gt;      [27,]          0          0          0          0          1          1
-#&gt;      [28,]          0          0          0          1          0          0
-#&gt;      [29,]          1          0          0          1          0          1
-#&gt;      [30,]          1          0          0          0          0          0
-#&gt;      [31,]          0          0          0          0          0          1
-#&gt;      [32,]          0          0          1          0          0          0
-#&gt;      [33,]          0          0          0          0          0          0
-#&gt;      [34,]          1          0          0          0          0          0
-#&gt;      [35,]          0          0          1          0          0          1
-#&gt;      [36,]          0          0          0          0          0          0
-#&gt;      [37,]          0          0          1          0          0          0
-#&gt;      [38,]          0          0          0          0          0          0
-#&gt;      [39,]          0          1          0          0          1          1
-#&gt;      [40,]          0          0          0          0          0          0
-#&gt;      [41,]          0          0          0          0          0          1
-#&gt;      [42,]          0          0          0          1          0          0
-#&gt;      [43,]          1          0          0          0          0          0
-#&gt;      [44,]          0          0          0          0          0          0
-#&gt;      [45,]          1          0          0          0          0          0
-#&gt;      [46,]          0          0          0          0          0          0
-#&gt;      [47,]          0          0          1          1          1          1
-#&gt;      [48,]          1          1          0          0          1          0
-#&gt;      [49,]          0          0          0          0          0          0
-#&gt;      [50,]          0          1          0          1          1          0
-#&gt;      [51,]          0          1          1          0          0          0
-#&gt;      [52,]          0          0          0          0          1          0
-#&gt;      [53,]          0          0          0          0          0          0
-#&gt;      [54,]          0          0          0          0          0          0
-#&gt;      [55,]          1          1          0          1          0          0
-#&gt;      [56,]          0          0          0          0          0          0
-#&gt;      [57,]          0          0          1          0          1          1
-#&gt;      [58,]          1          0          0          1          0          1
-#&gt;      [59,]          0          0          1          1          1          0
-#&gt;      [60,]          0          0          1          1          0          0
-#&gt;      [61,]          0          0          0          0          0          0
-#&gt;      [62,]          0          0          0          0          0          0
-#&gt;      [63,]          0          0          0          0          0          1
-#&gt;      [64,]          0          0          0          1          0          0
-#&gt;      [65,]          0          0          0          0          0          0
-#&gt;      [66,]          1          1          0          0          1          0
-#&gt;      [67,]          0          0          1          0          0          0
-#&gt;      [68,]          0          0          0          0          0          0
-#&gt;      [69,]          0          0          0          0          0          0
-#&gt;      [70,]          0          0          0          0          0          0
-#&gt;      [71,]          0          1          0          0          0          0
-#&gt;      [72,]          1          0          0          0          1          0
-#&gt;      [73,]          0          0          0          0          0          0
-#&gt;      [74,]          0          1          0          1          1          0
-#&gt;      [75,]          0          1          0          0          0          1
-#&gt;      [76,]          0          0          1          1          0          1
-#&gt;      [77,]          0          1          0          0          0          0
-#&gt;      [78,]          0          0          0          0          0          1
-#&gt;      [79,]          0          0          0          0          0          0
-#&gt;      [80,]          0          0          1          1          1          0
-#&gt;      [81,]          0          0          1          0          0          0
-#&gt;      [82,]          0          0          0          0          0          1
-#&gt;      [83,]          0          0          0          1          0          0
-#&gt;      [84,]          0          0          1          1          0          1
-#&gt;      [85,]          0          0          1          1          0          0
-#&gt;      [86,]          1          0          0          0          0          0
-#&gt;      [87,]          0          1          0          1          0          0
-#&gt;      [88,]          0          0          0          0          0          0
-#&gt;      [89,]          0          0          1          0          1          0
-#&gt;      [90,]          0          1          0          0          0          0
-#&gt;      [91,]          0          0          0          0          1          0
-#&gt;      [92,]          0          0          0          0          1          0
-#&gt;      [93,]          0          0          0          0          0          0
-#&gt;      [94,]          0          1          1          0          1          1
-#&gt;      [95,]          0          0          0          0          0          0
-#&gt;      [96,]          0          0          0          0          1          0
-#&gt;      [97,]          0          0          1          0          0          0
-#&gt;      [98,]          0          0          0          0          0          0
-#&gt;      [99,]          1          1          0          0          0          0
-#&gt;     [100,]          1          0          0          0          0          0
-#&gt;           parameters
-#&gt; iterations y_pred[19] y_pred[20] y_pred[21] y_pred[22] y_pred[23] y_pred[24]
-#&gt;       [1,]          0          0          0          0          0          0
-#&gt;       [2,]          0          0          0          1          0          0
-#&gt;       [3,]          0          1          0          0          0          1
-#&gt;       [4,]          0          1          1          1          0          0
-#&gt;       [5,]          0          0          0          0          0          1
-#&gt;       [6,]          1          0          0          1          0          1
-#&gt;       [7,]          1          1          0          0          0          0
-#&gt;       [8,]          0          0          0          0          0          0
-#&gt;       [9,]          0          1          0          0          0          0
-#&gt;      [10,]          0          0          0          0          0          1
-#&gt;      [11,]          0          0          0          1          1          0
-#&gt;      [12,]          1          0          0          0          0          0
-#&gt;      [13,]          0          0          1          0          0          0
-#&gt;      [14,]          1          0          0          0          0          0
-#&gt;      [15,]          1          1          0          0          0          0
-#&gt;      [16,]          0          0          0          0          0          0
-#&gt;      [17,]          1          0          0          0          0          1
-#&gt;      [18,]          1          0          0          1          0          0
-#&gt;      [19,]          0          0          0          0          0          0
-#&gt;      [20,]          1          0          0          0          1          0
-#&gt;      [21,]          0          0          0          0          0          1
-#&gt;      [22,]          0          0          0          0          1          1
-#&gt;      [23,]          0          0          1          1          1          0
-#&gt;      [24,]          0          0          1          0          0          0
-#&gt;      [25,]          1          0          0          0          0          0
-#&gt;      [26,]          0          0          0          1          1          0
-#&gt;      [27,]          0          0          1          0          0          1
-#&gt;      [28,]          1          0          1          0          1          0
-#&gt;      [29,]          0          0          0          1          0          0
-#&gt;      [30,]          1          0          0          0          0          1
-#&gt;      [31,]          0          0          0          1          0          1
-#&gt;      [32,]          1          0          1          0          0          0
-#&gt;      [33,]          0          0          0          0          0          0
-#&gt;      [34,]          0          0          0          0          0          0
-#&gt;      [35,]          1          1          0          0          0          0
-#&gt;      [36,]          0          0          1          1          0          0
-#&gt;      [37,]          0          0          0          0          1          0
-#&gt;      [38,]          0          0          0          0          0          0
-#&gt;      [39,]          0          0          0          0          0          0
-#&gt;      [40,]          0          0          0          0          0          0
-#&gt;      [41,]          0          0          0          0          0          1
-#&gt;      [42,]          1          0          0          0          0          0
-#&gt;      [43,]          0          0          1          0          1          1
-#&gt;      [44,]          0          0          0          1          0          0
-#&gt;      [45,]          0          0          0          0          0          1
-#&gt;      [46,]          0          1          0          0          0          0
-#&gt;      [47,]          1          1          1          1          1          1
-#&gt;      [48,]          0          0          0          0          0          0
-#&gt;      [49,]          0          0          0          0          0          0
-#&gt;      [50,]          0          1          0          1          0          0
-#&gt;      [51,]          0          0          0          0          0          1
-#&gt;      [52,]          1          0          0          1          0          0
-#&gt;      [53,]          0          0          0          0          0          1
-#&gt;      [54,]          0          0          0          0          1          1
-#&gt;      [55,]          0          0          0          0          0          1
-#&gt;      [56,]          0          0          0          1          0          0
-#&gt;      [57,]          0          0          0          0          0          1
-#&gt;      [58,]          0          1          0          1          0          0
-#&gt;      [59,]          1          0          0          0          0          0
-#&gt;      [60,]          0          1          0          0          0          0
-#&gt;      [61,]          0          0          0          0          1          0
-#&gt;      [62,]          1          0          0          0          1          0
-#&gt;      [63,]          1          0          0          0          0          0
-#&gt;      [64,]          0          1          1          0          0          0
-#&gt;      [65,]          0          1          0          1          0          0
-#&gt;      [66,]          0          1          1          0          0          0
-#&gt;      [67,]          1          0          0          0          1          0
-#&gt;      [68,]          0          0          0          0          1          0
-#&gt;      [69,]          0          1          0          0          1          0
-#&gt;      [70,]          0          0          0          0          0          1
-#&gt;      [71,]          0          0          0          0          0          0
-#&gt;      [72,]          0          0          0          0          1          0
-#&gt;      [73,]          0          0          0          0          0          0
-#&gt;      [74,]          1          0          0          0          0          1
-#&gt;      [75,]          1          0          0          1          0          1
-#&gt;      [76,]          0          0          1          0          0          1
-#&gt;      [77,]          0          0          0          0          0          0
-#&gt;      [78,]          0          0          1          0          0          0
-#&gt;      [79,]          1          0          0          1          0          1
-#&gt;      [80,]          1          1          1          0          0          0
-#&gt;      [81,]          0          0          0          0          0          1
-#&gt;      [82,]          0          0          0          0          0          0
-#&gt;      [83,]          0          0          1          0          0          0
-#&gt;      [84,]          0          1          1          0          0          0
-#&gt;      [85,]          1          1          1          0          0          0
-#&gt;      [86,]          0          0          0          0          0          0
-#&gt;      [87,]          0          0          0          0          0          0
-#&gt;      [88,]          0          0          1          0          1          0
-#&gt;      [89,]          0          0          0          1          1          0
-#&gt;      [90,]          0          0          0          0          0          1
-#&gt;      [91,]          0          0          0          0          0          0
-#&gt;      [92,]          1          0          0          0          0          0
-#&gt;      [93,]          0          1          0          0          0          0
-#&gt;      [94,]          0          0          0          1          0          0
-#&gt;      [95,]          0          0          1          0          0          0
-#&gt;      [96,]          0          1          0          0          0          0
-#&gt;      [97,]          0          1          0          0          0          0
-#&gt;      [98,]          0          0          0          0          0          1
-#&gt;      [99,]          0          0          0          0          0          1
-#&gt;     [100,]          1          1          1          1          1          1
-#&gt;           parameters
-#&gt; iterations y_pred[25] y_pred[26] y_pred[27] y_pred[28] y_pred[29] y_pred[30]
-#&gt;       [1,]          0          0          0          0          0          0
-#&gt;       [2,]          0          0          0          0          0          0
-#&gt;       [3,]          1          0          1          1          0          1
-#&gt;       [4,]          1          0          1          1          0          1
-#&gt;       [5,]          1          0          0          0          0          0
-#&gt;       [6,]          0          0          0          0          0          0
-#&gt;       [7,]          0          0          0          0          0          0
-#&gt;       [8,]          1          1          0          0          0          0
-#&gt;       [9,]          0          1          0          0          0          0
-#&gt;      [10,]          1          1          0          0          0          0
-#&gt;      [11,]          1          0          0          0          0          0
-#&gt;      [12,]          1          0          0          0          0          0
-#&gt;      [13,]          0          1          0          0          0          0
-#&gt;      [14,]          1          0          0          0          0          1
-#&gt;      [15,]          0          1          0          0          0          0
-#&gt;      [16,]          0          0          0          0          1          0
-#&gt;      [17,]          0          1          0          0          0          0
-#&gt;      [18,]          0          0          0          0          0          0
-#&gt;      [19,]          0          0          0          1          0          1
-#&gt;      [20,]          0          0          0          1          0          0
-#&gt;      [21,]          0          1          0          0          0          0
-#&gt;      [22,]          0          1          0          0          0          0
-#&gt;      [23,]          0          1          0          0          0          0
-#&gt;      [24,]          1          0          0          0          0          0
-#&gt;      [25,]          0          0          0          0          0          0
-#&gt;      [26,]          1          0          0          0          0          0
-#&gt;      [27,]          0          0          0          0          0          0
-#&gt;      [28,]          0          0          0          0          0          0
-#&gt;      [29,]          0          1          0          0          0          0
-#&gt;      [30,]          0          0          0          1          0          0
-#&gt;      [31,]          0          0          0          0          0          0
-#&gt;      [32,]          0          1          0          0          0          0
-#&gt;      [33,]          0          0          0          0          0          0
-#&gt;      [34,]          0          0          0          0          0          0
-#&gt;      [35,]          1          0          0          0          0          0
-#&gt;      [36,]          0          0          0          0          0          0
-#&gt;      [37,]          1          1          0          0          0          0
-#&gt;      [38,]          1          0          0          0          1          0
-#&gt;      [39,]          0          0          0          0          0          0
-#&gt;      [40,]          0          0          0          0          0          0
-#&gt;      [41,]          1          0          0          1          0          1
-#&gt;      [42,]          0          0          0          0          0          0
-#&gt;      [43,]          0          0          1          0          0          0
-#&gt;      [44,]          0          0          0          0          0          0
-#&gt;      [45,]          0          1          0          0          0          0
-#&gt;      [46,]          0          0          1          1          1          0
-#&gt;      [47,]          0          0          0          1          0          0
-#&gt;      [48,]          0          1          0          0          0          0
-#&gt;      [49,]          0          0          0          0          1          0
-#&gt;      [50,]          1          0          0          0          1          0
-#&gt;      [51,]          0          1          0          0          0          1
-#&gt;      [52,]          0          0          0          0          0          0
-#&gt;      [53,]          0          0          0          0          0          1
-#&gt;      [54,]          1          0          0          0          0          0
-#&gt;      [55,]          1          1          1          0          0          0
-#&gt;      [56,]          0          0          1          0          0          1
-#&gt;      [57,]          0          0          0          1          0          1
-#&gt;      [58,]          0          1          0          0          1          0
-#&gt;      [59,]          0          0          0          0          0          0
-#&gt;      [60,]          0          0          0          0          0          0
-#&gt;      [61,]          0          0          1          1          0          0
-#&gt;      [62,]          1          0          0          0          0          0
-#&gt;      [63,]          0          0          0          1          0          0
-#&gt;      [64,]          1          1          0          0          0          0
-#&gt;      [65,]          0          0          0          0          0          0
-#&gt;      [66,]          0          0          1          0          1          1
-#&gt;      [67,]          0          0          0          0          0          0
-#&gt;      [68,]          0          0          0          0          0          0
-#&gt;      [69,]          0          1          0          0          0          0
-#&gt;      [70,]          1          1          0          0          0          0
-#&gt;      [71,]          1          0          0          0          0          0
-#&gt;      [72,]          0          1          0          0          1          0
-#&gt;      [73,]          0          0          0          0          0          0
-#&gt;      [74,]          1          1          0          0          0          1
-#&gt;      [75,]          1          1          0          0          0          0
-#&gt;      [76,]          0          0          0          1          0          0
-#&gt;      [77,]          1          0          1          0          0          0
-#&gt;      [78,]          1          0          0          0          0          0
-#&gt;      [79,]          0          1          0          0          0          0
-#&gt;      [80,]          0          1          0          0          0          0
-#&gt;      [81,]          1          1          0          0          0          0
-#&gt;      [82,]          1          1          1          0          0          0
-#&gt;      [83,]          1          1          0          0          0          0
-#&gt;      [84,]          1          0          0          0          0          1
-#&gt;      [85,]          0          0          1          0          0          0
-#&gt;      [86,]          0          0          0          0          0          0
-#&gt;      [87,]          0          1          0          1          0          0
-#&gt;      [88,]          0          0          0          0          0          0
-#&gt;      [89,]          0          0          0          0          0          0
-#&gt;      [90,]          0          0          0          0          0          0
-#&gt;      [91,]          0          0          1          0          0          0
-#&gt;      [92,]          0          0          0          0          0          0
-#&gt;      [93,]          0          1          1          0          0          0
-#&gt;      [94,]          1          0          0          1          1          1
-#&gt;      [95,]          0          0          0          0          1          0
-#&gt;      [96,]          0          1          0          0          0          0
-#&gt;      [97,]          0          1          0          0          0          0
-#&gt;      [98,]          0          0          0          0          0          0
-#&gt;      [99,]          0          0          0          0          1          0
-#&gt;     [100,]          0          1          0          0          0          0
-#&gt;           parameters
-#&gt; iterations y_pred[31] y_pred[32] y_pred[33] y_pred[34] y_pred[35] y_pred[36]
-#&gt;       [1,]          0          0          0          0          0          0
-#&gt;       [2,]          0          0          0          0          1          0
-#&gt;       [3,]          1          0          1          1          0          0
-#&gt;       [4,]          0          0          0          0          1          0
-#&gt;       [5,]          1          0          0          0          0          1
-#&gt;       [6,]          1          0          0          0          1          0
-#&gt;       [7,]          0          0          0          0          0          0
-#&gt;       [8,]          0          0          0          0          1          1
-#&gt;       [9,]          0          0          0          0          0          1
-#&gt;      [10,]          0          0          1          0          1          1
-#&gt;      [11,]          0          0          0          0          0          1
-#&gt;      [12,]          1          1          0          0          1          0
-#&gt;      [13,]          0          0          1          0          0          0
-#&gt;      [14,]          0          1          0          0          1          1
-#&gt;      [15,]          0          1          0          0          1          1
-#&gt;      [16,]          0          0          0          0          1          0
-#&gt;      [17,]          0          1          0          0          1          1
-#&gt;      [18,]          0          1          0          1          0          1
-#&gt;      [19,]          0          0          0          1          0          1
-#&gt;      [20,]          0          0          0          1          1          0
-#&gt;      [21,]          0          0          0          0          1          1
-#&gt;      [22,]          0          0          0          1          1          1
-#&gt;      [23,]          0          0          0          0          1          0
-#&gt;      [24,]          0          0          0          0          1          1
-#&gt;      [25,]          0          1          1          0          1          0
-#&gt;      [26,]          0          0          0          0          1          1
-#&gt;      [27,]          0          0          0          0          1          0
-#&gt;      [28,]          0          0          0          0          0          0
-#&gt;      [29,]          0          0          0          0          1          0
-#&gt;      [30,]          0          0          0          1          0          1
-#&gt;      [31,]          0          0          0          0          1          0
-#&gt;      [32,]          0          0          0          0          1          1
-#&gt;      [33,]          1          0          0          0          1          0
-#&gt;      [34,]          0          0          0          0          1          1
-#&gt;      [35,]          0          0          0          0          1          1
-#&gt;      [36,]          0          1          1          0          1          1
-#&gt;      [37,]          0          0          0          0          1          1
-#&gt;      [38,]          0          0          0          0          1          1
-#&gt;      [39,]          0          0          0          0          1          1
-#&gt;      [40,]          0          0          0          0          1          1
-#&gt;      [41,]          0          0          0          1          1          1
-#&gt;      [42,]          0          0          0          0          0          1
-#&gt;      [43,]          0          0          1          0          1          0
-#&gt;      [44,]          0          1          0          0          0          1
-#&gt;      [45,]          0          0          0          0          1          0
-#&gt;      [46,]          0          1          0          0          0          1
-#&gt;      [47,]          0          1          0          0          1          0
-#&gt;      [48,]          1          0          0          0          0          1
-#&gt;      [49,]          0          0          0          0          1          0
-#&gt;      [50,]          1          1          0          0          0          0
-#&gt;      [51,]          1          0          0          0          1          1
-#&gt;      [52,]          0          0          0          1          0          1
-#&gt;      [53,]          0          0          0          0          1          1
-#&gt;      [54,]          0          0          0          0          0          0
-#&gt;      [55,]          0          0          0          0          1          1
-#&gt;      [56,]          0          0          0          0          1          1
-#&gt;      [57,]          0          0          0          0          1          0
-#&gt;      [58,]          0          1          1          0          1          0
-#&gt;      [59,]          0          0          0          0          0          0
-#&gt;      [60,]          1          0          0          0          1          1
-#&gt;      [61,]          0          1          0          0          0          0
-#&gt;      [62,]          0          0          1          0          1          1
-#&gt;      [63,]          0          0          0          0          0          0
-#&gt;      [64,]          1          0          0          0          0          1
-#&gt;      [65,]          0          0          1          0          1          0
-#&gt;      [66,]          0          1          1          0          1          1
-#&gt;      [67,]          1          0          0          0          0          1
-#&gt;      [68,]          0          0          0          0          0          0
-#&gt;      [69,]          0          0          0          0          1          0
-#&gt;      [70,]          0          0          0          0          0          1
-#&gt;      [71,]          1          0          0          0          0          1
-#&gt;      [72,]          0          0          0          0          0          0
-#&gt;      [73,]          0          0          0          0          0          0
-#&gt;      [74,]          1          0          0          0          0          1
-#&gt;      [75,]          1          0          0          1          1          1
-#&gt;      [76,]          0          0          0          0          0          1
-#&gt;      [77,]          0          0          1          0          0          1
-#&gt;      [78,]          0          0          0          0          1          1
-#&gt;      [79,]          0          0          0          0          0          1
-#&gt;      [80,]          0          1          0          0          0          0
-#&gt;      [81,]          0          0          0          0          0          0
-#&gt;      [82,]          1          1          0          1          1          1
-#&gt;      [83,]          0          1          0          1          0          1
-#&gt;      [84,]          0          0          0          1          1          0
-#&gt;      [85,]          1          0          0          0          0          0
-#&gt;      [86,]          0          0          0          0          0          0
-#&gt;      [87,]          0          0          0          0          1          0
-#&gt;      [88,]          0          0          0          0          1          0
-#&gt;      [89,]          0          0          0          1          1          0
-#&gt;      [90,]          0          0          0          1          0          1
-#&gt;      [91,]          0          0          0          0          1          1
-#&gt;      [92,]          0          0          0          0          0          1
-#&gt;      [93,]          0          0          0          0          1          1
-#&gt;      [94,]          0          0          0          1          1          0
-#&gt;      [95,]          1          0          0          0          1          1
-#&gt;      [96,]          0          1          0          1          1          0
-#&gt;      [97,]          0          0          0          0          0          1
-#&gt;      [98,]          0          0          0          0          1          1
-#&gt;      [99,]          1          0          0          0          1          1
-#&gt;     [100,]          0          0          0          0          1          0
-#&gt;           parameters
-#&gt; iterations y_pred[37] y_pred[38] y_pred[39] y_pred[40] y_pred[41] y_pred[42]
-#&gt;       [1,]          1          0          1          0          0          0
-#&gt;       [2,]          0          0          0          0          0          0
-#&gt;       [3,]          0          0          1          0          1          0
-#&gt;       [4,]          0          0          0          0          0          0
-#&gt;       [5,]          0          1          0          0          1          0
-#&gt;       [6,]          0          1          0          1          0          0
-#&gt;       [7,]          0          0          0          0          0          1
-#&gt;       [8,]          1          1          0          0          0          0
-#&gt;       [9,]          0          0          1          1          1          0
-#&gt;      [10,]          1          0          0          0          1          0
-#&gt;      [11,]          1          0          1          1          1          0
-#&gt;      [12,]          1          0          1          0          1          0
-#&gt;      [13,]          0          0          1          0          1          0
-#&gt;      [14,]          1          0          1          1          0          1
-#&gt;      [15,]          1          0          1          0          1          0
-#&gt;      [16,]          1          0          0          1          1          1
-#&gt;      [17,]          1          1          1          0          0          0
-#&gt;      [18,]          0          0          0          0          0          0
-#&gt;      [19,]          1          0          0          1          1          0
-#&gt;      [20,]          0          1          0          0          1          0
-#&gt;      [21,]          0          1          1          0          0          1
-#&gt;      [22,]          0          1          1          0          0          0
-#&gt;      [23,]          0          1          0          0          0          0
-#&gt;      [24,]          1          1          1          1          0          1
-#&gt;      [25,]          0          0          0          0          0          0
-#&gt;      [26,]          0          0          1          0          0          0
-#&gt;      [27,]          0          0          0          0          0          1
-#&gt;      [28,]          0          0          1          0          0          0
-#&gt;      [29,]          1          1          0          1          0          0
-#&gt;      [30,]          0          1          0          0          1          0
-#&gt;      [31,]          1          0          0          1          0          0
-#&gt;      [32,]          1          0          0          0          0          0
-#&gt;      [33,]          0          1          0          0          0          1
-#&gt;      [34,]          0          0          0          1          0          1
-#&gt;      [35,]          1          1          0          1          0          0
-#&gt;      [36,]          1          0          0          0          0          1
-#&gt;      [37,]          1          0          1          0          0          1
-#&gt;      [38,]          1          1          0          1          0          0
-#&gt;      [39,]          1          0          0          1          1          1
-#&gt;      [40,]          0          1          1          0          1          0
-#&gt;      [41,]          1          0          1          0          0          1
-#&gt;      [42,]          0          1          0          0          1          0
-#&gt;      [43,]          1          0          0          0          1          1
-#&gt;      [44,]          0          0          0          1          1          0
-#&gt;      [45,]          1          0          0          0          1          0
-#&gt;      [46,]          1          0          0          1          1          1
-#&gt;      [47,]          0          0          0          0          0          0
-#&gt;      [48,]          0          1          0          1          0          1
-#&gt;      [49,]          0          0          0          1          0          0
-#&gt;      [50,]          1          0          0          1          0          0
-#&gt;      [51,]          0          1          0          1          1          0
-#&gt;      [52,]          0          0          1          1          0          0
-#&gt;      [53,]          0          1          0          0          1          1
-#&gt;      [54,]          0          1          0          0          0          0
-#&gt;      [55,]          1          1          1          1          0          1
-#&gt;      [56,]          1          1          0          0          1          1
-#&gt;      [57,]          1          0          0          0          0          0
-#&gt;      [58,]          1          1          1          1          0          1
-#&gt;      [59,]          0          0          0          0          0          0
-#&gt;      [60,]          1          0          0          1          1          0
-#&gt;      [61,]          1          0          0          0          0          0
-#&gt;      [62,]          1          1          0          0          0          0
-#&gt;      [63,]          0          0          0          1          0          0
-#&gt;      [64,]          1          1          1          1          0          1
-#&gt;      [65,]          1          1          0          0          1          1
-#&gt;      [66,]          1          1          1          1          0          0
-#&gt;      [67,]          1          0          0          0          0          1
-#&gt;      [68,]          1          0          0          0          0          0
-#&gt;      [69,]          1          0          1          1          1          0
-#&gt;      [70,]          1          0          0          0          0          0
-#&gt;      [71,]          1          0          0          0          1          0
-#&gt;      [72,]          0          0          0          0          0          0
-#&gt;      [73,]          0          0          1          1          0          0
-#&gt;      [74,]          1          1          0          1          0          0
-#&gt;      [75,]          1          0          0          1          0          0
-#&gt;      [76,]          1          1          1          1          0          0
-#&gt;      [77,]          0          0          0          1          1          1
-#&gt;      [78,]          0          0          0          0          0          0
-#&gt;      [79,]          0          0          0          1          0          1
-#&gt;      [80,]          0          0          0          1          0          0
-#&gt;      [81,]          1          0          0          1          1          0
-#&gt;      [82,]          1          1          1          1          0          0
-#&gt;      [83,]          1          1          0          1          1          0
-#&gt;      [84,]          0          0          0          0          0          0
-#&gt;      [85,]          0          0          0          0          0          1
-#&gt;      [86,]          1          1          0          0          1          0
-#&gt;      [87,]          1          0          1          0          0          0
-#&gt;      [88,]          1          1          1          1          1          1
-#&gt;      [89,]          1          0          0          0          1          1
-#&gt;      [90,]          1          1          0          1          1          1
-#&gt;      [91,]          1          1          1          1          0          0
-#&gt;      [92,]          1          0          0          0          0          0
-#&gt;      [93,]          1          1          0          1          0          1
-#&gt;      [94,]          0          1          1          0          0          0
-#&gt;      [95,]          0          1          1          1          1          1
-#&gt;      [96,]          1          0          1          1          0          0
-#&gt;      [97,]          1          1          0          0          0          0
-#&gt;      [98,]          1          0          0          1          0          0
-#&gt;      [99,]          1          0          0          1          0          0
-#&gt;     [100,]          1          0          1          0          1          0
-#&gt;           parameters
-#&gt; iterations y_pred[43] y_pred[44] y_pred[45] y_pred[46]
-#&gt;       [1,]          0          0          0          0
-#&gt;       [2,]          0          0          0          0
-#&gt;       [3,]          0          0          1          0
-#&gt;       [4,]          0          0          0          0
-#&gt;       [5,]          1          0          1          0
-#&gt;       [6,]          1          0          0          0
-#&gt;       [7,]          1          1          1          0
-#&gt;       [8,]          0          1          0          0
-#&gt;       [9,]          0          0          0          1
-#&gt;      [10,]          1          0          1          0
-#&gt;      [11,]          0          1          0          0
-#&gt;      [12,]          0          0          0          0
-#&gt;      [13,]          1          1          0          0
-#&gt;      [14,]          0          1          0          1
-#&gt;      [15,]          1          0          0          0
-#&gt;      [16,]          0          0          0          1
-#&gt;      [17,]          0          1          0          0
-#&gt;      [18,]          0          0          0          0
-#&gt;      [19,]          1          0          1          1
-#&gt;      [20,]          1          0          0          1
-#&gt;      [21,]          0          0          0          0
-#&gt;      [22,]          0          0          0          0
-#&gt;      [23,]          0          0          0          1
-#&gt;      [24,]          1          1          1          1
-#&gt;      [25,]          0          0          0          0
-#&gt;      [26,]          0          0          0          1
-#&gt;      [27,]          1          0          0          0
-#&gt;      [28,]          0          0          0          0
-#&gt;      [29,]          0          0          1          0
-#&gt;      [30,]          0          0          0          0
-#&gt;      [31,]          1          0          0          0
-#&gt;      [32,]          0          1          0          0
-#&gt;      [33,]          0          1          1          0
-#&gt;      [34,]          1          0          0          0
-#&gt;      [35,]          0          0          0          0
-#&gt;      [36,]          0          0          0          0
-#&gt;      [37,]          1          1          1          0
-#&gt;      [38,]          1          0          1          1
-#&gt;      [39,]          0          1          0          0
-#&gt;      [40,]          0          0          0          0
-#&gt;      [41,]          0          0          0          0
-#&gt;      [42,]          1          1          1          0
-#&gt;      [43,]          0          0          0          0
-#&gt;      [44,]          0          0          0          0
-#&gt;      [45,]          0          0          0          1
-#&gt;      [46,]          0          0          0          0
-#&gt;      [47,]          0          0          0          0
-#&gt;      [48,]          0          1          1          0
-#&gt;      [49,]          1          0          1          1
-#&gt;      [50,]          1          1          0          0
-#&gt;      [51,]          0          1          0          0
-#&gt;      [52,]          0          0          0          1
-#&gt;      [53,]          0          0          0          0
-#&gt;      [54,]          0          0          0          0
-#&gt;      [55,]          0          0          0          0
-#&gt;      [56,]          0          0          0          0
-#&gt;      [57,]          0          1          0          0
-#&gt;      [58,]          0          0          0          0
-#&gt;      [59,]          0          0          0          0
-#&gt;      [60,]          0          0          1          0
-#&gt;      [61,]          1          0          0          0
-#&gt;      [62,]          0          0          0          0
-#&gt;      [63,]          0          0          0          0
-#&gt;      [64,]          0          0          0          1
-#&gt;      [65,]          0          0          0          0
-#&gt;      [66,]          0          0          1          0
-#&gt;      [67,]          1          0          1          0
-#&gt;      [68,]          0          0          0          0
-#&gt;      [69,]          1          0          0          0
-#&gt;      [70,]          0          1          0          0
-#&gt;      [71,]          1          0          0          0
-#&gt;      [72,]          0          0          0          1
-#&gt;      [73,]          1          0          0          1
-#&gt;      [74,]          0          0          0          0
-#&gt;      [75,]          0          0          0          0
-#&gt;      [76,]          0          0          1          0
-#&gt;      [77,]          1          1          1          0
-#&gt;      [78,]          0          0          0          0
-#&gt;      [79,]          0          0          0          0
-#&gt;      [80,]          1          0          0          1
-#&gt;      [81,]          0          0          1          0
-#&gt;      [82,]          0          0          0          0
-#&gt;      [83,]          1          0          0          1
-#&gt;      [84,]          0          0          1          0
-#&gt;      [85,]          0          0          0          0
-#&gt;      [86,]          1          1          0          1
-#&gt;      [87,]          0          0          0          0
-#&gt;      [88,]          0          1          1          0
-#&gt;      [89,]          0          1          1          0
-#&gt;      [90,]          0          0          0          0
-#&gt;      [91,]          1          1          0          0
-#&gt;      [92,]          0          0          1          1
-#&gt;      [93,]          0          0          0          0
-#&gt;      [94,]          0          1          0          0
-#&gt;      [95,]          0          1          1          1
-#&gt;      [96,]          0          1          1          0
-#&gt;      [97,]          1          0          0          0
-#&gt;      [98,]          0          0          0          1
-#&gt;      [99,]          1          0          1          0
-#&gt;     [100,]          1          1          0          1</div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt;        y_pred[1] y_pred[2] y_pred[3] y_pred[4] y_pred[5] y_pred[6] y_pred[7]
+#&gt;   [1,]         1         1         1         1         0         0         1
+#&gt;   [2,]         0         0         0         0         1         0         0
+#&gt;   [3,]         1         1         1         1         1         1         0
+#&gt;   [4,]         0         1         1         0         1         0         0
+#&gt;   [5,]         1         0         1         0         0         0         0
+#&gt;   [6,]         1         1         1         1         0         1         0
+#&gt;   [7,]         0         1         0         0         0         0         1
+#&gt;   [8,]         1         1         1         1         1         1         1
+#&gt;   [9,]         0         0         0         1         1         0         0
+#&gt;  [10,]         1         1         0         1         1         0         0
+#&gt;  [11,]         1         1         1         1         1         0         0
+#&gt;  [12,]         0         0         1         0         0         0         0
+#&gt;  [13,]         1         1         0         0         1         0         0
+#&gt;  [14,]         1         1         1         1         0         0         0
+#&gt;  [15,]         0         1         1         1         1         1         0
+#&gt;  [16,]         1         1         1         1         1         0         1
+#&gt;  [17,]         0         1         1         1         1         0         1
+#&gt;  [18,]         1         0         1         0         1         0         0
+#&gt;  [19,]         1         1         0         1         1         0         0
+#&gt;  [20,]         0         1         1         0         0         0         0
+#&gt;  [21,]         0         0         1         1         1         0         1
+#&gt;  [22,]         0         0         1         1         1         0         0
+#&gt;  [23,]         1         1         1         1         1         0         0
+#&gt;  [24,]         1         1         1         1         0         0         0
+#&gt;  [25,]         1         1         1         1         1         0         1
+#&gt;  [26,]         1         1         0         1         0         1         1
+#&gt;  [27,]         0         0         1         0         1         0         0
+#&gt;  [28,]         0         1         0         0         1         0         1
+#&gt;  [29,]         0         1         0         0         0         0         1
+#&gt;  [30,]         1         0         1         0         0         1         0
+#&gt;  [31,]         1         1         1         1         1         0         1
+#&gt;  [32,]         1         1         1         1         1         0         1
+#&gt;  [33,]         1         1         1         1         0         0         1
+#&gt;  [34,]         1         1         1         1         1         0         1
+#&gt;  [35,]         1         1         1         1         1         0         0
+#&gt;  [36,]         1         1         0         1         1         0         0
+#&gt;  [37,]         0         0         1         1         1         0         0
+#&gt;  [38,]         0         1         0         0         1         0         1
+#&gt;  [39,]         1         0         0         0         1         0         0
+#&gt;  [40,]         1         1         1         0         1         0         0
+#&gt;  [41,]         1         0         0         1         0         0         0
+#&gt;  [42,]         0         1         1         0         0         0         1
+#&gt;  [43,]         1         1         1         1         0         0         0
+#&gt;  [44,]         1         1         0         1         1         1         1
+#&gt;  [45,]         0         1         0         1         1         0         0
+#&gt;  [46,]         0         0         0         1         0         0         0
+#&gt;  [47,]         0         1         0         0         0         0         0
+#&gt;  [48,]         1         1         1         1         0         0         0
+#&gt;  [49,]         1         0         0         1         0         0         0
+#&gt;  [50,]         1         0         1         1         0         1         1
+#&gt;  [51,]         0         1         1         1         1         1         0
+#&gt;  [52,]         0         0         1         1         0         0         0
+#&gt;  [53,]         1         1         1         1         0         1         1
+#&gt;  [54,]         1         1         1         0         0         1         0
+#&gt;  [55,]         1         1         1         1         1         0         0
+#&gt;  [56,]         0         1         0         1         1         0         1
+#&gt;  [57,]         0         0         0         0         0         0         1
+#&gt;  [58,]         1         1         1         1         1         1         0
+#&gt;  [59,]         0         1         1         1         0         0         0
+#&gt;  [60,]         0         1         1         1         1         0         1
+#&gt;  [61,]         0         1         0         1         1         0         0
+#&gt;  [62,]         0         1         1         0         1         0         0
+#&gt;  [63,]         1         1         1         1         1         0         0
+#&gt;  [64,]         0         1         1         1         1         0         1
+#&gt;  [65,]         0         1         1         1         1         0         0
+#&gt;  [66,]         1         0         0         0         0         0         0
+#&gt;  [67,]         1         1         1         1         1         0         1
+#&gt;  [68,]         0         0         0         0         0         0         0
+#&gt;  [69,]         1         1         0         0         0         1         1
+#&gt;  [70,]         1         1         1         1         1         0         1
+#&gt;  [71,]         1         1         1         1         1         1         0
+#&gt;  [72,]         1         1         1         1         1         0         0
+#&gt;  [73,]         1         1         1         0         0         0         0
+#&gt;  [74,]         1         0         0         1         1         0         0
+#&gt;  [75,]         0         0         1         1         0         0         0
+#&gt;  [76,]         0         0         0         1         0         0         0
+#&gt;  [77,]         0         0         1         1         1         0         1
+#&gt;  [78,]         1         1         1         1         0         1         0
+#&gt;  [79,]         1         1         1         1         1         0         0
+#&gt;  [80,]         0         1         1         1         1         1         1
+#&gt;  [81,]         1         1         1         1         0         1         0
+#&gt;  [82,]         0         1         1         0         1         0         1
+#&gt;  [83,]         0         1         1         0         0         1         0
+#&gt;  [84,]         1         1         1         0         1         1         0
+#&gt;  [85,]         1         1         0         1         0         0         0
+#&gt;  [86,]         0         0         0         1         1         0         0
+#&gt;  [87,]         1         0         0         1         0         1         1
+#&gt;  [88,]         0         1         0         1         1         0         0
+#&gt;  [89,]         1         1         1         1         0         0         0
+#&gt;  [90,]         1         1         1         0         1         0         1
+#&gt;  [91,]         0         1         1         1         1         1         1
+#&gt;  [92,]         1         1         0         1         0         0         0
+#&gt;  [93,]         1         1         1         1         1         0         0
+#&gt;  [94,]         0         1         1         0         1         1         0
+#&gt;  [95,]         1         0         0         1         0         0         1
+#&gt;  [96,]         1         1         0         1         0         0         0
+#&gt;  [97,]         0         0         1         1         1         0         0
+#&gt;  [98,]         1         0         1         1         1         0         1
+#&gt;  [99,]         0         0         1         1         1         1         0
+#&gt; [100,]         1         0         1         1         0         0         0
+#&gt;        y_pred[8] y_pred[9] y_pred[10] y_pred[11] y_pred[12] y_pred[13]
+#&gt;   [1,]         1         0          0          1          0          0
+#&gt;   [2,]         1         1          1          0          0          0
+#&gt;   [3,]         1         0          0          0          1          0
+#&gt;   [4,]         1         1          0          1          0          0
+#&gt;   [5,]         0         0          0          1          1          0
+#&gt;   [6,]         0         0          0          1          0          0
+#&gt;   [7,]         1         1          1          0          1          1
+#&gt;   [8,]         1         1          0          0          0          0
+#&gt;   [9,]         1         0          0          0          0          0
+#&gt;  [10,]         1         1          0          1          1          0
+#&gt;  [11,]         0         0          0          1          1          0
+#&gt;  [12,]         1         0          0          0          1          1
+#&gt;  [13,]         0         0          0          0          0          0
+#&gt;  [14,]         0         0          0          0          1          0
+#&gt;  [15,]         1         0          0          1          1          0
+#&gt;  [16,]         1         0          0          0          0          0
+#&gt;  [17,]         0         0          0          1          1          0
+#&gt;  [18,]         1         1          0          1          1          1
+#&gt;  [19,]         1         1          0          0          1          0
+#&gt;  [20,]         1         0          1          1          0          0
+#&gt;  [21,]         0         1          1          1          0          0
+#&gt;  [22,]         0         0          0          0          1          0
+#&gt;  [23,]         1         0          0          0          1          1
+#&gt;  [24,]         1         0          0          1          1          0
+#&gt;  [25,]         1         1          1          0          0          1
+#&gt;  [26,]         1         1          1          1          1          0
+#&gt;  [27,]         1         0          0          0          1          0
+#&gt;  [28,]         0         0          1          1          0          0
+#&gt;  [29,]         0         0          1          0          1          0
+#&gt;  [30,]         0         1          0          0          0          1
+#&gt;  [31,]         0         1          1          1          0          1
+#&gt;  [32,]         1         1          1          1          1          0
+#&gt;  [33,]         1         1          1          0          1          1
+#&gt;  [34,]         0         0          0          0          0          1
+#&gt;  [35,]         0         1          0          0          0          0
+#&gt;  [36,]         1         0          0          1          0          1
+#&gt;  [37,]         1         0          1          1          1          0
+#&gt;  [38,]         1         0          1          0          0          0
+#&gt;  [39,]         0         0          0          0          0          0
+#&gt;  [40,]         1         1          0          0          1          0
+#&gt;  [41,]         0         0          0          0          0          1
+#&gt;  [42,]         0         1          1          0          0          0
+#&gt;  [43,]         1         1          0          0          1          1
+#&gt;  [44,]         1         0          1          1          1          0
+#&gt;  [45,]         0         0          1          1          1          0
+#&gt;  [46,]         0         0          0          0          1          0
+#&gt;  [47,]         0         0          0          0          0          0
+#&gt;  [48,]         1         0          1          0          1          0
+#&gt;  [49,]         0         0          1          1          1          1
+#&gt;  [50,]         1         1          1          0          0          0
+#&gt;  [51,]         0         0          1          1          1          0
+#&gt;  [52,]         1         1          0          0          0          1
+#&gt;  [53,]         0         0          0          1          1          0
+#&gt;  [54,]         0         1          0          0          0          0
+#&gt;  [55,]         1         1          1          1          0          0
+#&gt;  [56,]         1         0          0          0          0          0
+#&gt;  [57,]         0         0          0          0          0          1
+#&gt;  [58,]         0         1          0          0          1          1
+#&gt;  [59,]         1         1          0          1          0          0
+#&gt;  [60,]         1         1          0          0          0          0
+#&gt;  [61,]         0         0          0          0          1          0
+#&gt;  [62,]         0         0          0          0          0          1
+#&gt;  [63,]         1         1          0          1          1          1
+#&gt;  [64,]         1         1          0          0          0          0
+#&gt;  [65,]         0         0          0          1          0          0
+#&gt;  [66,]         0         0          0          0          0          0
+#&gt;  [67,]         0         1          0          0          1          0
+#&gt;  [68,]         1         0          0          0          1          0
+#&gt;  [69,]         0         0          0          1          0          0
+#&gt;  [70,]         1         0          0          1          1          0
+#&gt;  [71,]         1         1          0          0          1          0
+#&gt;  [72,]         1         0          0          1          1          0
+#&gt;  [73,]         0         1          1          1          0          0
+#&gt;  [74,]         1         0          0          0          0          0
+#&gt;  [75,]         1         0          1          1          0          1
+#&gt;  [76,]         0         0          1          0          1          0
+#&gt;  [77,]         1         1          1          0          1          0
+#&gt;  [78,]         0         0          0          1          0          0
+#&gt;  [79,]         1         1          1          1          1          0
+#&gt;  [80,]         1         1          1          0          1          0
+#&gt;  [81,]         0         1          1          1          1          0
+#&gt;  [82,]         0         1          1          1          0          0
+#&gt;  [83,]         0         0          0          0          0          0
+#&gt;  [84,]         1         0          1          1          0          1
+#&gt;  [85,]         0         0          0          1          0          0
+#&gt;  [86,]         0         1          0          0          0          0
+#&gt;  [87,]         0         1          0          0          0          0
+#&gt;  [88,]         0         0          1          1          0          0
+#&gt;  [89,]         0         0          0          0          0          0
+#&gt;  [90,]         1         1          0          0          0          0
+#&gt;  [91,]         1         1          1          1          0          0
+#&gt;  [92,]         1         0          0          0          0          0
+#&gt;  [93,]         0         1          0          0          0          0
+#&gt;  [94,]         0         0          1          1          1          0
+#&gt;  [95,]         1         1          1          0          0          0
+#&gt;  [96,]         1         0          0          0          0          0
+#&gt;  [97,]         0         0          1          0          0          0
+#&gt;  [98,]         0         0          0          0          0          0
+#&gt;  [99,]         1         0          0          1          0          0
+#&gt; [100,]         0         0          0          0          1          0
+#&gt;        y_pred[14] y_pred[15] y_pred[16] y_pred[17] y_pred[18] y_pred[19]
+#&gt;   [1,]          1          0          0          1          0          0
+#&gt;   [2,]          0          1          1          0          0          1
+#&gt;   [3,]          1          0          0          0          0          0
+#&gt;   [4,]          0          1          0          0          0          1
+#&gt;   [5,]          0          0          1          0          0          0
+#&gt;   [6,]          0          1          0          0          1          0
+#&gt;   [7,]          0          0          1          0          0          0
+#&gt;   [8,]          0          0          0          0          0          0
+#&gt;   [9,]          0          0          0          0          0          1
+#&gt;  [10,]          0          0          0          1          0          0
+#&gt;  [11,]          0          0          0          0          0          0
+#&gt;  [12,]          1          0          0          0          1          1
+#&gt;  [13,]          0          1          1          1          0          0
+#&gt;  [14,]          0          0          0          1          1          1
+#&gt;  [15,]          0          0          1          1          0          1
+#&gt;  [16,]          1          0          1          1          0          0
+#&gt;  [17,]          0          0          1          0          0          0
+#&gt;  [18,]          1          0          1          0          1          0
+#&gt;  [19,]          0          0          0          0          0          0
+#&gt;  [20,]          0          0          0          0          1          0
+#&gt;  [21,]          1          0          0          0          0          0
+#&gt;  [22,]          0          0          0          0          0          1
+#&gt;  [23,]          0          0          0          0          0          1
+#&gt;  [24,]          0          0          0          0          0          0
+#&gt;  [25,]          0          0          0          0          0          0
+#&gt;  [26,]          0          0          0          1          1          0
+#&gt;  [27,]          1          0          0          0          0          0
+#&gt;  [28,]          0          0          0          0          0          1
+#&gt;  [29,]          0          1          0          0          0          1
+#&gt;  [30,]          1          0          0          0          1          0
+#&gt;  [31,]          0          1          0          0          1          1
+#&gt;  [32,]          1          0          0          0          0          0
+#&gt;  [33,]          0          1          0          1          0          0
+#&gt;  [34,]          0          0          0          0          1          0
+#&gt;  [35,]          0          0          0          0          0          0
+#&gt;  [36,]          0          0          0          1          0          0
+#&gt;  [37,]          0          1          0          1          0          0
+#&gt;  [38,]          0          0          0          1          1          0
+#&gt;  [39,]          0          0          0          1          0          1
+#&gt;  [40,]          0          0          0          0          0          0
+#&gt;  [41,]          0          0          0          1          0          0
+#&gt;  [42,]          0          1          0          0          1          0
+#&gt;  [43,]          0          0          0          1          0          0
+#&gt;  [44,]          0          1          0          1          1          1
+#&gt;  [45,]          0          1          0          1          0          0
+#&gt;  [46,]          1          0          1          1          1          1
+#&gt;  [47,]          0          0          0          0          0          0
+#&gt;  [48,]          0          0          0          0          0          0
+#&gt;  [49,]          0          0          0          0          0          1
+#&gt;  [50,]          1          0          1          0          0          1
+#&gt;  [51,]          0          1          1          0          1          0
+#&gt;  [52,]          0          1          0          0          0          0
+#&gt;  [53,]          0          0          1          0          0          1
+#&gt;  [54,]          0          0          0          1          1          1
+#&gt;  [55,]          1          0          0          0          0          0
+#&gt;  [56,]          0          1          0          0          0          1
+#&gt;  [57,]          0          1          1          0          0          0
+#&gt;  [58,]          1          0          0          0          0          0
+#&gt;  [59,]          0          0          1          0          0          0
+#&gt;  [60,]          1          0          0          0          0          0
+#&gt;  [61,]          0          0          0          0          0          0
+#&gt;  [62,]          0          0          0          0          0          0
+#&gt;  [63,]          1          1          0          0          1          0
+#&gt;  [64,]          0          1          0          0          0          1
+#&gt;  [65,]          0          0          0          1          1          1
+#&gt;  [66,]          0          0          0          0          0          0
+#&gt;  [67,]          0          1          0          0          0          0
+#&gt;  [68,]          0          1          0          0          0          0
+#&gt;  [69,]          1          0          0          0          1          0
+#&gt;  [70,]          0          0          0          0          0          1
+#&gt;  [71,]          0          1          0          0          0          0
+#&gt;  [72,]          1          1          0          0          1          0
+#&gt;  [73,]          0          0          0          0          0          0
+#&gt;  [74,]          0          0          1          1          1          1
+#&gt;  [75,]          0          1          0          0          1          0
+#&gt;  [76,]          0          0          0          0          0          0
+#&gt;  [77,]          1          1          1          1          0          0
+#&gt;  [78,]          0          0          0          0          0          1
+#&gt;  [79,]          0          0          1          0          0          0
+#&gt;  [80,]          0          0          0          0          0          0
+#&gt;  [81,]          1          0          0          0          0          0
+#&gt;  [82,]          1          0          0          0          1          0
+#&gt;  [83,]          0          0          0          0          1          0
+#&gt;  [84,]          0          0          0          1          0          0
+#&gt;  [85,]          1          0          0          0          0          0
+#&gt;  [86,]          0          0          0          0          1          0
+#&gt;  [87,]          1          1          0          1          0          0
+#&gt;  [88,]          0          1          0          0          0          0
+#&gt;  [89,]          0          0          1          1          0          0
+#&gt;  [90,]          0          0          0          0          0          0
+#&gt;  [91,]          0          0          0          1          0          0
+#&gt;  [92,]          0          0          0          0          0          1
+#&gt;  [93,]          0          0          0          0          0          0
+#&gt;  [94,]          0          1          0          0          0          1
+#&gt;  [95,]          0          0          1          0          0          0
+#&gt;  [96,]          0          0          0          0          1          0
+#&gt;  [97,]          0          1          0          0          1          0
+#&gt;  [98,]          0          0          0          0          1          0
+#&gt;  [99,]          0          0          0          0          0          0
+#&gt; [100,]          0          1          0          0          0          0
+#&gt;        y_pred[20] y_pred[21] y_pred[22] y_pred[23] y_pred[24] y_pred[25]
+#&gt;   [1,]          0          0          1          0          0          0
+#&gt;   [2,]          0          0          0          0          1          1
+#&gt;   [3,]          1          0          0          0          0          0
+#&gt;   [4,]          0          1          0          0          0          1
+#&gt;   [5,]          0          1          1          0          0          1
+#&gt;   [6,]          1          0          0          0          0          0
+#&gt;   [7,]          0          0          0          0          1          1
+#&gt;   [8,]          1          0          0          0          0          0
+#&gt;   [9,]          0          0          0          0          1          1
+#&gt;  [10,]          0          0          0          0          0          0
+#&gt;  [11,]          0          0          0          0          0          0
+#&gt;  [12,]          1          0          0          0          0          0
+#&gt;  [13,]          1          1          0          0          0          0
+#&gt;  [14,]          0          0          0          0          0          1
+#&gt;  [15,]          0          1          0          1          0          0
+#&gt;  [16,]          0          0          0          0          1          0
+#&gt;  [17,]          1          1          0          0          1          0
+#&gt;  [18,]          0          1          0          0          0          0
+#&gt;  [19,]          0          1          0          0          1          1
+#&gt;  [20,]          0          0          1          0          0          1
+#&gt;  [21,]          0          0          1          0          0          1
+#&gt;  [22,]          1          1          0          1          0          1
+#&gt;  [23,]          0          0          0          0          0          0
+#&gt;  [24,]          0          0          0          0          0          0
+#&gt;  [25,]          0          0          0          0          0          0
+#&gt;  [26,]          0          0          1          1          1          0
+#&gt;  [27,]          0          1          0          1          0          0
+#&gt;  [28,]          1          0          1          0          0          0
+#&gt;  [29,]          0          1          0          0          1          1
+#&gt;  [30,]          1          0          1          1          0          1
+#&gt;  [31,]          1          1          1          0          1          1
+#&gt;  [32,]          0          0          0          0          0          0
+#&gt;  [33,]          0          0          0          1          1          0
+#&gt;  [34,]          0          0          0          0          0          0
+#&gt;  [35,]          1          0          0          1          1          0
+#&gt;  [36,]          0          0          1          0          0          0
+#&gt;  [37,]          1          1          0          1          1          0
+#&gt;  [38,]          0          0          0          0          0          0
+#&gt;  [39,]          1          0          1          1          0          0
+#&gt;  [40,]          0          0          0          0          0          0
+#&gt;  [41,]          0          0          0          0          0          0
+#&gt;  [42,]          0          0          0          0          1          0
+#&gt;  [43,]          0          1          1          0          0          0
+#&gt;  [44,]          1          1          1          0          0          0
+#&gt;  [45,]          1          0          0          0          0          0
+#&gt;  [46,]          1          1          0          1          0          1
+#&gt;  [47,]          0          0          0          0          0          0
+#&gt;  [48,]          0          1          0          0          1          1
+#&gt;  [49,]          0          0          0          0          0          0
+#&gt;  [50,]          1          1          0          1          0          1
+#&gt;  [51,]          0          0          1          0          0          0
+#&gt;  [52,]          1          0          1          0          0          0
+#&gt;  [53,]          0          0          0          1          0          1
+#&gt;  [54,]          0          0          1          0          0          0
+#&gt;  [55,]          0          1          0          1          1          0
+#&gt;  [56,]          1          0          0          0          0          0
+#&gt;  [57,]          0          0          1          0          0          1
+#&gt;  [58,]          0          0          0          0          0          0
+#&gt;  [59,]          1          1          0          1          0          0
+#&gt;  [60,]          0          0          0          0          1          0
+#&gt;  [61,]          0          0          0          0          0          1
+#&gt;  [62,]          0          0          0          0          1          0
+#&gt;  [63,]          1          0          0          0          0          0
+#&gt;  [64,]          0          0          0          1          1          1
+#&gt;  [65,]          1          0          0          0          0          0
+#&gt;  [66,]          0          0          0          0          0          0
+#&gt;  [67,]          0          0          1          0          0          0
+#&gt;  [68,]          0          0          0          0          0          1
+#&gt;  [69,]          0          0          0          0          1          0
+#&gt;  [70,]          0          0          0          0          1          0
+#&gt;  [71,]          0          0          0          0          0          0
+#&gt;  [72,]          0          1          0          1          0          1
+#&gt;  [73,]          0          0          1          0          1          1
+#&gt;  [74,]          1          1          1          1          0          0
+#&gt;  [75,]          0          0          0          0          0          0
+#&gt;  [76,]          0          0          0          1          1          0
+#&gt;  [77,]          0          1          0          0          0          0
+#&gt;  [78,]          1          0          1          0          0          0
+#&gt;  [79,]          0          0          0          0          0          1
+#&gt;  [80,]          1          1          0          0          0          1
+#&gt;  [81,]          0          0          0          0          0          1
+#&gt;  [82,]          1          0          1          1          0          0
+#&gt;  [83,]          0          0          0          1          0          0
+#&gt;  [84,]          1          0          0          0          1          1
+#&gt;  [85,]          0          0          0          0          0          0
+#&gt;  [86,]          0          0          0          0          0          1
+#&gt;  [87,]          0          0          1          0          0          0
+#&gt;  [88,]          0          0          1          0          1          0
+#&gt;  [89,]          0          0          1          0          1          0
+#&gt;  [90,]          0          0          0          0          0          0
+#&gt;  [91,]          0          0          0          1          0          1
+#&gt;  [92,]          0          0          0          0          0          0
+#&gt;  [93,]          0          0          0          1          1          0
+#&gt;  [94,]          0          0          0          0          0          0
+#&gt;  [95,]          0          0          0          1          0          0
+#&gt;  [96,]          1          0          0          0          1          0
+#&gt;  [97,]          0          0          1          0          0          0
+#&gt;  [98,]          0          0          1          0          0          0
+#&gt;  [99,]          0          0          1          1          0          0
+#&gt; [100,]          0          0          0          0          0          0
+#&gt;        y_pred[26] y_pred[27] y_pred[28] y_pred[29] y_pred[30] y_pred[31]
+#&gt;   [1,]          0          0          0          0          0          0
+#&gt;   [2,]          0          0          0          0          0          1
+#&gt;   [3,]          1          0          0          0          0          0
+#&gt;   [4,]          1          0          0          0          0          1
+#&gt;   [5,]          1          0          0          0          0          0
+#&gt;   [6,]          0          0          1          0          0          0
+#&gt;   [7,]          0          0          0          0          0          1
+#&gt;   [8,]          0          0          0          0          1          0
+#&gt;   [9,]          0          0          1          0          0          0
+#&gt;  [10,]          1          0          0          0          1          0
+#&gt;  [11,]          0          0          0          0          1          0
+#&gt;  [12,]          1          1          0          0          1          0
+#&gt;  [13,]          1          0          0          0          0          1
+#&gt;  [14,]          1          1          1          0          0          0
+#&gt;  [15,]          1          0          0          0          0          0
+#&gt;  [16,]          1          0          0          0          0          0
+#&gt;  [17,]          0          0          0          0          0          0
+#&gt;  [18,]          0          0          0          0          0          0
+#&gt;  [19,]          1          1          0          0          0          0
+#&gt;  [20,]          0          0          0          0          0          0
+#&gt;  [21,]          1          0          0          0          0          0
+#&gt;  [22,]          1          0          0          0          0          0
+#&gt;  [23,]          0          0          0          1          0          0
+#&gt;  [24,]          0          0          0          0          0          0
+#&gt;  [25,]          1          0          0          0          0          0
+#&gt;  [26,]          1          0          0          0          0          0
+#&gt;  [27,]          0          0          0          0          0          0
+#&gt;  [28,]          0          0          0          0          1          0
+#&gt;  [29,]          1          0          0          0          0          1
+#&gt;  [30,]          1          1          1          0          0          0
+#&gt;  [31,]          1          0          0          0          0          0
+#&gt;  [32,]          0          0          0          0          0          0
+#&gt;  [33,]          0          1          0          1          0          0
+#&gt;  [34,]          0          0          0          0          0          0
+#&gt;  [35,]          0          0          0          0          0          0
+#&gt;  [36,]          0          0          0          0          0          0
+#&gt;  [37,]          0          0          1          0          0          1
+#&gt;  [38,]          0          0          0          0          0          0
+#&gt;  [39,]          0          0          0          0          0          0
+#&gt;  [40,]          0          0          0          0          0          0
+#&gt;  [41,]          0          0          0          0          1          0
+#&gt;  [42,]          0          0          0          0          1          0
+#&gt;  [43,]          0          0          0          0          1          0
+#&gt;  [44,]          0          0          0          1          0          0
+#&gt;  [45,]          0          0          0          0          0          0
+#&gt;  [46,]          1          0          1          0          1          0
+#&gt;  [47,]          0          0          0          0          0          0
+#&gt;  [48,]          1          0          1          0          0          0
+#&gt;  [49,]          0          0          0          0          0          0
+#&gt;  [50,]          1          0          0          0          0          0
+#&gt;  [51,]          0          0          0          0          0          0
+#&gt;  [52,]          1          0          0          0          0          0
+#&gt;  [53,]          0          0          0          1          1          0
+#&gt;  [54,]          0          1          0          0          0          0
+#&gt;  [55,]          1          0          0          1          0          1
+#&gt;  [56,]          0          0          0          0          0          0
+#&gt;  [57,]          1          0          1          0          0          0
+#&gt;  [58,]          0          0          0          1          0          0
+#&gt;  [59,]          0          0          0          0          0          1
+#&gt;  [60,]          1          0          0          0          0          0
+#&gt;  [61,]          0          0          0          0          0          0
+#&gt;  [62,]          0          1          0          0          0          1
+#&gt;  [63,]          0          0          0          0          0          0
+#&gt;  [64,]          0          0          0          0          1          0
+#&gt;  [65,]          0          0          0          0          0          0
+#&gt;  [66,]          1          0          0          0          1          0
+#&gt;  [67,]          0          0          0          0          0          0
+#&gt;  [68,]          0          0          0          0          0          0
+#&gt;  [69,]          0          0          0          0          0          0
+#&gt;  [70,]          1          0          0          0          0          0
+#&gt;  [71,]          0          0          0          0          1          0
+#&gt;  [72,]          0          0          0          0          0          0
+#&gt;  [73,]          0          0          0          1          0          0
+#&gt;  [74,]          0          0          0          0          0          0
+#&gt;  [75,]          1          0          1          0          0          0
+#&gt;  [76,]          1          0          0          0          0          0
+#&gt;  [77,]          0          0          1          0          0          0
+#&gt;  [78,]          0          0          0          0          0          0
+#&gt;  [79,]          0          0          0          0          0          0
+#&gt;  [80,]          0          0          0          0          1          0
+#&gt;  [81,]          1          1          0          0          0          0
+#&gt;  [82,]          0          0          0          0          0          0
+#&gt;  [83,]          0          0          0          0          0          0
+#&gt;  [84,]          0          0          0          0          1          0
+#&gt;  [85,]          0          0          0          0          0          1
+#&gt;  [86,]          0          0          0          1          1          0
+#&gt;  [87,]          0          0          0          0          0          0
+#&gt;  [88,]          1          0          0          0          0          0
+#&gt;  [89,]          1          0          0          0          0          0
+#&gt;  [90,]          0          0          0          0          0          0
+#&gt;  [91,]          0          0          0          0          0          0
+#&gt;  [92,]          0          0          0          0          0          0
+#&gt;  [93,]          0          0          0          1          0          0
+#&gt;  [94,]          1          0          0          0          0          0
+#&gt;  [95,]          0          0          0          0          0          0
+#&gt;  [96,]          1          0          0          1          0          0
+#&gt;  [97,]          0          0          0          0          0          0
+#&gt;  [98,]          0          0          0          0          0          1
+#&gt;  [99,]          0          0          0          0          0          0
+#&gt; [100,]          1          1          0          0          0          0
+#&gt;        y_pred[32] y_pred[33] y_pred[34] y_pred[35] y_pred[36] y_pred[37]
+#&gt;   [1,]          0          0          0          1          0          1
+#&gt;   [2,]          0          0          0          1          1          1
+#&gt;   [3,]          0          0          0          1          1          0
+#&gt;   [4,]          0          0          1          1          0          1
+#&gt;   [5,]          0          0          0          1          1          1
+#&gt;   [6,]          0          0          0          0          1          0
+#&gt;   [7,]          0          0          0          1          0          1
+#&gt;   [8,]          1          0          0          0          0          1
+#&gt;   [9,]          0          0          0          1          0          0
+#&gt;  [10,]          0          0          0          1          1          1
+#&gt;  [11,]          0          0          0          1          1          1
+#&gt;  [12,]          1          0          0          0          0          0
+#&gt;  [13,]          0          0          0          0          1          0
+#&gt;  [14,]          0          1          1          1          0          0
+#&gt;  [15,]          0          0          1          0          0          1
+#&gt;  [16,]          0          0          0          0          0          1
+#&gt;  [17,]          0          0          0          1          0          1
+#&gt;  [18,]          0          0          0          1          1          1
+#&gt;  [19,]          0          0          0          1          0          1
+#&gt;  [20,]          0          0          0          0          0          0
+#&gt;  [21,]          0          0          0          1          1          1
+#&gt;  [22,]          0          0          1          1          0          1
+#&gt;  [23,]          0          0          0          1          1          1
+#&gt;  [24,]          0          0          0          1          1          0
+#&gt;  [25,]          0          1          0          1          0          0
+#&gt;  [26,]          0          0          0          1          1          1
+#&gt;  [27,]          0          0          0          0          0          0
+#&gt;  [28,]          0          0          0          1          1          1
+#&gt;  [29,]          0          0          0          1          1          0
+#&gt;  [30,]          1          1          0          0          0          0
+#&gt;  [31,]          0          0          0          1          0          0
+#&gt;  [32,]          0          0          0          1          1          1
+#&gt;  [33,]          1          0          1          1          1          0
+#&gt;  [34,]          0          0          0          1          0          1
+#&gt;  [35,]          0          0          1          0          0          1
+#&gt;  [36,]          0          0          0          1          0          0
+#&gt;  [37,]          1          0          0          0          1          1
+#&gt;  [38,]          0          0          0          1          1          0
+#&gt;  [39,]          1          0          0          0          1          0
+#&gt;  [40,]          0          0          0          1          1          0
+#&gt;  [41,]          0          0          0          0          1          1
+#&gt;  [42,]          1          0          0          1          0          1
+#&gt;  [43,]          0          0          0          1          1          1
+#&gt;  [44,]          0          0          0          0          0          0
+#&gt;  [45,]          1          1          0          1          1          1
+#&gt;  [46,]          0          0          0          1          1          0
+#&gt;  [47,]          0          0          1          0          1          0
+#&gt;  [48,]          0          0          0          1          1          1
+#&gt;  [49,]          0          0          0          1          1          1
+#&gt;  [50,]          0          1          0          0          0          1
+#&gt;  [51,]          0          1          0          1          1          0
+#&gt;  [52,]          0          0          0          1          1          0
+#&gt;  [53,]          0          0          0          0          0          1
+#&gt;  [54,]          0          0          0          1          0          0
+#&gt;  [55,]          0          1          0          1          0          1
+#&gt;  [56,]          0          0          0          0          1          1
+#&gt;  [57,]          0          0          0          1          0          0
+#&gt;  [58,]          1          0          1          0          1          0
+#&gt;  [59,]          0          0          0          1          1          1
+#&gt;  [60,]          1          0          0          1          1          0
+#&gt;  [61,]          0          0          0          1          1          1
+#&gt;  [62,]          1          0          0          1          1          1
+#&gt;  [63,]          1          0          0          0          0          0
+#&gt;  [64,]          0          0          0          0          0          1
+#&gt;  [65,]          1          0          0          1          0          1
+#&gt;  [66,]          0          0          0          1          0          1
+#&gt;  [67,]          0          0          1          1          0          0
+#&gt;  [68,]          0          0          0          1          0          1
+#&gt;  [69,]          1          0          0          1          1          1
+#&gt;  [70,]          0          0          0          1          1          1
+#&gt;  [71,]          0          0          0          1          1          1
+#&gt;  [72,]          1          0          0          1          0          1
+#&gt;  [73,]          1          0          0          1          1          0
+#&gt;  [74,]          0          0          0          0          1          0
+#&gt;  [75,]          1          0          0          0          0          1
+#&gt;  [76,]          0          0          0          1          0          0
+#&gt;  [77,]          0          0          1          0          0          1
+#&gt;  [78,]          0          0          0          1          0          0
+#&gt;  [79,]          0          1          0          0          0          1
+#&gt;  [80,]          0          0          0          1          1          1
+#&gt;  [81,]          0          0          1          1          1          1
+#&gt;  [82,]          1          0          0          1          1          0
+#&gt;  [83,]          0          0          0          1          1          1
+#&gt;  [84,]          0          0          0          0          1          1
+#&gt;  [85,]          0          0          0          1          1          1
+#&gt;  [86,]          0          0          1          1          1          1
+#&gt;  [87,]          0          0          0          1          1          1
+#&gt;  [88,]          0          0          0          0          1          0
+#&gt;  [89,]          0          0          0          0          0          0
+#&gt;  [90,]          0          0          0          0          1          1
+#&gt;  [91,]          0          0          0          1          0          1
+#&gt;  [92,]          0          0          0          1          0          0
+#&gt;  [93,]          0          0          0          1          1          1
+#&gt;  [94,]          0          0          0          1          0          0
+#&gt;  [95,]          0          0          0          1          1          1
+#&gt;  [96,]          0          0          1          1          1          1
+#&gt;  [97,]          0          0          0          0          0          0
+#&gt;  [98,]          0          0          0          1          0          0
+#&gt;  [99,]          0          0          0          0          0          0
+#&gt; [100,]          0          0          0          1          1          0
+#&gt;        y_pred[38] y_pred[39] y_pred[40] y_pred[41] y_pred[42] y_pred[43]
+#&gt;   [1,]          0          1          0          1          0          1
+#&gt;   [2,]          0          0          0          0          0          1
+#&gt;   [3,]          0          0          0          0          0          0
+#&gt;   [4,]          1          0          0          1          0          0
+#&gt;   [5,]          0          1          1          0          0          0
+#&gt;   [6,]          0          1          0          0          0          0
+#&gt;   [7,]          1          0          1          0          0          0
+#&gt;   [8,]          0          1          1          0          1          0
+#&gt;   [9,]          0          0          0          0          1          0
+#&gt;  [10,]          0          0          0          0          0          0
+#&gt;  [11,]          1          1          0          0          1          0
+#&gt;  [12,]          0          0          0          0          1          0
+#&gt;  [13,]          1          0          0          1          0          0
+#&gt;  [14,]          0          1          1          0          0          0
+#&gt;  [15,]          0          0          0          0          0          0
+#&gt;  [16,]          0          0          0          1          0          0
+#&gt;  [17,]          0          1          0          1          0          0
+#&gt;  [18,]          1          1          0          1          0          1
+#&gt;  [19,]          0          1          0          0          0          0
+#&gt;  [20,]          0          0          0          1          0          0
+#&gt;  [21,]          1          1          1          1          0          0
+#&gt;  [22,]          0          1          0          0          0          0
+#&gt;  [23,]          1          0          0          1          1          0
+#&gt;  [24,]          0          0          0          0          0          0
+#&gt;  [25,]          0          1          0          1          0          0
+#&gt;  [26,]          1          0          0          0          0          0
+#&gt;  [27,]          0          0          0          0          1          0
+#&gt;  [28,]          1          1          1          0          0          0
+#&gt;  [29,]          0          0          0          1          0          0
+#&gt;  [30,]          0          0          0          1          0          0
+#&gt;  [31,]          0          0          1          0          0          0
+#&gt;  [32,]          1          0          1          0          1          0
+#&gt;  [33,]          1          0          0          1          0          1
+#&gt;  [34,]          0          0          0          1          0          0
+#&gt;  [35,]          0          1          0          0          0          0
+#&gt;  [36,]          0          0          0          0          0          0
+#&gt;  [37,]          0          0          1          0          0          0
+#&gt;  [38,]          0          1          1          0          0          0
+#&gt;  [39,]          0          0          0          0          1          0
+#&gt;  [40,]          1          1          1          1          0          1
+#&gt;  [41,]          1          1          1          0          1          1
+#&gt;  [42,]          0          0          0          1          0          0
+#&gt;  [43,]          0          0          0          1          1          0
+#&gt;  [44,]          0          0          0          0          0          0
+#&gt;  [45,]          1          0          1          0          0          0
+#&gt;  [46,]          0          0          0          1          0          0
+#&gt;  [47,]          1          0          0          0          0          1
+#&gt;  [48,]          1          1          0          0          0          0
+#&gt;  [49,]          0          1          0          0          1          0
+#&gt;  [50,]          0          0          1          1          0          0
+#&gt;  [51,]          0          0          0          0          0          0
+#&gt;  [52,]          0          1          0          0          0          1
+#&gt;  [53,]          0          0          0          0          1          1
+#&gt;  [54,]          1          0          0          0          0          0
+#&gt;  [55,]          1          0          0          0          1          0
+#&gt;  [56,]          1          0          0          0          0          0
+#&gt;  [57,]          1          0          0          0          0          1
+#&gt;  [58,]          1          0          0          0          0          0
+#&gt;  [59,]          1          1          0          0          0          1
+#&gt;  [60,]          0          0          0          0          0          0
+#&gt;  [61,]          1          0          0          0          1          0
+#&gt;  [62,]          1          0          1          1          0          0
+#&gt;  [63,]          1          0          1          1          1          0
+#&gt;  [64,]          0          1          0          0          1          0
+#&gt;  [65,]          0          0          0          0          0          1
+#&gt;  [66,]          0          0          0          0          0          0
+#&gt;  [67,]          1          1          0          0          0          1
+#&gt;  [68,]          0          1          1          0          1          1
+#&gt;  [69,]          0          0          1          0          1          0
+#&gt;  [70,]          1          1          0          1          1          1
+#&gt;  [71,]          0          1          1          0          1          0
+#&gt;  [72,]          0          0          0          1          0          0
+#&gt;  [73,]          0          0          0          0          0          0
+#&gt;  [74,]          0          0          0          0          0          1
+#&gt;  [75,]          1          0          1          1          0          1
+#&gt;  [76,]          0          1          0          1          0          1
+#&gt;  [77,]          0          0          0          0          0          0
+#&gt;  [78,]          1          0          0          0          0          1
+#&gt;  [79,]          1          0          1          1          0          0
+#&gt;  [80,]          0          0          1          1          0          0
+#&gt;  [81,]          1          1          1          1          1          0
+#&gt;  [82,]          0          0          1          0          0          0
+#&gt;  [83,]          0          0          0          0          0          1
+#&gt;  [84,]          1          0          0          0          0          0
+#&gt;  [85,]          0          0          0          1          1          0
+#&gt;  [86,]          1          1          0          0          0          1
+#&gt;  [87,]          0          1          0          0          1          1
+#&gt;  [88,]          1          1          0          1          0          1
+#&gt;  [89,]          0          0          0          0          0          0
+#&gt;  [90,]          1          0          1          0          0          0
+#&gt;  [91,]          0          0          0          0          0          0
+#&gt;  [92,]          0          0          0          1          0          0
+#&gt;  [93,]          1          1          1          1          0          0
+#&gt;  [94,]          0          0          0          0          0          1
+#&gt;  [95,]          1          1          0          0          0          0
+#&gt;  [96,]          0          0          0          1          1          1
+#&gt;  [97,]          0          0          0          1          1          1
+#&gt;  [98,]          1          0          0          1          0          1
+#&gt;  [99,]          1          0          0          0          0          0
+#&gt; [100,]          0          0          0          1          0          1
+#&gt;        y_pred[44] y_pred[45] y_pred[46]
+#&gt;   [1,]          0          0          0
+#&gt;   [2,]          0          0          0
+#&gt;   [3,]          0          0          0
+#&gt;   [4,]          1          0          0
+#&gt;   [5,]          0          0          0
+#&gt;   [6,]          1          1          0
+#&gt;   [7,]          0          0          1
+#&gt;   [8,]          1          0          1
+#&gt;   [9,]          0          0          0
+#&gt;  [10,]          1          0          0
+#&gt;  [11,]          0          0          0
+#&gt;  [12,]          0          0          1
+#&gt;  [13,]          0          0          0
+#&gt;  [14,]          0          1          0
+#&gt;  [15,]          0          0          0
+#&gt;  [16,]          0          1          0
+#&gt;  [17,]          0          0          0
+#&gt;  [18,]          0          0          1
+#&gt;  [19,]          0          0          0
+#&gt;  [20,]          1          0          0
+#&gt;  [21,]          0          0          0
+#&gt;  [22,]          0          1          0
+#&gt;  [23,]          0          0          1
+#&gt;  [24,]          1          0          0
+#&gt;  [25,]          1          0          0
+#&gt;  [26,]          0          0          1
+#&gt;  [27,]          1          0          1
+#&gt;  [28,]          0          0          0
+#&gt;  [29,]          0          0          1
+#&gt;  [30,]          0          0          1
+#&gt;  [31,]          0          0          0
+#&gt;  [32,]          0          0          0
+#&gt;  [33,]          1          1          0
+#&gt;  [34,]          0          1          0
+#&gt;  [35,]          1          1          0
+#&gt;  [36,]          0          0          0
+#&gt;  [37,]          0          1          0
+#&gt;  [38,]          0          0          0
+#&gt;  [39,]          0          0          0
+#&gt;  [40,]          0          1          0
+#&gt;  [41,]          1          0          1
+#&gt;  [42,]          0          0          0
+#&gt;  [43,]          1          1          0
+#&gt;  [44,]          0          1          0
+#&gt;  [45,]          0          0          0
+#&gt;  [46,]          0          0          1
+#&gt;  [47,]          1          0          1
+#&gt;  [48,]          0          0          0
+#&gt;  [49,]          1          0          0
+#&gt;  [50,]          1          0          0
+#&gt;  [51,]          0          0          0
+#&gt;  [52,]          0          0          0
+#&gt;  [53,]          1          0          0
+#&gt;  [54,]          0          1          0
+#&gt;  [55,]          0          1          1
+#&gt;  [56,]          0          0          0
+#&gt;  [57,]          0          1          0
+#&gt;  [58,]          1          1          0
+#&gt;  [59,]          0          0          0
+#&gt;  [60,]          0          0          0
+#&gt;  [61,]          1          0          0
+#&gt;  [62,]          0          1          0
+#&gt;  [63,]          0          0          1
+#&gt;  [64,]          1          0          0
+#&gt;  [65,]          0          0          0
+#&gt;  [66,]          0          0          0
+#&gt;  [67,]          1          0          0
+#&gt;  [68,]          1          1          0
+#&gt;  [69,]          0          0          0
+#&gt;  [70,]          1          1          0
+#&gt;  [71,]          0          0          1
+#&gt;  [72,]          1          0          1
+#&gt;  [73,]          0          0          0
+#&gt;  [74,]          0          0          0
+#&gt;  [75,]          0          0          0
+#&gt;  [76,]          0          0          1
+#&gt;  [77,]          0          0          0
+#&gt;  [78,]          1          0          0
+#&gt;  [79,]          0          1          0
+#&gt;  [80,]          0          0          0
+#&gt;  [81,]          1          0          0
+#&gt;  [82,]          0          0          0
+#&gt;  [83,]          0          0          0
+#&gt;  [84,]          0          0          0
+#&gt;  [85,]          0          1          1
+#&gt;  [86,]          1          0          1
+#&gt;  [87,]          0          1          0
+#&gt;  [88,]          0          0          0
+#&gt;  [89,]          0          0          1
+#&gt;  [90,]          0          0          0
+#&gt;  [91,]          0          0          0
+#&gt;  [92,]          1          1          0
+#&gt;  [93,]          1          1          0
+#&gt;  [94,]          0          0          1
+#&gt;  [95,]          0          0          0
+#&gt;  [96,]          0          1          0
+#&gt;  [97,]          0          0          0
+#&gt;  [98,]          0          0          1
+#&gt;  [99,]          0          0          0
+#&gt; [100,]          0          0          0</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

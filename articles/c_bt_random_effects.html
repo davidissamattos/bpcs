@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0.900</span>
       </span>
     </div>
 
@@ -70,7 +70,7 @@
       <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper: Bayesian Paired-Comparison with the bpcs package</a>
     </li>
     <li>
       <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
@@ -143,11 +143,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-gregmisc/gtools">gtools</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstan">rstan</a></span><span class="op">)</span>
-<span class="co">#Stan should use parallel cores</span>
-<span class="co"># options(mc.cores = parallel::detectCores()) #use multiple cores</span>
-<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>mc.cores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="co">#CRAN works only with max 2 cores</span>
-<span class="fu">rstan</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/rstan/reference/rstan_options.html">rstan_options</a></span><span class="op">(</span>auto_write <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/bayesplot/">bayesplot</a></span><span class="op">)</span></code></pre></div>
 <p>The collected data is available as:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"optimization_algorithms"</span><span class="op">)</span>
@@ -180,53 +176,13 @@ simNumber
 <tbody>
 <tr>
 <td style="text-align:left;">
-DifferentialEvolution
-</td>
-<td style="text-align:left;">
-Schwefel2d4N6
-</td>
-<td style="text-align:right;">
-2.314700e-02
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-1e+05
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-NelderMead
+RandomSearch1
 </td>
 <td style="text-align:left;">
 Price1
 </td>
 <td style="text-align:right;">
-9.059135e-01
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1e+05
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-PSO
-</td>
-<td style="text-align:left;">
-Schwefel2d20N2
-</td>
-<td style="text-align:right;">
-2.304000e-04
+7.420000e-05
 </td>
 <td style="text-align:right;">
 2
@@ -240,93 +196,13 @@ Schwefel2d20N2
 </tr>
 <tr>
 <td style="text-align:left;">
-DifferentialEvolution
+RandomSearch1
 </td>
 <td style="text-align:left;">
-SphereN6
+Schwefel2d21N6
 </td>
 <td style="text-align:right;">
-0.000000e+00
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-1e+05
-</td>
-<td style="text-align:right;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-SimulatedAnnealing
-</td>
-<td style="text-align:left;">
-Tripod
-</td>
-<td style="text-align:right;">
-1.766725e+01
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1e+05
-</td>
-<td style="text-align:right;">
-6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-SimulatedAnnealing
-</td>
-<td style="text-align:left;">
-ChenV
-</td>
-<td style="text-align:right;">
-1.884754e+03
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1e+05
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-DifferentialEvolution
-</td>
-<td style="text-align:left;">
-Tripod
-</td>
-<td style="text-align:right;">
-0.000000e+00
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1e+05
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-DifferentialEvolution
-</td>
-<td style="text-align:left;">
-Schwefel2d4N6
-</td>
-<td style="text-align:right;">
-8.102100e-03
+7.421398e+00
 </td>
 <td style="text-align:right;">
 6
@@ -340,13 +216,33 @@ Schwefel2d4N6
 </tr>
 <tr>
 <td style="text-align:left;">
-DifferentialEvolution
+RandomSearch1
 </td>
 <td style="text-align:left;">
-ZakharovN2
+Schwefel2d21N6
 </td>
 <td style="text-align:right;">
-0.000000e+00
+5.478962e+00
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+Damavandi
+</td>
+<td style="text-align:right;">
+2.000001e+00
 </td>
 <td style="text-align:right;">
 2
@@ -355,47 +251,27 @@ ZakharovN2
 1e+05
 </td>
 <td style="text-align:right;">
-0
+2
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-DifferentialEvolution
+SimulatedAnnealing
 </td>
 <td style="text-align:left;">
-RosenbrockRotatedN6
+Price1
 </td>
 <td style="text-align:right;">
-0.000000e+00
+1.463000e-04
 </td>
 <td style="text-align:right;">
-6
+2
 </td>
 <td style="text-align:right;">
 1e+05
 </td>
 <td style="text-align:right;">
-9
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-PSO
-</td>
-<td style="text-align:left;">
-RosenbrockRotatedN6
-</td>
-<td style="text-align:right;">
-2.014533e+00
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-1e+05
-</td>
-<td style="text-align:right;">
-0
+4
 </td>
 </tr>
 <tr>
@@ -403,10 +279,50 @@ RosenbrockRotatedN6
 RandomSearch1
 </td>
 <td style="text-align:left;">
-Schwefel2d26N6
+StrechedVSineWave2N
 </td>
 <td style="text-align:right;">
-7.119299e+01
+1.280253e-01
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SimulatedAnnealing
+</td>
+<td style="text-align:left;">
+Price1
+</td>
+<td style="text-align:right;">
+9.730000e-05
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NelderMead
+</td>
+<td style="text-align:left;">
+WhitleyN6
+</td>
+<td style="text-align:right;">
+1.501749e+04
 </td>
 <td style="text-align:right;">
 6
@@ -415,21 +331,21 @@ Schwefel2d26N6
 1e+05
 </td>
 <td style="text-align:right;">
-6
+7
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-CMAES
+PSO
 </td>
 <td style="text-align:left;">
-PinterN6
+ExponentialN2
 </td>
 <td style="text-align:right;">
-1.092540e+02
+0.000000e+00
 </td>
 <td style="text-align:right;">
-6
+2
 </td>
 <td style="text-align:right;">
 1e+05
@@ -440,93 +356,13 @@ PinterN6
 </tr>
 <tr>
 <td style="text-align:left;">
-SimulatedAnnealing
-</td>
-<td style="text-align:left;">
-RosenbrockRotatedN6
-</td>
-<td style="text-align:right;">
-1.455619e+05
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-1e+05
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-DifferentialEvolution
-</td>
-<td style="text-align:left;">
-RosenbrockRotatedN6
-</td>
-<td style="text-align:right;">
-0.000000e+00
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-1e+05
-</td>
-<td style="text-align:right;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-DifferentialEvolution
-</td>
-<td style="text-align:left;">
-Schwefel2d21N6
-</td>
-<td style="text-align:right;">
-0.000000e+00
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-1e+05
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-SimulatedAnnealing
-</td>
-<td style="text-align:left;">
-Trefethen
-</td>
-<td style="text-align:right;">
-4.441455e-01
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1e+05
-</td>
-<td style="text-align:right;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-CMAES
+NelderMead
 </td>
 <td style="text-align:left;">
 ChenBird
 </td>
 <td style="text-align:right;">
-1.000004e+03
+2.000004e+03
 </td>
 <td style="text-align:right;">
 2
@@ -543,10 +379,130 @@ ChenBird
 RandomSearch1
 </td>
 <td style="text-align:left;">
-LunacekBiRastriginN6
+ChenBird
 </td>
 <td style="text-align:right;">
-1.855517e+01
+1.437474e+03
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DifferentialEvolution
+</td>
+<td style="text-align:left;">
+RosenbrockRotatedN6
+</td>
+<td style="text-align:right;">
+0.000000e+00
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+Trigonometric1N6
+</td>
+<td style="text-align:right;">
+0.000000e+00
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+Giunta
+</td>
+<td style="text-align:right;">
+1.500000e-06
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+Damavandi
+</td>
+<td style="text-align:right;">
+6.965498e-01
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+StrechedVSineWave2N
+</td>
+<td style="text-align:right;">
+3.221910e-02
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CMAES
+</td>
+<td style="text-align:left;">
+Trigonometric1N6
+</td>
+<td style="text-align:right;">
+0.000000e+00
 </td>
 <td style="text-align:right;">
 6
@@ -560,13 +516,13 @@ LunacekBiRastriginN6
 </tr>
 <tr>
 <td style="text-align:left;">
-DifferentialEvolution
+RandomSearch1
 </td>
 <td style="text-align:left;">
-ThreeHumpCamelBack
+XinSheYang2N2
 </td>
 <td style="text-align:right;">
-0.000000e+00
+5.887500e-03
 </td>
 <td style="text-align:right;">
 2
@@ -575,7 +531,47 @@ ThreeHumpCamelBack
 1e+05
 </td>
 <td style="text-align:right;">
-5
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RandomSearch1
+</td>
+<td style="text-align:left;">
+SalomonN2
+</td>
+<td style="text-align:right;">
+1.008789e-01
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSO
+</td>
+<td style="text-align:left;">
+Damavandi
+</td>
+<td style="text-align:right;">
+2.000000e+00
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1e+05
+</td>
+<td style="text-align:right;">
+9
 </td>
 </tr>
 </tbody>
@@ -902,119 +898,166 @@ CMAES
     cluster <span class="op">=</span> <span class="st">'Benchmark'</span>,
     model_type <span class="op">=</span> <span class="st">'bt-U'</span>,
     priors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>prior_U1_std <span class="op">=</span> <span class="fl">10.0</span><span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+  <span class="op">)</span>
+<span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Chain 1 finished in 3102.0 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 3175.0 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 3185.5 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 3191.5 seconds.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; All 4 chains finished successfully.</span>
+<span class="co">#&gt; Mean chain execution time: 3163.5 seconds.</span>
+<span class="co">#&gt; Total execution time: 3192.1 seconds.</span></code></pre></div>
 <div id="diagnostics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#diagnostics" class="anchor"></a>Diagnostics</h2>
 <p>First let’s look at the MCMC convergence with the traceplots and look at the Rhat and neff</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stanfit</span><span class="op">&lt;-</span><span class="fu"><a href="../reference/get_stanfit.html">get_stanfit</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>
-<span class="co">#&gt; Estimated baseline parameters with HPD intervals:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Table: Parameters estimates</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter                                         Mean   HPD_lower   HPD_higher</span>
-<span class="co">#&gt; ----------------------------------------------  ------  ----------  -----------</span>
-<span class="co">#&gt; lambda[NelderMead]                               -6.08       -9.16        -2.68</span>
-<span class="co">#&gt; lambda[PSO]                                       1.94       -1.22         4.84</span>
-<span class="co">#&gt; lambda[SimulatedAnnealing]                       -3.55       -6.55        -0.37</span>
-<span class="co">#&gt; lambda[DifferentialEvolution]                     6.32        3.17         9.53</span>
-<span class="co">#&gt; lambda[RandomSearch1]                            -1.05       -3.99         1.87</span>
-<span class="co">#&gt; lambda[CMAES]                                     2.63       -0.35         5.81</span>
-<span class="co">#&gt; U1_std                                            3.27        2.26         4.36</span>
-<span class="co">#&gt; U1[NelderMead,BentCigarN6]                        1.03       -0.38         2.44</span>
-<span class="co">#&gt; U1[PSO,BentCigarN6]                              -0.14       -1.02         1.21</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,BentCigarN6]                0.32       -0.90         1.38</span>
-<span class="co">#&gt; U1[DifferentialEvolution,BentCigarN6]             0.68       -0.93         1.47</span>
-<span class="co">#&gt; U1[RandomSearch1,BentCigarN6]                    -0.14       -0.73         1.50</span>
-<span class="co">#&gt; U1[CMAES,BentCigarN6]                             0.39       -3.25        -0.62</span>
-<span class="co">#&gt; U1[NelderMead,ChenBird]                           0.11       -1.32         0.97</span>
-<span class="co">#&gt; U1[PSO,ChenBird]                                 -0.78       -0.90         1.37</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,ChenBird]                   0.15       -0.33         2.07</span>
-<span class="co">#&gt; U1[DifferentialEvolution,ChenBird]                0.67       -0.97         1.54</span>
-<span class="co">#&gt; U1[RandomSearch1,ChenBird]                        0.08       -0.56         1.67</span>
-<span class="co">#&gt; U1[CMAES,ChenBird]                                0.20       -3.32        -0.68</span>
-<span class="co">#&gt; U1[NelderMead,ChungReynoldsN2]                   -0.07       -0.89         1.60</span>
-<span class="co">#&gt; U1[PSO,ChungReynoldsN2]                           0.04       -1.17         1.08</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,ChungReynoldsN2]           -0.08       -0.25         2.21</span>
-<span class="co">#&gt; U1[DifferentialEvolution,ChungReynoldsN2]        -0.18       -2.47         0.39</span>
-<span class="co">#&gt; U1[RandomSearch1,ChungReynoldsN2]                 0.10       -0.85         1.44</span>
-<span class="co">#&gt; U1[CMAES,ChungReynoldsN2]                         0.95       -1.68         0.65</span>
-<span class="co">#&gt; U1[NelderMead,ExponentialN2]                     -0.65       -0.76         2.23</span>
-<span class="co">#&gt; U1[PSO,ExponentialN2]                            -1.09       -1.03         1.08</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,ExponentialN2]              0.28       -1.52         0.67</span>
-<span class="co">#&gt; U1[DifferentialEvolution,ExponentialN2]           0.97       -0.73         1.54</span>
-<span class="co">#&gt; U1[RandomSearch1,ExponentialN2]                   0.96       -1.06         1.06</span>
-<span class="co">#&gt; U1[CMAES,ExponentialN2]                          -0.39       -1.98         0.26</span>
-<span class="co">#&gt; U1[NelderMead,PinterN6]                          -0.53       -1.31         1.01</span>
-<span class="co">#&gt; U1[PSO,PinterN6]                                  0.36       -1.19         0.97</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,PinterN6]                   1.31       -1.58         0.55</span>
-<span class="co">#&gt; U1[DifferentialEvolution,PinterN6]               -0.06       -2.07         0.96</span>
-<span class="co">#&gt; U1[RandomSearch1,PinterN6]                       -0.75       -1.07         1.05</span>
-<span class="co">#&gt; U1[CMAES,PinterN6]                               -0.88        0.27         2.49</span>
-<span class="co">#&gt; U1[NelderMead,RosenbrockRotatedN6]                0.26       -0.91         1.59</span>
-<span class="co">#&gt; U1[PSO,RosenbrockRotatedN6]                       0.36       -1.33         0.95</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,RosenbrockRotatedN6]       -0.97       -0.79         1.52</span>
-<span class="co">#&gt; U1[DifferentialEvolution,RosenbrockRotatedN6]     0.38       -1.29         1.07</span>
-<span class="co">#&gt; U1[RandomSearch1,RosenbrockRotatedN6]            -0.57       -0.75         1.52</span>
-<span class="co">#&gt; U1[CMAES,RosenbrockRotatedN6]                    -0.15       -1.93         0.39</span>
-<span class="co">#&gt; U1[NelderMead,Schwefel2d23N6]                    -1.12       -1.13         1.33</span>
-<span class="co">#&gt; U1[PSO,Schwefel2d23N6]                            0.28       -1.01         1.30</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,Schwefel2d23N6]            -0.88        0.07         2.53</span>
-<span class="co">#&gt; U1[DifferentialEvolution,Schwefel2d23N6]          0.12       -2.50         0.40</span>
-<span class="co">#&gt; U1[RandomSearch1,Schwefel2d23N6]                  0.37       -0.85         1.49</span>
-<span class="co">#&gt; U1[CMAES,Schwefel2d23N6]                          0.57       -2.12         0.33</span>
-<span class="co">#&gt; U1[NelderMead,Schwefel2d26N6]                     0.25       -1.81         0.26</span>
-<span class="co">#&gt; U1[PSO,Schwefel2d26N6]                            0.05       -0.03         2.09</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,Schwefel2d26N6]            -0.06       -1.04         0.99</span>
-<span class="co">#&gt; U1[DifferentialEvolution,Schwefel2d26N6]          0.36       -0.95         1.39</span>
-<span class="co">#&gt; U1[RandomSearch1,Schwefel2d26N6]                  0.33       -2.14        -0.04</span>
-<span class="co">#&gt; U1[CMAES,Schwefel2d26N6]                         -1.06       -0.37         1.67</span>
-<span class="co">#&gt; U1[NelderMead,StrechedVSineWave2N]               -0.24       -0.98         1.33</span>
-<span class="co">#&gt; U1[PSO,StrechedVSineWave2N]                      -0.26       -1.86         0.51</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,StrechedVSineWave2N]       -1.99       -1.83         0.39</span>
-<span class="co">#&gt; U1[DifferentialEvolution,StrechedVSineWave2N]    -1.92       -2.31         0.58</span>
-<span class="co">#&gt; U1[RandomSearch1,StrechedVSineWave2N]            -0.53       -1.29         0.89</span>
-<span class="co">#&gt; U1[CMAES,StrechedVSineWave2N]                    -0.81        1.19         3.59</span>
-<span class="co">#&gt; U1[NelderMead,Trefethen]                          1.42       -0.82         2.19</span>
-<span class="co">#&gt; U1[PSO,Trefethen]                                -0.76       -2.35         0.09</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,Trefethen]                 -0.81       -2.01         0.23</span>
-<span class="co">#&gt; U1[DifferentialEvolution,Trefethen]               0.67       -1.13         1.30</span>
-<span class="co">#&gt; U1[RandomSearch1,Trefethen]                       2.36       -1.32         0.84</span>
-<span class="co">#&gt; U1[CMAES,Trefethen]                               1.50        0.32         2.68</span>
-<span class="co">#&gt; NOTES:</span>
-<span class="co">#&gt; * A higher lambda indicates a higher team ability</span>
-<span class="co">#&gt; * The U_std indicates the standard deviation of the normal distribution where the parameters U[player, cluster] are drawn from. Higher values of U_std indicates a higher effect of the cluster in the team abitilies.</span>
-<span class="co">#&gt; * The U[player, cluster] represents the effect of a particular cluster in a particular team ability.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Rank of the players' abilities:</span>
-<span class="co">#&gt; The rank is based on the posterior rank distribution of the lambda parameter</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Table: Estimated posterior ranks</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter                        MedianRank   MeanRank   StdRank</span>
-<span class="co">#&gt; ------------------------------  -----------  ---------  --------</span>
-<span class="co">#&gt; lambda[DifferentialEvolution]             1       1.01      0.08</span>
-<span class="co">#&gt; lambda[CMAES]                             2       2.32      0.49</span>
-<span class="co">#&gt; lambda[PSO]                               3       2.70      0.49</span>
-<span class="co">#&gt; lambda[RandomSearch1]                     4       4.01      0.24</span>
-<span class="co">#&gt; lambda[SimulatedAnnealing]                5       5.01      0.27</span>
-<span class="co">#&gt; lambda[NelderMead]                        6       5.96      0.20</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/get_parameters_df.html">get_parameters_df</a></span><span class="op">(</span><span class="va">m</span>, n_eff <span class="op">=</span> <span class="cn">T</span>, Rhat <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
+<span class="co">#&gt;                                        Parameter        Mean      Median</span>
+<span class="co">#&gt; 1                             lambda[NelderMead] -6.10810972 -6.12350500</span>
+<span class="co">#&gt; 2                                    lambda[PSO]  1.90441804  1.89784500</span>
+<span class="co">#&gt; 3                     lambda[SimulatedAnnealing] -3.55592226 -3.55070500</span>
+<span class="co">#&gt; 4                  lambda[DifferentialEvolution]  6.32010385  6.30835000</span>
+<span class="co">#&gt; 5                          lambda[RandomSearch1] -1.06321251 -1.08614000</span>
+<span class="co">#&gt; 6                                  lambda[CMAES]  2.60299353  2.57542000</span>
+<span class="co">#&gt; 7                     U1[NelderMead,BentCigarN6] -1.00758874 -0.98139350</span>
+<span class="co">#&gt; 8                            U1[PSO,BentCigarN6] -0.07753904 -0.08200790</span>
+<span class="co">#&gt; 9             U1[SimulatedAnnealing,BentCigarN6] -0.27600814 -0.27076950</span>
+<span class="co">#&gt; 10         U1[DifferentialEvolution,BentCigarN6] -0.27008696 -0.26894600</span>
+<span class="co">#&gt; 11                 U1[RandomSearch1,BentCigarN6] -0.37172490 -0.36906700</span>
+<span class="co">#&gt; 12                         U1[CMAES,BentCigarN6]  1.98923669  1.97657000</span>
+<span class="co">#&gt; 13                       U1[NelderMead,ChenBird]  0.15165166  0.15543150</span>
+<span class="co">#&gt; 14                              U1[PSO,ChenBird] -0.18351594 -0.19157850</span>
+<span class="co">#&gt; 15               U1[SimulatedAnnealing,ChenBird] -0.94637713 -0.94557550</span>
+<span class="co">#&gt; 16            U1[DifferentialEvolution,ChenBird] -0.33725296 -0.34428800</span>
+<span class="co">#&gt; 17                    U1[RandomSearch1,ChenBird] -0.55481582 -0.55026600</span>
+<span class="co">#&gt; 18                            U1[CMAES,ChenBird]  1.93082862  1.91112000</span>
+<span class="co">#&gt; 19                U1[NelderMead,ChungReynoldsN2] -0.31749361 -0.30858850</span>
+<span class="co">#&gt; 20                       U1[PSO,ChungReynoldsN2]  0.07453414  0.06466390</span>
+<span class="co">#&gt; 21        U1[SimulatedAnnealing,ChungReynoldsN2] -0.96540562 -0.96101050</span>
+<span class="co">#&gt; 22     U1[DifferentialEvolution,ChungReynoldsN2]  0.94343669  0.91907050</span>
+<span class="co">#&gt; 23             U1[RandomSearch1,ChungReynoldsN2] -0.25571713 -0.24913200</span>
+<span class="co">#&gt; 24                     U1[CMAES,ChungReynoldsN2]  0.52904367  0.53480150</span>
+<span class="co">#&gt; 25                  U1[NelderMead,ExponentialN2] -0.66141727 -0.62704750</span>
+<span class="co">#&gt; 26                         U1[PSO,ExponentialN2] -0.04723910 -0.04996835</span>
+<span class="co">#&gt; 27          U1[SimulatedAnnealing,ExponentialN2]  0.38188001  0.37733900</span>
+<span class="co">#&gt; 28       U1[DifferentialEvolution,ExponentialN2] -0.39059440 -0.38545950</span>
+<span class="co">#&gt; 29               U1[RandomSearch1,ExponentialN2] -0.05669672 -0.05196185</span>
+<span class="co">#&gt; 30                       U1[CMAES,ExponentialN2]  0.80567842  0.79661900</span>
+<span class="co">#&gt; 31                       U1[NelderMead,PinterN6]  0.15593465  0.16700100</span>
+<span class="co">#&gt; 32                              U1[PSO,PinterN6]  0.08552279  0.08313760</span>
+<span class="co">#&gt; 33               U1[SimulatedAnnealing,PinterN6]  0.52786695  0.52568350</span>
+<span class="co">#&gt; 34            U1[DifferentialEvolution,PinterN6]  0.58833364  0.54973600</span>
+<span class="co">#&gt; 35                    U1[RandomSearch1,PinterN6]  0.06078388  0.06025335</span>
+<span class="co">#&gt; 36                            U1[CMAES,PinterN6] -1.40808557 -1.40093500</span>
+<span class="co">#&gt; 37            U1[NelderMead,RosenbrockRotatedN6] -0.37853226 -0.36856000</span>
+<span class="co">#&gt; 38                   U1[PSO,RosenbrockRotatedN6]  0.17055384  0.16737150</span>
+<span class="co">#&gt; 39    U1[SimulatedAnnealing,RosenbrockRotatedN6] -0.35664793 -0.34720250</span>
+<span class="co">#&gt; 40 U1[DifferentialEvolution,RosenbrockRotatedN6]  0.13451722  0.13433350</span>
+<span class="co">#&gt; 41         U1[RandomSearch1,RosenbrockRotatedN6] -0.35692088 -0.34738750</span>
+<span class="co">#&gt; 42                 U1[CMAES,RosenbrockRotatedN6]  0.75279310  0.74384000</span>
+<span class="co">#&gt; 43                 U1[NelderMead,Schwefel2d23N6] -0.11225531 -0.11109950</span>
+<span class="co">#&gt; 44                        U1[PSO,Schwefel2d23N6] -0.10121956 -0.09974590</span>
+<span class="co">#&gt; 45         U1[SimulatedAnnealing,Schwefel2d23N6] -1.33004846 -1.32729000</span>
+<span class="co">#&gt; 46      U1[DifferentialEvolution,Schwefel2d23N6]  1.09996531  1.07526500</span>
+<span class="co">#&gt; 47              U1[RandomSearch1,Schwefel2d23N6] -0.33655185 -0.33647000</span>
+<span class="co">#&gt; 48                      U1[CMAES,Schwefel2d23N6]  0.81540015  0.81484200</span>
+<span class="co">#&gt; 49                 U1[NelderMead,Schwefel2d26N6]  0.77222373  0.76481850</span>
+<span class="co">#&gt; 50                        U1[PSO,Schwefel2d26N6] -0.95513714 -0.95481500</span>
+<span class="co">#&gt; 51         U1[SimulatedAnnealing,Schwefel2d26N6]  0.04467586  0.04283875</span>
+<span class="co">#&gt; 52      U1[DifferentialEvolution,Schwefel2d26N6] -0.28249294 -0.28819600</span>
+<span class="co">#&gt; 53              U1[RandomSearch1,Schwefel2d26N6]  1.05542501  1.04452000</span>
+<span class="co">#&gt; 54                      U1[CMAES,Schwefel2d26N6] -0.67916286 -0.68133000</span>
+<span class="co">#&gt; 55            U1[NelderMead,StrechedVSineWave2N] -0.14393381 -0.14626450</span>
+<span class="co">#&gt; 56                   U1[PSO,StrechedVSineWave2N]  0.65333062  0.64341450</span>
+<span class="co">#&gt; 57    U1[SimulatedAnnealing,StrechedVSineWave2N]  0.73342395  0.72676400</span>
+<span class="co">#&gt; 58 U1[DifferentialEvolution,StrechedVSineWave2N]  0.87519950  0.84686800</span>
+<span class="co">#&gt; 59         U1[RandomSearch1,StrechedVSineWave2N]  0.22209742  0.21388650</span>
+<span class="co">#&gt; 60                 U1[CMAES,StrechedVSineWave2N] -2.33926506 -2.33498500</span>
+<span class="co">#&gt; 61                      U1[NelderMead,Trefethen] -0.65145296 -0.61850000</span>
+<span class="co">#&gt; 62                             U1[PSO,Trefethen]  1.11266440  1.11640000</span>
+<span class="co">#&gt; 63              U1[SimulatedAnnealing,Trefethen]  0.87042565  0.86282700</span>
+<span class="co">#&gt; 64           U1[DifferentialEvolution,Trefethen] -0.09594043 -0.10590850</span>
+<span class="co">#&gt; 65                   U1[RandomSearch1,Trefethen]  0.25820381  0.26490650</span>
+<span class="co">#&gt; 66                           U1[CMAES,Trefethen] -1.49136053 -1.48878000</span>
+<span class="co">#&gt; 67                                        U1_std  3.28660341  3.21802500</span>
+<span class="co">#&gt;     HPD_lower HPD_higher      Rhat     n_eff</span>
+<span class="co">#&gt; 1  -9.3110700 -2.9710400 1.0005725  6821.374</span>
+<span class="co">#&gt; 2  -1.1995800  4.9463900 1.0000993  6455.356</span>
+<span class="co">#&gt; 3  -6.5660400 -0.4842180 1.0002045  6467.955</span>
+<span class="co">#&gt; 4   3.1029200  9.4034400 1.0001347  7157.360</span>
+<span class="co">#&gt; 5  -4.1313800  1.9371600 1.0006373  6270.268</span>
+<span class="co">#&gt; 6  -0.4521180  5.6673800 1.0010239  6794.128</span>
+<span class="co">#&gt; 7  -2.4406900  0.3706760 0.9998148  9698.617</span>
+<span class="co">#&gt; 8  -1.2316000  1.0643300 1.0007114  8403.410</span>
+<span class="co">#&gt; 9  -1.4196600  0.8820330 1.0007885  8174.885</span>
+<span class="co">#&gt; 10 -1.5007900  0.9407810 1.0004509  8974.361</span>
+<span class="co">#&gt; 11 -1.5763800  0.7027340 1.0011797  7922.995</span>
+<span class="co">#&gt; 12  0.6749780  3.3008400 1.0000144  9050.014</span>
+<span class="co">#&gt; 13 -1.0046100  1.2793800 1.0000673  7915.790</span>
+<span class="co">#&gt; 14 -1.3693100  0.9577270 1.0003712  8345.716</span>
+<span class="co">#&gt; 15 -2.1006700  0.2139620 1.0002113  7978.366</span>
+<span class="co">#&gt; 16 -1.4966100  0.8993270 1.0000700  8701.685</span>
+<span class="co">#&gt; 17 -1.7103400  0.5362900 1.0005577  7973.549</span>
+<span class="co">#&gt; 18  0.6492880  3.2622800 0.9999664  9303.027</span>
+<span class="co">#&gt; 19 -1.5302600  0.9153230 0.9999381  8745.584</span>
+<span class="co">#&gt; 20 -1.0695700  1.1922900 0.9997942  8324.338</span>
+<span class="co">#&gt; 21 -2.1377200  0.2630240 0.9999526  8380.859</span>
+<span class="co">#&gt; 22 -0.4556840  2.3838600 1.0007169  9767.449</span>
+<span class="co">#&gt; 23 -1.3998800  0.8974950 1.0002376  7848.858</span>
+<span class="co">#&gt; 24 -0.6018150  1.6984700 1.0002769  8397.106</span>
+<span class="co">#&gt; 25 -2.1350000  0.8019950 1.0002552  9818.144</span>
+<span class="co">#&gt; 26 -1.0848800  1.0374300 1.0005263  6910.262</span>
+<span class="co">#&gt; 27 -0.7307690  1.4534500 0.9999030  7138.350</span>
+<span class="co">#&gt; 28 -1.4874800  0.7690870 1.0002960  7998.985</span>
+<span class="co">#&gt; 29 -1.0818400  1.0632800 1.0007975  6927.226</span>
+<span class="co">#&gt; 30 -0.3434110  1.8840400 1.0004869  7746.557</span>
+<span class="co">#&gt; 31 -0.9723120  1.3357100 1.0004429  7496.983</span>
+<span class="co">#&gt; 32 -0.9915230  1.1837200 0.9998469  7210.009</span>
+<span class="co">#&gt; 33 -0.5495750  1.5805300 1.0008016  6808.141</span>
+<span class="co">#&gt; 34 -0.8542200  2.1618000 1.0001861 11777.173</span>
+<span class="co">#&gt; 35 -0.9667000  1.1104400 0.9998172  6833.898</span>
+<span class="co">#&gt; 36 -2.5371500 -0.3323380 1.0004118  5944.353</span>
+<span class="co">#&gt; 37 -1.5962600  0.8530750 1.0004843  7939.168</span>
+<span class="co">#&gt; 38 -1.0129400  1.2802500 0.9999306  7668.227</span>
+<span class="co">#&gt; 39 -1.5021300  0.7532060 1.0002357  7631.714</span>
+<span class="co">#&gt; 40 -1.0220400  1.3057600 0.9997702  8557.073</span>
+<span class="co">#&gt; 41 -1.4560400  0.7753630 1.0005107  7036.037</span>
+<span class="co">#&gt; 42 -0.3904240  1.9401000 0.9999901  7905.054</span>
+<span class="co">#&gt; 43 -1.3007800  1.1277800 0.9998953  8330.293</span>
+<span class="co">#&gt; 44 -1.2230900  1.0699600 1.0005909  8411.075</span>
+<span class="co">#&gt; 45 -2.5077200 -0.0853162 0.9997411  8346.163</span>
+<span class="co">#&gt; 46 -0.3225130  2.4944800 0.9997868  9806.307</span>
+<span class="co">#&gt; 47 -1.5008000  0.8008400 1.0003560  7905.685</span>
+<span class="co">#&gt; 48 -0.3759100  2.0022300 1.0003487  8905.615</span>
+<span class="co">#&gt; 49 -0.3082910  1.8328800 0.9999938  6991.279</span>
+<span class="co">#&gt; 50 -1.9576800  0.1559700 1.0010134  6673.592</span>
+<span class="co">#&gt; 51 -1.0236600  1.0608600 1.0000341  7059.253</span>
+<span class="co">#&gt; 52 -1.4883700  0.8827520 1.0001052  8229.758</span>
+<span class="co">#&gt; 53  0.0290641  2.1566500 1.0005150  5992.387</span>
+<span class="co">#&gt; 54 -1.7180500  0.3363720 1.0007509  7041.859</span>
+<span class="co">#&gt; 55 -1.3240200  0.9932460 1.0000484  7570.478</span>
+<span class="co">#&gt; 56 -0.5481430  1.8615400 0.9997139  9000.714</span>
+<span class="co">#&gt; 57 -0.3426310  1.8987600 1.0004424  7054.839</span>
+<span class="co">#&gt; 58 -0.5639240  2.2952400 1.0003260  9014.604</span>
+<span class="co">#&gt; 59 -0.8253850  1.3523200 0.9999066  7215.760</span>
+<span class="co">#&gt; 60 -3.5605000 -1.1143100 1.0009720  6763.606</span>
+<span class="co">#&gt; 61 -2.1487000  0.8386380 1.0002914  9458.216</span>
+<span class="co">#&gt; 62 -0.1298920  2.2861600 1.0004977  8703.871</span>
+<span class="co">#&gt; 63 -0.2439750  1.9468900 1.0010050  7251.878</span>
+<span class="co">#&gt; 64 -1.3400200  1.1089600 1.0008127  9532.709</span>
+<span class="co">#&gt; 65 -0.9087470  1.2620600 0.9997933  7778.580</span>
+<span class="co">#&gt; 66 -2.6059100 -0.3805550 1.0002368  7424.306</span>
+<span class="co">#&gt; 67  2.2476200  4.4012900 1.0004090  3496.077</span></code></pre></div>
 <p>All seems ok! Let’s look now at the traceplots</p>
 <p>Traceplots of the chains with the bayesplot library</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/bayesplot/">bayesplot</a></span><span class="op">)</span>
-<span class="co">#&gt; This is bayesplot version 1.8.0</span>
-<span class="co">#&gt; - Online documentation and vignettes at mc-stan.org/bayesplot</span>
-<span class="co">#&gt; - bayesplot theme set to bayesplot::theme_default()</span>
-<span class="co">#&gt;    * Does _not_ affect other ggplot2 plots</span>
-<span class="co">#&gt;    * See ?bayesplot_theme_set for details on theme setting</span>
-<span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu">rstan</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/rstan/reference/stanfit-method-extract.html">extract</a></span><span class="op">(</span><span class="va">stanfit</span>, inc_warmup <span class="op">=</span> <span class="cn">T</span>, permuted <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_fit.html">get_fit</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>
+<span class="va">posterior_draws</span> <span class="op">&lt;-</span> <span class="fu">posterior</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/posterior/reference/draws_matrix.html">as_draws_matrix</a></span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="fu">draws</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="fu">bayesplot</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/bayesplot/reference/MCMC-traces.html">mcmc_trace</a></span><span class="op">(</span>
-  <span class="va">posterior</span>,
+  <span class="va">posterior_draws</span>,
   pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
     <span class="st">"lambda[1]"</span>,
     <span class="st">"lambda[2]"</span>,
@@ -1029,8 +1072,7 @@ CMAES
 <p><img src="c_bt_random_effects_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <p>Everything seems in order for us to look at the predictive posterior bar plot.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">y_pp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/posterior_predictive.html">posterior_predictive</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">y_pp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/posterior_predictive.html">posterior_predictive</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>
 <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">y_pp</span><span class="op">$</span><span class="va">y</span>
 <span class="va">yrep</span> <span class="op">&lt;-</span> <span class="va">y_pp</span><span class="op">$</span><span class="va">y_pred</span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -1045,80 +1087,79 @@ CMAES
 <p>In the console, we can use the summary function. It gives the parameters estimates with HPDI, the probability table for every condition of players and benchmarks and we also have a rank estimate.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>
-<span class="co">#&gt; Estimated baseline parameters with HPD intervals:</span>
-<span class="co">#&gt; </span>
+<span class="co">#&gt; Estimated baseline parameters with 95% HPD intervals:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Table: Parameters estimates</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter                                         Mean   HPD_lower   HPD_higher</span>
-<span class="co">#&gt; ----------------------------------------------  ------  ----------  -----------</span>
-<span class="co">#&gt; lambda[NelderMead]                               -6.08       -9.16        -2.68</span>
-<span class="co">#&gt; lambda[PSO]                                       1.94       -1.22         4.84</span>
-<span class="co">#&gt; lambda[SimulatedAnnealing]                       -3.55       -6.55        -0.37</span>
-<span class="co">#&gt; lambda[DifferentialEvolution]                     6.32        3.17         9.53</span>
-<span class="co">#&gt; lambda[RandomSearch1]                            -1.05       -3.99         1.87</span>
-<span class="co">#&gt; lambda[CMAES]                                     2.63       -0.35         5.81</span>
-<span class="co">#&gt; U1_std                                            3.27        2.26         4.36</span>
-<span class="co">#&gt; U1[NelderMead,BentCigarN6]                        1.03       -0.38         2.44</span>
-<span class="co">#&gt; U1[PSO,BentCigarN6]                              -0.14       -1.02         1.21</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,BentCigarN6]                0.32       -0.90         1.38</span>
-<span class="co">#&gt; U1[DifferentialEvolution,BentCigarN6]             0.68       -0.93         1.47</span>
-<span class="co">#&gt; U1[RandomSearch1,BentCigarN6]                    -0.14       -0.73         1.50</span>
-<span class="co">#&gt; U1[CMAES,BentCigarN6]                             0.39       -3.25        -0.62</span>
-<span class="co">#&gt; U1[NelderMead,ChenBird]                           0.11       -1.32         0.97</span>
-<span class="co">#&gt; U1[PSO,ChenBird]                                 -0.78       -0.90         1.37</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,ChenBird]                   0.15       -0.33         2.07</span>
-<span class="co">#&gt; U1[DifferentialEvolution,ChenBird]                0.67       -0.97         1.54</span>
-<span class="co">#&gt; U1[RandomSearch1,ChenBird]                        0.08       -0.56         1.67</span>
-<span class="co">#&gt; U1[CMAES,ChenBird]                                0.20       -3.32        -0.68</span>
-<span class="co">#&gt; U1[NelderMead,ChungReynoldsN2]                   -0.07       -0.89         1.60</span>
-<span class="co">#&gt; U1[PSO,ChungReynoldsN2]                           0.04       -1.17         1.08</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,ChungReynoldsN2]           -0.08       -0.25         2.21</span>
-<span class="co">#&gt; U1[DifferentialEvolution,ChungReynoldsN2]        -0.18       -2.47         0.39</span>
-<span class="co">#&gt; U1[RandomSearch1,ChungReynoldsN2]                 0.10       -0.85         1.44</span>
-<span class="co">#&gt; U1[CMAES,ChungReynoldsN2]                         0.95       -1.68         0.65</span>
-<span class="co">#&gt; U1[NelderMead,ExponentialN2]                     -0.65       -0.76         2.23</span>
-<span class="co">#&gt; U1[PSO,ExponentialN2]                            -1.09       -1.03         1.08</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,ExponentialN2]              0.28       -1.52         0.67</span>
-<span class="co">#&gt; U1[DifferentialEvolution,ExponentialN2]           0.97       -0.73         1.54</span>
-<span class="co">#&gt; U1[RandomSearch1,ExponentialN2]                   0.96       -1.06         1.06</span>
-<span class="co">#&gt; U1[CMAES,ExponentialN2]                          -0.39       -1.98         0.26</span>
-<span class="co">#&gt; U1[NelderMead,PinterN6]                          -0.53       -1.31         1.01</span>
-<span class="co">#&gt; U1[PSO,PinterN6]                                  0.36       -1.19         0.97</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,PinterN6]                   1.31       -1.58         0.55</span>
-<span class="co">#&gt; U1[DifferentialEvolution,PinterN6]               -0.06       -2.07         0.96</span>
-<span class="co">#&gt; U1[RandomSearch1,PinterN6]                       -0.75       -1.07         1.05</span>
-<span class="co">#&gt; U1[CMAES,PinterN6]                               -0.88        0.27         2.49</span>
-<span class="co">#&gt; U1[NelderMead,RosenbrockRotatedN6]                0.26       -0.91         1.59</span>
-<span class="co">#&gt; U1[PSO,RosenbrockRotatedN6]                       0.36       -1.33         0.95</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,RosenbrockRotatedN6]       -0.97       -0.79         1.52</span>
-<span class="co">#&gt; U1[DifferentialEvolution,RosenbrockRotatedN6]     0.38       -1.29         1.07</span>
-<span class="co">#&gt; U1[RandomSearch1,RosenbrockRotatedN6]            -0.57       -0.75         1.52</span>
-<span class="co">#&gt; U1[CMAES,RosenbrockRotatedN6]                    -0.15       -1.93         0.39</span>
-<span class="co">#&gt; U1[NelderMead,Schwefel2d23N6]                    -1.12       -1.13         1.33</span>
-<span class="co">#&gt; U1[PSO,Schwefel2d23N6]                            0.28       -1.01         1.30</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,Schwefel2d23N6]            -0.88        0.07         2.53</span>
-<span class="co">#&gt; U1[DifferentialEvolution,Schwefel2d23N6]          0.12       -2.50         0.40</span>
-<span class="co">#&gt; U1[RandomSearch1,Schwefel2d23N6]                  0.37       -0.85         1.49</span>
-<span class="co">#&gt; U1[CMAES,Schwefel2d23N6]                          0.57       -2.12         0.33</span>
-<span class="co">#&gt; U1[NelderMead,Schwefel2d26N6]                     0.25       -1.81         0.26</span>
-<span class="co">#&gt; U1[PSO,Schwefel2d26N6]                            0.05       -0.03         2.09</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,Schwefel2d26N6]            -0.06       -1.04         0.99</span>
-<span class="co">#&gt; U1[DifferentialEvolution,Schwefel2d26N6]          0.36       -0.95         1.39</span>
-<span class="co">#&gt; U1[RandomSearch1,Schwefel2d26N6]                  0.33       -2.14        -0.04</span>
-<span class="co">#&gt; U1[CMAES,Schwefel2d26N6]                         -1.06       -0.37         1.67</span>
-<span class="co">#&gt; U1[NelderMead,StrechedVSineWave2N]               -0.24       -0.98         1.33</span>
-<span class="co">#&gt; U1[PSO,StrechedVSineWave2N]                      -0.26       -1.86         0.51</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,StrechedVSineWave2N]       -1.99       -1.83         0.39</span>
-<span class="co">#&gt; U1[DifferentialEvolution,StrechedVSineWave2N]    -1.92       -2.31         0.58</span>
-<span class="co">#&gt; U1[RandomSearch1,StrechedVSineWave2N]            -0.53       -1.29         0.89</span>
-<span class="co">#&gt; U1[CMAES,StrechedVSineWave2N]                    -0.81        1.19         3.59</span>
-<span class="co">#&gt; U1[NelderMead,Trefethen]                          1.42       -0.82         2.19</span>
-<span class="co">#&gt; U1[PSO,Trefethen]                                -0.76       -2.35         0.09</span>
-<span class="co">#&gt; U1[SimulatedAnnealing,Trefethen]                 -0.81       -2.01         0.23</span>
-<span class="co">#&gt; U1[DifferentialEvolution,Trefethen]               0.67       -1.13         1.30</span>
-<span class="co">#&gt; U1[RandomSearch1,Trefethen]                       2.36       -1.32         0.84</span>
-<span class="co">#&gt; U1[CMAES,Trefethen]                               1.50        0.32         2.68</span>
+<span class="co">#&gt; Parameter                                         Mean   Median   HPD_lower   HPD_higher</span>
+<span class="co">#&gt; ----------------------------------------------  ------  -------  ----------  -----------</span>
+<span class="co">#&gt; lambda[NelderMead]                               -6.11    -6.12       -9.31        -2.97</span>
+<span class="co">#&gt; lambda[PSO]                                       1.90     1.90       -1.20         4.95</span>
+<span class="co">#&gt; lambda[SimulatedAnnealing]                       -3.56    -3.55       -6.57        -0.48</span>
+<span class="co">#&gt; lambda[DifferentialEvolution]                     6.32     6.31        3.10         9.40</span>
+<span class="co">#&gt; lambda[RandomSearch1]                            -1.06    -1.09       -4.13         1.94</span>
+<span class="co">#&gt; lambda[CMAES]                                     2.60     2.58       -0.45         5.67</span>
+<span class="co">#&gt; U1[NelderMead,BentCigarN6]                       -1.01    -0.98       -2.44         0.37</span>
+<span class="co">#&gt; U1[PSO,BentCigarN6]                              -0.08    -0.08       -1.23         1.06</span>
+<span class="co">#&gt; U1[SimulatedAnnealing,BentCigarN6]               -0.28    -0.27       -1.42         0.88</span>
+<span class="co">#&gt; U1[DifferentialEvolution,BentCigarN6]            -0.27    -0.27       -1.50         0.94</span>
+<span class="co">#&gt; U1[RandomSearch1,BentCigarN6]                    -0.37    -0.37       -1.58         0.70</span>
+<span class="co">#&gt; U1[CMAES,BentCigarN6]                             1.99     1.98        0.67         3.30</span>
+<span class="co">#&gt; U1[NelderMead,ChenBird]                           0.15     0.16       -1.00         1.28</span>
+<span class="co">#&gt; U1[PSO,ChenBird]                                 -0.18    -0.19       -1.37         0.96</span>
+<span class="co">#&gt; U1[SimulatedAnnealing,ChenBird]                  -0.95    -0.95       -2.10         0.21</span>
+<span class="co">#&gt; U1[DifferentialEvolution,ChenBird]               -0.34    -0.34       -1.50         0.90</span>
+<span class="co">#&gt; U1[RandomSearch1,ChenBird]                       -0.55    -0.55       -1.71         0.54</span>
+<span class="co">#&gt; U1[CMAES,ChenBird]                                1.93     1.91        0.65         3.26</span>
+<span class="co">#&gt; U1[NelderMead,ChungReynoldsN2]                   -0.32    -0.31       -1.53         0.92</span>
+<span class="co">#&gt; U1[PSO,ChungReynoldsN2]                           0.07     0.06       -1.07         1.19</span>
+<span class="co">#&gt; U1[SimulatedAnnealing,ChungReynoldsN2]           -0.97    -0.96       -2.14         0.26</span>
+<span class="co">#&gt; U1[DifferentialEvolution,ChungReynoldsN2]         0.94     0.92       -0.46         2.38</span>
+<span class="co">#&gt; U1[RandomSearch1,ChungReynoldsN2]                -0.26    -0.25       -1.40         0.90</span>
+<span class="co">#&gt; U1[CMAES,ChungReynoldsN2]                         0.53     0.53       -0.60         1.70</span>
+<span class="co">#&gt; U1[NelderMead,ExponentialN2]                     -0.66    -0.63       -2.13         0.80</span>
+<span class="co">#&gt; U1[PSO,ExponentialN2]                            -0.05    -0.05       -1.08         1.04</span>
+<span class="co">#&gt; U1[SimulatedAnnealing,ExponentialN2]              0.38     0.38       -0.73         1.45</span>
+<span class="co">#&gt; U1[DifferentialEvolution,ExponentialN2]          -0.39    -0.39       -1.49         0.77</span>
+<span class="co">#&gt; U1[RandomSearch1,ExponentialN2]                  -0.06    -0.05       -1.08         1.06</span>
+<span class="co">#&gt; U1[CMAES,ExponentialN2]                           0.81     0.80       -0.34         1.88</span>
+<span class="co">#&gt; U1[NelderMead,PinterN6]                           0.16     0.17       -0.97         1.34</span>
+<span class="co">#&gt; U1[PSO,PinterN6]                                  0.09     0.08       -0.99         1.18</span>
+<span class="co">#&gt; U1[SimulatedAnnealing,PinterN6]                   0.53     0.53       -0.55         1.58</span>
+<span class="co">#&gt; U1[DifferentialEvolution,PinterN6]                0.59     0.55       -0.85         2.16</span>
+<span class="co">#&gt; U1[RandomSearch1,PinterN6]                        0.06     0.06       -0.97         1.11</span>
+<span class="co">#&gt; U1[CMAES,PinterN6]                               -1.41    -1.40       -2.54        -0.33</span>
+<span class="co">#&gt; U1[NelderMead,RosenbrockRotatedN6]               -0.38    -0.37       -1.60         0.85</span>
+<span class="co">#&gt; U1[PSO,RosenbrockRotatedN6]                       0.17     0.17       -1.01         1.28</span>
+<span class="co">#&gt; U1[SimulatedAnnealing,RosenbrockRotatedN6]       -0.36    -0.35       -1.50         0.75</span>
+<span class="co">#&gt; U1[DifferentialEvolution,RosenbrockRotatedN6]     0.13     0.13       -1.02         1.31</span>
+<span class="co">#&gt; U1[RandomSearch1,RosenbrockRotatedN6]            -0.36    -0.35       -1.46         0.78</span>
+<span class="co">#&gt; U1[CMAES,RosenbrockRotatedN6]                     0.75     0.74       -0.39         1.94</span>
+<span class="co">#&gt; U1[NelderMead,Schwefel2d23N6]                    -0.11    -0.11       -1.30         1.13</span>
+<span class="co">#&gt; U1[PSO,Schwefel2d23N6]                           -0.10    -0.10       -1.22         1.07</span>
+<span class="co">#&gt; U1[SimulatedAnnealing,Schwefel2d23N6]            -1.33    -1.33       -2.51        -0.09</span>
+<span class="co">#&gt; U1[DifferentialEvolution,Schwefel2d23N6]          1.10     1.08       -0.32         2.49</span>
+<span class="co">#&gt; U1[RandomSearch1,Schwefel2d23N6]                 -0.34    -0.34       -1.50         0.80</span>
+<span class="co">#&gt; U1[CMAES,Schwefel2d23N6]                          0.82     0.81       -0.38         2.00</span>
+<span class="co">#&gt; U1[NelderMead,Schwefel2d26N6]                     0.77     0.76       -0.31         1.83</span>
+<span class="co">#&gt; U1[PSO,Schwefel2d26N6]                           -0.96    -0.95       -1.96         0.16</span>
+<span class="co">#&gt; U1[SimulatedAnnealing,Schwefel2d26N6]             0.04     0.04       -1.02         1.06</span>
+<span class="co">#&gt; U1[DifferentialEvolution,Schwefel2d26N6]         -0.28    -0.29       -1.49         0.88</span>
+<span class="co">#&gt; U1[RandomSearch1,Schwefel2d26N6]                  1.06     1.04        0.03         2.16</span>
+<span class="co">#&gt; U1[CMAES,Schwefel2d26N6]                         -0.68    -0.68       -1.72         0.34</span>
+<span class="co">#&gt; U1[NelderMead,StrechedVSineWave2N]               -0.14    -0.15       -1.32         0.99</span>
+<span class="co">#&gt; U1[PSO,StrechedVSineWave2N]                       0.65     0.64       -0.55         1.86</span>
+<span class="co">#&gt; U1[SimulatedAnnealing,StrechedVSineWave2N]        0.73     0.73       -0.34         1.90</span>
+<span class="co">#&gt; U1[DifferentialEvolution,StrechedVSineWave2N]     0.88     0.85       -0.56         2.30</span>
+<span class="co">#&gt; U1[RandomSearch1,StrechedVSineWave2N]             0.22     0.21       -0.83         1.35</span>
+<span class="co">#&gt; U1[CMAES,StrechedVSineWave2N]                    -2.34    -2.33       -3.56        -1.11</span>
+<span class="co">#&gt; U1[NelderMead,Trefethen]                         -0.65    -0.62       -2.15         0.84</span>
+<span class="co">#&gt; U1[PSO,Trefethen]                                 1.11     1.12       -0.13         2.29</span>
+<span class="co">#&gt; U1[SimulatedAnnealing,Trefethen]                  0.87     0.86       -0.24         1.95</span>
+<span class="co">#&gt; U1[DifferentialEvolution,Trefethen]              -0.10    -0.11       -1.34         1.11</span>
+<span class="co">#&gt; U1[RandomSearch1,Trefethen]                       0.26     0.26       -0.91         1.26</span>
+<span class="co">#&gt; U1[CMAES,Trefethen]                              -1.49    -1.49       -2.61        -0.38</span>
+<span class="co">#&gt; U1_std                                            3.29     3.22        2.25         4.40</span>
 <span class="co">#&gt; NOTES:</span>
 <span class="co">#&gt; * A higher lambda indicates a higher team ability</span>
 <span class="co">#&gt; * The U_std indicates the standard deviation of the normal distribution where the parameters U[player, cluster] are drawn from. Higher values of U_std indicates a higher effect of the cluster in the team abitilies.</span>
@@ -1127,17 +1168,16 @@ CMAES
 <span class="co">#&gt; Rank of the players' abilities:</span>
 <span class="co">#&gt; The rank is based on the posterior rank distribution of the lambda parameter</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
 <span class="co">#&gt; Table: Estimated posterior ranks</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter                        MedianRank   MeanRank   StdRank</span>
-<span class="co">#&gt; ------------------------------  -----------  ---------  --------</span>
-<span class="co">#&gt; lambda[DifferentialEvolution]             1       1.01      0.08</span>
-<span class="co">#&gt; lambda[CMAES]                             2       2.32      0.50</span>
-<span class="co">#&gt; lambda[PSO]                               3       2.70      0.50</span>
-<span class="co">#&gt; lambda[RandomSearch1]                     4       4.01      0.27</span>
-<span class="co">#&gt; lambda[SimulatedAnnealing]                5       5.01      0.31</span>
-<span class="co">#&gt; lambda[NelderMead]                        6       5.95      0.23</span></code></pre></div>
+<span class="co">#&gt; Parameter                MedianRank   MeanRank   StdRank</span>
+<span class="co">#&gt; ----------------------  -----------  ---------  --------</span>
+<span class="co">#&gt; DifferentialEvolution             1       1.01      0.09</span>
+<span class="co">#&gt; CMAES                             2       2.33      0.49</span>
+<span class="co">#&gt; PSO                               3       2.68      0.51</span>
+<span class="co">#&gt; RandomSearch1                     4       4.03      0.27</span>
+<span class="co">#&gt; SimulatedAnnealing                5       5.00      0.30</span>
+<span class="co">#&gt; NelderMead                        6       5.96      0.21</span></code></pre></div>
 <p>Of course we can get these estimates in nicer tables with kable that allows a greater deal of customization</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_parameters_table.html">get_parameters_table</a></span><span class="op">(</span><span class="va">m</span>, format <span class="op">=</span> <span class="st">'html'</span><span class="op">)</span></code></pre></div>
@@ -1153,6 +1193,9 @@ Parameter
 Mean
 </th>
 <th style="text-align:right;">
+Median
+</th>
+<th style="text-align:right;">
 HPD_lower
 </th>
 <th style="text-align:right;">
@@ -1165,13 +1208,16 @@ HPD_higher
 lambda[NelderMead]
 </td>
 <td style="text-align:right;">
--6.077
+-6.108
 </td>
 <td style="text-align:right;">
--9.162
+-6.124
 </td>
 <td style="text-align:right;">
--2.681
+-9.311
+</td>
+<td style="text-align:right;">
+-2.971
 </td>
 </tr>
 <tr>
@@ -1179,13 +1225,16 @@ lambda[NelderMead]
 lambda[PSO]
 </td>
 <td style="text-align:right;">
-1.937
+1.904
 </td>
 <td style="text-align:right;">
--1.221
+1.898
 </td>
 <td style="text-align:right;">
-4.841
+-1.200
+</td>
+<td style="text-align:right;">
+4.946
 </td>
 </tr>
 <tr>
@@ -1193,13 +1242,16 @@ lambda[PSO]
 lambda[SimulatedAnnealing]
 </td>
 <td style="text-align:right;">
--3.546
+-3.556
 </td>
 <td style="text-align:right;">
--6.546
+-3.551
 </td>
 <td style="text-align:right;">
--0.371
+-6.566
+</td>
+<td style="text-align:right;">
+-0.484
 </td>
 </tr>
 <tr>
@@ -1210,10 +1262,13 @@ lambda[DifferentialEvolution]
 6.320
 </td>
 <td style="text-align:right;">
-3.170
+6.308
 </td>
 <td style="text-align:right;">
-9.531
+3.103
+</td>
+<td style="text-align:right;">
+9.403
 </td>
 </tr>
 <tr>
@@ -1221,13 +1276,16 @@ lambda[DifferentialEvolution]
 lambda[RandomSearch1]
 </td>
 <td style="text-align:right;">
--1.048
+-1.063
 </td>
 <td style="text-align:right;">
--3.987
+-1.086
 </td>
 <td style="text-align:right;">
-1.867
+-4.131
+</td>
+<td style="text-align:right;">
+1.937
 </td>
 </tr>
 <tr>
@@ -1235,27 +1293,16 @@ lambda[RandomSearch1]
 lambda[CMAES]
 </td>
 <td style="text-align:right;">
-2.628
+2.603
 </td>
 <td style="text-align:right;">
--0.350
+2.575
 </td>
 <td style="text-align:right;">
-5.814
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1_std
+-0.452
 </td>
 <td style="text-align:right;">
-3.270
-</td>
-<td style="text-align:right;">
-2.255
-</td>
-<td style="text-align:right;">
-4.358
+5.667
 </td>
 </tr>
 <tr>
@@ -1263,13 +1310,16 @@ U1_std
 U1[NelderMead,BentCigarN6]
 </td>
 <td style="text-align:right;">
-1.032
+-1.008
 </td>
 <td style="text-align:right;">
--0.381
+-0.981
 </td>
 <td style="text-align:right;">
-2.436
+-2.441
+</td>
+<td style="text-align:right;">
+0.371
 </td>
 </tr>
 <tr>
@@ -1277,304 +1327,13 @@ U1[NelderMead,BentCigarN6]
 U1[PSO,BentCigarN6]
 </td>
 <td style="text-align:right;">
--0.140
+-0.078
 </td>
 <td style="text-align:right;">
--1.015
+-0.082
 </td>
 <td style="text-align:right;">
-1.211
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[SimulatedAnnealing,BentCigarN6]
-</td>
-<td style="text-align:right;">
-0.318
-</td>
-<td style="text-align:right;">
--0.897
-</td>
-<td style="text-align:right;">
-1.376
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[DifferentialEvolution,BentCigarN6]
-</td>
-<td style="text-align:right;">
-0.685
-</td>
-<td style="text-align:right;">
--0.932
-</td>
-<td style="text-align:right;">
-1.467
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[RandomSearch1,BentCigarN6]
-</td>
-<td style="text-align:right;">
--0.139
-</td>
-<td style="text-align:right;">
--0.725
-</td>
-<td style="text-align:right;">
-1.497
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[CMAES,BentCigarN6]
-</td>
-<td style="text-align:right;">
-0.391
-</td>
-<td style="text-align:right;">
--3.251
-</td>
-<td style="text-align:right;">
--0.616
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[NelderMead,ChenBird]
-</td>
-<td style="text-align:right;">
-0.112
-</td>
-<td style="text-align:right;">
--1.324
-</td>
-<td style="text-align:right;">
-0.974
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[PSO,ChenBird]
-</td>
-<td style="text-align:right;">
--0.780
-</td>
-<td style="text-align:right;">
--0.900
-</td>
-<td style="text-align:right;">
-1.366
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[SimulatedAnnealing,ChenBird]
-</td>
-<td style="text-align:right;">
-0.152
-</td>
-<td style="text-align:right;">
--0.327
-</td>
-<td style="text-align:right;">
-2.065
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[DifferentialEvolution,ChenBird]
-</td>
-<td style="text-align:right;">
-0.668
-</td>
-<td style="text-align:right;">
--0.966
-</td>
-<td style="text-align:right;">
-1.538
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[RandomSearch1,ChenBird]
-</td>
-<td style="text-align:right;">
-0.077
-</td>
-<td style="text-align:right;">
--0.559
-</td>
-<td style="text-align:right;">
-1.667
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[CMAES,ChenBird]
-</td>
-<td style="text-align:right;">
-0.198
-</td>
-<td style="text-align:right;">
--3.320
-</td>
-<td style="text-align:right;">
--0.683
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[NelderMead,ChungReynoldsN2]
-</td>
-<td style="text-align:right;">
--0.068
-</td>
-<td style="text-align:right;">
--0.887
-</td>
-<td style="text-align:right;">
-1.603
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[PSO,ChungReynoldsN2]
-</td>
-<td style="text-align:right;">
-0.045
-</td>
-<td style="text-align:right;">
--1.170
-</td>
-<td style="text-align:right;">
-1.081
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[SimulatedAnnealing,ChungReynoldsN2]
-</td>
-<td style="text-align:right;">
--0.081
-</td>
-<td style="text-align:right;">
--0.255
-</td>
-<td style="text-align:right;">
-2.208
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[DifferentialEvolution,ChungReynoldsN2]
-</td>
-<td style="text-align:right;">
--0.179
-</td>
-<td style="text-align:right;">
--2.473
-</td>
-<td style="text-align:right;">
-0.390
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[RandomSearch1,ChungReynoldsN2]
-</td>
-<td style="text-align:right;">
-0.098
-</td>
-<td style="text-align:right;">
--0.851
-</td>
-<td style="text-align:right;">
-1.442
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[CMAES,ChungReynoldsN2]
-</td>
-<td style="text-align:right;">
-0.952
-</td>
-<td style="text-align:right;">
--1.679
-</td>
-<td style="text-align:right;">
-0.651
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[NelderMead,ExponentialN2]
-</td>
-<td style="text-align:right;">
--0.652
-</td>
-<td style="text-align:right;">
--0.764
-</td>
-<td style="text-align:right;">
-2.228
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[PSO,ExponentialN2]
-</td>
-<td style="text-align:right;">
--1.093
-</td>
-<td style="text-align:right;">
--1.027
-</td>
-<td style="text-align:right;">
-1.078
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[SimulatedAnnealing,ExponentialN2]
-</td>
-<td style="text-align:right;">
-0.284
-</td>
-<td style="text-align:right;">
--1.520
-</td>
-<td style="text-align:right;">
-0.675
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[DifferentialEvolution,ExponentialN2]
-</td>
-<td style="text-align:right;">
-0.966
-</td>
-<td style="text-align:right;">
--0.731
-</td>
-<td style="text-align:right;">
-1.535
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[RandomSearch1,ExponentialN2]
-</td>
-<td style="text-align:right;">
-0.965
-</td>
-<td style="text-align:right;">
--1.063
+-1.232
 </td>
 <td style="text-align:right;">
 1.064
@@ -1582,13 +1341,220 @@ U1[RandomSearch1,ExponentialN2]
 </tr>
 <tr>
 <td style="text-align:left;">
-U1[CMAES,ExponentialN2]
+U1[SimulatedAnnealing,BentCigarN6]
 </td>
 <td style="text-align:right;">
--0.394
+-0.276
 </td>
 <td style="text-align:right;">
--1.978
+-0.271
+</td>
+<td style="text-align:right;">
+-1.420
+</td>
+<td style="text-align:right;">
+0.882
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[DifferentialEvolution,BentCigarN6]
+</td>
+<td style="text-align:right;">
+-0.270
+</td>
+<td style="text-align:right;">
+-0.269
+</td>
+<td style="text-align:right;">
+-1.501
+</td>
+<td style="text-align:right;">
+0.941
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[RandomSearch1,BentCigarN6]
+</td>
+<td style="text-align:right;">
+-0.372
+</td>
+<td style="text-align:right;">
+-0.369
+</td>
+<td style="text-align:right;">
+-1.576
+</td>
+<td style="text-align:right;">
+0.703
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[CMAES,BentCigarN6]
+</td>
+<td style="text-align:right;">
+1.989
+</td>
+<td style="text-align:right;">
+1.977
+</td>
+<td style="text-align:right;">
+0.675
+</td>
+<td style="text-align:right;">
+3.301
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[NelderMead,ChenBird]
+</td>
+<td style="text-align:right;">
+0.152
+</td>
+<td style="text-align:right;">
+0.155
+</td>
+<td style="text-align:right;">
+-1.005
+</td>
+<td style="text-align:right;">
+1.279
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[PSO,ChenBird]
+</td>
+<td style="text-align:right;">
+-0.184
+</td>
+<td style="text-align:right;">
+-0.192
+</td>
+<td style="text-align:right;">
+-1.369
+</td>
+<td style="text-align:right;">
+0.958
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[SimulatedAnnealing,ChenBird]
+</td>
+<td style="text-align:right;">
+-0.946
+</td>
+<td style="text-align:right;">
+-0.946
+</td>
+<td style="text-align:right;">
+-2.101
+</td>
+<td style="text-align:right;">
+0.214
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[DifferentialEvolution,ChenBird]
+</td>
+<td style="text-align:right;">
+-0.337
+</td>
+<td style="text-align:right;">
+-0.344
+</td>
+<td style="text-align:right;">
+-1.497
+</td>
+<td style="text-align:right;">
+0.899
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[RandomSearch1,ChenBird]
+</td>
+<td style="text-align:right;">
+-0.555
+</td>
+<td style="text-align:right;">
+-0.550
+</td>
+<td style="text-align:right;">
+-1.710
+</td>
+<td style="text-align:right;">
+0.536
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[CMAES,ChenBird]
+</td>
+<td style="text-align:right;">
+1.931
+</td>
+<td style="text-align:right;">
+1.911
+</td>
+<td style="text-align:right;">
+0.649
+</td>
+<td style="text-align:right;">
+3.262
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[NelderMead,ChungReynoldsN2]
+</td>
+<td style="text-align:right;">
+-0.317
+</td>
+<td style="text-align:right;">
+-0.309
+</td>
+<td style="text-align:right;">
+-1.530
+</td>
+<td style="text-align:right;">
+0.915
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[PSO,ChungReynoldsN2]
+</td>
+<td style="text-align:right;">
+0.075
+</td>
+<td style="text-align:right;">
+0.065
+</td>
+<td style="text-align:right;">
+-1.070
+</td>
+<td style="text-align:right;">
+1.192
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[SimulatedAnnealing,ChungReynoldsN2]
+</td>
+<td style="text-align:right;">
+-0.965
+</td>
+<td style="text-align:right;">
+-0.961
+</td>
+<td style="text-align:right;">
+-2.138
 </td>
 <td style="text-align:right;">
 0.263
@@ -1596,16 +1562,172 @@ U1[CMAES,ExponentialN2]
 </tr>
 <tr>
 <td style="text-align:left;">
+U1[DifferentialEvolution,ChungReynoldsN2]
+</td>
+<td style="text-align:right;">
+0.943
+</td>
+<td style="text-align:right;">
+0.919
+</td>
+<td style="text-align:right;">
+-0.456
+</td>
+<td style="text-align:right;">
+2.384
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[RandomSearch1,ChungReynoldsN2]
+</td>
+<td style="text-align:right;">
+-0.256
+</td>
+<td style="text-align:right;">
+-0.249
+</td>
+<td style="text-align:right;">
+-1.400
+</td>
+<td style="text-align:right;">
+0.897
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[CMAES,ChungReynoldsN2]
+</td>
+<td style="text-align:right;">
+0.529
+</td>
+<td style="text-align:right;">
+0.535
+</td>
+<td style="text-align:right;">
+-0.602
+</td>
+<td style="text-align:right;">
+1.698
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[NelderMead,ExponentialN2]
+</td>
+<td style="text-align:right;">
+-0.661
+</td>
+<td style="text-align:right;">
+-0.627
+</td>
+<td style="text-align:right;">
+-2.135
+</td>
+<td style="text-align:right;">
+0.802
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[PSO,ExponentialN2]
+</td>
+<td style="text-align:right;">
+-0.047
+</td>
+<td style="text-align:right;">
+-0.050
+</td>
+<td style="text-align:right;">
+-1.085
+</td>
+<td style="text-align:right;">
+1.037
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[SimulatedAnnealing,ExponentialN2]
+</td>
+<td style="text-align:right;">
+0.382
+</td>
+<td style="text-align:right;">
+0.377
+</td>
+<td style="text-align:right;">
+-0.731
+</td>
+<td style="text-align:right;">
+1.453
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[DifferentialEvolution,ExponentialN2]
+</td>
+<td style="text-align:right;">
+-0.391
+</td>
+<td style="text-align:right;">
+-0.385
+</td>
+<td style="text-align:right;">
+-1.487
+</td>
+<td style="text-align:right;">
+0.769
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[RandomSearch1,ExponentialN2]
+</td>
+<td style="text-align:right;">
+-0.057
+</td>
+<td style="text-align:right;">
+-0.052
+</td>
+<td style="text-align:right;">
+-1.082
+</td>
+<td style="text-align:right;">
+1.063
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[CMAES,ExponentialN2]
+</td>
+<td style="text-align:right;">
+0.806
+</td>
+<td style="text-align:right;">
+0.797
+</td>
+<td style="text-align:right;">
+-0.343
+</td>
+<td style="text-align:right;">
+1.884
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 U1[NelderMead,PinterN6]
 </td>
 <td style="text-align:right;">
--0.526
+0.156
 </td>
 <td style="text-align:right;">
--1.314
+0.167
 </td>
 <td style="text-align:right;">
-1.013
+-0.972
+</td>
+<td style="text-align:right;">
+1.336
 </td>
 </tr>
 <tr>
@@ -1613,13 +1735,16 @@ U1[NelderMead,PinterN6]
 U1[PSO,PinterN6]
 </td>
 <td style="text-align:right;">
-0.358
+0.086
 </td>
 <td style="text-align:right;">
--1.194
+0.083
 </td>
 <td style="text-align:right;">
-0.974
+-0.992
+</td>
+<td style="text-align:right;">
+1.184
 </td>
 </tr>
 <tr>
@@ -1627,13 +1752,16 @@ U1[PSO,PinterN6]
 U1[SimulatedAnnealing,PinterN6]
 </td>
 <td style="text-align:right;">
-1.312
+0.528
 </td>
 <td style="text-align:right;">
--1.580
+0.526
 </td>
 <td style="text-align:right;">
-0.548
+-0.550
+</td>
+<td style="text-align:right;">
+1.581
 </td>
 </tr>
 <tr>
@@ -1641,13 +1769,16 @@ U1[SimulatedAnnealing,PinterN6]
 U1[DifferentialEvolution,PinterN6]
 </td>
 <td style="text-align:right;">
--0.055
+0.588
 </td>
 <td style="text-align:right;">
--2.069
+0.550
 </td>
 <td style="text-align:right;">
-0.960
+-0.854
+</td>
+<td style="text-align:right;">
+2.162
 </td>
 </tr>
 <tr>
@@ -1655,13 +1786,16 @@ U1[DifferentialEvolution,PinterN6]
 U1[RandomSearch1,PinterN6]
 </td>
 <td style="text-align:right;">
--0.753
+0.061
 </td>
 <td style="text-align:right;">
--1.069
+0.060
 </td>
 <td style="text-align:right;">
-1.047
+-0.967
+</td>
+<td style="text-align:right;">
+1.110
 </td>
 </tr>
 <tr>
@@ -1669,13 +1803,16 @@ U1[RandomSearch1,PinterN6]
 U1[CMAES,PinterN6]
 </td>
 <td style="text-align:right;">
--0.875
+-1.408
 </td>
 <td style="text-align:right;">
-0.272
+-1.401
 </td>
 <td style="text-align:right;">
-2.489
+-2.537
+</td>
+<td style="text-align:right;">
+-0.332
 </td>
 </tr>
 <tr>
@@ -1683,13 +1820,16 @@ U1[CMAES,PinterN6]
 U1[NelderMead,RosenbrockRotatedN6]
 </td>
 <td style="text-align:right;">
-0.264
+-0.379
 </td>
 <td style="text-align:right;">
--0.908
+-0.369
 </td>
 <td style="text-align:right;">
-1.589
+-1.596
+</td>
+<td style="text-align:right;">
+0.853
 </td>
 </tr>
 <tr>
@@ -1697,13 +1837,16 @@ U1[NelderMead,RosenbrockRotatedN6]
 U1[PSO,RosenbrockRotatedN6]
 </td>
 <td style="text-align:right;">
-0.356
+0.171
 </td>
 <td style="text-align:right;">
--1.327
+0.167
 </td>
 <td style="text-align:right;">
-0.950
+-1.013
+</td>
+<td style="text-align:right;">
+1.280
 </td>
 </tr>
 <tr>
@@ -1711,13 +1854,16 @@ U1[PSO,RosenbrockRotatedN6]
 U1[SimulatedAnnealing,RosenbrockRotatedN6]
 </td>
 <td style="text-align:right;">
--0.965
+-0.357
 </td>
 <td style="text-align:right;">
--0.795
+-0.347
 </td>
 <td style="text-align:right;">
-1.515
+-1.502
+</td>
+<td style="text-align:right;">
+0.753
 </td>
 </tr>
 <tr>
@@ -1725,13 +1871,16 @@ U1[SimulatedAnnealing,RosenbrockRotatedN6]
 U1[DifferentialEvolution,RosenbrockRotatedN6]
 </td>
 <td style="text-align:right;">
-0.379
+0.135
 </td>
 <td style="text-align:right;">
--1.292
+0.134
 </td>
 <td style="text-align:right;">
-1.067
+-1.022
+</td>
+<td style="text-align:right;">
+1.306
 </td>
 </tr>
 <tr>
@@ -1739,13 +1888,16 @@ U1[DifferentialEvolution,RosenbrockRotatedN6]
 U1[RandomSearch1,RosenbrockRotatedN6]
 </td>
 <td style="text-align:right;">
--0.569
+-0.357
 </td>
 <td style="text-align:right;">
--0.755
+-0.347
 </td>
 <td style="text-align:right;">
-1.523
+-1.456
+</td>
+<td style="text-align:right;">
+0.775
 </td>
 </tr>
 <tr>
@@ -1753,13 +1905,16 @@ U1[RandomSearch1,RosenbrockRotatedN6]
 U1[CMAES,RosenbrockRotatedN6]
 </td>
 <td style="text-align:right;">
--0.148
+0.753
 </td>
 <td style="text-align:right;">
--1.930
+0.744
 </td>
 <td style="text-align:right;">
-0.392
+-0.390
+</td>
+<td style="text-align:right;">
+1.940
 </td>
 </tr>
 <tr>
@@ -1767,13 +1922,16 @@ U1[CMAES,RosenbrockRotatedN6]
 U1[NelderMead,Schwefel2d23N6]
 </td>
 <td style="text-align:right;">
--1.115
+-0.112
 </td>
 <td style="text-align:right;">
--1.133
+-0.111
 </td>
 <td style="text-align:right;">
-1.328
+-1.301
+</td>
+<td style="text-align:right;">
+1.128
 </td>
 </tr>
 <tr>
@@ -1781,13 +1939,16 @@ U1[NelderMead,Schwefel2d23N6]
 U1[PSO,Schwefel2d23N6]
 </td>
 <td style="text-align:right;">
-0.277
+-0.101
 </td>
 <td style="text-align:right;">
--1.011
+-0.100
 </td>
 <td style="text-align:right;">
-1.301
+-1.223
+</td>
+<td style="text-align:right;">
+1.070
 </td>
 </tr>
 <tr>
@@ -1795,13 +1956,16 @@ U1[PSO,Schwefel2d23N6]
 U1[SimulatedAnnealing,Schwefel2d23N6]
 </td>
 <td style="text-align:right;">
--0.875
+-1.330
 </td>
 <td style="text-align:right;">
-0.071
+-1.327
 </td>
 <td style="text-align:right;">
-2.530
+-2.508
+</td>
+<td style="text-align:right;">
+-0.085
 </td>
 </tr>
 <tr>
@@ -1809,13 +1973,16 @@ U1[SimulatedAnnealing,Schwefel2d23N6]
 U1[DifferentialEvolution,Schwefel2d23N6]
 </td>
 <td style="text-align:right;">
-0.117
+1.100
 </td>
 <td style="text-align:right;">
--2.503
+1.075
 </td>
 <td style="text-align:right;">
-0.396
+-0.323
+</td>
+<td style="text-align:right;">
+2.494
 </td>
 </tr>
 <tr>
@@ -1823,13 +1990,16 @@ U1[DifferentialEvolution,Schwefel2d23N6]
 U1[RandomSearch1,Schwefel2d23N6]
 </td>
 <td style="text-align:right;">
-0.369
+-0.337
 </td>
 <td style="text-align:right;">
--0.849
+-0.336
 </td>
 <td style="text-align:right;">
-1.495
+-1.501
+</td>
+<td style="text-align:right;">
+0.801
 </td>
 </tr>
 <tr>
@@ -1837,13 +2007,16 @@ U1[RandomSearch1,Schwefel2d23N6]
 U1[CMAES,Schwefel2d23N6]
 </td>
 <td style="text-align:right;">
-0.568
+0.815
 </td>
 <td style="text-align:right;">
--2.119
+0.815
 </td>
 <td style="text-align:right;">
-0.329
+-0.376
+</td>
+<td style="text-align:right;">
+2.002
 </td>
 </tr>
 <tr>
@@ -1851,13 +2024,16 @@ U1[CMAES,Schwefel2d23N6]
 U1[NelderMead,Schwefel2d26N6]
 </td>
 <td style="text-align:right;">
-0.250
+0.772
 </td>
 <td style="text-align:right;">
--1.810
+0.765
 </td>
 <td style="text-align:right;">
-0.260
+-0.308
+</td>
+<td style="text-align:right;">
+1.833
 </td>
 </tr>
 <tr>
@@ -1865,13 +2041,16 @@ U1[NelderMead,Schwefel2d26N6]
 U1[PSO,Schwefel2d26N6]
 </td>
 <td style="text-align:right;">
-0.046
+-0.955
 </td>
 <td style="text-align:right;">
--0.028
+-0.955
 </td>
 <td style="text-align:right;">
-2.085
+-1.958
+</td>
+<td style="text-align:right;">
+0.156
 </td>
 </tr>
 <tr>
@@ -1879,13 +2058,16 @@ U1[PSO,Schwefel2d26N6]
 U1[SimulatedAnnealing,Schwefel2d26N6]
 </td>
 <td style="text-align:right;">
--0.059
+0.045
 </td>
 <td style="text-align:right;">
--1.040
+0.043
 </td>
 <td style="text-align:right;">
-0.986
+-1.024
+</td>
+<td style="text-align:right;">
+1.061
 </td>
 </tr>
 <tr>
@@ -1893,13 +2075,16 @@ U1[SimulatedAnnealing,Schwefel2d26N6]
 U1[DifferentialEvolution,Schwefel2d26N6]
 </td>
 <td style="text-align:right;">
-0.359
+-0.282
 </td>
 <td style="text-align:right;">
--0.947
+-0.288
 </td>
 <td style="text-align:right;">
-1.394
+-1.488
+</td>
+<td style="text-align:right;">
+0.883
 </td>
 </tr>
 <tr>
@@ -1907,13 +2092,16 @@ U1[DifferentialEvolution,Schwefel2d26N6]
 U1[RandomSearch1,Schwefel2d26N6]
 </td>
 <td style="text-align:right;">
-0.327
+1.055
 </td>
 <td style="text-align:right;">
--2.136
+1.045
 </td>
 <td style="text-align:right;">
--0.040
+0.029
+</td>
+<td style="text-align:right;">
+2.157
 </td>
 </tr>
 <tr>
@@ -1921,13 +2109,16 @@ U1[RandomSearch1,Schwefel2d26N6]
 U1[CMAES,Schwefel2d26N6]
 </td>
 <td style="text-align:right;">
--1.063
+-0.679
 </td>
 <td style="text-align:right;">
--0.371
+-0.681
 </td>
 <td style="text-align:right;">
-1.670
+-1.718
+</td>
+<td style="text-align:right;">
+0.336
 </td>
 </tr>
 <tr>
@@ -1935,13 +2126,16 @@ U1[CMAES,Schwefel2d26N6]
 U1[NelderMead,StrechedVSineWave2N]
 </td>
 <td style="text-align:right;">
--0.239
+-0.144
 </td>
 <td style="text-align:right;">
--0.975
+-0.146
 </td>
 <td style="text-align:right;">
-1.331
+-1.324
+</td>
+<td style="text-align:right;">
+0.993
 </td>
 </tr>
 <tr>
@@ -1949,13 +2143,16 @@ U1[NelderMead,StrechedVSineWave2N]
 U1[PSO,StrechedVSineWave2N]
 </td>
 <td style="text-align:right;">
--0.257
+0.653
 </td>
 <td style="text-align:right;">
--1.861
+0.643
 </td>
 <td style="text-align:right;">
-0.508
+-0.548
+</td>
+<td style="text-align:right;">
+1.862
 </td>
 </tr>
 <tr>
@@ -1963,13 +2160,16 @@ U1[PSO,StrechedVSineWave2N]
 U1[SimulatedAnnealing,StrechedVSineWave2N]
 </td>
 <td style="text-align:right;">
--1.991
+0.733
 </td>
 <td style="text-align:right;">
--1.829
+0.727
 </td>
 <td style="text-align:right;">
-0.394
+-0.343
+</td>
+<td style="text-align:right;">
+1.899
 </td>
 </tr>
 <tr>
@@ -1977,13 +2177,16 @@ U1[SimulatedAnnealing,StrechedVSineWave2N]
 U1[DifferentialEvolution,StrechedVSineWave2N]
 </td>
 <td style="text-align:right;">
--1.924
+0.875
 </td>
 <td style="text-align:right;">
--2.307
+0.847
 </td>
 <td style="text-align:right;">
-0.579
+-0.564
+</td>
+<td style="text-align:right;">
+2.295
 </td>
 </tr>
 <tr>
@@ -1991,13 +2194,16 @@ U1[DifferentialEvolution,StrechedVSineWave2N]
 U1[RandomSearch1,StrechedVSineWave2N]
 </td>
 <td style="text-align:right;">
--0.527
+0.222
 </td>
 <td style="text-align:right;">
--1.293
+0.214
 </td>
 <td style="text-align:right;">
-0.894
+-0.825
+</td>
+<td style="text-align:right;">
+1.352
 </td>
 </tr>
 <tr>
@@ -2005,13 +2211,16 @@ U1[RandomSearch1,StrechedVSineWave2N]
 U1[CMAES,StrechedVSineWave2N]
 </td>
 <td style="text-align:right;">
--0.812
+-2.339
 </td>
 <td style="text-align:right;">
-1.187
+-2.335
 </td>
 <td style="text-align:right;">
-3.586
+-3.561
+</td>
+<td style="text-align:right;">
+-1.114
 </td>
 </tr>
 <tr>
@@ -2019,66 +2228,13 @@ U1[CMAES,StrechedVSineWave2N]
 U1[NelderMead,Trefethen]
 </td>
 <td style="text-align:right;">
-1.422
+-0.651
 </td>
 <td style="text-align:right;">
--0.818
+-0.619
 </td>
 <td style="text-align:right;">
-2.187
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[PSO,Trefethen]
-</td>
-<td style="text-align:right;">
--0.761
-</td>
-<td style="text-align:right;">
--2.352
-</td>
-<td style="text-align:right;">
-0.091
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[SimulatedAnnealing,Trefethen]
-</td>
-<td style="text-align:right;">
--0.807
-</td>
-<td style="text-align:right;">
--2.005
-</td>
-<td style="text-align:right;">
-0.233
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[DifferentialEvolution,Trefethen]
-</td>
-<td style="text-align:right;">
-0.674
-</td>
-<td style="text-align:right;">
--1.133
-</td>
-<td style="text-align:right;">
-1.303
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U1[RandomSearch1,Trefethen]
-</td>
-<td style="text-align:right;">
-2.355
-</td>
-<td style="text-align:right;">
--1.324
+-2.149
 </td>
 <td style="text-align:right;">
 0.839
@@ -2086,16 +2242,104 @@ U1[RandomSearch1,Trefethen]
 </tr>
 <tr>
 <td style="text-align:left;">
+U1[PSO,Trefethen]
+</td>
+<td style="text-align:right;">
+1.113
+</td>
+<td style="text-align:right;">
+1.116
+</td>
+<td style="text-align:right;">
+-0.130
+</td>
+<td style="text-align:right;">
+2.286
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[SimulatedAnnealing,Trefethen]
+</td>
+<td style="text-align:right;">
+0.870
+</td>
+<td style="text-align:right;">
+0.863
+</td>
+<td style="text-align:right;">
+-0.244
+</td>
+<td style="text-align:right;">
+1.947
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[DifferentialEvolution,Trefethen]
+</td>
+<td style="text-align:right;">
+-0.096
+</td>
+<td style="text-align:right;">
+-0.106
+</td>
+<td style="text-align:right;">
+-1.340
+</td>
+<td style="text-align:right;">
+1.109
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1[RandomSearch1,Trefethen]
+</td>
+<td style="text-align:right;">
+0.258
+</td>
+<td style="text-align:right;">
+0.265
+</td>
+<td style="text-align:right;">
+-0.909
+</td>
+<td style="text-align:right;">
+1.262
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 U1[CMAES,Trefethen]
 </td>
 <td style="text-align:right;">
-1.500
+-1.491
 </td>
 <td style="text-align:right;">
-0.316
+-1.489
 </td>
 <td style="text-align:right;">
-2.683
+-2.606
+</td>
+<td style="text-align:right;">
+-0.381
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U1_std
+</td>
+<td style="text-align:right;">
+3.287
+</td>
+<td style="text-align:right;">
+3.218
+</td>
+<td style="text-align:right;">
+2.248
+</td>
+<td style="text-align:right;">
+4.401
 </td>
 </tr>
 </tbody>
@@ -2123,7 +2367,7 @@ StdRank
 <tbody>
 <tr>
 <td style="text-align:left;">
-lambda[DifferentialEvolution]
+DifferentialEvolution
 </td>
 <td style="text-align:right;">
 1
@@ -2137,72 +2381,72 @@ lambda[DifferentialEvolution]
 </tr>
 <tr>
 <td style="text-align:left;">
-lambda[CMAES]
+CMAES
 </td>
 <td style="text-align:right;">
 2
 </td>
 <td style="text-align:right;">
-2.322
+2.294
 </td>
 <td style="text-align:right;">
-0.490
+0.473
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-lambda[PSO]
+PSO
 </td>
 <td style="text-align:right;">
 3
 </td>
 <td style="text-align:right;">
-2.687
+2.732
 </td>
 <td style="text-align:right;">
-0.499
+0.510
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-lambda[RandomSearch1]
+RandomSearch1
 </td>
 <td style="text-align:right;">
 4
 </td>
 <td style="text-align:right;">
-4.008
+4.010
 </td>
 <td style="text-align:right;">
-0.214
+0.303
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-lambda[SimulatedAnnealing]
+SimulatedAnnealing
 </td>
 <td style="text-align:right;">
 5
 </td>
 <td style="text-align:right;">
-5.012
+4.998
 </td>
 <td style="text-align:right;">
-0.257
+0.300
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-lambda[NelderMead]
+NelderMead
 </td>
 <td style="text-align:right;">
 6
 </td>
 <td style="text-align:right;">
-5.961
+5.956
 </td>
 <td style="text-align:right;">
-0.194
+0.205
 </td>
 </tr>
 </tbody>

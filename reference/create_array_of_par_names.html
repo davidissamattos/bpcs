@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0.900</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@
       <a href="../articles/c_bt_random_effects">Random effects</a>
     </li>
     <li>
-      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper - An overview of the models</a>
+      <a href="https://arxiv.org/pdf/2101.11227.pdf">Paper: Bayesian Paired-Comparison with the bpcs package</a>
     </li>
     <li>
       <a href="https://davidissamattos.github.io/bpcs-online-appendix/">Online appendix for the paper</a>
@@ -159,7 +159,8 @@
   <span class='va'>par</span>,
   <span class='va'>lookup_table</span>,
   cluster_lookup_table <span class='op'>=</span> <span class='cn'>NULL</span>,
-  subject_predictors_lookup_table <span class='op'>=</span> <span class='cn'>NULL</span>
+  subject_predictors_lookup_table <span class='op'>=</span> <span class='cn'>NULL</span>,
+  keep_par_name <span class='op'>=</span> <span class='cn'>T</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -180,6 +181,10 @@
     <tr>
       <th>subject_predictors_lookup_table</th>
       <td><p>a subject predictor lookup table</p></td>
+    </tr>
+    <tr>
+      <th>keep_par_name</th>
+      <td><p>keep the parameter name e.g. lambdaGraff instead of Graff. Default to T. Only valid for lambda, so we can have better ranks</p></td>
     </tr>
     </table>
 
