@@ -390,19 +390,27 @@ replace_parameter_index_with_names <-
 #' @param lookup_table lookup table of the players
 #' @param cluster_lookup_table a list of lookup table of the clusters
 #' @param subject_predictors_lookup_table a subject predictor lookup table
+#' @param keep_par_name keep the parameter name e.g. lambda[Graff] instead of Graff. Default to T. Only valid for lambda, so we can have better ranks
 #' @return a data. frame where we change the names in the variable column to the corresponding parameter_name from the lookup table
 create_array_of_par_names <-
   function(par,
            lookup_table,
            cluster_lookup_table = NULL,
-           subject_predictors_lookup_table = NULL) {
+           subject_predictors_lookup_table = NULL,
+           keep_par_name=T) {
     out <- NULL
     if (par == 'lambda') {
-      nplayers <- nrow(lookup_table)
-      l <- rep('lambda', nplayers)
-      sB <- rep('[', nplayers)
-      cB <- rep(']', nplayers)
-      out <- paste(l, sB, lookup_table$Names, cB, sep = "")
+        nplayers <- nrow(lookup_table)
+        l <- rep('lambda', nplayers)
+        sB <- rep('[', nplayers)
+        cB <- rep(']', nplayers)
+      if(keep_par_name){
+        out <- paste(l, sB, lookup_table$Names, cB, sep = "")
+      }
+      else{
+        out <- paste(lookup_table$Names, sep = "")
+      }
+
     }
 
     else if (par == 'U1')

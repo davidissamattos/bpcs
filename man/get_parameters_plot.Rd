@@ -14,7 +14,8 @@ get_parameters_plot(
   xaxis = "Parameter",
   yaxis = "Value",
   rotate_x_labels = FALSE,
-  APA = TRUE
+  APA = TRUE,
+  keep_par_name = TRUE
 )
 }
 \arguments{
@@ -35,6 +36,8 @@ get_parameters_plot(
 \item{rotate_x_labels}{should the labels be shown horizontally (default, FALSE) or vertically (TRUE)}
 
 \item{APA}{should the graphic be formatted in APA style (default TRUE)}
+
+\item{keep_par_name}{keep the parameter name e.g. lambda\link{Graff} instead of Graff. Default to T. Only valid for lambda, so we can have better ranks}
 }
 \value{
 a ggplot2 caterpillar plot

@@ -98,7 +98,7 @@ summary(m)
 ```
 
 ```{r}
-plot(m, rotate_x_labels = T)
+plot(m)
 ```
 
 # Features of the bpcs package

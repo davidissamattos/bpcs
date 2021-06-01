@@ -10,7 +10,8 @@ get_parameters_df(
   HPDI = TRUE,
   credMass = 0.95,
   n_eff = FALSE,
-  Rhat = FALSE
+  Rhat = FALSE,
+  keep_par_name = T
 )
 }
 \arguments{

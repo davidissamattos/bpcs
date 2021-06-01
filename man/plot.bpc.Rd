@@ -10,12 +10,13 @@ This is just a wrapper for the get_parameters_plot function and can be used inte
   y = NULL,
   HPDI = T,
   params = c("lambda"),
-  title = "Parameter estimates",
+  title = "Strength estimates",
   subtitle = NULL,
-  xaxis = "Parameter",
+  xaxis = "Player",
   yaxis = "Value",
   rotate_x_labels = FALSE,
   APA = TRUE,
+  keep_par_name = FALSE,
   ...
 )
 }
@@ -39,6 +40,8 @@ This is just a wrapper for the get_parameters_plot function and can be used inte
 \item{rotate_x_labels}{should the labels be shown horizontally (default, FALSE) or vertically (TRUE)}
 
 \item{APA}{should the graphic be formatted in APA style (default TRUE)}
+
+\item{keep_par_name}{keep the parameter name e.g. lambda\link{Graff} instead of Graff. Default to T. Only valid for lambda, so we can have better ranks}
 
 \item{...}{additional parameters for the generic S3 plot function. Not used.}
 }

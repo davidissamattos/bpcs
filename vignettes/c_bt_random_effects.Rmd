@@ -188,7 +188,7 @@ All seems ok! Let's look now at the traceplots
 Traceplots of the chains with the bayesplot library
 
 ```{r}
-fit <- get_fit(m1)
+fit <- get_fit(m)
 posterior_draws <- posterior::as_draws_matrix(fit$draws())
 bayesplot::mcmc_trace(
   posterior_draws,
@@ -208,7 +208,6 @@ bayesplot::mcmc_trace(
 Everything seems in order for us to look at the predictive posterior bar plot. 
 
 ```{r}
-
 y_pp <- posterior_predictive(m)
 y <- y_pp$y
 yrep <- y_pp$y_pred

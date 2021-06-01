@@ -7,6 +7,7 @@
 #' @param n_eff Should include the number of effective samples in the df
 #' @param Rhat Should include the Rhat in the df
 #' @param credMass probability mass for the summary stats
+#' @param keep_par_name keep the parameter name e.g. lambda[Graff] instead of Graff. Default to T. Only valid for lambda, so we can have better ranks
 #' @return a data frame containing a column with the parameters, a column with mean and two columns with higher and lower intervals
 #' @export
 #' @importFrom rlang .data
@@ -21,7 +22,7 @@
 #' hpdi<-get_parameters(m)
 #' print(hpdi)
 #' }
-get_parameters <- function(bpc_object, params=NULL, HPDI = TRUE, credMass=0.95, n_eff=FALSE, Rhat=FALSE) {
+get_parameters <- function(bpc_object, params=NULL, HPDI = TRUE, credMass=0.95, n_eff=FALSE, Rhat=FALSE, keep_par_name=T) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
   pars <- get_model_parameters(bpc_object)

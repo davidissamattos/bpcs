@@ -27,6 +27,7 @@ get_fit <- function(bpc_object) {
 #' @param bpc_object a bpc object
 #' @param n how many times are we sampling? Default 1000
 #' @param par name of the parameters to predict
+#' @param keep_par_name keep the parameter name e.g. lambda[Graff] instead of Graff. Default to T. Only valid for lambda, so we can have better ranks
 #' @return Return a data frame with the posterior samples for the parameters. One column for each parameter one row for each sample
 #' @export
 #' @importFrom rlang .data
@@ -42,7 +43,7 @@ get_fit <- function(bpc_object) {
 #' print(head(s))
 #' }
 get_sample_posterior <-
-  function(bpc_object, par = 'lambda', n = 1000) {
+  function(bpc_object, par = 'lambda', n = 1000, keep_par_name=T) {
     if (class(bpc_object) != 'bpc')
       stop('Error! The object is not of bpc class')
 
@@ -69,7 +70,8 @@ get_sample_posterior <-
       create_array_of_par_names(par,
                                 lookup_table = lookup_table,
                                 cluster_lookup_table = cluster_lookup_table,
-                                subject_predictors_lookup_table=subject_predictors_lookup_table)
+                                subject_predictors_lookup_table=subject_predictors_lookup_table,
+                                keep_par_name=keep_par_name)
     return(as.data.frame(posterior))
   }
 

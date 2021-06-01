@@ -8,13 +8,14 @@
 get_rank_of_players <- function(bpc_object, n = 1000) {
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
-  s <- get_sample_posterior(bpc_object, par = 'lambda', n = n)
+  s <- get_sample_posterior(bpc_object, par = 'lambda', n = n, keep_par_name=F)
+  cols_names <- colnames(s)
   s <- dplyr::mutate(s, rown = dplyr::row_number())
 
   wide_s <-
     tidyr::pivot_longer(
       s,
-      cols = tidyselect::starts_with('lambda'),
+      cols = tidyselect::all_of(cols_names),
       names_to = "Parameter",
       values_to = "value"
     )

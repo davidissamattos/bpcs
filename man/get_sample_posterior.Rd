@@ -4,7 +4,7 @@
 \alias{get_sample_posterior}
 \title{Get the posterior samples for a parameter of the model.}
 \usage{
-get_sample_posterior(bpc_object, par = "lambda", n = 1000)
+get_sample_posterior(bpc_object, par = "lambda", n = 1000, keep_par_name = T)
 }
 \arguments{
 \item{bpc_object}{a bpc object}
@@ -12,6 +12,8 @@ get_sample_posterior(bpc_object, par = "lambda", n = 1000)
 \item{par}{name of the parameters to predict}
 
 \item{n}{how many times are we sampling? Default 1000}
+
+\item{keep_par_name}{keep the parameter name e.g. lambda\link{Graff} instead of Graff. Default to T. Only valid for lambda, so we can have better ranks}
 }
 \value{
 Return a data frame with the posterior samples for the parameters. One column for each parameter one row for each sample

@@ -156,6 +156,7 @@ get_rank_of_players_table <-
 #' @param yaxis title of the y axis
 #' @param rotate_x_labels should the labels be shown horizontally (default, FALSE) or vertically (TRUE)
 #' @param APA should the graphic be formatted in APA style (default TRUE)
+#' @param keep_par_name keep the parameter name e.g. lambda[Graff] instead of Graff. Default to T. Only valid for lambda, so we can have better ranks
 #' @return a ggplot2 caterpillar plot
 #' @importFrom rlang .data
 #' @export
@@ -180,12 +181,19 @@ get_parameters_plot <-
            xaxis = 'Parameter',
            yaxis = 'Value',
            rotate_x_labels = FALSE,
-           APA=TRUE) {
+           APA=TRUE,
+           keep_par_name = TRUE) {
     df <- get_parameters(bpc_object,
                          params = params,
                          HPDI = HPDI,
                          n_eff = F,
-                         Rhat = F)
+                         Rhat = F,
+                         keep_par_name = keep_par_name)
+
+    if(params==c('lambda') & keep_par_name == FALSE){
+      df$Parameter<-stringr::str_remove(df$Parameter,stringr::fixed("lambda["))
+      df$Parameter<-stringr::str_remove(df$Parameter,stringr::fixed("]"))
+    }
 
 
     colnames(df) <- c('Parameter', 'Mean', 'Median', 'Lower', 'Higher')
