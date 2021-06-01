@@ -80,7 +80,8 @@ m<-bpc(data = tennis_agresti, #datafrane
        player1 = 'player1', #name of the column for player 1
        result_column = 'y', #name of the column for the result of the match
        model_type = 'bt', #bt = Simple Bradley Terry model
-       solve_ties = 'none' #there are no ties in the dataset so we can choose none here
+       solve_ties = 'none', #there are no ties in the dataset so we can choose none here,
+       show_chain_messages = F
        )
 ```
 

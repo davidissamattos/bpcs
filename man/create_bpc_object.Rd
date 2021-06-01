@@ -12,6 +12,7 @@ create_bpc_object(
   model_type,
   standata,
   call_arg,
+  output_dir,
   cluster_lookup_table = NULL,
   predictors_df = NULL,
   predictors_lookup_table = NULL,
@@ -31,6 +32,8 @@ create_bpc_object(
 \item{standata}{a list with the data used to call the rstan::sampling procedure}
 
 \item{call_arg}{a list with the arguments called from the bpc function}
+
+\item{output_dir}{output directory for the csv files}
 
 \item{cluster_lookup_table}{a lookup table with we have random effects}
 

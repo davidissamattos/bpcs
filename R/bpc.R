@@ -46,9 +46,10 @@
 #' @param parallel_chains Number of parallel chains
 #' @param iter Number of iterations passed to Stan sampling. Positive integer, default =2000. For more information consult Stan documentation
 #' @param warmup Number of iteration for the warmup passed to Stan sampling. Positive integer, default 1000.  For more information consult Stan documentation
-#' @param show_chain_messages Hide chain messages from Stan
+#' @param show_chain_messages FALSE (default) to hide chain messages from Stan; TRUE to show
 #' @param seed a random seed for Stan
 #' @param log_lik boolean. Calculate Log-likelihood for loo and waic?
+#' @param dir directory to save the csv files produced by cmdstanr. The default is in the current working directory at the .bpcs folder
 #' @return An object of the class bpc. This object should be used in conjunction with the several auxiliary functions from the package
 #' @export
 #' @references
@@ -87,9 +88,10 @@ bpc <- function(data,
                 parallel_chains = 4,
                 iter = 2000,
                 warmup = 1000,
-                show_chain_messages = TRUE,
+                show_chain_messages = FALSE,
                 seed = NULL,
-                log_lik=T) {
+                log_lik=T,
+                dir=NULL) {
   if ((is.null(player0_score) |
        is.null(player1_score)) & is.null(result_column))
     stop(
@@ -386,7 +388,6 @@ bpc <- function(data,
   }
 
   # Add random effects or not
-  #TODO: add clusters below
   if (stringr::str_detect(model_type, '-U')) {
     if (!is.null(cluster)) {
       if (length(cluster) == 1) {
@@ -508,6 +509,17 @@ bpc <- function(data,
   }
 
 
+  #Directory for csv files
+  outdir <- dir
+  if(is.null(dir)){
+    outdir <- file.path(getwd(),'.bpcs')
+    dir.create(outdir, showWarnings = FALSE)
+  }
+
+  else{
+    dir.create(dir, showWarnings = FALSE)
+  }
+
 
   # Now we do the sampling in Stan
   if (startsWith(model_type, 'bt') |
@@ -518,6 +530,8 @@ bpc <- function(data,
                   package = "bpcs",
                   mustWork = TRUE)
     model <- cmdstanr::cmdstan_model(model_file)
+
+
     fit <- model$sample(
       data = standata,
       chains = chains,
@@ -526,7 +540,8 @@ bpc <- function(data,
       parallel_chains = parallel_chains,
       refresh = refresh,
       seed = seed,
-      show_messages = show_chain_messages
+      show_messages = show_chain_messages,
+      output_dir = outdir
     )
     #cmdstanr requires us to read the files to save them into the fitted model
     #More in https://mc-stan.org/cmdstanr/articles/cmdstanr-internals.html#saving-fitted-model-objects
@@ -552,7 +567,8 @@ bpc <- function(data,
     predictors_matrix = predictors_matrix,
     subject_predictors_lookup_table = subject_predictors_lookup_table,
     subject_predictors_matrix = subject_predictors_matrix,
-    used_pars=used_pars
+    used_pars=used_pars,
+    output_dir = outdir
   )
   return(out)
 

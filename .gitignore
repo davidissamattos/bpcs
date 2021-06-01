@@ -18,3 +18,5 @@ Meta
 tarversions
 .DS_Store
 /inst/stan/bt
+.bpcs/*
+.bpcs_csv/*

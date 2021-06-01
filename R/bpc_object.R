@@ -14,6 +14,7 @@
 #' @param subject_predictors_lookup_table a lookup table for the subject predictors models
 #' @param subject_predictors_matrix a matrix of predictors for the subject predictors matrix
 #' @param used_pars an array with all the parameters set for the model
+#' @param output_dir output directory for the csv files
 #' @return a bpc object
 #'
 create_bpc_object <-
@@ -22,6 +23,7 @@ create_bpc_object <-
            model_type,
            standata,
            call_arg,
+           output_dir,
            cluster_lookup_table = NULL,
            predictors_df = NULL,
            predictors_lookup_table = NULL,
@@ -47,7 +49,9 @@ create_bpc_object <-
       subject_predictors_lookup_table = subject_predictors_lookup_table,
       subject_predictors_matrix = subject_predictors_matrix,
       call_arg = call_arg,
-      used_pars=used_pars
+      used_pars=used_pars,
+      output_dir = output_dir,
+      bpcs_version =  utils::packageVersion("bpcs")
       )
     class(obj) <- "bpc"
     return(obj)

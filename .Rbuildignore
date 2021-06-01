@@ -21,4 +21,6 @@
 ^tarversions$
 ^.Rhistory$
 ^inst/stan/bt$
+^.bpcs/$
+
 

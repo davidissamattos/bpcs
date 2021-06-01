@@ -8,7 +8,7 @@ Thin wrapper over cmdstanr cmdstan_diagnose() function}
 check_convergence_diagnostics(bpc_object)
 }
 \arguments{
-\item{bpc_object}{a bpc objecte}
+\item{bpc_object}{a bpc object}
 }
 \description{
 Run cmdstan diagnostics for convergence and print the results in the screen

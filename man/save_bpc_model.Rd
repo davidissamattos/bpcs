@@ -4,14 +4,14 @@
 \alias{save_bpc_model}
 \title{Thin wrapper to save the bpc model for examining later}
 \usage{
-save_bpc_model(bpc_object, filename, path = ".")
+save_bpc_model(bpc_object, filename, path = NULL)
 }
 \arguments{
 \item{bpc_object}{a bpc object}
 
 \item{filename}{string with the file name}
 
-\item{path}{string with path following the conventions of the operating system}
+\item{path}{string with path following the conventions of the operating system. If not provided it will use the default folder of the csv files .bpcs in the current working directory}
 }
 \description{
 Thin wrapper to save the bpc model for examining later

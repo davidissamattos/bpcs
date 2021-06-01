@@ -23,9 +23,10 @@ bpc(
   parallel_chains = 4,
   iter = 2000,
   warmup = 1000,
-  show_chain_messages = TRUE,
+  show_chain_messages = FALSE,
   seed = NULL,
-  log_lik = T
+  log_lik = T,
+  dir = NULL
 )
 }
 \arguments{
@@ -98,11 +99,13 @@ bpc(
 
 \item{warmup}{Number of iteration for the warmup passed to Stan sampling. Positive integer, default 1000.  For more information consult Stan documentation}
 
-\item{show_chain_messages}{Hide chain messages from Stan}
+\item{show_chain_messages}{FALSE (default) to hide chain messages from Stan; TRUE to show}
 
 \item{seed}{a random seed for Stan}
 
 \item{log_lik}{boolean. Calculate Log-likelihood for loo and waic?}
+
+\item{dir}{directory to save the csv files produced by cmdstanr. The default is in the current working directory at the .bpcs folder}
 }
 \value{
 An object of the class bpc. This object should be used in conjunction with the several auxiliary functions from the package

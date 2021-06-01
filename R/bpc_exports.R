@@ -252,13 +252,16 @@ inv_logit <- function(x) {
 #'
 #' @param bpc_object a bpc object
 #' @param filename string with the file name
-#' @param path string with path following the conventions of the operating system
+#' @param path string with path following the conventions of the operating system. If not provided it will use the default folder of the csv files .bpcs in the current working directory
 #' @export
-save_bpc_model <- function(bpc_object, filename, path='.'){
+save_bpc_model <- function(bpc_object, filename, path=NULL){
   if (class(bpc_object) != 'bpc')
     stop('Error! The object is not of bpc class')
   tryCatch({
-    saveRDS(bpc_object, file=file.path(path,paste(filename,'.RDS',sep = "")))
+    dir <- getwd()
+    if(is.null(path))
+        dir <- bpc$get_output_dir()
+    saveRDS(bpc_object, file=file.path(dir,paste(filename,'.RDS',sep = "")))
   },
   error = function(cond) {
     message("Error when saving the model")
@@ -292,7 +295,7 @@ load_bpc_model <- function(file_name_with_path){
 
 #' Run cmdstan diagnostics for convergence and print the results in the screen
 #' Thin wrapper over cmdstanr cmdstan_diagnose() function
-#' @param bpc_object a bpc objecte
+#' @param bpc_object a bpc object
 #' @export
 #' @examples
 #' \donttest{
@@ -309,4 +312,14 @@ check_convergence_diagnostics <- function(bpc_object){
     stop('Error! The object is not of bpc class')
   bpc_object$fit$cmdstan_diagnose()
 }
+
+#' Get the location of the output directory for the cmdstanr csv fukes
+#' @param bpc_object a bpc object
+#' @export
+get_output_dir <- function(bpc_object){
+  if (class(bpc_object) != 'bpc')
+    stop('Error! The object is not of bpc class')
+  return(bpc_object$output_dir)
+}
+
 
