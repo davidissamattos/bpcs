@@ -21,7 +21,7 @@ create_array_of_par_names(
 
 \item{subject_predictors_lookup_table}{a subject predictor lookup table}
 
-\item{keep_par_name}{keep the parameter name e.g. lambda\link{Graff} instead of Graff. Default to T. Only valid for lambda, so we can have better ranks}
+\item{keep_par_name}{keep the parameter name e.g. lambda Graff instead of Graff. Default to T. Only valid for lambda, so we can have better ranks}
 }
 \value{
 a data. frame where we change the names in the variable column to the corresponding parameter_name from the lookup table

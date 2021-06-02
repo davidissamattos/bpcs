@@ -1,6 +1,6 @@
 Package: bpcs
 Title: Bayesian Paired Comparison Analysis with Stan
-Version: 1.2.0.900
+Version: 1.2.1
 Authors@R: c(
     person(given = "David",
            family = "Issa Mattos",
@@ -42,7 +42,7 @@ Imports:
     rlang,
     knitr,
     jtools
-SystemRequirements: GNU make
+SystemRequirements: CmdStan (https://mc-stan.org/users/interfaces/cmdstan)
 Remotes: 
     stan-dev/posterior,
     stan-dev/cmdstanr

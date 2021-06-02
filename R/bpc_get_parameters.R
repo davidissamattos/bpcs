@@ -7,7 +7,7 @@
 #' @param n_eff Should include the number of effective samples in the df
 #' @param Rhat Should include the Rhat in the df
 #' @param credMass probability mass for the summary stats
-#' @param keep_par_name keep the parameter name e.g. lambda[Graff] instead of Graff. Default to T. Only valid for lambda, so we can have better ranks
+#' @param keep_par_name keep the parameter name e.g. lambda Graff instead of Graff. Default to T. Only valid for lambda, so we can have better ranks
 #' @return a data frame containing a column with the parameters, a column with mean and two columns with higher and lower intervals
 #' @export
 #' @importFrom rlang .data
@@ -146,6 +146,7 @@ get_parameters <- function(bpc_object, params=NULL, HPDI = TRUE, credMass=0.95, 
 #' @param n_eff Should include the number of effective samples in the df
 #' @param Rhat Should include the Rhat in the df
 #' @param credMass probability mass for the summary stats
+#' @param keep_par_name keep the parameter name e.g. lambda Graff instead of Graff. Default to T. Only valid for lambda, so we can have better ranks
 #' @examples
 #' \donttest{
 #' m<-bpc(data = tennis_agresti,
@@ -190,3 +191,56 @@ get_parameters_posterior<-function(bpc_object, n=100){
   }
   return(as.data.frame(post))
 }
+
+
+#' Publication-ready table for the parameter estimates
+#'
+#' @param bpc_object a bpc object
+#' @param params a vector with the parameters to be in the table. If NULL them all will be present
+#' @param credMass the probability mass for the credible interval
+#' @param format A character string. same formats utilized in the knitr::kable function
+#' * 'latex': output in latex format
+#' * 'simple': appropriated for the console
+#' * 'pipe': Pandoc's pipe tables
+#' * 'html': for html formats
+#' * 'rst'
+#' @param digits number of digits in the table
+#' @param caption a string containing the caption of the table
+#' @param HPDI a boolean if the intervals should be credible (F) or HPD intervals (T)
+#' @param n_eff a boolean. Should the number of effective samples be presented (T) or not (F default).
+#' @return a formatted table
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' m<-bpc(data = tennis_agresti,
+#' player0 = 'player0',
+#' player1 = 'player1',
+#' result_column = 'y',
+#' model_type = 'bt',
+#' solve_ties = 'none')
+#' t<-get_parameters_table(m)
+#' print(t)
+#' }
+get_parameters_table <-
+  function(bpc_object,
+           params=NULL,
+           credMass = 0.95,
+           format = 'latex',
+           digits = 3,
+           caption = 'Parameters estimates',
+           HPDI = T,
+           n_eff = F) {
+    if (class(bpc_object) != 'bpc')
+      stop('Error! The object is not of bpc class')
+    t <- get_parameters(bpc_object, credMass=credMass, params=params, HPDI = HPDI,n_eff = n_eff)
+    out <-
+      knitr::kable(t,
+                   format = format,
+                   digits = digits,
+                   caption = caption,
+                   booktabs = T)
+    return(out)
+  }
+
+

@@ -27,7 +27,7 @@ get_parameters(
 
 \item{Rhat}{Should include the Rhat in the df}
 
-\item{keep_par_name}{keep the parameter name e.g. lambda\link{Graff} instead of Graff. Default to T. Only valid for lambda, so we can have better ranks}
+\item{keep_par_name}{keep the parameter name e.g. lambda Graff instead of Graff. Default to T. Only valid for lambda, so we can have better ranks}
 }
 \value{
 a data frame containing a column with the parameters, a column with mean and two columns with higher and lower intervals

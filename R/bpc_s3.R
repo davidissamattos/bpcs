@@ -413,7 +413,7 @@ predict.bpc <-
 #' @param yaxis title of the y axis
 #' @param rotate_x_labels should the labels be shown horizontally (default, FALSE) or vertically (TRUE)
 #' @param APA should the graphic be formatted in APA style (default TRUE)
-#' @param keep_par_name keep the parameter name e.g. lambda[Graff] instead of Graff. Default to T. Only valid for lambda, so we can have better ranks
+#' @param keep_par_name keep the parameter name e.g. lambda Graff instead of Graff. Default to T. Only valid for lambda, so we can have better ranks
 #' @param ... additional parameters for the generic S3 plot function. Not used.
 #' @return a ggplot2 caterpillar plot
 #' @export

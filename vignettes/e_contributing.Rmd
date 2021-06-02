@@ -27,7 +27,7 @@ The points below are mostly reminders for me but hopefully it can help others
   - `bpc_get_probabilities.R` Get probabilities related functions
   - `bpc_get_rank_of_players.R` Get rank related functions
   - `bpc_get_parameters.R` Get parameters related functions
-  - `bpc_publciation.R` Functions for publication ready tables and plots
+  - `bpc_plot.R` Functions for possible plots
   - `bpc_helpers_X.R` additional functions to facilitate and support either the bpc function or the exports functions. None of these functions should be exported, although all of them should be documented. We divided these helpers in several files. the indexes are related to creating and checking names and indexes in lookup tables, the hpd to HPDI related functions, the checks to check correct specification of the data frame columns
   - `bpc_s3.R` all functions here are the custom implementation of the generic base functions from R, such as `summary`, `print`, `predict` and `plot`
     - Generated quantities is implemented in the `predict` function and in the file `bpc_btpredict.R`

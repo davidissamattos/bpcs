@@ -41,7 +41,7 @@ This is just a wrapper for the get_parameters_plot function and can be used inte
 
 \item{APA}{should the graphic be formatted in APA style (default TRUE)}
 
-\item{keep_par_name}{keep the parameter name e.g. lambda\link{Graff} instead of Graff. Default to T. Only valid for lambda, so we can have better ranks}
+\item{keep_par_name}{keep the parameter name e.g. lambda Graff instead of Graff. Default to T. Only valid for lambda, so we can have better ranks}
 
 \item{...}{additional parameters for the generic S3 plot function. Not used.}
 }

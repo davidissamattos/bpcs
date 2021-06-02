@@ -27,7 +27,7 @@ get_fit <- function(bpc_object) {
 #' @param bpc_object a bpc object
 #' @param n how many times are we sampling? Default 1000
 #' @param par name of the parameters to predict
-#' @param keep_par_name keep the parameter name e.g. lambda[Graff] instead of Graff. Default to T. Only valid for lambda, so we can have better ranks
+#' @param keep_par_name keep the parameter name e.g. lambda Graff instead of Graff. Default to T. Only valid for lambda, so we can have better ranks
 #' @return Return a data frame with the posterior samples for the parameters. One column for each parameter one row for each sample
 #' @export
 #' @importFrom rlang .data

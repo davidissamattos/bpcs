@@ -26,6 +26,8 @@ get_parameters_df(
 \item{n_eff}{Should include the number of effective samples in the df}
 
 \item{Rhat}{Should include the Rhat in the df}
+
+\item{keep_par_name}{keep the parameter name e.g. lambda Graff instead of Graff. Default to T. Only valid for lambda, so we can have better ranks}
 }
 \description{
 Function to retrieve a data frame with summary of the parameters

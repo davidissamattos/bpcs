@@ -104,3 +104,51 @@ get_rank_of_players_posterior <- function(bpc_object, n = 1000) {
   rank_post<-  rank_m$Posterior
   return(rank_post)
 }
+
+
+#' Publication-ready table for the rank table
+#'
+#' @param bpc_object a bpc object
+#' @param format A character string. same formats utilized in the knitr::kable function
+#' * 'latex': output in latex format
+#' * 'simple': appropriated for the console
+#' * 'pipe': Pandoc's pipe tables
+#' * 'html': for html formats
+#' * 'rst'
+#' * 'simple' appropriated for the console
+#' @param digits number of digits in the table
+#' @param caption a string containing the caption of the table
+#' @param n number of times we are sampling the posterior
+#' @return a formatted table
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' m<-bpc(data = tennis_agresti,
+#' player0 = 'player0',
+#' player1 = 'player1',
+#' result_column = 'y',
+#' model_type = 'bt',
+#' solve_ties = 'none')
+#' t<-get_rank_of_players_table(m)
+#' print(t)
+#' }
+get_rank_of_players_table <-
+  function(bpc_object,
+           format = 'latex',
+           digits = 3,
+           caption = 'Estimated posterior ranks',
+           n = 1000) {
+    if (class(bpc_object) != 'bpc')
+      stop('Error! The object is not of bpc class')
+    t <- get_rank_of_players_df(bpc_object , n = n)
+    out <-
+      knitr::kable(t,
+                   format = format,
+                   digits = digits,
+                   caption = caption,
+                   booktabs = T)
+    return(out)
+  }
+
+

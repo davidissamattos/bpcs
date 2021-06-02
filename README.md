@@ -44,7 +44,7 @@ After installing, we load the package with:
 
 ``` r
 library(bpcs)
-#> This is the version 1.2.0.900 of the bpcs package. 
+#> This is the version 1.2.1 of the bpcs package. 
 #> The bpcs package requires an installation of cmdstan and an appropriated toolchain.
 ```
 
@@ -91,13 +91,13 @@ id
 Seles
 </td>
 <td style="text-align:left;">
-Navratilova
+Graf
 </td>
 <td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-11
+5
 </td>
 </tr>
 <tr>
@@ -111,7 +111,7 @@ Sanchez
 0
 </td>
 <td style="text-align:right;">
-27
+33
 </td>
 </tr>
 <tr>
@@ -125,21 +125,7 @@ Sabatini
 1
 </td>
 <td style="text-align:right;">
-23
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Sabatini
-</td>
-<td style="text-align:left;">
-Sanchez
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-38
+22
 </td>
 </tr>
 <tr>
@@ -181,7 +167,7 @@ Sabatini
 0
 </td>
 <td style="text-align:right;">
-16
+19
 </td>
 </tr>
 <tr>
@@ -195,21 +181,7 @@ Graf
 0
 </td>
 <td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Navratilova
-</td>
-<td style="text-align:left;">
-Sanchez
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-44
+1
 </td>
 </tr>
 <tr>
@@ -224,6 +196,34 @@ Graf
 </td>
 <td style="text-align:right;">
 3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:left;">
+Navratilova
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+24
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sabatini
+</td>
+<td style="text-align:left;">
+Sanchez
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+42
 </td>
 </tr>
 </tbody>
@@ -249,14 +249,14 @@ m<-bpc(data = tennis_agresti, #datafrane
        )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 1 finished in 3.0 seconds.
-#> Chain 2 finished in 2.9 seconds.
-#> Chain 3 finished in 3.0 seconds.
-#> Chain 4 finished in 3.1 seconds.
+#> Chain 2 finished in 7.2 seconds.
+#> Chain 1 finished in 7.6 seconds.
+#> Chain 4 finished in 7.5 seconds.
+#> Chain 3 finished in 7.8 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 3.0 seconds.
-#> Total execution time: 3.5 seconds.
+#> Mean chain execution time: 7.5 seconds.
+#> Total execution time: 8.5 seconds.
 ```
 
 If `cmdstanr` is available and correctly working this function should
@@ -279,11 +279,11 @@ summary(m)
 #> 
 #> Parameter               Mean   Median   HPD_lower   HPD_higher
 #> --------------------  ------  -------  ----------  -----------
-#> lambda[Seles]           0.59     0.57       -2.04         3.49
-#> lambda[Graf]            1.02     1.01       -1.62         3.81
-#> lambda[Sabatini]       -0.27    -0.27       -2.81         2.64
-#> lambda[Navratilova]     0.12     0.11       -2.59         2.81
-#> lambda[Sanchez]        -1.05    -1.07       -3.71         1.80
+#> lambda[Seles]           0.49     0.50       -2.03         3.38
+#> lambda[Graf]            0.92     0.91       -1.72         3.65
+#> lambda[Sabatini]       -0.35    -0.34       -2.99         2.45
+#> lambda[Navratilova]     0.03     0.03       -2.74         2.67
+#> lambda[Sanchez]        -1.14    -1.12       -3.79         1.66
 #> NOTES:
 #> * A higher lambda indicates a higher team ability
 #> 
@@ -297,32 +297,32 @@ summary(m)
 #> i             j              i_beats_j   j_beats_i
 #> ------------  ------------  ----------  ----------
 #> Graf          Navratilova         0.70        0.30
-#> Graf          Sabatini            0.78        0.22
-#> Graf          Sanchez             0.85        0.15
-#> Graf          Seles               0.52        0.48
-#> Navratilova   Sabatini            0.67        0.33
+#> Graf          Sabatini            0.74        0.26
+#> Graf          Sanchez             0.83        0.17
+#> Graf          Seles               0.59        0.41
+#> Navratilova   Sabatini            0.58        0.42
 #> Navratilova   Sanchez             0.73        0.27
-#> Navratilova   Seles               0.41        0.59
-#> Sabatini      Sanchez             0.72        0.28
-#> Sabatini      Seles               0.34        0.66
-#> Sanchez       Seles               0.27        0.73
+#> Navratilova   Seles               0.43        0.57
+#> Sabatini      Sanchez             0.66        0.34
+#> Sabatini      Seles               0.30        0.70
+#> Sanchez       Seles               0.15        0.85
 #> 
 #> Rank of the players' abilities:
 #> The rank is based on the posterior rank distribution of the lambda parameter
 #> 
 #> Table: Estimated posterior ranks
 #> 
-#> Parameter              MedianRank   MeanRank   StdRank
-#> --------------------  -----------  ---------  --------
-#> lambda[Graf]                    1       1.40      0.62
-#> lambda[Seles]                   2       2.07      0.86
-#> lambda[Navratilova]             3       3.04      0.93
-#> lambda[Sabatini]                4       3.70      0.81
-#> lambda[Sanchez]                 5       4.79      0.49
+#> Parameter      MedianRank   MeanRank   StdRank
+#> ------------  -----------  ---------  --------
+#> Graf                    1       1.35      0.61
+#> Seles                   2       2.17      0.89
+#> Navratilova             3       3.00      0.93
+#> Sabatini                4       3.68      0.81
+#> Sanchez                 5       4.79      0.50
 ```
 
 ``` r
-plot(m, rotate_x_labels = T)
+plot(m)
 ```
 
 <img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
