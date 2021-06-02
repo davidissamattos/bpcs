@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0.900</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
       </span>
     </div>
 
@@ -487,62 +487,62 @@ Corinthians
 <span class="op">)</span> <span class="co">#stan indicates a low bulk ESS so we are increasing the number of iterations</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 4 finished in 14.1 seconds.</span>
-<span class="co">#&gt; Chain 3 finished in 14.2 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 14.6 seconds.</span>
-<span class="co">#&gt; Chain 2 finished in 14.7 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 20.9 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 21.1 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 21.2 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 21.3 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 14.4 seconds.</span>
-<span class="co">#&gt; Total execution time: 14.8 seconds.</span></code></pre></div>
+<span class="co">#&gt; Mean chain execution time: 21.1 seconds.</span>
+<span class="co">#&gt; Total execution time: 21.5 seconds.</span></code></pre></div>
 <div id="simple-diagnostics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#simple-diagnostics" class="anchor"></a>Simple diagnostics</h2>
 <p>Looking at the Rhat and the n_eff:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_parameters_df.html">get_parameters_df</a></span><span class="op">(</span><span class="va">m1</span>, n_eff <span class="op">=</span> <span class="cn">T</span>, Rhat <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
-<span class="co">#&gt;                Parameter        Mean     Median HPD_lower HPD_higher     Rhat</span>
-<span class="co">#&gt; 1           lambda[Avaí] -1.09936523 -1.1004750 -2.236150  0.0588943 1.001893</span>
-<span class="co">#&gt; 2  lambda[Internacional]  0.20087383  0.1920195 -0.854158  1.3242200 1.002312</span>
-<span class="co">#&gt; 3       lambda[Cruzeiro] -0.59110196 -0.5971930 -1.648400  0.5793450 1.002042</span>
-<span class="co">#&gt; 4    lambda[Botafogo-rj] -0.35877577 -0.3691965 -1.443760  0.7533850 1.002195</span>
-<span class="co">#&gt; 5          lambda[Vasco]  0.31498110  0.3108720 -0.771872  1.4164500 1.002172</span>
-<span class="co">#&gt; 6    lambda[Corinthians]  0.42899054  0.4219815 -0.688098  1.5292600 1.002030</span>
-<span class="co">#&gt; 7            lambda[CSA] -1.24046634 -1.2413750 -2.410020 -0.0789624 1.001929</span>
-<span class="co">#&gt; 8          lambda[Goiás] -0.13322066 -0.1399145 -1.200060  0.9697680 1.002293</span>
-<span class="co">#&gt; 9      lambda[Fortaleza]  0.20233577  0.2013080 -0.889478  1.2981200 1.001914</span>
-<span class="co">#&gt; 10        lambda[Santos]  0.79129851  0.7748465 -0.315334  1.9131100 1.002776</span>
-<span class="co">#&gt; 11        lambda[Grêmio]  0.43245215  0.4222705 -0.682768  1.5110500 1.002318</span>
-<span class="co">#&gt; 12     lambda[Palmeiras]  0.66764998  0.6580040 -0.448771  1.7716200 1.001904</span>
-<span class="co">#&gt; 13   lambda[Atlético-MG] -0.59267873 -0.5916965 -1.709310  0.4599650 1.002154</span>
-<span class="co">#&gt; 14   lambda[Chapecoense] -0.71424107 -0.7212630 -1.781520  0.4097190 1.002262</span>
-<span class="co">#&gt; 15         lambda[Ceará] -0.71641714 -0.7206150 -1.840380  0.3915230 1.002804</span>
-<span class="co">#&gt; 16  lambda[Athlético-PR]  0.31427095  0.3061600 -0.793945  1.3882000 1.002043</span>
-<span class="co">#&gt; 17      lambda[Flamengo]  1.50498144  1.4918450  0.371307  2.7207200 1.002228</span>
-<span class="co">#&gt; 18     lambda[São Paulo]  0.54790119  0.5400745 -0.550922  1.6580000 1.002259</span>
-<span class="co">#&gt; 19         lambda[Bahia]  0.08896559  0.0778130 -0.996370  1.1894800 1.002077</span>
-<span class="co">#&gt; 20    lambda[Fluminense] -0.48165125 -0.4865805 -1.593410  0.6129300 1.002213</span>
-<span class="co">#&gt;       n_eff</span>
-<span class="co">#&gt; 1  1048.322</span>
-<span class="co">#&gt; 2   999.332</span>
-<span class="co">#&gt; 3  1034.455</span>
-<span class="co">#&gt; 4  1005.387</span>
-<span class="co">#&gt; 5  1004.123</span>
-<span class="co">#&gt; 6  1025.518</span>
-<span class="co">#&gt; 7  1125.657</span>
-<span class="co">#&gt; 8  1018.861</span>
-<span class="co">#&gt; 9  1018.343</span>
-<span class="co">#&gt; 10 1048.566</span>
-<span class="co">#&gt; 11 1018.449</span>
-<span class="co">#&gt; 12 1034.648</span>
-<span class="co">#&gt; 13 1049.913</span>
-<span class="co">#&gt; 14 1023.494</span>
-<span class="co">#&gt; 15 1087.258</span>
-<span class="co">#&gt; 16 1020.917</span>
-<span class="co">#&gt; 17 1124.415</span>
-<span class="co">#&gt; 18 1029.894</span>
-<span class="co">#&gt; 19 1003.810</span>
-<span class="co">#&gt; 20 1017.052</span></code></pre></div>
+<span class="co">#&gt;                Parameter        Mean      Median   HPD_lower  HPD_higher</span>
+<span class="co">#&gt; 1           lambda[Avaí] -1.08549174 -1.08422500 -2.15141000 -0.00310175</span>
+<span class="co">#&gt; 2  lambda[Internacional]  0.10092748  0.09724680 -0.95784800  1.15134000</span>
+<span class="co">#&gt; 3       lambda[Cruzeiro] -0.82577165 -0.82594300 -1.89532000  0.24445400</span>
+<span class="co">#&gt; 4    lambda[Botafogo-rj] -0.46563546 -0.47341000 -1.52783000  0.58911300</span>
+<span class="co">#&gt; 5          lambda[Vasco] -0.24195117 -0.24874900 -1.29896000  0.80439300</span>
+<span class="co">#&gt; 6    lambda[Corinthians]  0.32458049  0.31831200 -0.72700000  1.35668000</span>
+<span class="co">#&gt; 7            lambda[CSA] -0.70434217 -0.71315700 -1.80202000  0.32442200</span>
+<span class="co">#&gt; 8          lambda[Goiás] -0.23568184 -0.23727100 -1.26050000  0.81101600</span>
+<span class="co">#&gt; 9      lambda[Fortaleza]  0.10097672  0.09493060 -0.93335600  1.16609000</span>
+<span class="co">#&gt; 10        lambda[Santos]  0.56238130  0.56161150 -0.55127400  1.57324000</span>
+<span class="co">#&gt; 11        lambda[Grêmio]  0.56173112  0.55627350 -0.53656600  1.57467000</span>
+<span class="co">#&gt; 12     lambda[Palmeiras]  1.07307293  1.06243000 -0.00870592  2.15880000</span>
+<span class="co">#&gt; 13   lambda[Atlético-MG] -0.01229438 -0.01376100 -1.04348000  1.06660000</span>
+<span class="co">#&gt; 14   lambda[Chapecoense] -1.08309169 -1.08242500 -2.21657000 -0.03687930</span>
+<span class="co">#&gt; 15         lambda[Ceará] -0.46855506 -0.47286700 -1.47318000  0.61129600</span>
+<span class="co">#&gt; 16  lambda[Athlético-PR]  0.56237490  0.55625450 -0.53621600  1.61762000</span>
+<span class="co">#&gt; 17      lambda[Flamengo]  1.89736149  1.88061000  0.69707400  3.12069000</span>
+<span class="co">#&gt; 18     lambda[São Paulo]  0.21170495  0.20564400 -0.82646700  1.26849000</span>
+<span class="co">#&gt; 19         lambda[Bahia] -0.01768839 -0.02042995 -1.10351000  0.99367600</span>
+<span class="co">#&gt; 20    lambda[Fluminense] -0.23447949 -0.23121800 -1.27237000  0.83692700</span>
+<span class="co">#&gt;        Rhat    n_eff</span>
+<span class="co">#&gt; 1  1.001291 1599.353</span>
+<span class="co">#&gt; 2  1.001608 1561.504</span>
+<span class="co">#&gt; 3  1.001686 1576.662</span>
+<span class="co">#&gt; 4  1.001552 1532.550</span>
+<span class="co">#&gt; 5  1.001819 1493.308</span>
+<span class="co">#&gt; 6  1.001933 1527.772</span>
+<span class="co">#&gt; 7  1.001378 1597.798</span>
+<span class="co">#&gt; 8  1.001751 1507.244</span>
+<span class="co">#&gt; 9  1.001688 1515.269</span>
+<span class="co">#&gt; 10 1.001467 1595.856</span>
+<span class="co">#&gt; 11 1.001367 1613.823</span>
+<span class="co">#&gt; 12 1.001797 1672.475</span>
+<span class="co">#&gt; 13 1.001490 1506.743</span>
+<span class="co">#&gt; 14 1.001614 1644.635</span>
+<span class="co">#&gt; 15 1.001814 1504.323</span>
+<span class="co">#&gt; 16 1.001757 1591.793</span>
+<span class="co">#&gt; 17 1.001194 2021.858</span>
+<span class="co">#&gt; 18 1.001856 1519.012</span>
+<span class="co">#&gt; 19 1.001640 1521.813</span>
+<span class="co">#&gt; 20 1.002089 1517.700</span></code></pre></div>
 <p>Both look fine for all teams.</p>
 <p>Looking at the traceplots for the first 4 teams only (we can look at the others or launch the shinystan app)</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -585,24 +585,10 @@ Flamengo
 1
 </td>
 <td style="text-align:right;">
-1.251
+1.102
 </td>
 <td style="text-align:right;">
-0.768
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Santos
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3.817
-</td>
-<td style="text-align:right;">
-2.263
+0.360
 </td>
 </tr>
 <tr>
@@ -610,69 +596,27 @@ Santos
 Palmeiras
 </td>
 <td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2.597
+</td>
+<td style="text-align:right;">
+1.226
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Santos
+</td>
+<td style="text-align:right;">
 4
 </td>
 <td style="text-align:right;">
-4.505
+5.083
 </td>
 <td style="text-align:right;">
-2.488
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-São Paulo
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-5.574
-</td>
-<td style="text-align:right;">
-2.764
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Corinthians
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-6.392
-</td>
-<td style="text-align:right;">
-2.997
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Grêmio
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-6.490
-</td>
-<td style="text-align:right;">
-2.961
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Vasco
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-7.590
-</td>
-<td style="text-align:right;">
-3.128
+2.485
 </td>
 </tr>
 <tr>
@@ -680,27 +624,55 @@ Vasco
 Athlético-PR
 </td>
 <td style="text-align:right;">
-8
+5
 </td>
 <td style="text-align:right;">
-7.580
+5.047
 </td>
 <td style="text-align:right;">
-3.176
+2.420
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Internacional
+Grêmio
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5.076
+</td>
+<td style="text-align:right;">
+2.413
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Corinthians
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7.223
+</td>
+<td style="text-align:right;">
+3.111
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+São Paulo
 </td>
 <td style="text-align:right;">
 8
 </td>
 <td style="text-align:right;">
-8.423
+7.941
 </td>
 <td style="text-align:right;">
-3.193
+3.090
 </td>
 </tr>
 <tr>
@@ -711,10 +683,38 @@ Fortaleza
 9
 </td>
 <td style="text-align:right;">
-8.532
+9.021
 </td>
 <td style="text-align:right;">
-3.177
+3.289
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Internacional
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+9.100
+</td>
+<td style="text-align:right;">
+3.425
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlético-MG
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+10.150
+</td>
+<td style="text-align:right;">
+3.420
 </td>
 </tr>
 <tr>
@@ -725,10 +725,10 @@ Bahia
 10
 </td>
 <td style="text-align:right;">
-9.384
+10.419
 </td>
 <td style="text-align:right;">
-3.086
+3.329
 </td>
 </tr>
 <tr>
@@ -739,24 +739,24 @@ Goiás
 12
 </td>
 <td style="text-align:right;">
-11.708
+12.271
 </td>
 <td style="text-align:right;">
-2.999
+3.191
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Botafogo-rj
+Vasco
 </td>
 <td style="text-align:right;">
-14
+12
 </td>
 <td style="text-align:right;">
-13.599
+12.426
 </td>
 <td style="text-align:right;">
-2.851
+3.069
 </td>
 </tr>
 <tr>
@@ -764,27 +764,27 @@ Botafogo-rj
 Fluminense
 </td>
 <td style="text-align:right;">
-15
+13
 </td>
 <td style="text-align:right;">
-14.569
+12.423
 </td>
 <td style="text-align:right;">
-2.639
+3.263
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Atlético-MG
+Botafogo-rj
 </td>
 <td style="text-align:right;">
-16
+15
 </td>
 <td style="text-align:right;">
-15.391
+14.583
 </td>
 <td style="text-align:right;">
-2.522
+2.881
 </td>
 </tr>
 <tr>
@@ -792,13 +792,27 @@ Atlético-MG
 Ceará
 </td>
 <td style="text-align:right;">
-16
+15
 </td>
 <td style="text-align:right;">
-16.148
+14.574
 </td>
 <td style="text-align:right;">
-2.434
+2.892
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CSA
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+16.432
+</td>
+<td style="text-align:right;">
+2.571
 </td>
 </tr>
 <tr>
@@ -806,27 +820,13 @@ Ceará
 Cruzeiro
 </td>
 <td style="text-align:right;">
-16
+18
 </td>
 <td style="text-align:right;">
-15.367
+17.295
 </td>
 <td style="text-align:right;">
-2.456
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Chapecoense
-</td>
-<td style="text-align:right;">
-17
-</td>
-<td style="text-align:right;">
-16.243
-</td>
-<td style="text-align:right;">
-2.391
+2.110
 </td>
 </tr>
 <tr>
@@ -837,24 +837,24 @@ Avaí
 19
 </td>
 <td style="text-align:right;">
-18.435
+18.641
 </td>
 <td style="text-align:right;">
-1.654
+1.605
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-CSA
+Chapecoense
 </td>
 <td style="text-align:right;">
-20
+19
 </td>
 <td style="text-align:right;">
-19.002
+18.596
 </td>
 <td style="text-align:right;">
-1.470
+1.648
 </td>
 </tr>
 </tbody>
@@ -877,14 +877,14 @@ CSA
           iter <span class="op">=</span> <span class="fl">3000</span><span class="op">)</span> <span class="co">#stan indicates a low bulk ESS so we are increasing the number of iterations</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 2 finished in 14.3 seconds.</span>
-<span class="co">#&gt; Chain 4 finished in 14.5 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 14.7 seconds.</span>
-<span class="co">#&gt; Chain 3 finished in 14.7 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 18.7 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 19.3 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 19.5 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 19.4 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 14.6 seconds.</span>
-<span class="co">#&gt; Total execution time: 14.9 seconds.</span></code></pre></div>
+<span class="co">#&gt; Mean chain execution time: 19.2 seconds.</span>
+<span class="co">#&gt; Total execution time: 19.6 seconds.</span></code></pre></div>
 <p>For sake of space and repetition we will not present the diagnostics which can be observed at:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/launch_shinystan.html">launch_shinystan</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span></code></pre></div>
@@ -897,27 +897,27 @@ CSA
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter                  Mean   Median   HPD_lower   HPD_higher</span>
 <span class="co">#&gt; ----------------------  -------  -------  ----------  -----------</span>
-<span class="co">#&gt; lambda[Avaí]             -1.914   -1.908      -3.292       -0.612</span>
-<span class="co">#&gt; lambda[Internacional]     0.151    0.147      -1.107        1.402</span>
-<span class="co">#&gt; lambda[Cruzeiro]         -0.694   -0.693      -1.973        0.549</span>
-<span class="co">#&gt; lambda[Botafogo-rj]      -0.600   -0.593      -1.854        0.714</span>
-<span class="co">#&gt; lambda[Vasco]            -0.077   -0.076      -1.377        1.147</span>
-<span class="co">#&gt; lambda[Corinthians]       0.295    0.296      -0.974        1.519</span>
-<span class="co">#&gt; lambda[CSA]              -1.110   -1.102      -2.425        0.137</span>
-<span class="co">#&gt; lambda[Goiás]            -0.074   -0.077      -1.303        1.149</span>
-<span class="co">#&gt; lambda[Fortaleza]         0.125    0.125      -1.160        1.355</span>
-<span class="co">#&gt; lambda[Santos]            1.062    1.057      -0.252        2.320</span>
-<span class="co">#&gt; lambda[Grêmio]            0.623    0.622      -0.651        1.913</span>
-<span class="co">#&gt; lambda[Palmeiras]         1.238    1.233      -0.013        2.576</span>
-<span class="co">#&gt; lambda[Atlético-MG]      -0.062   -0.063      -1.262        1.219</span>
-<span class="co">#&gt; lambda[Chapecoense]      -0.992   -0.998      -2.276        0.339</span>
-<span class="co">#&gt; lambda[Ceará]            -0.735   -0.727      -2.002        0.508</span>
-<span class="co">#&gt; lambda[Athlético-PR]      0.703    0.700      -0.544        1.968</span>
-<span class="co">#&gt; lambda[Flamengo]          2.038    2.032       0.700        3.457</span>
-<span class="co">#&gt; lambda[São Paulo]         0.606    0.608      -0.692        1.838</span>
-<span class="co">#&gt; lambda[Bahia]            -0.144   -0.146      -1.401        1.116</span>
-<span class="co">#&gt; lambda[Fluminense]       -0.396   -0.393      -1.692        0.855</span>
-<span class="co">#&gt; nu                        0.387    0.389       0.154        0.608</span>
+<span class="co">#&gt; lambda[Avaí]             -1.912   -1.893      -3.214       -0.592</span>
+<span class="co">#&gt; lambda[Internacional]     0.161    0.161      -1.073        1.347</span>
+<span class="co">#&gt; lambda[Cruzeiro]         -0.687   -0.683      -1.958        0.460</span>
+<span class="co">#&gt; lambda[Botafogo-rj]      -0.590   -0.586      -1.858        0.615</span>
+<span class="co">#&gt; lambda[Vasco]            -0.065   -0.057      -1.278        1.172</span>
+<span class="co">#&gt; lambda[Corinthians]       0.304    0.308      -0.903        1.525</span>
+<span class="co">#&gt; lambda[CSA]              -1.106   -1.107      -2.384        0.113</span>
+<span class="co">#&gt; lambda[Goiás]            -0.061   -0.063      -1.287        1.157</span>
+<span class="co">#&gt; lambda[Fortaleza]         0.132    0.132      -1.045        1.401</span>
+<span class="co">#&gt; lambda[Santos]            1.075    1.072      -0.141        2.315</span>
+<span class="co">#&gt; lambda[Grêmio]            0.632    0.635      -0.603        1.857</span>
+<span class="co">#&gt; lambda[Palmeiras]         1.245    1.236       0.005        2.521</span>
+<span class="co">#&gt; lambda[Atlético-MG]      -0.055   -0.059      -1.316        1.099</span>
+<span class="co">#&gt; lambda[Chapecoense]      -0.984   -0.977      -2.282        0.230</span>
+<span class="co">#&gt; lambda[Ceará]            -0.722   -0.715      -1.968        0.483</span>
+<span class="co">#&gt; lambda[Athlético-PR]      0.714    0.710      -0.518        1.952</span>
+<span class="co">#&gt; lambda[Flamengo]          2.047    2.039       0.741        3.369</span>
+<span class="co">#&gt; lambda[São Paulo]         0.615    0.609      -0.594        1.834</span>
+<span class="co">#&gt; lambda[Bahia]            -0.135   -0.130      -1.332        1.109</span>
+<span class="co">#&gt; lambda[Fluminense]       -0.383   -0.382      -1.563        0.910</span>
+<span class="co">#&gt; nu                        0.388    0.388       0.152        0.615</span>
 <span class="co">#&gt; NOTES:</span>
 <span class="co">#&gt; * A higher lambda indicates a higher team ability</span>
 <span class="co">#&gt; * Large positive values of the nu parameter indicates a high probability of tie regardless of the abilities of theplayers.</span>
@@ -956,10 +956,10 @@ Flamengo
 1
 </td>
 <td style="text-align:right;">
-1.292
+1.293
 </td>
 <td style="text-align:right;">
-0.722
+0.811
 </td>
 </tr>
 <tr>
@@ -970,10 +970,10 @@ Palmeiras
 3
 </td>
 <td style="text-align:right;">
-3.121
+3.070
 </td>
 <td style="text-align:right;">
-1.754
+1.712
 </td>
 </tr>
 <tr>
@@ -984,10 +984,10 @@ Santos
 3
 </td>
 <td style="text-align:right;">
-3.746
+3.760
 </td>
 <td style="text-align:right;">
-2.058
+2.168
 </td>
 </tr>
 <tr>
@@ -998,10 +998,10 @@ Athlético-PR
 5
 </td>
 <td style="text-align:right;">
-5.558
+5.616
 </td>
 <td style="text-align:right;">
-2.674
+2.728
 </td>
 </tr>
 <tr>
@@ -1009,13 +1009,13 @@ Athlético-PR
 Grêmio
 </td>
 <td style="text-align:right;">
-5
+6
 </td>
 <td style="text-align:right;">
-6.040
+6.164
 </td>
 <td style="text-align:right;">
-2.893
+2.971
 </td>
 </tr>
 <tr>
@@ -1026,10 +1026,10 @@ São Paulo
 6
 </td>
 <td style="text-align:right;">
-6.092
+6.125
 </td>
 <td style="text-align:right;">
-2.784
+2.789
 </td>
 </tr>
 <tr>
@@ -1040,10 +1040,10 @@ Corinthians
 8
 </td>
 <td style="text-align:right;">
-8.106
+8.242
 </td>
 <td style="text-align:right;">
-3.229
+3.380
 </td>
 </tr>
 <tr>
@@ -1054,10 +1054,10 @@ Fortaleza
 9
 </td>
 <td style="text-align:right;">
-9.415
+9.411
 </td>
 <td style="text-align:right;">
-3.344
+3.406
 </td>
 </tr>
 <tr>
@@ -1068,10 +1068,10 @@ Internacional
 9
 </td>
 <td style="text-align:right;">
-9.192
+9.205
 </td>
 <td style="text-align:right;">
-3.312
+3.320
 </td>
 </tr>
 <tr>
@@ -1082,10 +1082,10 @@ Atlético-MG
 11
 </td>
 <td style="text-align:right;">
-10.896
+10.871
 </td>
 <td style="text-align:right;">
-3.448
+3.548
 </td>
 </tr>
 <tr>
@@ -1096,10 +1096,10 @@ Goiás
 11
 </td>
 <td style="text-align:right;">
-11.212
+11.193
 </td>
 <td style="text-align:right;">
-3.482
+3.425
 </td>
 </tr>
 <tr>
@@ -1110,10 +1110,10 @@ Vasco
 11
 </td>
 <td style="text-align:right;">
-10.783
+10.901
 </td>
 <td style="text-align:right;">
-3.571
+3.481
 </td>
 </tr>
 <tr>
@@ -1124,10 +1124,10 @@ Bahia
 12
 </td>
 <td style="text-align:right;">
-11.503
+11.425
 </td>
 <td style="text-align:right;">
-3.388
+3.448
 </td>
 </tr>
 <tr>
@@ -1138,10 +1138,10 @@ Fluminense
 14
 </td>
 <td style="text-align:right;">
-13.293
+13.268
 </td>
 <td style="text-align:right;">
-3.172
+3.353
 </td>
 </tr>
 <tr>
@@ -1152,10 +1152,10 @@ Botafogo-rj
 15
 </td>
 <td style="text-align:right;">
-14.685
+14.612
 </td>
 <td style="text-align:right;">
-3.013
+3.096
 </td>
 </tr>
 <tr>
@@ -1166,10 +1166,10 @@ Ceará
 16
 </td>
 <td style="text-align:right;">
-15.643
+15.591
 </td>
 <td style="text-align:right;">
-2.678
+2.700
 </td>
 </tr>
 <tr>
@@ -1180,10 +1180,10 @@ Cruzeiro
 16
 </td>
 <td style="text-align:right;">
-15.413
+15.185
 </td>
 <td style="text-align:right;">
-2.768
+2.969
 </td>
 </tr>
 <tr>
@@ -1194,10 +1194,10 @@ Chapecoense
 18
 </td>
 <td style="text-align:right;">
-16.989
+17.051
 </td>
 <td style="text-align:right;">
-2.428
+2.295
 </td>
 </tr>
 <tr>
@@ -1208,10 +1208,10 @@ CSA
 18
 </td>
 <td style="text-align:right;">
-17.379
+17.427
 </td>
 <td style="text-align:right;">
-2.201
+2.156
 </td>
 </tr>
 <tr>
@@ -1222,10 +1222,10 @@ Avaí
 20
 </td>
 <td style="text-align:right;">
-19.642
+19.590
 </td>
 <td style="text-align:right;">
-0.802
+0.922
 </td>
 </tr>
 </tbody>
@@ -1252,14 +1252,14 @@ Avaí
           iter <span class="op">=</span> <span class="fl">3000</span><span class="op">)</span> <span class="co">#stan indicates a low bulk ESS so we are increasing the number of iterations</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 1 finished in 14.8 seconds.</span>
-<span class="co">#&gt; Chain 3 finished in 14.8 seconds.</span>
-<span class="co">#&gt; Chain 2 finished in 15.2 seconds.</span>
-<span class="co">#&gt; Chain 4 finished in 15.2 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 19.3 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 19.3 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 19.4 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 19.5 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 15.0 seconds.</span>
-<span class="co">#&gt; Total execution time: 15.3 seconds.</span></code></pre></div>
+<span class="co">#&gt; Mean chain execution time: 19.4 seconds.</span>
+<span class="co">#&gt; Total execution time: 19.5 seconds.</span></code></pre></div>
 <p>For sake of space and repetition we will not present the diagnostics which can be observed at:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/launch_shinystan.html">launch_shinystan</a></span><span class="op">(</span><span class="va">m3</span><span class="op">)</span></code></pre></div>
@@ -1272,27 +1272,27 @@ Avaí
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter                  Mean   Median   HPD_lower   HPD_higher</span>
 <span class="co">#&gt; ----------------------  -------  -------  ----------  -----------</span>
-<span class="co">#&gt; lambda[Avaí]             -1.803   -1.799      -3.049       -0.650</span>
-<span class="co">#&gt; lambda[Internacional]     0.114    0.110      -0.959        1.189</span>
-<span class="co">#&gt; lambda[Cruzeiro]         -0.490   -0.492      -1.589        0.593</span>
-<span class="co">#&gt; lambda[Botafogo-rj]      -0.611   -0.615      -1.685        0.493</span>
-<span class="co">#&gt; lambda[Vasco]             0.233    0.232      -0.839        1.312</span>
-<span class="co">#&gt; lambda[Corinthians]      -0.006   -0.005      -1.122        1.047</span>
-<span class="co">#&gt; lambda[CSA]              -1.006   -1.004      -2.152        0.031</span>
-<span class="co">#&gt; lambda[Goiás]            -0.010   -0.016      -1.082        1.050</span>
-<span class="co">#&gt; lambda[Fortaleza]         0.114    0.112      -0.937        1.232</span>
-<span class="co">#&gt; lambda[Santos]            0.725    0.714      -0.358        1.818</span>
-<span class="co">#&gt; lambda[Grêmio]            0.855    0.847      -0.242        1.943</span>
-<span class="co">#&gt; lambda[Palmeiras]         0.858    0.857      -0.309        1.920</span>
-<span class="co">#&gt; lambda[Atlético-MG]      -0.245   -0.248      -1.308        0.850</span>
-<span class="co">#&gt; lambda[Chapecoense]      -0.488   -0.491      -1.560        0.615</span>
-<span class="co">#&gt; lambda[Ceará]            -0.740   -0.742      -1.819        0.368</span>
-<span class="co">#&gt; lambda[Athlético-PR]     -0.007   -0.010      -1.090        1.065</span>
-<span class="co">#&gt; lambda[Flamengo]          1.599    1.593       0.420        2.767</span>
-<span class="co">#&gt; lambda[São Paulo]         0.601    0.596      -0.429        1.748</span>
-<span class="co">#&gt; lambda[Bahia]             0.116    0.109      -0.964        1.175</span>
-<span class="co">#&gt; lambda[Fluminense]       -0.006   -0.001      -1.068        1.076</span>
-<span class="co">#&gt; gm                       -0.535   -0.535      -0.772       -0.308</span>
+<span class="co">#&gt; lambda[Avaí]             -1.783   -1.773      -2.996       -0.561</span>
+<span class="co">#&gt; lambda[Internacional]     0.120    0.122      -0.960        1.216</span>
+<span class="co">#&gt; lambda[Cruzeiro]         -0.480   -0.481      -1.605        0.547</span>
+<span class="co">#&gt; lambda[Botafogo-rj]      -0.355   -0.353      -1.443        0.714</span>
+<span class="co">#&gt; lambda[Vasco]            -0.237   -0.238      -1.327        0.822</span>
+<span class="co">#&gt; lambda[Corinthians]       0.002    0.010      -1.061        1.134</span>
+<span class="co">#&gt; lambda[CSA]              -0.860   -0.858      -1.984        0.212</span>
+<span class="co">#&gt; lambda[Goiás]            -0.239   -0.236      -1.362        0.828</span>
+<span class="co">#&gt; lambda[Fortaleza]         0.123    0.121      -0.974        1.202</span>
+<span class="co">#&gt; lambda[Santos]            1.135    1.133       0.008        2.214</span>
+<span class="co">#&gt; lambda[Grêmio]            0.730    0.724      -0.380        1.847</span>
+<span class="co">#&gt; lambda[Palmeiras]         1.141    1.137       0.045        2.282</span>
+<span class="co">#&gt; lambda[Atlético-MG]      -0.001    0.006      -1.099        1.069</span>
+<span class="co">#&gt; lambda[Chapecoense]      -0.605   -0.596      -1.730        0.471</span>
+<span class="co">#&gt; lambda[Ceará]            -0.358   -0.354      -1.459        0.715</span>
+<span class="co">#&gt; lambda[Athlético-PR]      0.357    0.355      -0.728        1.445</span>
+<span class="co">#&gt; lambda[Flamengo]          1.445    1.434       0.339        2.660</span>
+<span class="co">#&gt; lambda[São Paulo]         0.479    0.478      -0.630        1.562</span>
+<span class="co">#&gt; lambda[Bahia]            -0.358   -0.353      -1.498        0.692</span>
+<span class="co">#&gt; lambda[Fluminense]       -0.234   -0.232      -1.322        0.839</span>
+<span class="co">#&gt; gm                       -0.524   -0.524      -0.758       -0.295</span>
 <span class="co">#&gt; NOTES:</span>
 <span class="co">#&gt; * A higher lambda indicates a higher team ability</span>
 <span class="co">#&gt; * Large positive values of the gm parameter indicate that player 1 has a disadvantage. E.g. in a home effect scenario positive values indicate a home disadvantage.</span>
@@ -1332,24 +1332,10 @@ Flamengo
 1
 </td>
 <td style="text-align:right;">
-1.291
+1.718
 </td>
 <td style="text-align:right;">
-0.720
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Grêmio
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3.700
-</td>
-<td style="text-align:right;">
-2.059
+0.988
 </td>
 </tr>
 <tr>
@@ -1357,13 +1343,13 @@ Grêmio
 Palmeiras
 </td>
 <td style="text-align:right;">
-3
+2
 </td>
 <td style="text-align:right;">
-3.669
+2.550
 </td>
 <td style="text-align:right;">
-2.099
+1.299
 </td>
 </tr>
 <tr>
@@ -1371,13 +1357,41 @@ Palmeiras
 Santos
 </td>
 <td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2.635
+</td>
+<td style="text-align:right;">
+1.215
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Grêmio
+</td>
+<td style="text-align:right;">
 4
 </td>
 <td style="text-align:right;">
-4.243
+4.620
 </td>
 <td style="text-align:right;">
-2.240
+2.087
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Athlético-PR
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+6.830
+</td>
+<td style="text-align:right;">
+2.694
 </td>
 </tr>
 <tr>
@@ -1385,41 +1399,13 @@ Santos
 São Paulo
 </td>
 <td style="text-align:right;">
-5
+6
 </td>
 <td style="text-align:right;">
-5.295
+6.074
 </td>
 <td style="text-align:right;">
-2.659
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Vasco
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-8.223
-</td>
-<td style="text-align:right;">
-3.308
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Bahia
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:right;">
-9.317
-</td>
-<td style="text-align:right;">
-3.341
+2.398
 </td>
 </tr>
 <tr>
@@ -1430,10 +1416,10 @@ Fortaleza
 9
 </td>
 <td style="text-align:right;">
-9.406
+8.891
 </td>
 <td style="text-align:right;">
-3.417
+3.101
 </td>
 </tr>
 <tr>
@@ -1444,49 +1430,7 @@ Internacional
 9
 </td>
 <td style="text-align:right;">
-9.333
-</td>
-<td style="text-align:right;">
-3.313
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Athlético-PR
-</td>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-10.534
-</td>
-<td style="text-align:right;">
-3.454
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Fluminense
-</td>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-10.525
-</td>
-<td style="text-align:right;">
-3.449
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Corinthians
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-10.575
+9.168
 </td>
 <td style="text-align:right;">
 3.342
@@ -1494,30 +1438,86 @@ Corinthians
 </tr>
 <tr>
 <td style="text-align:left;">
-Goiás
+Atlético-MG
 </td>
 <td style="text-align:right;">
-11
+10
 </td>
 <td style="text-align:right;">
-10.608
+10.144
 </td>
 <td style="text-align:right;">
-3.558
+3.345
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Atlético-MG
+Corinthians
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+10.028
+</td>
+<td style="text-align:right;">
+3.407
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fluminense
 </td>
 <td style="text-align:right;">
 13
 </td>
 <td style="text-align:right;">
-12.824
+12.599
 </td>
 <td style="text-align:right;">
-3.375
+3.439
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Goiás
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+12.502
+</td>
+<td style="text-align:right;">
+3.516
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Vasco
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+12.581
+</td>
+<td style="text-align:right;">
+3.476
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bahia
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+13.832
+</td>
+<td style="text-align:right;">
+3.487
 </td>
 </tr>
 <tr>
@@ -1525,27 +1525,27 @@ Atlético-MG
 Botafogo-rj
 </td>
 <td style="text-align:right;">
-16
+14
 </td>
 <td style="text-align:right;">
-15.816
+13.647
 </td>
 <td style="text-align:right;">
-2.448
+3.302
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Chapecoense
+Ceará
 </td>
 <td style="text-align:right;">
-16
+14
 </td>
 <td style="text-align:right;">
-15.021
+13.628
 </td>
 <td style="text-align:right;">
-2.805
+3.316
 </td>
 </tr>
 <tr>
@@ -1556,24 +1556,24 @@ Cruzeiro
 16
 </td>
 <td style="text-align:right;">
-15.003
+15.034
 </td>
 <td style="text-align:right;">
-2.837
+3.056
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Ceará
+Chapecoense
 </td>
 <td style="text-align:right;">
 17
 </td>
 <td style="text-align:right;">
-16.691
+15.926
 </td>
 <td style="text-align:right;">
-2.192
+2.814
 </td>
 </tr>
 <tr>
@@ -1584,10 +1584,10 @@ CSA
 19
 </td>
 <td style="text-align:right;">
-18.048
+17.683
 </td>
 <td style="text-align:right;">
-1.572
+2.033
 </td>
 </tr>
 <tr>
@@ -1598,10 +1598,10 @@ Avaí
 20
 </td>
 <td style="text-align:right;">
-19.878
+19.910
 </td>
 <td style="text-align:right;">
-0.428
+0.392
 </td>
 </tr>
 </tbody>
@@ -1626,14 +1626,14 @@ Avaí
           iter <span class="op">=</span> <span class="fl">3000</span><span class="op">)</span> <span class="co">#stan indicates a low bulk ESS so we are increasing the number of iterations</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 2 finished in 14.2 seconds.</span>
-<span class="co">#&gt; Chain 4 finished in 14.5 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 14.5 seconds.</span>
-<span class="co">#&gt; Chain 3 finished in 14.5 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 20.6 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 20.5 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 20.8 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 21.1 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 14.4 seconds.</span>
-<span class="co">#&gt; Total execution time: 14.8 seconds.</span></code></pre></div>
+<span class="co">#&gt; Mean chain execution time: 20.8 seconds.</span>
+<span class="co">#&gt; Total execution time: 21.1 seconds.</span></code></pre></div>
 <p>For sake of space and repetition we will not present the diagnostics which can be observed at:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/launch_shinystan.html">launch_shinystan</a></span><span class="op">(</span><span class="va">m4</span><span class="op">)</span></code></pre></div>
@@ -1646,28 +1646,28 @@ Avaí
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter                  Mean   Median   HPD_lower   HPD_higher</span>
 <span class="co">#&gt; ----------------------  -------  -------  ----------  -----------</span>
-<span class="co">#&gt; lambda[Avaí]             -2.989   -2.980      -4.728       -1.421</span>
-<span class="co">#&gt; lambda[Internacional]     0.037    0.043      -1.421        1.510</span>
-<span class="co">#&gt; lambda[Cruzeiro]         -0.988   -0.980      -2.443        0.560</span>
-<span class="co">#&gt; lambda[Botafogo-rj]      -0.794   -0.793      -2.290        0.709</span>
-<span class="co">#&gt; lambda[Vasco]            -0.015   -0.016      -1.484        1.476</span>
-<span class="co">#&gt; lambda[Corinthians]       0.399    0.394      -1.016        1.848</span>
-<span class="co">#&gt; lambda[CSA]              -1.602   -1.594      -3.088       -0.026</span>
-<span class="co">#&gt; lambda[Goiás]            -0.005   -0.007      -1.481        1.502</span>
-<span class="co">#&gt; lambda[Fortaleza]         0.382    0.372      -1.065        1.841</span>
-<span class="co">#&gt; lambda[Santos]            1.425    1.423      -0.099        2.914</span>
-<span class="co">#&gt; lambda[Grêmio]            0.979    0.974      -0.539        2.432</span>
-<span class="co">#&gt; lambda[Palmeiras]         1.838    1.836       0.258        3.411</span>
-<span class="co">#&gt; lambda[Atlético-MG]       0.177    0.175      -1.329        1.640</span>
-<span class="co">#&gt; lambda[Chapecoense]      -1.224   -1.224      -2.764        0.274</span>
-<span class="co">#&gt; lambda[Ceará]            -1.164   -1.155      -2.726        0.267</span>
-<span class="co">#&gt; lambda[Athlético-PR]      1.171    1.177      -0.308        2.659</span>
-<span class="co">#&gt; lambda[Flamengo]          2.826    2.806       1.222        4.489</span>
-<span class="co">#&gt; lambda[São Paulo]         0.798    0.782      -0.704        2.251</span>
-<span class="co">#&gt; lambda[Bahia]            -0.359   -0.359      -1.857        1.117</span>
-<span class="co">#&gt; lambda[Fluminense]       -0.758   -0.748      -2.243        0.703</span>
-<span class="co">#&gt; gm                       -3.895   -3.873      -4.856       -2.954</span>
-<span class="co">#&gt; nu                        0.089    0.087      -0.123        0.298</span>
+<span class="co">#&gt; lambda[Avaí]             -2.994   -2.978      -4.590       -1.298</span>
+<span class="co">#&gt; lambda[Internacional]     0.012    0.004      -1.451        1.468</span>
+<span class="co">#&gt; lambda[Cruzeiro]         -1.006   -1.006      -2.460        0.462</span>
+<span class="co">#&gt; lambda[Botafogo-rj]      -0.808   -0.803      -2.251        0.656</span>
+<span class="co">#&gt; lambda[Vasco]            -0.024   -0.021      -1.468        1.504</span>
+<span class="co">#&gt; lambda[Corinthians]       0.386    0.382      -1.093        1.818</span>
+<span class="co">#&gt; lambda[CSA]              -1.622   -1.619      -3.121       -0.073</span>
+<span class="co">#&gt; lambda[Goiás]            -0.026   -0.036      -1.441        1.470</span>
+<span class="co">#&gt; lambda[Fortaleza]         0.381    0.382      -1.108        1.864</span>
+<span class="co">#&gt; lambda[Santos]            1.408    1.402      -0.061        2.957</span>
+<span class="co">#&gt; lambda[Grêmio]            0.964    0.961      -0.553        2.439</span>
+<span class="co">#&gt; lambda[Palmeiras]         1.821    1.805       0.309        3.355</span>
+<span class="co">#&gt; lambda[Atlético-MG]       0.167    0.155      -1.210        1.725</span>
+<span class="co">#&gt; lambda[Chapecoense]      -1.231   -1.221      -2.747        0.250</span>
+<span class="co">#&gt; lambda[Ceará]            -1.181   -1.173      -2.678        0.334</span>
+<span class="co">#&gt; lambda[Athlético-PR]      1.161    1.147      -0.269        2.729</span>
+<span class="co">#&gt; lambda[Flamengo]          2.815    2.804       1.114        4.413</span>
+<span class="co">#&gt; lambda[São Paulo]         0.786    0.789      -0.691        2.263</span>
+<span class="co">#&gt; lambda[Bahia]            -0.374   -0.376      -1.878        1.077</span>
+<span class="co">#&gt; lambda[Fluminense]       -0.757   -0.749      -2.184        0.721</span>
+<span class="co">#&gt; gm                       -3.889   -3.862      -4.868       -2.981</span>
+<span class="co">#&gt; nu                        0.088    0.088      -0.117        0.301</span>
 <span class="co">#&gt; NOTES:</span>
 <span class="co">#&gt; * A higher lambda indicates a higher team ability</span>
 <span class="co">#&gt; * Large positive values of the nu parameter indicates a high probability of tie regardless of the abilities of theplayers.</span>
@@ -1707,13 +1707,13 @@ StdRank
 Flamengo
 </td>
 <td style="text-align:right;">
-1
+1.0
 </td>
 <td style="text-align:right;">
-1.295
+1.302
 </td>
 <td style="text-align:right;">
-0.703
+0.772
 </td>
 </tr>
 <tr>
@@ -1721,13 +1721,13 @@ Flamengo
 Palmeiras
 </td>
 <td style="text-align:right;">
-2
+2.0
 </td>
 <td style="text-align:right;">
-2.913
+2.868
 </td>
 <td style="text-align:right;">
-1.630
+1.502
 </td>
 </tr>
 <tr>
@@ -1735,13 +1735,13 @@ Palmeiras
 Athlético-PR
 </td>
 <td style="text-align:right;">
-4
+4.0
 </td>
 <td style="text-align:right;">
-4.845
+4.926
 </td>
 <td style="text-align:right;">
-2.410
+2.396
 </td>
 </tr>
 <tr>
@@ -1749,13 +1749,13 @@ Athlético-PR
 Santos
 </td>
 <td style="text-align:right;">
-4
+4.0
 </td>
 <td style="text-align:right;">
-4.160
+4.052
 </td>
 <td style="text-align:right;">
-2.196
+2.134
 </td>
 </tr>
 <tr>
@@ -1763,13 +1763,13 @@ Santos
 Grêmio
 </td>
 <td style="text-align:right;">
-5
+5.0
 </td>
 <td style="text-align:right;">
-5.635
+5.704
 </td>
 <td style="text-align:right;">
-2.578
+2.695
 </td>
 </tr>
 <tr>
@@ -1777,13 +1777,13 @@ Grêmio
 São Paulo
 </td>
 <td style="text-align:right;">
-6
+6.0
 </td>
 <td style="text-align:right;">
-6.578
+6.527
 </td>
 <td style="text-align:right;">
-2.834
+2.798
 </td>
 </tr>
 <tr>
@@ -1791,13 +1791,13 @@ São Paulo
 Corinthians
 </td>
 <td style="text-align:right;">
-8
+8.0
 </td>
 <td style="text-align:right;">
-8.186
+8.401
 </td>
 <td style="text-align:right;">
-2.987
+3.180
 </td>
 </tr>
 <tr>
@@ -1805,13 +1805,13 @@ Corinthians
 Fortaleza
 </td>
 <td style="text-align:right;">
-8
+8.0
 </td>
 <td style="text-align:right;">
-8.479
+8.531
 </td>
 <td style="text-align:right;">
-3.163
+3.166
 </td>
 </tr>
 <tr>
@@ -1819,13 +1819,13 @@ Fortaleza
 Atlético-MG
 </td>
 <td style="text-align:right;">
-9
+9.5
 </td>
 <td style="text-align:right;">
-9.522
+9.580
 </td>
 <td style="text-align:right;">
-3.299
+3.190
 </td>
 </tr>
 <tr>
@@ -1833,27 +1833,13 @@ Atlético-MG
 Internacional
 </td>
 <td style="text-align:right;">
-10
+10.0
 </td>
 <td style="text-align:right;">
-10.406
+10.369
 </td>
 <td style="text-align:right;">
-3.196
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Goiás
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-10.620
-</td>
-<td style="text-align:right;">
-3.233
+3.212
 </td>
 </tr>
 <tr>
@@ -1861,13 +1847,27 @@ Goiás
 Vasco
 </td>
 <td style="text-align:right;">
-11
+10.0
 </td>
 <td style="text-align:right;">
-10.669
+10.525
 </td>
 <td style="text-align:right;">
-3.281
+3.276
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Goiás
+</td>
+<td style="text-align:right;">
+11.0
+</td>
+<td style="text-align:right;">
+10.578
+</td>
+<td style="text-align:right;">
+3.196
 </td>
 </tr>
 <tr>
@@ -1875,13 +1875,13 @@ Vasco
 Bahia
 </td>
 <td style="text-align:right;">
-13
+12.0
 </td>
 <td style="text-align:right;">
-12.441
+12.411
 </td>
 <td style="text-align:right;">
-3.119
+3.284
 </td>
 </tr>
 <tr>
@@ -1889,13 +1889,13 @@ Bahia
 Botafogo-rj
 </td>
 <td style="text-align:right;">
-15
+15.0
 </td>
 <td style="text-align:right;">
-14.558
+14.689
 </td>
 <td style="text-align:right;">
-2.876
+2.756
 </td>
 </tr>
 <tr>
@@ -1903,13 +1903,13 @@ Botafogo-rj
 Fluminense
 </td>
 <td style="text-align:right;">
-15
+15.0
 </td>
 <td style="text-align:right;">
-14.548
+14.326
 </td>
 <td style="text-align:right;">
-2.810
+2.912
 </td>
 </tr>
 <tr>
@@ -1917,13 +1917,13 @@ Fluminense
 Cruzeiro
 </td>
 <td style="text-align:right;">
-16
+16.0
 </td>
 <td style="text-align:right;">
-15.376
+15.488
 </td>
 <td style="text-align:right;">
-2.633
+2.587
 </td>
 </tr>
 <tr>
@@ -1931,13 +1931,13 @@ Cruzeiro
 Ceará
 </td>
 <td style="text-align:right;">
-17
+17.0
 </td>
 <td style="text-align:right;">
-16.147
+16.055
 </td>
 <td style="text-align:right;">
-2.488
+2.515
 </td>
 </tr>
 <tr>
@@ -1945,13 +1945,13 @@ Ceará
 Chapecoense
 </td>
 <td style="text-align:right;">
-17
+17.0
 </td>
 <td style="text-align:right;">
-16.268
+16.195
 </td>
 <td style="text-align:right;">
-2.479
+2.489
 </td>
 </tr>
 <tr>
@@ -1959,13 +1959,13 @@ Chapecoense
 CSA
 </td>
 <td style="text-align:right;">
-18
+18.0
 </td>
 <td style="text-align:right;">
-17.530
+17.624
 </td>
 <td style="text-align:right;">
-2.013
+1.847
 </td>
 </tr>
 <tr>
@@ -1973,13 +1973,13 @@ CSA
 Avaí
 </td>
 <td style="text-align:right;">
-20
+20.0
 </td>
 <td style="text-align:right;">
-19.824
+19.849
 </td>
 <td style="text-align:right;">
-0.584
+0.490
 </td>
 </tr>
 </tbody>
@@ -2002,15 +2002,15 @@ Avaí
 <span class="co">#&gt; Computed from 12000 by 380 log-likelihood matrix</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           Estimate   SE</span>
-<span class="co">#&gt; elpd_waic   -248.4  8.0</span>
-<span class="co">#&gt; p_waic        19.7  0.8</span>
-<span class="co">#&gt; waic         496.9 16.1</span>
+<span class="co">#&gt; elpd_waic   -246.7  8.2</span>
+<span class="co">#&gt; p_waic        19.4  0.9</span>
+<span class="co">#&gt; waic         493.5 16.4</span>
 <span class="va">m2_waic</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Computed from 12000 by 380 log-likelihood matrix</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           Estimate   SE</span>
-<span class="co">#&gt; elpd_waic   -332.4 10.4</span>
+<span class="co">#&gt; elpd_waic   -332.3 10.4</span>
 <span class="co">#&gt; p_waic        19.6  1.1</span>
 <span class="co">#&gt; waic         664.7 20.7</span>
 <span class="va">m3_waic</span>
@@ -2018,31 +2018,25 @@ Avaí
 <span class="co">#&gt; Computed from 12000 by 380 log-likelihood matrix</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           Estimate   SE</span>
-<span class="co">#&gt; elpd_waic   -238.8  9.0</span>
-<span class="co">#&gt; p_waic        20.8  1.0</span>
-<span class="co">#&gt; waic         477.7 18.1</span>
+<span class="co">#&gt; elpd_waic   -239.1  9.1</span>
+<span class="co">#&gt; p_waic        20.7  1.0</span>
+<span class="co">#&gt; waic         478.2 18.3</span>
 <span class="va">m4_waic</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Computed from 12000 by 380 log-likelihood matrix</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           Estimate   SE</span>
 <span class="co">#&gt; elpd_waic   -242.2  7.5</span>
-<span class="co">#&gt; p_waic        17.1  0.7</span>
-<span class="co">#&gt; waic         484.5 15.0</span></code></pre></div>
+<span class="co">#&gt; p_waic        17.0  0.7</span>
+<span class="co">#&gt; waic         484.4 15.0</span></code></pre></div>
 <p>Or can also use the loo::compare function to see which performs better.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">loo</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/loo/reference/loo_compare.html">loo_compare</a></span><span class="op">(</span><span class="va">m1_waic</span>,<span class="va">m2_waic</span>, <span class="va">m3_waic</span>, <span class="va">m4_waic</span><span class="op">)</span>
 <span class="co">#&gt;        elpd_diff se_diff</span>
 <span class="co">#&gt; model3   0.0       0.0  </span>
-<span class="co">#&gt; model4  -3.4       7.5  </span>
-<span class="co">#&gt; model1  -9.6       8.0  </span>
-<span class="co">#&gt; model2 -93.5      12.1</span></code></pre></div>
-<p>We can see here that the best performing model was the Davidson model with order effect model (lowest WAIC), although very close to the davidson without order effect.</p>
-</div>
-<div id="final-remarks" class="section level1">
-<h1 class="hasAnchor">
-<a href="#final-remarks" class="anchor"></a>Final remarks</h1>
-<p>In this vignette, we looked at 4 different models. However, we have not explored the impact of different priors in the model performance.</p>
+<span class="co">#&gt; model4  -3.1       7.3  </span>
+<span class="co">#&gt; model1  -7.7       8.5  </span>
+<span class="co">#&gt; model2 -93.3      12.1</span></code></pre></div>
 </div>
   </div>
 

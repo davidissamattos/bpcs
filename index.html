@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0.900</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
       </span>
     </div>
 
@@ -127,7 +127,7 @@
 <p>After installing, we load the package with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/davidissamattos/bpcs">bpcs</a></span><span class="op">)</span>
-<span class="co">#&gt; This is the version 1.2.0.900 of the bpcs package. </span>
+<span class="co">#&gt; This is the version 1.2.1 of the bpcs package. </span>
 <span class="co">#&gt; The bpcs package requires an installation of cmdstan and an appropriated toolchain.</span></code></pre></div>
 </div>
 <div id="minimal-example" class="section level2">
@@ -163,13 +163,13 @@ id
 Seles
 </td>
 <td style="text-align:left;">
-Navratilova
+Graf
 </td>
 <td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-11
+5
 </td>
 </tr>
 <tr>
@@ -183,7 +183,7 @@ Sanchez
 0
 </td>
 <td style="text-align:right;">
-27
+33
 </td>
 </tr>
 <tr>
@@ -197,21 +197,7 @@ Sabatini
 1
 </td>
 <td style="text-align:right;">
-23
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Sabatini
-</td>
-<td style="text-align:left;">
-Sanchez
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-38
+22
 </td>
 </tr>
 <tr>
@@ -253,7 +239,7 @@ Sabatini
 0
 </td>
 <td style="text-align:right;">
-16
+19
 </td>
 </tr>
 <tr>
@@ -267,21 +253,7 @@ Graf
 0
 </td>
 <td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Navratilova
-</td>
-<td style="text-align:left;">
-Sanchez
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-44
+1
 </td>
 </tr>
 <tr>
@@ -296,6 +268,34 @@ Graf
 </td>
 <td style="text-align:right;">
 3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:left;">
+Navratilova
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+24
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sabatini
+</td>
+<td style="text-align:left;">
+Sanchez
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+42
 </td>
 </tr>
 </tbody>
@@ -313,14 +313,14 @@ Graf
        <span class="op">)</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 1 finished in 3.0 seconds.</span>
-<span class="co">#&gt; Chain 2 finished in 2.9 seconds.</span>
-<span class="co">#&gt; Chain 3 finished in 3.0 seconds.</span>
-<span class="co">#&gt; Chain 4 finished in 3.1 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 7.2 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 7.6 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 7.5 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 7.8 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 3.0 seconds.</span>
-<span class="co">#&gt; Total execution time: 3.5 seconds.</span></code></pre></div>
+<span class="co">#&gt; Mean chain execution time: 7.5 seconds.</span>
+<span class="co">#&gt; Total execution time: 8.5 seconds.</span></code></pre></div>
 <p>If <code>cmdstanr</code> is available and correctly working this function should sample the posterior distribution and create a <code>bpc</code> object.</p>
 <p>To see a summary of the results we can run the summary function. Here we get three tables:</p>
 <ol>
@@ -336,11 +336,11 @@ Graf
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter               Mean   Median   HPD_lower   HPD_higher</span>
 <span class="co">#&gt; --------------------  ------  -------  ----------  -----------</span>
-<span class="co">#&gt; lambda[Seles]           0.59     0.57       -2.04         3.49</span>
-<span class="co">#&gt; lambda[Graf]            1.02     1.01       -1.62         3.81</span>
-<span class="co">#&gt; lambda[Sabatini]       -0.27    -0.27       -2.81         2.64</span>
-<span class="co">#&gt; lambda[Navratilova]     0.12     0.11       -2.59         2.81</span>
-<span class="co">#&gt; lambda[Sanchez]        -1.05    -1.07       -3.71         1.80</span>
+<span class="co">#&gt; lambda[Seles]           0.49     0.50       -2.03         3.38</span>
+<span class="co">#&gt; lambda[Graf]            0.92     0.91       -1.72         3.65</span>
+<span class="co">#&gt; lambda[Sabatini]       -0.35    -0.34       -2.99         2.45</span>
+<span class="co">#&gt; lambda[Navratilova]     0.03     0.03       -2.74         2.67</span>
+<span class="co">#&gt; lambda[Sanchez]        -1.14    -1.12       -3.79         1.66</span>
 <span class="co">#&gt; NOTES:</span>
 <span class="co">#&gt; * A higher lambda indicates a higher team ability</span>
 <span class="co">#&gt; </span>
@@ -354,30 +354,30 @@ Graf
 <span class="co">#&gt; i             j              i_beats_j   j_beats_i</span>
 <span class="co">#&gt; ------------  ------------  ----------  ----------</span>
 <span class="co">#&gt; Graf          Navratilova         0.70        0.30</span>
-<span class="co">#&gt; Graf          Sabatini            0.78        0.22</span>
-<span class="co">#&gt; Graf          Sanchez             0.85        0.15</span>
-<span class="co">#&gt; Graf          Seles               0.52        0.48</span>
-<span class="co">#&gt; Navratilova   Sabatini            0.67        0.33</span>
+<span class="co">#&gt; Graf          Sabatini            0.74        0.26</span>
+<span class="co">#&gt; Graf          Sanchez             0.83        0.17</span>
+<span class="co">#&gt; Graf          Seles               0.59        0.41</span>
+<span class="co">#&gt; Navratilova   Sabatini            0.58        0.42</span>
 <span class="co">#&gt; Navratilova   Sanchez             0.73        0.27</span>
-<span class="co">#&gt; Navratilova   Seles               0.41        0.59</span>
-<span class="co">#&gt; Sabatini      Sanchez             0.72        0.28</span>
-<span class="co">#&gt; Sabatini      Seles               0.34        0.66</span>
-<span class="co">#&gt; Sanchez       Seles               0.27        0.73</span>
+<span class="co">#&gt; Navratilova   Seles               0.43        0.57</span>
+<span class="co">#&gt; Sabatini      Sanchez             0.66        0.34</span>
+<span class="co">#&gt; Sabatini      Seles               0.30        0.70</span>
+<span class="co">#&gt; Sanchez       Seles               0.15        0.85</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Rank of the players' abilities:</span>
 <span class="co">#&gt; The rank is based on the posterior rank distribution of the lambda parameter</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Table: Estimated posterior ranks</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter              MedianRank   MeanRank   StdRank</span>
-<span class="co">#&gt; --------------------  -----------  ---------  --------</span>
-<span class="co">#&gt; lambda[Graf]                    1       1.40      0.62</span>
-<span class="co">#&gt; lambda[Seles]                   2       2.07      0.86</span>
-<span class="co">#&gt; lambda[Navratilova]             3       3.04      0.93</span>
-<span class="co">#&gt; lambda[Sabatini]                4       3.70      0.81</span>
-<span class="co">#&gt; lambda[Sanchez]                 5       4.79      0.49</span></code></pre></div>
+<span class="co">#&gt; Parameter      MedianRank   MeanRank   StdRank</span>
+<span class="co">#&gt; ------------  -----------  ---------  --------</span>
+<span class="co">#&gt; Graf                    1       1.35      0.61</span>
+<span class="co">#&gt; Seles                   2       2.17      0.89</span>
+<span class="co">#&gt; Navratilova             3       3.00      0.93</span>
+<span class="co">#&gt; Sabatini                4       3.68      0.81</span>
+<span class="co">#&gt; Sanchez                 5       4.79      0.50</span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">m</span>, rotate_x_labels <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
 </div>
 </div>
