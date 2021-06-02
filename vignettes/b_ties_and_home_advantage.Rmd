@@ -230,10 +230,4 @@ Or can also use the loo::compare function to see which performs better.
 loo::loo_compare(m1_waic,m2_waic, m3_waic, m4_waic)
 ```
 
-We can see here that the best performing model was the Davidson model with order effect model (lowest WAIC), although very close to the davidson without order effect.
-
-
-# Final remarks
-
-In this vignette, we looked at 4 different models. However, we have not explored the impact of different priors in the model performance. 
 
