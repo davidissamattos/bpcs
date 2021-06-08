@@ -12,7 +12,8 @@ replace_parameter_index_with_names(
   lookup_table,
   cluster_lookup_table = NULL,
   predictors_lookup_table = NULL,
-  subject_predictors_lookup_table = NULL
+  subject_predictors_lookup_table = NULL,
+  keep_par_name = T
 )
 }
 \arguments{
@@ -29,6 +30,8 @@ replace_parameter_index_with_names(
 \item{predictors_lookup_table}{a lookup table for the predictors}
 
 \item{subject_predictors_lookup_table}{a lookup table for the subject predictors}
+
+\item{keep_par_name}{keep the parameter name e.g. lambda Graff instead of Graff. Default to T. Only valid for lambda, so we can have better ranks}
 }
 \value{
 a data. frame where we change the names in the variable colum to the corresponding parameter_name from the lookup table

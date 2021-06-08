@@ -12,7 +12,8 @@ get_parameters_table(
   digits = 3,
   caption = "Parameters estimates",
   HPDI = T,
-  n_eff = F
+  n_eff = F,
+  keep_par_name = T
 )
 }
 \arguments{
@@ -38,6 +39,8 @@ get_parameters_table(
 \item{HPDI}{a boolean if the intervals should be credible (F) or HPD intervals (T)}
 
 \item{n_eff}{a boolean. Should the number of effective samples be presented (T) or not (F default).}
+
+\item{keep_par_name}{keep the parameter name e.g. lambda Graff instead of Graff. Default to T. Only valid for lambda, so we can have better ranks}
 }
 \value{
 a formatted table

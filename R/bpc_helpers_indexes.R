@@ -234,6 +234,7 @@ create_subject_predictor_lookuptable <-
 #' @param cluster_lookup_table a lookup table of the predictors
 #' @param predictors_lookup_table  a lookup table for the predictors
 #' @param subject_predictors_lookup_table a lookup table for the subject predictors
+#' @param keep_par_name keep the parameter name e.g. lambda Graff instead of Graff. Default to T. Only valid for lambda, so we can have better ranks
 #' @return a data. frame where we change the names in the variable colum to the corresponding parameter_name from the lookup table
 replace_parameter_index_with_names <-
   function(d,
@@ -242,14 +243,18 @@ replace_parameter_index_with_names <-
            lookup_table,
            cluster_lookup_table = NULL,
            predictors_lookup_table = NULL,
-           subject_predictors_lookup_table = NULL) {
+           subject_predictors_lookup_table = NULL,
+           keep_par_name=T) {
     d <- as.data.frame(d)
     #If not one of the if else parameters we dont change the name
     if (par == 'lambda') {
       for (i in 1:nrow(lookup_table)) {
         old_name <- paste(par, '[', i, ']', sep = "")
-        new_name <-
-          paste(par, '[', lookup_table$Names[i], ']', sep = "")
+        new_name <- NULL
+        if(keep_par_name)
+          new_name <-  paste(par, '[', lookup_table$Names[i], ']', sep = "")
+        else
+          new_name <-  lookup_table$Names[i]
         for (j in 1:nrow(d)) {
           d[j, column] <-
             gsub(

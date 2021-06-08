@@ -34,11 +34,11 @@
 #' * 'prior_nu_mu' Mean value of the nu parameter in the Davidson  models. nu ~ normal(mu, std)
 #' * 'prior_nu_std' Standard deviation ofnu parameter in the Davidson  models. nu ~ normal(mu, std). Default = 0.3
 #' * 'prior_gm_mu' Mean value of the gm in the ordered effect model. gm ~ normal(mu, std). Default = 0
-#' * 'prior_gm_std' Standard deviation of the gm parameter in the ordered effect model. gm ~ normal(mu, std). Default =
+#' * 'prior_gm_std' Standard deviation of the gm parameter in the ordered effect model. gm ~ normal(mu, std). Default = 1.0
 #' * 'prior_U1_std' Standard deviation of the U1 parameter in the random effects model. U ~ normal(0, std). Default = 3.0
 #' * 'prior_U2_std' Standard deviation of the U2 parameter in the random effects model. U ~ normal(0, std). Default = 3.0
 #' * 'prior_U3_std' Standard deviation of the U3 parameter in the random effects model. U ~ normal(0, std). Default = 3.0
-#' * 'prior_S_std' Standard deviation of the subject predictors parameter. S ~ normal(0,S_std). This for all predictors
+#' * 'prior_S_std' Standard deviation of the subject predictors parameter. S ~ normal(0,S_std). This for all predictors. Defaul =
 #' @param win_score A string that indicates if which score should win
 #' * 'higher' score is winner
 #' * 'lower' score is winner

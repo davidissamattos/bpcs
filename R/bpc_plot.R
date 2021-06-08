@@ -43,12 +43,6 @@ get_parameters_plot <-
                          Rhat = F,
                          keep_par_name = keep_par_name)
 
-    if(params==c('lambda') & keep_par_name == FALSE){
-      df$Parameter<-stringr::str_remove(df$Parameter,stringr::fixed("lambda["))
-      df$Parameter<-stringr::str_remove(df$Parameter,stringr::fixed("]"))
-    }
-
-
     colnames(df) <- c('Parameter', 'Mean', 'Median', 'Lower', 'Higher')
     df <- df %>%
       dplyr::arrange(.data$Mean)

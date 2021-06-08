@@ -30,6 +30,56 @@ get_parameters <- function(bpc_object, params=NULL, HPDI = TRUE, credMass=0.95, 
   nclusters <- length(bpc_object$cluster_lookup_table)
 
 
+  #Fixing the random effects table
+  if(!stringr::str_detect(bpc_object$model_type, "-U"))
+    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "U"))
+  if(nclusters==1){
+    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "U2"))
+    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "U3"))
+  }
+  if(nclusters==2){
+    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "U3"))
+  }
+
+
+  if(!stringr::str_detect(bpc_object$model_type, "-ordereffect"))
+    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "gm"))
+  if(!stringr::str_detect(bpc_object$model_type, "-subjectpredictors"))
+    hpdi <- dplyr::filter(hpdi, !startsWith(.data$Parameter, "S"))
+  if(!startsWith(bpc_object$model_type, "davidson"))
+    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "nu"))
+  if(!stringr::str_detect(bpc_object$model_type, "-generalized"))
+    hpdi <- dplyr::filter(hpdi, !startsWith(.data$Parameter, "B"))
+
+  #Now we need to add the conditions if credible or HPD intervals
+  if(HPDI){
+    hpdi<- hpdi[, !(names(hpdi) %in% c('q_lower','q_higher'))]
+  }
+  else{
+    hpdi<- dplyr::select(hpdi, -.data$HPD_lower, -.data$HPD_higher)
+  }
+
+  if(!n_eff){
+    hpdi <- dplyr::select(hpdi, -.data$n_eff)
+  }
+  else{
+    hpdi$n_eff <- floor(as.numeric(hpdi$n_eff))
+  }
+
+  if(!Rhat){
+    hpdi <- dplyr::select(hpdi, -.data$Rhat)
+  }
+  else{
+    hpdi$Rhat <- round(as.numeric(hpdi$Rhat), digits=4)
+  }
+
+  if(!is.null(params)){
+    hpdi <- dplyr::filter(hpdi, stringr::str_detect(.data$Parameter, paste(params , collapse = "|")))
+  }
+
+  #FIXING NAMES
+
+
   for (i in 1:length(pars)) {
     parameter <- pars[i]
     if (parameter == 'U1' & stringr::str_detect(bpc_object$model_type,'-U') & nclusters==1) {
@@ -68,7 +118,8 @@ get_parameters <- function(bpc_object, params=NULL, HPDI = TRUE, credMass=0.95, 
           hpdi,
           column = 'Parameter',
           par = parameter,
-          lookup_table = bpc_object$lookup_table
+          lookup_table = bpc_object$lookup_table,
+          keep_par_name = keep_par_name
         )
     }
     else if (parameter == 'B' & stringr::str_detect(bpc_object$model_type,'-generalized')) {
@@ -92,48 +143,6 @@ get_parameters <- function(bpc_object, params=NULL, HPDI = TRUE, credMass=0.95, 
         )
     }
   }
-
-  #FIxing the random effects table
-  if(!stringr::str_detect(bpc_object$model_type, "-U"))
-    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "U"))
-  if(nclusters==1){
-    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "U2"))
-    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "U3"))
-  }
-  if(nclusters==2){
-    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "U3"))
-  }
-
-
-  if(!stringr::str_detect(bpc_object$model_type, "-ordereffect"))
-    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "gm"))
-  if(!stringr::str_detect(bpc_object$model_type, "-subjectpredictors"))
-    hpdi <- dplyr::filter(hpdi, !startsWith(.data$Parameter, "S"))
-  if(!startsWith(bpc_object$model_type, "davidson"))
-    hpdi <- dplyr::filter(hpdi, !stringr::str_detect(.data$Parameter, "nu"))
-  if(!stringr::str_detect(bpc_object$model_type, "-generalized"))
-    hpdi <- dplyr::filter(hpdi, !startsWith(.data$Parameter, "B"))
-
-  #Now we need to add the conditions if credible or HPD intervals
-  if(HPDI){
-    hpdi<- hpdi[, !(names(hpdi) %in% c('q_lower','q_higher'))]
-  }
-  else{
-    hpdi<- dplyr::select(hpdi, -.data$HPD_lower, -.data$HPD_higher)
-  }
-
-  if(!n_eff){
-    hpdi <- dplyr::select(hpdi, -.data$n_eff)
-  }
-  if(!Rhat){
-    hpdi <- dplyr::select(hpdi, -.data$Rhat)
-  }
-
-  if(!is.null(params)){
-    hpdi <- dplyr::filter(hpdi, stringr::str_detect(.data$Parameter, paste(params , collapse = "|")))
-  }
-
-
   return(hpdi)
 }
 
@@ -208,6 +217,7 @@ get_parameters_posterior<-function(bpc_object, n=100){
 #' @param caption a string containing the caption of the table
 #' @param HPDI a boolean if the intervals should be credible (F) or HPD intervals (T)
 #' @param n_eff a boolean. Should the number of effective samples be presented (T) or not (F default).
+#' @param keep_par_name keep the parameter name e.g. lambda Graff instead of Graff. Default to T. Only valid for lambda, so we can have better ranks
 #' @return a formatted table
 #' @export
 #'
@@ -230,10 +240,11 @@ get_parameters_table <-
            digits = 3,
            caption = 'Parameters estimates',
            HPDI = T,
-           n_eff = F) {
+           n_eff = F,
+           keep_par_name=T) {
     if (class(bpc_object) != 'bpc')
       stop('Error! The object is not of bpc class')
-    t <- get_parameters(bpc_object, credMass=credMass, params=params, HPDI = HPDI,n_eff = n_eff)
+    t <- get_parameters(bpc_object, credMass=credMass, params=params, HPDI = HPDI,n_eff = n_eff,keep_par_name = keep_par_name)
     out <-
       knitr::kable(t,
                    format = format,
