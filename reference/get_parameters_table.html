@@ -163,7 +163,8 @@
   digits <span class='op'>=</span> <span class='fl'>3</span>,
   caption <span class='op'>=</span> <span class='st'>"Parameters estimates"</span>,
   HPDI <span class='op'>=</span> <span class='cn'>T</span>,
-  n_eff <span class='op'>=</span> <span class='cn'>F</span>
+  n_eff <span class='op'>=</span> <span class='cn'>F</span>,
+  keep_par_name <span class='op'>=</span> <span class='cn'>T</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -207,6 +208,10 @@
       <th>n_eff</th>
       <td><p>a boolean. Should the number of effective samples be presented (T) or not (F default).</p></td>
     </tr>
+    <tr>
+      <th>keep_par_name</th>
+      <td><p>keep the parameter name e.g. lambda Graff instead of Graff. Default to T. Only valid for lambda, so we can have better ranks</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -230,7 +235,7 @@ solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='
 #&gt; 
 #&gt; All 4 chains finished successfully.
 #&gt; Mean chain execution time: 2.3 seconds.
-#&gt; Total execution time: 2.6 seconds.</div><div class='input'><span class='va'>t</span><span class='op'>&lt;-</span><span class='fu'>get_parameters_table</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+#&gt; Total execution time: 2.7 seconds.</div><div class='input'><span class='va'>t</span><span class='op'>&lt;-</span><span class='fu'>get_parameters_table</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; \begin{table}
 #&gt; 

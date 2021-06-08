@@ -167,7 +167,8 @@ Receives a data frame and returns a dataframe.</p>
   <span class='va'>lookup_table</span>,
   cluster_lookup_table <span class='op'>=</span> <span class='cn'>NULL</span>,
   predictors_lookup_table <span class='op'>=</span> <span class='cn'>NULL</span>,
-  subject_predictors_lookup_table <span class='op'>=</span> <span class='cn'>NULL</span>
+  subject_predictors_lookup_table <span class='op'>=</span> <span class='cn'>NULL</span>,
+  keep_par_name <span class='op'>=</span> <span class='cn'>T</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -200,6 +201,10 @@ Receives a data frame and returns a dataframe.</p>
     <tr>
       <th>subject_predictors_lookup_table</th>
       <td><p>a lookup table for the subject predictors</p></td>
+    </tr>
+    <tr>
+      <th>keep_par_name</th>
+      <td><p>keep the parameter name e.g. lambda Graff instead of Graff. Default to T. Only valid for lambda, so we can have better ranks</p></td>
     </tr>
     </table>
 

@@ -265,11 +265,11 @@ For more information and larger examples of usage see the vignettes.</p>
 <li><p>'prior_nu_mu' Mean value of the nu parameter in the Davidson  models. nu ~ normal(mu, std)</p></li>
 <li><p>'prior_nu_std' Standard deviation ofnu parameter in the Davidson  models. nu ~ normal(mu, std). Default = 0.3</p></li>
 <li><p>'prior_gm_mu' Mean value of the gm in the ordered effect model. gm ~ normal(mu, std). Default = 0</p></li>
-<li><p>'prior_gm_std' Standard deviation of the gm parameter in the ordered effect model. gm ~ normal(mu, std). Default =</p></li>
+<li><p>'prior_gm_std' Standard deviation of the gm parameter in the ordered effect model. gm ~ normal(mu, std). Default = 1.0</p></li>
 <li><p>'prior_U1_std' Standard deviation of the U1 parameter in the random effects model. U ~ normal(0, std). Default = 3.0</p></li>
 <li><p>'prior_U2_std' Standard deviation of the U2 parameter in the random effects model. U ~ normal(0, std). Default = 3.0</p></li>
 <li><p>'prior_U3_std' Standard deviation of the U3 parameter in the random effects model. U ~ normal(0, std). Default = 3.0</p></li>
-<li><p>'prior_S_std' Standard deviation of the subject predictors parameter. S ~ normal(0,S_std). This for all predictors</p></li>
+<li><p>'prior_S_std' Standard deviation of the subject predictors parameter. S ~ normal(0,S_std). This for all predictors. Defaul =</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -333,14 +333,14 @@ model_type <span class='op'>=</span> <span class='st'>'bt'</span>,
 solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Running MCMC with 4 parallel chains...
 #&gt; 
-#&gt; Chain 1 finished in 2.3 seconds.
-#&gt; Chain 4 finished in 2.2 seconds.
-#&gt; Chain 2 finished in 2.3 seconds.
-#&gt; Chain 3 finished in 2.3 seconds.
+#&gt; Chain 1 finished in 2.1 seconds.
+#&gt; Chain 2 finished in 2.2 seconds.
+#&gt; Chain 3 finished in 2.2 seconds.
+#&gt; Chain 4 finished in 2.1 seconds.
 #&gt; 
 #&gt; All 4 chains finished successfully.
-#&gt; Mean chain execution time: 2.3 seconds.
-#&gt; Total execution time: 2.8 seconds.</div><div class='output co'>#&gt; Estimated baseline parameters with 95% HPD intervals:
+#&gt; Mean chain execution time: 2.2 seconds.
+#&gt; Total execution time: 2.6 seconds.</div><div class='output co'>#&gt; Estimated baseline parameters with 95% HPD intervals:
 #&gt; 
 #&gt; Table: Parameters estimates
 #&gt; 
