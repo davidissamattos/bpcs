@@ -86,7 +86,7 @@ Table 3: Contains the ranking of the players' abilities based on the posterior d
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
       </span>
     </div>
 
@@ -94,7 +94,7 @@ Table 3: Contains the ranking of the players' abilities based on the posterior d
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -208,70 +208,72 @@ Table 3: Contains the ranking of the players' abilities based on the posterior d
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='va'>m</span><span class='op'>&lt;-</span><span class='fu'><a href='bpc.html'>bpc</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,
-player0 <span class='op'>=</span> <span class='st'>'player0'</span>,
-player1 <span class='op'>=</span> <span class='st'>'player1'</span>,
-result_column <span class='op'>=</span> <span class='st'>'y'</span>,
-model_type <span class='op'>=</span> <span class='st'>'bt'</span>,
-solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Running MCMC with 4 parallel chains...
-#&gt; 
-#&gt; Chain 1 finished in 2.5 seconds.
-#&gt; Chain 2 finished in 2.4 seconds.
-#&gt; Chain 3 finished in 2.5 seconds.
-#&gt; Chain 4 finished in 2.5 seconds.
-#&gt; 
-#&gt; All 4 chains finished successfully.
-#&gt; Mean chain execution time: 2.5 seconds.
-#&gt; Total execution time: 2.6 seconds.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Estimated baseline parameters with 95% HPD intervals:
-#&gt; 
-#&gt; Table: Parameters estimates
-#&gt; 
-#&gt; Parameter               Mean   Median   HPD_lower   HPD_higher
-#&gt; --------------------  ------  -------  ----------  -----------
-#&gt; lambda[Seles]           0.51     0.50       -2.07         3.36
-#&gt; lambda[Graf]            0.94     0.92       -1.81         3.56
-#&gt; lambda[Sabatini]       -0.35    -0.36       -3.05         2.33
-#&gt; lambda[Navratilova]     0.05     0.03       -2.71         2.72
-#&gt; lambda[Sanchez]        -1.12    -1.13       -3.82         1.71
-#&gt; NOTES:
-#&gt; * A higher lambda indicates a higher team ability
-#&gt; 
-#&gt; Posterior probabilities:
-#&gt; These probabilities are calculated from the predictive posterior distribution
-#&gt; for all player combinations
-#&gt; 
-#&gt; 
-#&gt; Table: Estimated posterior probabilites
-#&gt; 
-#&gt; i             j              i_beats_j   j_beats_i
-#&gt; ------------  ------------  ----------  ----------
-#&gt; Graf          Navratilova         0.70        0.30
-#&gt; Graf          Sabatini            0.67        0.33
-#&gt; Graf          Sanchez             0.86        0.14
-#&gt; Graf          Seles               0.63        0.37
-#&gt; Navratilova   Sabatini            0.62        0.38
-#&gt; Navratilova   Sanchez             0.78        0.22
-#&gt; Navratilova   Seles               0.40        0.60
-#&gt; Sabatini      Sanchez             0.66        0.34
-#&gt; Sabatini      Seles               0.34        0.66
-#&gt; Sanchez       Seles               0.21        0.79
-#&gt; 
-#&gt; Rank of the players' abilities:
-#&gt; The rank is based on the posterior rank distribution of the lambda parameter
-#&gt; 
-#&gt; Table: Estimated posterior ranks
-#&gt; 
-#&gt; Parameter      MedianRank   MeanRank   StdRank
-#&gt; ------------  -----------  ---------  --------
-#&gt; Graf                    1       1.40      0.63
-#&gt; Seles                   2       2.12      0.89
-#&gt; Navratilova             3       2.98      0.94
-#&gt; Sabatini                4       3.69      0.80
-#&gt; Sanchez                 5       4.80      0.49</div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='va'>m</span><span class='op'>&lt;-</span><span class='fu'><a href='bpc.html'>bpc</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,</span>
+<span class='r-in'>player0 <span class='op'>=</span> <span class='st'>'player0'</span>,</span>
+<span class='r-in'>player1 <span class='op'>=</span> <span class='st'>'player1'</span>,</span>
+<span class='r-in'>result_column <span class='op'>=</span> <span class='st'>'y'</span>,</span>
+<span class='r-in'>model_type <span class='op'>=</span> <span class='st'>'bt'</span>,</span>
+<span class='r-in'>solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Running MCMC with 4 parallel chains...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Chain 2 finished in 1.7 seconds.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Chain 1 finished in 1.7 seconds.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Chain 3 finished in 1.8 seconds.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Chain 4 finished in 1.8 seconds.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> All 4 chains finished successfully.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mean chain execution time: 1.7 seconds.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total execution time: 1.8 seconds.</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Estimated baseline parameters with 95% HPD intervals:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Table: Parameters estimates</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter               Mean   Median   HPD_lower   HPD_higher</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> --------------------  ------  -------  ----------  -----------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lambda[Seles]           0.51     0.50       -2.07         3.36</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lambda[Graf]            0.94     0.92       -1.81         3.56</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lambda[Sabatini]       -0.35    -0.36       -3.05         2.33</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lambda[Navratilova]     0.05     0.03       -2.71         2.72</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lambda[Sanchez]        -1.12    -1.13       -3.82         1.71</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NOTES:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * A higher lambda indicates a higher team ability</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Posterior probabilities:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> These probabilities are calculated from the predictive posterior distribution</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> for all player combinations</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Table: Estimated posterior probabilites</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> i             j              i_beats_j   j_beats_i</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ------------  ------------  ----------  ----------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Graf          Navratilova         0.70        0.30</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Graf          Sabatini            0.67        0.33</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Graf          Sanchez             0.86        0.14</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Graf          Seles               0.63        0.37</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Navratilova   Sabatini            0.62        0.38</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Navratilova   Sanchez             0.78        0.22</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Navratilova   Seles               0.40        0.60</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Sabatini      Sanchez             0.66        0.34</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Sabatini      Seles               0.34        0.66</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Sanchez       Seles               0.21        0.79</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Rank of the players' abilities:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> The rank is based on the posterior rank distribution of the lambda parameter</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Table: Estimated posterior ranks</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter      MedianRank   MeanRank   StdRank</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ------------  -----------  ---------  --------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Graf                    1       1.40      0.63</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Seles                   2       2.12      0.89</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Navratilova             3       2.98      0.94</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Sabatini                4       3.69      0.80</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Sanchez                 5       4.80      0.49</span>
+<span class='r-in'><span class='co'># }</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

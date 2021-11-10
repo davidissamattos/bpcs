@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -210,47 +210,49 @@ Possible values are latex, html, p, simple (Pandoc's simple tables), and rst.</p
     <p>a formatted table</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='va'>m</span><span class='op'>&lt;-</span><span class='fu'><a href='bpc.html'>bpc</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,
-player0 <span class='op'>=</span> <span class='st'>'player0'</span>,
-player1 <span class='op'>=</span> <span class='st'>'player1'</span>,
-result_column <span class='op'>=</span> <span class='st'>'y'</span>,
-model_type <span class='op'>=</span> <span class='st'>'bt'</span>,
-solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Running MCMC with 4 parallel chains...
-#&gt; 
-#&gt; Chain 1 finished in 2.3 seconds.
-#&gt; Chain 2 finished in 2.3 seconds.
-#&gt; Chain 3 finished in 2.3 seconds.
-#&gt; Chain 4 finished in 2.3 seconds.
-#&gt; 
-#&gt; All 4 chains finished successfully.
-#&gt; Mean chain execution time: 2.3 seconds.
-#&gt; Total execution time: 2.4 seconds.</div><div class='input'><span class='va'>t</span><span class='op'>&lt;-</span><span class='fu'>get_probabilities_table</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; \begin{table}
-#&gt; 
-#&gt; \caption{Estimated posterior probabilites}
-#&gt; \centering
-#&gt; \begin{tabular}[t]{llrr}
-#&gt; \toprule
-#&gt; i &amp; j &amp; i\_beats\_j &amp; j\_beats\_i\\
-#&gt; \midrule
-#&gt; Graf &amp; Navratilova &amp; 0.77 &amp; 0.23\\
-#&gt; Graf &amp; Sabatini &amp; 0.80 &amp; 0.20\\
-#&gt; Graf &amp; Sanchez &amp; 0.84 &amp; 0.16\\
-#&gt; Graf &amp; Seles &amp; 0.54 &amp; 0.46\\
-#&gt; Navratilova &amp; Sabatini &amp; 0.54 &amp; 0.46\\
-#&gt; \addlinespace
-#&gt; Navratilova &amp; Sanchez &amp; 0.77 &amp; 0.23\\
-#&gt; Navratilova &amp; Seles &amp; 0.31 &amp; 0.69\\
-#&gt; Sabatini &amp; Sanchez &amp; 0.72 &amp; 0.28\\
-#&gt; Sabatini &amp; Seles &amp; 0.29 &amp; 0.71\\
-#&gt; Sanchez &amp; Seles &amp; 0.24 &amp; 0.76\\
-#&gt; \bottomrule
-#&gt; \end{tabular}
-#&gt; \end{table}</div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='va'>m</span><span class='op'>&lt;-</span><span class='fu'><a href='bpc.html'>bpc</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,</span>
+<span class='r-in'>player0 <span class='op'>=</span> <span class='st'>'player0'</span>,</span>
+<span class='r-in'>player1 <span class='op'>=</span> <span class='st'>'player1'</span>,</span>
+<span class='r-in'>result_column <span class='op'>=</span> <span class='st'>'y'</span>,</span>
+<span class='r-in'>model_type <span class='op'>=</span> <span class='st'>'bt'</span>,</span>
+<span class='r-in'>solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Running MCMC with 4 parallel chains...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Chain 1 finished in 1.8 seconds.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Chain 2 finished in 1.8 seconds.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Chain 3 finished in 1.8 seconds.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Chain 4 finished in 1.8 seconds.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> All 4 chains finished successfully.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mean chain execution time: 1.8 seconds.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total execution time: 1.9 seconds.</span>
+<span class='r-in'><span class='va'>t</span><span class='op'>&lt;-</span><span class='fu'>get_probabilities_table</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \begin{table}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \caption{Estimated posterior probabilites}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \centering</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \begin{tabular}[t]{llrr}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \toprule</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> i &amp; j &amp; i\_beats\_j &amp; j\_beats\_i\\</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \midrule</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Graf &amp; Navratilova &amp; 0.77 &amp; 0.23\\</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Graf &amp; Sabatini &amp; 0.80 &amp; 0.20\\</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Graf &amp; Sanchez &amp; 0.84 &amp; 0.16\\</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Graf &amp; Seles &amp; 0.54 &amp; 0.46\\</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Navratilova &amp; Sabatini &amp; 0.54 &amp; 0.46\\</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \addlinespace</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Navratilova &amp; Sanchez &amp; 0.77 &amp; 0.23\\</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Navratilova &amp; Seles &amp; 0.31 &amp; 0.69\\</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Sabatini &amp; Sanchez &amp; 0.72 &amp; 0.28\\</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Sabatini &amp; Seles &amp; 0.29 &amp; 0.71\\</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Sanchez &amp; Seles &amp; 0.24 &amp; 0.76\\</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \bottomrule</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \end{tabular}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \end{table}</span>
+<span class='r-in'><span class='co'># }</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

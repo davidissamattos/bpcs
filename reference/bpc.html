@@ -82,7 +82,7 @@ For more information and larger examples of usage see the vignettes." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@ For more information and larger examples of usage see the vignettes." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -323,37 +323,39 @@ For more information and larger examples of usage see the vignettes.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='co'>#For the simple Bradley-Terry model</span>
-<span class='fu'>bpc</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,
-player0 <span class='op'>=</span> <span class='st'>'player0'</span>,
-player1 <span class='op'>=</span> <span class='st'>'player1'</span>,
-result_column <span class='op'>=</span> <span class='st'>'y'</span>,
-model_type <span class='op'>=</span> <span class='st'>'bt'</span>,
-solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Running MCMC with 4 parallel chains...
-#&gt; 
-#&gt; Chain 1 finished in 2.1 seconds.
-#&gt; Chain 2 finished in 2.2 seconds.
-#&gt; Chain 3 finished in 2.2 seconds.
-#&gt; Chain 4 finished in 2.1 seconds.
-#&gt; 
-#&gt; All 4 chains finished successfully.
-#&gt; Mean chain execution time: 2.2 seconds.
-#&gt; Total execution time: 2.6 seconds.</div><div class='output co'>#&gt; Estimated baseline parameters with 95% HPD intervals:
-#&gt; 
-#&gt; Table: Parameters estimates
-#&gt; 
-#&gt; Parameter                Mean   Median   HPD_lower   HPD_higher
-#&gt; --------------------  -------  -------  ----------  -----------
-#&gt; lambda[Seles]           0.529    0.522      -2.197        3.417
-#&gt; lambda[Graf]            0.967    0.939      -1.746        3.761
-#&gt; lambda[Sabatini]       -0.310   -0.336      -3.087        2.496
-#&gt; lambda[Navratilova]     0.069    0.034      -2.714        2.869
-#&gt; lambda[Sanchez]        -1.089   -1.115      -3.898        1.740
-#&gt; NOTES:
-#&gt; * A higher lambda indicates a higher team ability</div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='co'>#For the simple Bradley-Terry model</span></span>
+<span class='r-in'><span class='fu'>bpc</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>tennis_agresti</span>,</span>
+<span class='r-in'>player0 <span class='op'>=</span> <span class='st'>'player0'</span>,</span>
+<span class='r-in'>player1 <span class='op'>=</span> <span class='st'>'player1'</span>,</span>
+<span class='r-in'>result_column <span class='op'>=</span> <span class='st'>'y'</span>,</span>
+<span class='r-in'>model_type <span class='op'>=</span> <span class='st'>'bt'</span>,</span>
+<span class='r-in'>solve_ties <span class='op'>=</span> <span class='st'>'none'</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Running MCMC with 4 parallel chains...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Chain 4 finished in 1.7 seconds.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Chain 1 finished in 1.8 seconds.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Chain 2 finished in 1.8 seconds.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Chain 3 finished in 1.8 seconds.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> All 4 chains finished successfully.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mean chain execution time: 1.8 seconds.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total execution time: 2.3 seconds.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Estimated baseline parameters with 95% HPD intervals:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Table: Parameters estimates</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter                Mean   Median   HPD_lower   HPD_higher</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> --------------------  -------  -------  ----------  -----------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lambda[Seles]           0.529    0.522      -2.197        3.417</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lambda[Graf]            0.967    0.939      -1.746        3.761</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lambda[Sabatini]       -0.310   -0.336      -3.087        2.496</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lambda[Navratilova]     0.069    0.034      -2.714        2.869</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lambda[Sanchez]        -1.089   -1.115      -3.898        1.740</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NOTES:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * A higher lambda indicates a higher team ability</span>
+<span class='r-in'><span class='co'># }</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

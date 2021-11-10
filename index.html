@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bpcs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
       </span>
     </div>
 
@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -138,9 +138,9 @@
 <li>Two columns containing the name of the contestants in the paired comparison</li>
 <li>Two columns containing the score of each player OR one column containing the result of the match (0 if player0 won, 1 if player1 won, 2 if it was a tie)</li>
 </ul>
-<p>We will utilize the tennis dataset available (Agresti 2003). The dataset can be seen below and is available as <code><a href="https://rdrr.io/r/utils/data.html">data(tennis_agresti)</a></code>:</p>
+<p>We will utilize the tennis dataset available (Agresti 2003). The dataset can be seen below and is available as <code>data(tennis_agresti)</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op">(</span><span class="va">tennis_agresti</span>,<span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op">(</span><span class="va">tennis_agresti</span>,<span class="fl">10</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr>
@@ -428,7 +428,7 @@ Graf
 <li>The model type should be first</li>
 <li>The order of the options do not matter: <code>bt-U-ordereffect</code> is equivalent to <code>bt-ordereffect-U</code>
 </li>
-<li>The <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> is mandatory</li>
+<li>The <code>-</code> is mandatory</li>
 </ul>
 </div>
 </div>
