@@ -35,24 +35,8 @@ compute_scores <- function(d,
   }
 
   # How to handle ties in the scores
-  if (solve_ties == 'none')
-  {
+  d <- fix_ties(d, solve_ties = solve_ties)
 
-  }
-  if (solve_ties == 'random')
-  {
-    for (i in 1:nrow(d)) {
-      if (d$y[i] == 2)
-        d$y[i] = sample(c(0, 1), replace = T, size = 1)
-    }
-
-  }
-  if (solve_ties == 'remove')
-  {
-    d$ties <- ifelse(d$diff_score != 0, 0, NA)
-    d <- tidyr::drop_na(d, tidyselect::any_of('ties'))
-    d <- dplyr::select(d,-.data$ties)
-  }
 
   d <- compute_ties(d, 'y')
   d <- dplyr::select(d,-.data$diff_score)
@@ -72,6 +56,34 @@ compute_ties <- function(d, result_column) {
   else
     stop('compute_ties: Result column in the wrong format')
 
+}
+
+#' fix_ties
+#' This functions provides the possible solutions for ties in the data frame
+#' @param d a dataframe with the results in the y column
+#' @param solve_ties method for solving ties 'random', 'none', or 'remove'
+#'
+#' @return a data frame with the result column y adjusted
+#'@importFrom rlang .data
+fix_ties <- function(d, solve_ties = 'random'){
+  if (solve_ties == 'none')
+  {
+
+  }
+  if (solve_ties == 'random')
+  {
+    for (i in 1:nrow(d)) {
+      if (d$y[i] == 2)
+        d$y[i] = sample(c(0, 1), replace = T, size = 1)
+    }
+  }
+  if (solve_ties == 'remove')
+  {
+
+    d$y <- ifelse(d$y == 2, NA,d$y)
+    d <- tidyr::drop_na(d, .data$y)
+  }
+  return(d)
 }
 
 

@@ -20,3 +20,5 @@ tarversions
 /inst/stan/bt
 .bpcs/*
 .bpcs_csv/*
+/inst/stan/bt.exe
+/tests/testthat/.bpcs/*

@@ -1,6 +1,6 @@
 Package: bpcs
 Title: Bayesian Paired Comparison Analysis with Stan
-Version: 1.2.1
+Version: 1.2.2
 Authors@R: c(
     person(given = "David",
            family = "Issa Mattos",
@@ -20,7 +20,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Biarch: true
 Depends: 
     R (>= 4.0.0)

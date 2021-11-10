@@ -5,12 +5,15 @@
   - Add model for the Bayesian ELO-type rating system
   - Add Glicko and Glicko2 models
   - Add models for cumulative comparisons
-  - Add possibility to add more than one random effects
 - TODO: Improve test coverage
 * TODO: Get posterior distribution of the parameters without accessing the stanfit object
 * TODO: integration with bayesplot to get some of the nice plots that we see there
 
-# bpcs 1.2.0.900
+# bpcs 1.2.2
+
+* fixing problems with `solve_ties` when the ties where provided directly (and not as two separate score [issue #8](https://github.com/davidissamattos/bpcs/issues/8)
+
+# bpcs 1.2.1
 
 * Ability to add credibility mass and choose HDPI or credible intervals in print and in summary
 * New function `check_convergence_diagnostics` for HMC diagnostics. This is printed as default in `print` but not in `summary`

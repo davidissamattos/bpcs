@@ -50,6 +50,44 @@ test_that('compute_ties works',{
   expect_equal(compute_ties(v3,'results')$ties, rv3$ties)
 })
 
+
+test_that('fix_ties works',{
+  old_state <- get_rand_state() #saving seed state
+
+  test_davidson<-load_testdata('test_davidson')
+
+  v_none <- test_davidson
+
+  #four possibilities
+  v_random1 <- test_davidson
+  v_random1$y <- c(0, 0, 0, 0, 0, 0, 0, 0, 0)
+  v_random2 <- test_davidson
+  v_random2$y <- c(0, 0, 1, 0, 0, 0, 0, 0, 0)
+  v_random3 <- test_davidson
+  v_random3$y <- c(0, 0, 0, 0, 0, 0, 0, 0, 1)
+  v_random4 <- test_davidson
+  v_random4$y <- c(0, 0, 1, 0, 0, 0, 0, 0, 1)
+
+  v_remove <- test_davidson
+  v_remove <- v_remove[-c(3,9),]
+  row.names(v_remove) <- c()
+
+
+  expect_equal(fix_ties(test_davidson,'none'), v_none)
+  set.seed(33)
+  expect_equal(fix_ties(test_davidson,'random'), v_random4)
+  set.seed(353)
+  expect_equal(fix_ties(test_davidson,'random'), v_random2)
+  set.seed(3)
+  expect_equal(fix_ties(test_davidson,'random'), v_random3)
+  set.seed(42)
+  expect_equal(fix_ties(test_davidson,'random'), v_random1)
+  expect_equal(fix_ties(test_davidson,'remove'), v_remove)
+
+  on.exit(set_rand_state(old_state))
+})
+
+
 test_that('calculate_prob_from_vector works',{
   v1 <- c(1,0,2,0,0,1)
   v2 <- c(1,1,1,0,0,0)

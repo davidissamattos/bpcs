@@ -95,7 +95,7 @@ bpc <- function(data,
   if ((is.null(player0_score) |
        is.null(player1_score)) & is.null(result_column))
     stop(
-      'Error! It is required to have either scores for both player0 and player1 OR a column indicating who won (0 for player0 1 for player1'
+      'Error! It is required to have either scores for both player0 and player1 OR a column indicating who won (0 for player0 and 1 for player1)'
     )
 
   if (is.data.frame(data) == F & tibble::is_tibble(data) == F)
@@ -207,6 +207,11 @@ bpc <- function(data,
       !stringr::str_detect(model_type, 'davidson') &
       ties_present == T)
     stop('Error! If not handling the ties a version of Davidson model should be used')
+  # If we have a tie and we need to solve it
+  if(ties_present & solve_ties != 'none')
+    d <- fix_ties(d, solve_ties)
+
+
 
   # check the z column
   if (!is.null(z_player1))
