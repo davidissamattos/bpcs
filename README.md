@@ -1,10 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# bpcs - A package for Bayesian Paired Comparison analysis with Stan (v.1.2.1) <img src="man/figures/logo.png" align="right" width="120"/>
+# bpcs - A package for Bayesian Paired Comparison analysis with Stan <img src="man/figures/logo.png" align="right" width="120"/>
 
 <!-- badges: start -->
 
+[![](https://img.shields.io/github/r-package/v/davidissamattos/bpcs?color=green&style=plastic)](https://github.com/davidissamattos/bpcs)
 [![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![R build
 status](https://github.com/davidissamattos/bpcs/workflows/R-CMD-check/badge.svg)](https://github.com/davidissamattos/bpcs/actions)
@@ -20,7 +21,7 @@ Package documentation and vignette articles can be found at:
 
 ## Installation
 
-From version &gt;= 1.2.0, we rely upon the Stan software and the
+From version \>= 1.2.0, we rely upon the Stan software and the
 `cmdstanr` package (Gabry and Češnovar 2020).
 
 You need to have a suitable toolchain and install cmdstan and cmdstanr.
@@ -44,7 +45,7 @@ After installing, we load the package with:
 
 ``` r
 library(bpcs)
-#> This is the version 1.2.1 of the bpcs package. 
+#> This is the version 1.2.2 of the bpcs package. 
 #> The bpcs package requires an installation of cmdstan and an appropriated toolchain.
 ```
 
@@ -88,6 +89,34 @@ id
 <tbody>
 <tr>
 <td style="text-align:left;">
+Navratilova
+</td>
+<td style="text-align:left;">
+Sanchez
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+43
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Navratilova
+</td>
+<td style="text-align:left;">
+Sanchez
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+44
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 Seles
 </td>
 <td style="text-align:left;">
@@ -97,7 +126,21 @@ Sanchez
 0
 </td>
 <td style="text-align:right;">
-13
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:left;">
+Navratilova
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+24
 </td>
 </tr>
 <tr>
@@ -116,7 +159,21 @@ Sanchez
 </tr>
 <tr>
 <td style="text-align:left;">
-Graf
+Sabatini
+</td>
+<td style="text-align:left;">
+Sanchez
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+42
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sabatini
 </td>
 <td style="text-align:left;">
 Sanchez
@@ -125,77 +182,7 @@ Sanchez
 0
 </td>
 <td style="text-align:right;">
-29
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:left;">
-Sabatini
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-16
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:left;">
-Sanchez
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-30
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Seles
-</td>
-<td style="text-align:left;">
-Navratilova
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-10
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:left;">
-Sabatini
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-18
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:left;">
-Sabatini
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-21
+38
 </td>
 </tr>
 <tr>
@@ -209,21 +196,35 @@ Sanchez
 0
 </td>
 <td style="text-align:right;">
-27
+33
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Seles
-</td>
-<td style="text-align:left;">
 Graf
 </td>
-<td style="text-align:right;">
-1
+<td style="text-align:left;">
+Sanchez
 </td>
 <td style="text-align:right;">
-5
+0
+</td>
+<td style="text-align:right;">
+28
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sabatini
+</td>
+<td style="text-align:left;">
+Sanchez
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+40
 </td>
 </tr>
 </tbody>
@@ -249,14 +250,14 @@ m<-bpc(data = tennis_agresti, #datafrane
        )
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 2 finished in 7.4 seconds.
-#> Chain 1 finished in 7.6 seconds.
-#> Chain 3 finished in 7.7 seconds.
-#> Chain 4 finished in 7.7 seconds.
+#> Chain 2 finished in 2.7 seconds.
+#> Chain 1 finished in 2.8 seconds.
+#> Chain 3 finished in 2.6 seconds.
+#> Chain 4 finished in 2.7 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 7.6 seconds.
-#> Total execution time: 8.3 seconds.
+#> Mean chain execution time: 2.7 seconds.
+#> Total execution time: 3.9 seconds.
 ```
 
 If `cmdstanr` is available and correctly working this function should
@@ -279,11 +280,11 @@ summary(m)
 #> 
 #> Parameter               Mean   Median   HPD_lower   HPD_higher
 #> --------------------  ------  -------  ----------  -----------
-#> lambda[Seles]           0.48     0.50       -2.43         3.12
-#> lambda[Graf]            0.91     0.91       -2.01         3.46
-#> lambda[Sabatini]       -0.38    -0.37       -3.12         2.45
-#> lambda[Navratilova]     0.00     0.00       -2.84         2.71
-#> lambda[Sanchez]        -1.14    -1.15       -3.99         1.59
+#> lambda[Seles]           0.54     0.53       -2.40         3.31
+#> lambda[Graf]            0.98     0.96       -1.87         3.78
+#> lambda[Sabatini]       -0.31    -0.31       -3.21         2.50
+#> lambda[Navratilova]     0.07     0.08       -2.74         2.94
+#> lambda[Sanchez]        -1.10    -1.11       -4.06         1.65
 #> NOTES:
 #> * A higher lambda indicates a higher team ability
 #> 
@@ -296,16 +297,16 @@ summary(m)
 #> 
 #> i             j              i_beats_j   j_beats_i
 #> ------------  ------------  ----------  ----------
-#> Graf          Navratilova         0.68        0.32
+#> Graf          Navratilova         0.72        0.28
 #> Graf          Sabatini            0.81        0.19
-#> Graf          Sanchez             0.83        0.17
-#> Graf          Seles               0.62        0.38
-#> Navratilova   Sabatini            0.53        0.47
-#> Navratilova   Sanchez             0.70        0.30
-#> Navratilova   Seles               0.43        0.57
-#> Sabatini      Sanchez             0.70        0.30
-#> Sabatini      Seles               0.29        0.71
-#> Sanchez       Seles               0.24        0.76
+#> Graf          Sanchez             0.95        0.05
+#> Graf          Seles               0.65        0.35
+#> Navratilova   Sabatini            0.65        0.35
+#> Navratilova   Sanchez             0.77        0.23
+#> Navratilova   Seles               0.45        0.55
+#> Sabatini      Sanchez             0.56        0.44
+#> Sabatini      Seles               0.34        0.66
+#> Sanchez       Seles               0.26        0.74
 #> 
 #> Rank of the players' abilities:
 #> The rank is based on the posterior rank distribution of the lambda parameter
@@ -314,11 +315,11 @@ summary(m)
 #> 
 #> Parameter      MedianRank   MeanRank   StdRank
 #> ------------  -----------  ---------  --------
-#> Graf                    1       1.35      0.59
-#> Seles                   2       2.10      0.86
-#> Navratilova             3       3.05      0.87
-#> Sabatini                4       3.72      0.83
-#> Sanchez                 5       4.78      0.50
+#> Graf                    1       1.34      0.60
+#> Seles                   2       2.15      0.87
+#> Navratilova             3       3.02      0.89
+#> Sabatini                4       3.67      0.84
+#> Sanchez                 5       4.81      0.45
 ```
 
 ``` r
