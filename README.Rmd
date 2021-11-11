@@ -155,9 +155,10 @@ Below we list all our vignettes with a short description:
 
 <!-- * [Generalized Bradley-Terry model](): This vignette investigate the Bradley-Terry model when we have players specific characteristics. (TODO) -->
 
-- Paper *"Bayesian Paired-Comparison with the bpcs package"* (Arxiv:2101.11227). 
+- Paper ["Bayesian Paired-Comparison with the bpcs package"](https://arxiv.org/pdf/2101.11227.pdf)
+  - (in Press) Behavior Research Methods
   - This paper describes the theory and related work behind the presented models along with 3 reanalyses in behavioral sciences. Including random effects, order effect, a subject specific predictors 
-  - The reanalyses code can be found at: https://davidissamattos.github.io/bpcs-online-appendix/ 
+  - The reanalyses appendix and code can be found at: https://davidissamattos.github.io/bpcs-online-appendix/ 
 
 # Contributing and bugs
 
