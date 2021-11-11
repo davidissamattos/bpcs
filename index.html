@@ -160,7 +160,49 @@ id
 <tbody>
 <tr>
 <td style="text-align:left;">
+Seles
+</td>
+<td style="text-align:left;">
 Navratilova
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sabatini
+</td>
+<td style="text-align:left;">
+Navratilova
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+37
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Seles
+</td>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sabatini
 </td>
 <td style="text-align:left;">
 Sanchez
@@ -169,7 +211,7 @@ Sanchez
 0
 </td>
 <td style="text-align:right;">
-43
+40
 </td>
 </tr>
 <tr>
@@ -183,7 +225,21 @@ Sanchez
 0
 </td>
 <td style="text-align:right;">
-44
+45
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:left;">
+Sabatini
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+17
 </td>
 </tr>
 <tr>
@@ -205,76 +261,6 @@ Sanchez
 Graf
 </td>
 <td style="text-align:left;">
-Navratilova
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-24
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Sabatini
-</td>
-<td style="text-align:left;">
-Sanchez
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-41
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Sabatini
-</td>
-<td style="text-align:left;">
-Sanchez
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-42
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Sabatini
-</td>
-<td style="text-align:left;">
-Sanchez
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-38
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:left;">
-Sanchez
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-33
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Graf
-</td>
-<td style="text-align:left;">
 Sanchez
 </td>
 <td style="text-align:right;">
@@ -286,16 +272,30 @@ Sanchez
 </tr>
 <tr>
 <td style="text-align:left;">
-Sabatini
+Seles
 </td>
 <td style="text-align:left;">
-Sanchez
+Navratilova
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-40
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Graf
+</td>
+<td style="text-align:left;">
+Sabatini
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+21
 </td>
 </tr>
 </tbody>
@@ -313,14 +313,14 @@ Sanchez
        <span class="op">)</span>
 <span class="co">#&gt; Running MCMC with 4 parallel chains...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Chain 2 finished in 2.7 seconds.</span>
-<span class="co">#&gt; Chain 1 finished in 2.8 seconds.</span>
-<span class="co">#&gt; Chain 3 finished in 2.6 seconds.</span>
-<span class="co">#&gt; Chain 4 finished in 2.7 seconds.</span>
+<span class="co">#&gt; Chain 1 finished in 2.1 seconds.</span>
+<span class="co">#&gt; Chain 2 finished in 2.1 seconds.</span>
+<span class="co">#&gt; Chain 4 finished in 2.1 seconds.</span>
+<span class="co">#&gt; Chain 3 finished in 2.2 seconds.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; All 4 chains finished successfully.</span>
-<span class="co">#&gt; Mean chain execution time: 2.7 seconds.</span>
-<span class="co">#&gt; Total execution time: 3.9 seconds.</span></code></pre></div>
+<span class="co">#&gt; Mean chain execution time: 2.1 seconds.</span>
+<span class="co">#&gt; Total execution time: 4.1 seconds.</span></code></pre></div>
 <p>If <code>cmdstanr</code> is available and correctly working this function should sample the posterior distribution and create a <code>bpc</code> object.</p>
 <p>To see a summary of the results we can run the summary function. Here we get three tables:</p>
 <ol>
@@ -336,11 +336,11 @@ Sanchez
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter               Mean   Median   HPD_lower   HPD_higher</span>
 <span class="co">#&gt; --------------------  ------  -------  ----------  -----------</span>
-<span class="co">#&gt; lambda[Seles]           0.54     0.53       -2.40         3.31</span>
-<span class="co">#&gt; lambda[Graf]            0.98     0.96       -1.87         3.78</span>
-<span class="co">#&gt; lambda[Sabatini]       -0.31    -0.31       -3.21         2.50</span>
-<span class="co">#&gt; lambda[Navratilova]     0.07     0.08       -2.74         2.94</span>
-<span class="co">#&gt; lambda[Sanchez]        -1.10    -1.11       -4.06         1.65</span>
+<span class="co">#&gt; lambda[Seles]           0.51     0.49       -2.33         3.29</span>
+<span class="co">#&gt; lambda[Graf]            0.94     0.95       -1.69         3.78</span>
+<span class="co">#&gt; lambda[Sabatini]       -0.33    -0.31       -3.09         2.39</span>
+<span class="co">#&gt; lambda[Navratilova]     0.04     0.05       -2.74         2.86</span>
+<span class="co">#&gt; lambda[Sanchez]        -1.13    -1.10       -4.02         1.53</span>
 <span class="co">#&gt; NOTES:</span>
 <span class="co">#&gt; * A higher lambda indicates a higher team ability</span>
 <span class="co">#&gt; </span>
@@ -353,16 +353,16 @@ Sanchez
 <span class="co">#&gt; </span>
 <span class="co">#&gt; i             j              i_beats_j   j_beats_i</span>
 <span class="co">#&gt; ------------  ------------  ----------  ----------</span>
-<span class="co">#&gt; Graf          Navratilova         0.72        0.28</span>
-<span class="co">#&gt; Graf          Sabatini            0.81        0.19</span>
-<span class="co">#&gt; Graf          Sanchez             0.95        0.05</span>
-<span class="co">#&gt; Graf          Seles               0.65        0.35</span>
-<span class="co">#&gt; Navratilova   Sabatini            0.65        0.35</span>
-<span class="co">#&gt; Navratilova   Sanchez             0.77        0.23</span>
-<span class="co">#&gt; Navratilova   Seles               0.45        0.55</span>
-<span class="co">#&gt; Sabatini      Sanchez             0.56        0.44</span>
-<span class="co">#&gt; Sabatini      Seles               0.34        0.66</span>
-<span class="co">#&gt; Sanchez       Seles               0.26        0.74</span>
+<span class="co">#&gt; Graf          Navratilova         0.71        0.29</span>
+<span class="co">#&gt; Graf          Sabatini            0.72        0.28</span>
+<span class="co">#&gt; Graf          Sanchez             0.88        0.12</span>
+<span class="co">#&gt; Graf          Seles               0.63        0.37</span>
+<span class="co">#&gt; Navratilova   Sabatini            0.59        0.41</span>
+<span class="co">#&gt; Navratilova   Sanchez             0.75        0.25</span>
+<span class="co">#&gt; Navratilova   Seles               0.33        0.67</span>
+<span class="co">#&gt; Sabatini      Sanchez             0.73        0.27</span>
+<span class="co">#&gt; Sabatini      Seles               0.28        0.72</span>
+<span class="co">#&gt; Sanchez       Seles               0.20        0.80</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Rank of the players' abilities:</span>
 <span class="co">#&gt; The rank is based on the posterior rank distribution of the lambda parameter</span>
@@ -371,11 +371,11 @@ Sanchez
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter      MedianRank   MeanRank   StdRank</span>
 <span class="co">#&gt; ------------  -----------  ---------  --------</span>
-<span class="co">#&gt; Graf                    1       1.34      0.60</span>
-<span class="co">#&gt; Seles                   2       2.15      0.87</span>
-<span class="co">#&gt; Navratilova             3       3.02      0.89</span>
-<span class="co">#&gt; Sabatini                4       3.67      0.84</span>
-<span class="co">#&gt; Sanchez                 5       4.81      0.45</span></code></pre></div>
+<span class="co">#&gt; Graf                    1       1.37      0.62</span>
+<span class="co">#&gt; Seles                   2       2.12      0.88</span>
+<span class="co">#&gt; Navratilova             3       3.02      0.91</span>
+<span class="co">#&gt; Sabatini                4       3.69      0.79</span>
+<span class="co">#&gt; Sanchez                 5       4.80      0.52</span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
@@ -443,10 +443,11 @@ Sanchez
 <li><p><a href="https://davidissamattos.github.io/bpcs/articles/c_bt_random_effects.html">Bradley-Terry with random effects</a>: This vignette covers the problem of ranking black-box optimization algorithms based on benchmarks. Since in benchmarking we often run the same optimization algorithm more than once with the same benchmark problem, we need to compensate for the repeated measures effect. We deal with this utilizing a simple Bradley-Terry model with random effects.</p></li>
 </ul>
 <!-- * [Generalized Bradley-Terry model](): This vignette investigate the Bradley-Terry model when we have players specific characteristics. (TODO) --><ul>
-<li>Paper <em>“Bayesian Paired-Comparison with the bpcs package”</em> (Arxiv:2101.11227).
+<li>Paper <a href="https://arxiv.org/pdf/2101.11227.pdf">“Bayesian Paired-Comparison with the bpcs package”</a>
 <ul>
+<li>(in Press) Behavior Research Methods</li>
 <li>This paper describes the theory and related work behind the presented models along with 3 reanalyses in behavioral sciences. Including random effects, order effect, a subject specific predictors</li>
-<li>The reanalyses code can be found at: <a href="https://davidissamattos.github.io/bpcs-online-appendix/" class="uri">https://davidissamattos.github.io/bpcs-online-appendix/</a>
+<li>The reanalyses appendix and code can be found at: <a href="https://davidissamattos.github.io/bpcs-online-appendix/" class="uri">https://davidissamattos.github.io/bpcs-online-appendix/</a>
 </li>
 </ul>
 </li>
