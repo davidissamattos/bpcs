@@ -142,7 +142,7 @@ data {
  //Subject-predictors
  int <lower=0, upper=1> use_SubjectPredictors;
  int <lower=0> N_SubjectPredictors;
- matrix [use_SubjectPredictors ? N_total : 0, use_SubjectPredictors ? N_SubjectPredictors :0] X_subject;//Matrix of subject predictors
+ matrix[use_SubjectPredictors ? N_total : 0, use_SubjectPredictors ? N_SubjectPredictors :0] X_subject;//Matrix of subject predictors
 
 
   // Davidson
@@ -151,7 +151,7 @@ data {
   // Generalized
   int <lower=0, upper=1> use_Generalized;
   int <lower=0> K;//Number of predictors. We have fixed values for the predictors for both player0 and player1
-  matrix [use_Generalized ? N_players : 0, use_Generalized ? K :0] X;//Matrix of predictors
+  matrix[use_Generalized ? N_players : 0, use_Generalized ? K :0] X;//Matrix of predictors
 
 
   //Priors
@@ -384,7 +384,7 @@ model {
 
 
 generated quantities{
-vector[calc_log_lik ? N_total: 0] log_lik;//Log likelihood
+  vector[calc_log_lik ? N_total: 0] log_lik;//Log likelihood
 
   if(calc_log_lik){
     for (i in 1:N_total)
