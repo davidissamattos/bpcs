@@ -7,14 +7,30 @@
 //
 
 functions{
-real[] calculate_p1_win_and_ties(int i,
-                      int[] player1_indexes, int[] player0_indexes, real[] lambda,
-                      int use_Ordereffect, real[] z_player1, real gm,
-                      int use_Davidson, real nu,
-                      int use_U1, int[] U1_indexes, real[,] U1, real U1_std,
-                      int use_U2, int[] U2_indexes, real[,] U2, real U2_std,
-                      int use_U3, int[] U3_indexes, real[,] U3, real U3_std,
-                      int use_SubjectPredictors, real[,] S ,matrix X_subject)
+array[] real calculate_p1_win_and_ties(int i,
+				       array[] int player1_indexes,
+				       array[] int player0_indexes,
+				       array[] real lambda,
+				       int use_Ordereffect,
+				       array[] real z_player1,
+				       real gm,
+				       int use_Davidson,
+				       real nu,
+				       int use_U1,
+				       array[] int U1_indexes,
+				       array[,] real U1,
+				       real U1_std,
+				       int use_U2,
+				       array[] int U2_indexes,
+				       array[,] real U2,
+				       real U2_std,
+				       int use_U3,
+				       array[] int U3_indexes,
+				       array[,] real U3,
+				       real U3_std,
+				       int use_SubjectPredictors,
+				       array[,] real S,
+				       matrix X_subject)
 {
 
     //Probabilities
@@ -24,7 +40,7 @@ real[] calculate_p1_win_and_ties(int i,
     real p0;
     real lambda1;
     real lambda0;
-    real return_value[2];
+    array[2] real return_value;
 
     //Transformed varaibles for the conditional uses
     real z;
@@ -101,32 +117,32 @@ real[] calculate_p1_win_and_ties(int i,
 
 data {
   int <lower=1> N_total; // Sample size
-  int <lower=0, upper=2> y[N_total]; //variable that indicates which one wins player0 or player1
+  array[N_total] int <lower=0, upper=2> y; //variable that indicates which one wins player0 or player1
   int <lower=1> N_players; // Number of players
-  int <lower=1> player0_indexes[N_total];
-  int <lower=1> player1_indexes[N_total];
+  array[N_total] int <lower=1> player0_indexes;
+  array[N_total] int <lower=1> player1_indexes;
 
   // ORDER EFFECT
   int <lower=0, upper=1> use_Ordereffect;
-  real z_player1[use_Ordereffect ? N_total : 0]; //1 home advantage for player 1. 0 no home advantage.
+  array[use_Ordereffect ? N_total : 0] real z_player1; //1 home advantage for player 1. 0 no home advantage.
 
   // U for random effects
   int <lower=0, upper=1> use_U1;
   int <lower=0> N_U1;
-  int U1_indexes[use_U1 ? N_total : 0];
+  array[use_U1 ? N_total : 0] int U1_indexes;
 
   int <lower=0, upper=1> use_U2;
   int <lower=0> N_U2;
-  int U2_indexes[use_U2 ? N_total : 0];
+  array[use_U2 ? N_total : 0] int U2_indexes;
 
   int <lower=0, upper=1> use_U3;
   int <lower=0> N_U3;
-  int U3_indexes[use_U3 ? N_total : 0];
+  array[use_U3 ? N_total : 0] int U3_indexes;
 
  //Subject-predictors
  int <lower=0, upper=1> use_SubjectPredictors;
  int <lower=0> N_SubjectPredictors;
- matrix [use_SubjectPredictors ? N_total : 0, use_SubjectPredictors ? N_SubjectPredictors :0] X_subject;//Matrix of subject predictors
+ matrix[use_SubjectPredictors ? N_total : 0, use_SubjectPredictors ? N_SubjectPredictors :0] X_subject;//Matrix of subject predictors
 
 
   // Davidson
@@ -135,7 +151,7 @@ data {
   // Generalized
   int <lower=0, upper=1> use_Generalized;
   int <lower=0> K;//Number of predictors. We have fixed values for the predictors for both player0 and player1
-  matrix [use_Generalized ? N_players : 0, use_Generalized ? K :0] X;//Matrix of predictors
+  matrix[use_Generalized ? N_players : 0, use_Generalized ? K :0] X;//Matrix of predictors
 
 
   //Priors
@@ -159,49 +175,49 @@ data {
 }
 
 parameters {
-  real lambda_param [N_players]; //Latent variable that represents the strength
+  array[N_players] real lambda_param; //Latent variable that represents the strength
 
   // Order effect
-  real gm_param[use_Ordereffect ? 1: 0];//Represents the order effect gamma
+  array[use_Ordereffect ? 1: 0] real gm_param;//Represents the order effect gamma
     //Davidson
-  real nu_param[use_Davidson ? 1 : 0]; // the tie parameter.
+  array[use_Davidson ? 1 : 0] real nu_param; // the tie parameter.
   // U
-  real <lower=0> U1_std_param[use_U1 ? 1: 0];//std for the random effects
+  array[use_U1 ? 1: 0] real <lower=0> U1_std_param;//std for the random effects
   // Matrix N_players x N_U if use_U is 1 else 0x0
-  real U1_param[use_U1 ? N_players : 0, use_U1 ? N_U1 : 0]; //parameters of the random effects for cluster one random effect for each algorithm in each cluster
-  real <lower=0> U2_std_param[use_U2 ? 1: 0];//std for the random effects
+  array[use_U1 ? N_players : 0, use_U1 ? N_U1 : 0] real U1_param; //parameters of the random effects for cluster one random effect for each algorithm in each cluster
+  array[use_U2 ? 1: 0] real <lower=0> U2_std_param;//std for the random effects
   // Matrix N_players x N_U if use_U is 1 else 0x0
-  real U2_param[use_U2 ? N_players : 0, use_U2 ? N_U2 : 0]; //parameters of the random effects for cluster one random effect for each algorithm in each cluster
-  real <lower=0> U3_std_param[use_U3 ? 1: 0];//std for the random effects
+  array[use_U2 ? N_players : 0, use_U2 ? N_U2 : 0] real U2_param; //parameters of the random effects for cluster one random effect for each algorithm in each cluster
+  array[use_U3 ? 1: 0] real <lower=0> U3_std_param;//std for the random effects
   // Matrix N_players x N_U if use_U is 1 else 0x0
-  real U3_param[use_U3 ? N_players : 0, use_U3 ? N_U3 : 0]; //parameters of the random effects for cluster one random effect for each algorithm in each cluster
+  array[use_U3 ? N_players : 0, use_U3 ? N_U3 : 0] real U3_param; //parameters of the random effects for cluster one random effect for each algorithm in each cluster
 
   //Subject predictors
   //We have vector of suuject predictors for every player
-  real S_param[use_SubjectPredictors ? N_players :0, use_SubjectPredictors ? N_SubjectPredictors :0];
+  array[use_SubjectPredictors ? N_players :0, use_SubjectPredictors ? N_SubjectPredictors :0] real S_param;
 
   //Generalized
-  real B_param[use_Generalized ? K :0]; // variable for all the predictors and players
+  array[use_Generalized ? K :0] real B_param; // variable for all the predictors and players
 }
 
 transformed parameters{
 
-  real lambda[N_players];
+  array[N_players] real lambda;
   real gm;
   real nu;
 
 
   real <lower=0> U1_std;
-  real U1[N_players, use_U1 ? N_U1 : 1];//even if we dont use it we have it here for the gqs to work properly
+  array[N_players, use_U1 ? N_U1 : 1] real U1;//even if we dont use it we have it here for the gqs to work properly
 
   real <lower=0> U2_std;
-  real U2[N_players, use_U2 ? N_U2 : 1];//even if we dont use it we have it here for the gqs to work properly
+  array[N_players, use_U2 ? N_U2 : 1] real U2;//even if we dont use it we have it here for the gqs to work properly
 
   real <lower=0> U3_std;
-  real U3[N_players, use_U3 ? N_U3 : 1];//even if we dont use it we have it here for the gqs to work properly
+  array[N_players, use_U3 ? N_U3 : 1] real U3;//even if we dont use it we have it here for the gqs to work properly
 
-  real S[N_players, use_SubjectPredictors ? N_SubjectPredictors : 1];
-  real B[use_Generalized ? K : 1]; //due to a bug we need at least a vector of 2
+  array[N_players, use_SubjectPredictors ? N_SubjectPredictors : 1] real S;
+  array[use_Generalized ? K : 1] real B; //due to a bug we need at least a vector of 2
 
       // Davidson
   if(use_Davidson){
@@ -340,7 +356,7 @@ model {
   {
     real p1_win;
     real p_tie;
-    real p_win_ties[2];
+    array[2] real p_win_ties;
 
 
     p_win_ties = calculate_p1_win_and_ties(i,
@@ -368,14 +384,14 @@ model {
 
 
 generated quantities{
-vector[calc_log_lik ? N_total: 0] log_lik;//Log likelihood
+  vector[calc_log_lik ? N_total: 0] log_lik;//Log likelihood
 
   if(calc_log_lik){
     for (i in 1:N_total)
     {
     real p1_win;
     real p_tie;
-    real p_win_ties[2];
+    array[2] real p_win_ties;
 
     p_win_ties = calculate_p1_win_and_ties(i,
                       player1_indexes, player0_indexes, lambda,
